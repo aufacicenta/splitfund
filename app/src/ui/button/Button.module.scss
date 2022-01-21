@@ -387,6 +387,24 @@ $HALF_LOADER_SIZE: 15px;
       }
     }
 
+    &.button--primary {
+      .button__icon--right {
+        svg {
+          fill: var(--color-button-primary);
+        }
+      }
+
+      &:active,
+      &:hover,
+      &:focus {
+        .button__icon--right {
+          svg {
+            fill: var(--color-button-primary-text);
+          }
+        }
+      }
+    }
+
     @extend .button-outline;
   }
 

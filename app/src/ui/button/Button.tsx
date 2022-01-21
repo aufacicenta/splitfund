@@ -72,7 +72,15 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
         >
           {children}
         </div>
-        {rightIcon && <div className={styles["button__icon--right"]}>{rightIcon}</div>}
+        {rightIcon && (
+          <div
+            className={clsx(styles["button__icon--right"], {
+              [styles["button--outlined__icon--right"]]: variant === "outlined",
+            })}
+          >
+            {rightIcon}
+          </div>
+        )}
       </>
     );
 

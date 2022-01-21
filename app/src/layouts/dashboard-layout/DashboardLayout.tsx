@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useRoutes } from "../../hooks/useRoutes/useRoutes";
 import { CityIcon } from "../../ui/icons/CityIcon";
 import { MainPanel } from "../../ui/mainpanel/MainPanel";
-import { NavBar } from "../../ui/navbar/NavBar";
+import { AuthNavBar } from "../../ui/auth-navbar/AuthNavBar";
 import { Sidebar } from "../../ui/sidebar/Sidebar";
 
 import styles from "./DashboardLayout.module.scss";
@@ -16,7 +16,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
 
   return (
     <div className={clsx(styles["dashboard-layout"])}>
-      <NavBar />
+      <AuthNavBar />
       <Sidebar className={styles["dashboard-layout__sidebar"]}>
         <Sidebar.Item
           text={t("sidebar.item.real-estate")}
