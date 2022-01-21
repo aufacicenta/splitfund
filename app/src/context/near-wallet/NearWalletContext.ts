@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-import { SolanaWalletContextType } from "./NearWalletContext.types";
+import { NearWalletContextType } from "./NearWalletContext.types";
 
-export const WalletSolanaContext = createContext<SolanaWalletContextType | undefined>(undefined);
+export const WalletSolanaContext = createContext<NearWalletContextType | undefined>(undefined);

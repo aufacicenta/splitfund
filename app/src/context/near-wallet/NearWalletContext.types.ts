@@ -1,13 +1,9 @@
 import { ReactNode } from "react";
 
-export type SolanaWalletContextControllerProps = {
+import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
+
+export type NearWalletContextControllerProps = {
   children: ReactNode;
 };
 
-export enum WalletSelectorChain {
-  solana = "solana",
-}
-
-export type SolanaWalletContextType = {
-  // isConnected: boolean;
-};
+export type NearWalletContextType = WalletSelectorContextType;
