@@ -13,9 +13,9 @@ import { Icon } from "ui/icon/Icon";
 import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
 
 import styles from "./NavBar.module.scss";
-import { NavBarProps } from "./NavBar.types";
+import { AuthNavBarProps } from "./AuthNavBar.types";
 
-export const NavBar: React.FC<NavBarProps> = () => {
+export const AuthNavBar: React.FC<AuthNavBarProps> = () => {
   const auth = useAuthContext();
   const routes = useRoutes();
   const { locale } = useRouter();

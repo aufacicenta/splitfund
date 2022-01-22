@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
 
-export type NavBarProps = {
+export type AuthNavBarProps = {
   children?: ReactNode;
 };
