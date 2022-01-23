@@ -1,6 +1,8 @@
 @import "../../theme/base";
 
 .typography {
+  position: relative;
+
   &__inline {
     display: inline-block;
   }
@@ -32,13 +34,13 @@
   &__headline4 {
     @include font-properties($typography-headline-4);
     @include normalizeTypography;
+    margin-bottom: $space-xs;
+    color: var(--color-typography-headline-4);
 
     [class^="icon-"],
     [class*=" icon-"] {
       font-size: $font-size-headline-4 * 0.75;
     }
-    margin-bottom: $space-xs;
-    color: var(--color-typography-headline-4);
   }
 
   &__headline5 {
@@ -60,13 +62,13 @@
   &__text {
     @include font-properties($typography-text);
     @include normalizeTypography;
+    margin-bottom: $space-s;
+    color: var(--color-typography-text);
 
     [class^="icon-"],
     [class*=" icon-"] {
       font-size: $font-size-text * 0.75;
     }
-    margin-bottom: $space-s;
-    color: var(--color-typography-text);
   }
 
   &__text-lead {
@@ -117,13 +119,12 @@
   &__link {
     @include font-properties($typography-link);
     @include normalizeTypography;
+    font-size: inherit;
+    text-decoration: none;
+    color: var(--color-typography-link);
 
     &:hover {
       text-decoration: underline;
     }
-    font-size: inherit;
-    text-decoration: none;
-    color: var(--color-typography-link);
   }
-  position: relative;
 }
