@@ -160,15 +160,20 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) =
                             </Typography.MiniDescription>
                           </div>
                         </div>
-                        <Grid.Row>
-                          <Grid.Col lg={6}>
-                            <Typography.TextBold flat>Price</Typography.TextBold>
-                          </Grid.Col>
-                          <Grid.Col>
-                            <Typography.Text flat>30,456.00 Ⓝ</Typography.Text>
+                        <div className={styles["property-details__sidebar--price"]}>
+                          <div className={styles["property-details__sidebar--price-heading"]}>
+                            <Typography.TextBold
+                              className={styles["property-details__sidebar--price-heading-text"]}
+                              flat
+                            >
+                              Price
+                            </Typography.TextBold>
+                          </div>
+                          <div className={styles["property-details__sidebar--price-description"]}>
+                            <Typography.TextBold flat>30,456.00 Ⓝ</Typography.TextBold>
                             <Typography.MiniDescription>150,000.00 USD</Typography.MiniDescription>
-                          </Grid.Col>
-                        </Grid.Row>
+                          </div>
+                        </div>
                         <hr />
                         <Grid.Row>
                           <Grid.Col lg={6}>

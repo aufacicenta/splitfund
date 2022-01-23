@@ -88,19 +88,28 @@
       @include font-properties($typography-headline-6);
     }
 
-    &--sold {
+    &--sold,
+    &--price {
       display: flex;
       margin-bottom: $space-default;
     }
 
-    &--circular-progress {
+    &--circular-progress,
+    &--price-heading {
+      min-width: 70px;
       margin-right: $space-default;
     }
 
-    &--sold-description {
+    &--sold-description,
+    &--price-description {
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+
+    &--price-heading-text {
+      font-size: $font-size-headline-6;
+      text-align: center;
     }
   }
 

@@ -20,6 +20,10 @@ export type Styles = {
   "property-details__sidebar--circular-progress": string;
   "property-details__sidebar--heading": string;
   "property-details__sidebar--heading2": string;
+  "property-details__sidebar--price": string;
+  "property-details__sidebar--price-description": string;
+  "property-details__sidebar--price-heading": string;
+  "property-details__sidebar--price-heading-text": string;
   "property-details__sidebar--sold": string;
   "property-details__sidebar--sold-description": string;
   "z-depth-0": string;
