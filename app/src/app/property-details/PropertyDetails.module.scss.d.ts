@@ -17,8 +17,11 @@ export type Styles = {
   "property-details__ownership--card": string;
   "property-details__register-interest-modal--header": string;
   "property-details__sidebar": string;
+  "property-details__sidebar--circular-progress": string;
   "property-details__sidebar--heading": string;
   "property-details__sidebar--heading2": string;
+  "property-details__sidebar--sold": string;
+  "property-details__sidebar--sold-description": string;
   "z-depth-0": string;
   "z-depth-1": string;
   "z-depth-1-half": string;

@@ -33,12 +33,12 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) =
                     <div className={clsx(styles["property-details__media"])}>
                       <Card shadow>
                         <Card.Content>
-                          <div className={clsx(styles["property-details__media--featured-image"])}>
-                            <img
-                              src="https://bafybeiabp3jyc6pw5ynlsijphijkr2urbihr4errktlwybvco3xewarkfy.ipfs.infura-ipfs.io/avi-waxman-f9qZuKoZYoY-unsplash.jpeg"
-                              alt="property"
-                            />
-                          </div>
+                          <div
+                            className={clsx(styles["property-details__media--featured-image"])}
+                            style={{
+                              backgroundImage: `url(https://bafybeiabp3jyc6pw5ynlsijphijkr2urbihr4errktlwybvco3xewarkfy.ipfs.infura-ipfs.io/avi-waxman-f9qZuKoZYoY-unsplash.jpeg)`,
+                            }}
+                          />
                         </Card.Content>
                       </Card>
                     </div>
@@ -148,34 +148,48 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) =
                         <Typography.Headline2 className={styles["property-details__sidebar--heading2"]}>
                           Investment Details
                         </Typography.Headline2>
-                        <Grid.Row align="center">
-                          <Grid.Col lg={3}>
+                        <div className={styles["property-details__sidebar--sold"]}>
+                          <div className={styles["property-details__sidebar--circular-progress"]}>
                             <CircularProgress size={70} strokeWidth={5} percentage={80} />
+                          </div>
+                          <div className={styles["property-details__sidebar--sold-description"]}>
+                            <Typography.Description>Funded</Typography.Description>
+                            <Typography.Text flat>345.02 Ⓝ</Typography.Text>
+                            <Typography.MiniDescription>
+                              80% of property price · <Typography.Anchor href="#">1 Ⓝ = 11.99 USD</Typography.Anchor>
+                            </Typography.MiniDescription>
+                          </div>
+                        </div>
+                        <Grid.Row>
+                          <Grid.Col lg={6}>
+                            <Typography.TextBold flat>Price</Typography.TextBold>
                           </Grid.Col>
                           <Grid.Col>
-                            <Typography.Description>Sold</Typography.Description>
-                            <Typography.Text flat>345.02 NEAR</Typography.Text>
+                            <Typography.Text flat>30,456.00 Ⓝ</Typography.Text>
+                            <Typography.MiniDescription>150,000.00 USD</Typography.MiniDescription>
+                          </Grid.Col>
+                        </Grid.Row>
+                        <hr />
+                        <Grid.Row>
+                          <Grid.Col lg={6}>
+                            <Typography.TextBold flat># of NEAR wallets</Typography.TextBold>
+                            <Typography.MiniDescription>See current investors</Typography.MiniDescription>
+                          </Grid.Col>
+                          <Grid.Col>
+                            <Typography.Text>123</Typography.Text>
+                          </Grid.Col>
+                        </Grid.Row>
+                        <Grid.Row nowrap>
+                          <Grid.Col lg={6}>
+                            <Typography.TextBold flat>Escrow Contract</Typography.TextBold>
                             <Typography.MiniDescription>
-                              80% of property price - <Typography.Anchor href="#">1 NEAR = 11.99 USD</Typography.Anchor>
+                              Your money is secured by the NEAR Protocol
                             </Typography.MiniDescription>
                           </Grid.Col>
-                        </Grid.Row>
-                        <Grid.Row>
-                          <Grid.Col lg={7}>
-                            <Typography.TextBold flat>No. of NEAR wallets</Typography.TextBold>
-                            <Typography.MiniDescription>See current owners</Typography.MiniDescription>
-                          </Grid.Col>
                           <Grid.Col>
-                            <Typography.Text>123</Typography.Text>
-                          </Grid.Col>
-                        </Grid.Row>
-                        <Grid.Row>
-                          <Grid.Col lg={7}>
-                            <Typography.TextBold flat>Total NEAR funded</Typography.TextBold>
-                            <Typography.MiniDescription>80% of property price</Typography.MiniDescription>
-                          </Grid.Col>
-                          <Grid.Col>
-                            <Typography.Text>123</Typography.Text>
+                            <Typography.Text>
+                              <Typography.Anchor href="#">ce_gt_123.escrow...</Typography.Anchor>
+                            </Typography.Text>
                           </Grid.Col>
                         </Grid.Row>
                       </Card.Content>
@@ -188,92 +202,6 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) =
                         </Typography.Description>
                       </Card.Actions>
                     </Card>
-                    <Card shadow>
-                      <Card.Content>
-                        <Typography.Headline2 className={styles["property-details__sidebar--heading2"]}>
-                          Contract Details
-                        </Typography.Headline2>
-                        <Grid.Row>
-                          <Grid.Col lg={7}>
-                            <Typography.TextBold flat>Escrow Contract</Typography.TextBold>
-                            <Typography.MiniDescription>
-                              Your money is secured by NEAR Protocol
-                            </Typography.MiniDescription>
-                          </Grid.Col>
-                          <Grid.Col>
-                            <Typography.Text>ce_gt_123.escrowfactory.near</Typography.Text>
-                          </Grid.Col>
-                        </Grid.Row>
-                        <Grid.Row>
-                          <Grid.Col lg={7}>
-                            <Typography.TextBold flat>Total NEAR funded</Typography.TextBold>
-                            <Typography.MiniDescription>80% of property price</Typography.MiniDescription>
-                          </Grid.Col>
-                          <Grid.Col>
-                            <Typography.Text>123</Typography.Text>
-                          </Grid.Col>
-                        </Grid.Row>
-                      </Card.Content>
-                    </Card>
-                    <div>
-                      <Grid.Row>
-                        <Grid.Col>
-                          <Typography.Headline5 className={styles["property-details__sidebar--heading"]}>
-                            Owners
-                          </Typography.Headline5>
-                          <Typography.Description>
-                            Wallets (or programs) that hold a share of the property
-                          </Typography.Description>
-                        </Grid.Col>
-                        <Grid.Col justifyContent="end">
-                          <Button
-                            variant="outlined"
-                            size="xs"
-                            color="secondary"
-                            onClick={() => setIsBuyOwnershipInfoModalOpen(true)}
-                          >
-                            Buy Ownership
-                          </Button>
-                        </Grid.Col>
-                      </Grid.Row>
-                      <Card className={styles["property-details__ownership--card"]}>
-                        <Card.Content>
-                          <Grid.Row align="center">
-                            <Grid.Col lg={3}>
-                              <CircularProgress size={70} strokeWidth={5} percentage={80} />
-                            </Grid.Col>
-                            <Grid.Col>
-                              <Typography.Description>Sold</Typography.Description>
-                              <Typography.Text>SOL 345.02 of SOL 600.00</Typography.Text>
-                              <Typography.MiniDescription>
-                                USD 46,980.01 of USD 65,000.00 at{" "}
-                                <Typography.Anchor href="#">1 SOL = 25.99 USD</Typography.Anchor>
-                              </Typography.MiniDescription>
-                            </Grid.Col>
-                          </Grid.Row>
-                        </Card.Content>
-                      </Card>
-                      <div>
-                        <Card className={styles["property-details__ownership--card"]}>
-                          <Card.Content>
-                            <Typography.Description>23% Ownership</Typography.Description>
-                            <Typography.Link href="#">metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s</Typography.Link>
-                            <hr />
-                            <Typography.Description>At Transaction</Typography.Description>
-                            <Typography.Link href="#">metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s</Typography.Link>
-                          </Card.Content>
-                        </Card>
-                        <Card className={styles["property-details__ownership--card"]}>
-                          <Card.Content>
-                            <Typography.Description>34% Ownership</Typography.Description>
-                            <Typography.Link href="#">metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s</Typography.Link>
-                            <hr />
-                            <Typography.Description>At Transaction</Typography.Description>
-                            <Typography.Link href="#">metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s</Typography.Link>
-                          </Card.Content>
-                        </Card>
-                      </div>
-                    </div>
                   </div>
                 </Grid.Col>
               </Grid.Row>

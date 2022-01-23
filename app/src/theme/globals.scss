@@ -127,16 +127,16 @@ body[data-theme="dark"] {
 
 body[data-theme="light"] {
   // Status colors
-  --color-status-info: #a57ebf;
+  --color-status-info: #5f8afa;
   --color-status-info-light: #d6f5ff;
   --color-status-info-lighter: #f0fbff;
-  --color-status-success: #3dd598;
+  --color-status-success: #aad055;
   --color-status-success-light: #d6fff5;
   --color-status-success-lighter: #e6fff9;
-  --color-status-warning: #fad105;
+  --color-status-warning: #ffc860;
   --color-status-warning-light: #fffdb8;
   --color-status-warning-lighter: #fffeeb;
-  --color-status-critical: #bd2d00;
+  --color-status-critical: #db5555;
   --color-status-critical-light: #ffe2e0;
   --color-status-critical-lighter: #fff5f5;
   --color-status-unknown: #f4f6f8;
@@ -192,8 +192,8 @@ body[data-theme="light"] {
   --color-typography-subtitle: var(--color-dark-7);
   --color-typography-button-label: var(--color-dark-10);
   --color-typography-mini-button-label: var(--color-dark-10);
-  --color-typography-description: var(--color-dark-5);
-  --color-typography-mini-description: var(--color-dark-4);
+  --color-typography-description: var(--color-dark-6);
+  --color-typography-mini-description: var(--color-dark-5);
   --color-typography-link: var(--color-primary);
 
   // Tab
@@ -202,10 +202,10 @@ body[data-theme="light"] {
   --color-tab-item-active: var(--color-dark-10);
 
   // Data Visualization colors
-  --color-value-increase: #00d3a1;
-  --color-value-increase-bright: #00bb8e;
-  --color-value-decrease: #ff7c35;
-  --color-value-decrease-bright: #e76823;
+  --color-value-increase: #6b6ef9;
+  --color-value-increase-bright: #6b6ef9;
+  --color-value-decrease: #e3935b;
+  --color-value-decrease-bright: #e3935b;
 
   // Forms
   --color-input-border: var(--color-dark-10);
@@ -213,8 +213,9 @@ body[data-theme="light"] {
 
 hr {
   height: 1px;
-  background-color: var(--color-dark-7);
+  margin-bottom: $space-default;
   border: none;
+  background-color: var(--color-dark-2);
 }
 
 code {
@@ -222,20 +223,21 @@ code {
 }
 
 // Typeform EMBED
+
 .tf-v1-sidetab-button {
-  width: 160px !important;
-  height: 38px !important;
   @media (min-width: $mq-medium) {
     width: 200px !important;
     height: 48px !important;
   }
+  width: 160px !important;
+  height: 38px !important;
 }
 
 .tf-v1-sidetab-button-text {
-  font-size: 15px !important;
   @media (min-width: $mq-medium) {
     font-size: 18px !important;
   }
+  font-size: 15px !important;
 }
 
 .tf-v1-sidetab-button-icon[data-testid="default-icon"] {

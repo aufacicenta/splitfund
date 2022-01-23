@@ -120,7 +120,6 @@
     @include font-properties($typography-link);
     @include normalizeTypography;
     font-size: inherit;
-    text-decoration: none;
     color: var(--color-typography-link);
 
     &:hover {
