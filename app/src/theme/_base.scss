@@ -70,11 +70,11 @@ $sidebar-width: 320px;
   display: flex;
 }
 
-@mixin withNavbar {
-  padding-top: $navbar-height-mobile;
+@mixin withNavbar($divisor: 1) {
+  padding-top: $navbar-height-mobile / $divisor;
 
   @include atLargeTablet {
-    padding-top: $navbar-height;
+    padding-top: $navbar-height / $divisor;
   }
 }
 

@@ -47,8 +47,14 @@ const Headline6: React.FC<TypographyProps> = ({ children, className }) => (
   <h6 className={clsx(styles.typography__headline6, className)}>{children}</h6>
 );
 
-const Text: React.FC<TypographyProps> = ({ children, className, inline, ...props }) => (
-  <p className={clsx(styles.typography__text, className, { [styles.typography__inline]: inline })} {...props}>
+const Text: React.FC<TypographyProps> = ({ children, className, inline, flat, ...props }) => (
+  <p
+    className={clsx(styles.typography__text, className, {
+      [styles.typography__inline]: inline,
+      [styles.typography__flat]: flat,
+    })}
+    {...props}
+  >
     {children}
   </p>
 );
@@ -57,8 +63,8 @@ const TextLead: React.FC<TypographyProps> = ({ children, className }) => (
   <p className={clsx(styles["typography__text-lead"], className)}>{children}</p>
 );
 
-const TextBold: React.FC<TypographyProps> = ({ children, className }) => (
-  <p className={clsx(styles["typography__text-bold"], className)}>{children}</p>
+const TextBold: React.FC<TypographyProps> = ({ children, className, flat }) => (
+  <p className={clsx(styles["typography__text-bold"], className, { [styles.typography__flat]: flat })}>{children}</p>
 );
 
 const Subtitle: React.FC<TypographyProps> = ({ children, className }) => (
@@ -79,8 +85,10 @@ const Description: React.FC<TypographyProps> = ({ children, className, inline, .
   </p>
 );
 
-const MiniDescription: React.FC<TypographyProps> = ({ children, className }) => (
-  <p className={clsx(styles["typography__mini-description"], className)}>{children}</p>
+const MiniDescription: React.FC<TypographyProps> = ({ children, className, flat }) => (
+  <p className={clsx(styles["typography__mini-description"], className, { [styles.typography__flat]: flat })}>
+    {children}
+  </p>
 );
 
 const Link: React.FC<TypographyProps & LinkProps> = ({ children, className, href, ...props }) => (

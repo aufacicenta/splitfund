@@ -30,16 +30,22 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) =
               <Grid.Row>
                 <Grid.Col lg={8}>
                   <div className={styles["property-details__content"]}>
-                    <Typography.Headline1>Property Name</Typography.Headline1>
                     <div className={clsx(styles["property-details__media"])}>
-                      <div className={clsx(styles["property-details__media--single-image"])}>
-                        <img
-                          src="https://i.pinimg.com/564x/fc/62/18/fc62180f74d38deb00a4f63a88eae76a.jpg"
-                          alt="property"
-                        />
-                      </div>
+                      <Card shadow>
+                        <Card.Content>
+                          <div className={clsx(styles["property-details__media--featured-image"])}>
+                            <img
+                              src="https://bafybeiabp3jyc6pw5ynlsijphijkr2urbihr4errktlwybvco3xewarkfy.ipfs.infura-ipfs.io/avi-waxman-f9qZuKoZYoY-unsplash.jpeg"
+                              alt="property"
+                            />
+                          </div>
+                        </Card.Content>
+                      </Card>
                     </div>
                     <div className={clsx(styles["property-details__details"])}>
+                      <section>
+                        <Typography.Headline1>Property Name</Typography.Headline1>
+                      </section>
                       <section>
                         <Typography.Headline3>Description</Typography.Headline3>
                         <Typography.Text>
@@ -137,31 +143,78 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) =
                 </Grid.Col>
                 <Grid.Col lg={4}>
                   <div className={clsx(styles["property-details__sidebar"])}>
-                    <div>
-                      <Typography.Headline5 className={styles["property-details__sidebar--heading"]}>
-                        Identified by
-                      </Typography.Headline5>
-                      <div>
-                        <Card className={styles["property-details__ownership--card"]}>
-                          <Card.Content>
-                            <Typography.Description>Token Metadata</Typography.Description>
-                            <Typography.Link href="#">metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s</Typography.Link>
-                          </Card.Content>
-                        </Card>
-                        <Card className={styles["property-details__ownership--card"]}>
-                          <Card.Content>
-                            <Typography.Description>SPL Token</Typography.Description>
-                            <Typography.Link href="#">metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s</Typography.Link>
-                          </Card.Content>
-                        </Card>
-                        <Card className={styles["property-details__ownership--card"]}>
-                          <Card.Content>
-                            <Typography.Description>Created By</Typography.Description>
-                            <Typography.Link href="#">metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s</Typography.Link>
-                          </Card.Content>
-                        </Card>
-                      </div>
-                    </div>
+                    <Card shadow>
+                      <Card.Content>
+                        <Typography.Headline2 className={styles["property-details__sidebar--heading2"]}>
+                          Investment Details
+                        </Typography.Headline2>
+                        <Grid.Row align="center">
+                          <Grid.Col lg={3}>
+                            <CircularProgress size={70} strokeWidth={5} percentage={80} />
+                          </Grid.Col>
+                          <Grid.Col>
+                            <Typography.Description>Sold</Typography.Description>
+                            <Typography.Text flat>345.02 NEAR</Typography.Text>
+                            <Typography.MiniDescription>
+                              80% of property price - <Typography.Anchor href="#">1 NEAR = 11.99 USD</Typography.Anchor>
+                            </Typography.MiniDescription>
+                          </Grid.Col>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Grid.Col lg={7}>
+                            <Typography.TextBold flat>No. of NEAR wallets</Typography.TextBold>
+                            <Typography.MiniDescription>See current owners</Typography.MiniDescription>
+                          </Grid.Col>
+                          <Grid.Col>
+                            <Typography.Text>123</Typography.Text>
+                          </Grid.Col>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Grid.Col lg={7}>
+                            <Typography.TextBold flat>Total NEAR funded</Typography.TextBold>
+                            <Typography.MiniDescription>80% of property price</Typography.MiniDescription>
+                          </Grid.Col>
+                          <Grid.Col>
+                            <Typography.Text>123</Typography.Text>
+                          </Grid.Col>
+                        </Grid.Row>
+                      </Card.Content>
+                      <Card.Actions>
+                        <Button>Invest Now</Button>
+                        <Typography.Description>
+                          Offer expires in 15 days:
+                          <br />
+                          Sun, Feb 26, 2022 00:00:00 GMT-0
+                        </Typography.Description>
+                      </Card.Actions>
+                    </Card>
+                    <Card shadow>
+                      <Card.Content>
+                        <Typography.Headline2 className={styles["property-details__sidebar--heading2"]}>
+                          Contract Details
+                        </Typography.Headline2>
+                        <Grid.Row>
+                          <Grid.Col lg={7}>
+                            <Typography.TextBold flat>Escrow Contract</Typography.TextBold>
+                            <Typography.MiniDescription>
+                              Your money is secured by NEAR Protocol
+                            </Typography.MiniDescription>
+                          </Grid.Col>
+                          <Grid.Col>
+                            <Typography.Text>ce_gt_123.escrowfactory.near</Typography.Text>
+                          </Grid.Col>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Grid.Col lg={7}>
+                            <Typography.TextBold flat>Total NEAR funded</Typography.TextBold>
+                            <Typography.MiniDescription>80% of property price</Typography.MiniDescription>
+                          </Grid.Col>
+                          <Grid.Col>
+                            <Typography.Text>123</Typography.Text>
+                          </Grid.Col>
+                        </Grid.Row>
+                      </Card.Content>
+                    </Card>
                     <div>
                       <Grid.Row>
                         <Grid.Col>

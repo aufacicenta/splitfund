@@ -13,11 +13,12 @@ export type Styles = {
   "property-details__location--overlay-text": string;
   "property-details__main": string;
   "property-details__media": string;
-  "property-details__media--single-image": string;
+  "property-details__media--featured-image": string;
   "property-details__ownership--card": string;
   "property-details__register-interest-modal--header": string;
   "property-details__sidebar": string;
   "property-details__sidebar--heading": string;
+  "property-details__sidebar--heading2": string;
   "z-depth-0": string;
   "z-depth-1": string;
   "z-depth-1-half": string;
