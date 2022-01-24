@@ -18,6 +18,12 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) =
   const [isRegisterInterestModalOpen, setIsRegisterInterestModalOpen] = useState(false);
   const [isBuyOwnershipInfoModalOpen, setIsBuyOwnershipInfoModalOpen] = useState(false);
 
+  /**
+   * @TODO parse http://localhost:3001/p/example-property-slug_gt?transactionHashes=Hn8MmpofgPfoP1ibDeX3qEPhmoVwjwrT1mwpVmHrxQbc
+   * get transactionHashes from URL query and display a modal for transaction info
+   * create a TransactionParser component?
+   */
+
   return (
     <>
       <WalletSelectorNavbar>

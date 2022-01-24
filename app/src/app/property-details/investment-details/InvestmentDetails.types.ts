@@ -5,3 +5,7 @@ export type InvestmentDetailsProps = {
   className?: string;
   contractAddress: string;
 };
+
+export type OnSubmitDeposit = {
+  amount: string;
+};

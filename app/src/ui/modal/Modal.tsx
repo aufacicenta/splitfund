@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React, { KeyboardEvent, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
 import { IconButton } from "../iconButton/IconButton";
@@ -109,7 +110,7 @@ export const Modal = ({
     </CSSTransition>
   );
 
-  return modalElement;
+  return createPortal(modalElement, document.querySelector("#modal-root")!);
 };
 
 Modal.Header = ({ className, ...props }: ModalItemProps) => (

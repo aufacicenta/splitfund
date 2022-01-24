@@ -6,6 +6,7 @@ export type Styles = {
   "investment-details__price-description": string;
   "investment-details__price-heading": string;
   "investment-details__price-heading-text": string;
+  "investment-details__register-interest-modal--header": string;
   "investment-details__sold": string;
   "investment-details__sold-description": string;
   "z-depth-0": string;
