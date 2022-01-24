@@ -143,7 +143,7 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) =
                 </Grid.Col>
                 <Grid.Col lg={4}>
                   <div className={clsx(styles["property-details__sidebar"])}>
-                    <InvestmentDetails />
+                    <InvestmentDetails contractAddress="ce-example-property-slug_gt.fac3.escrowfactory.testnet" />
                   </div>
                 </Grid.Col>
               </Grid.Row>

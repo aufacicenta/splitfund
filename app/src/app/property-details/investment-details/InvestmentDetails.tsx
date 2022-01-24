@@ -13,9 +13,20 @@ import formatAccountBalance from "providers/near/formatAccountBalance";
 import styles from "./InvestmentDetails.module.scss";
 import { InvestmentDetailsProps } from "./InvestmentDetails.types";
 
-export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({
-  contractAddress = "ce-example-property-slug_gt.fac3.escrowfactory.testnet",
-}) => {
+const VIEW_METHODS = [
+  "deposits_of",
+  "get_deposits",
+  "get_total_funds",
+  "get_expiration_date",
+  "get_min_funding_amount",
+  "get_recipient_account_id",
+  "is_deposit_allowed",
+  "is_withdrawal_allowed",
+];
+
+const CHANGE_METHODS = ["deposit", "withdraw", "delegate_funds"];
+
+export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAddress }) => {
   const [values, setValues] = useState<{
     totalFunds?: string;
     expirationDate?: JSX.Element;
@@ -28,7 +39,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({
   }>({
     totalFunds: formatAccountBalance("0"),
     expirationDate: undefined,
-    minFundingAmount: undefined,
+    minFundingAmount: formatAccountBalance("0"),
     recipientAccountId: undefined,
     isDepositAllowed: false,
     isWithdrawalAllowed: false,
@@ -40,17 +51,8 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({
 
   // @TODO pass the current contract address by pre-rendered props
   const contract = useNearContract(wallet, contractAddress, {
-    viewMethods: [
-      "deposits_of",
-      "get_deposits",
-      "get_total_funds",
-      "get_expiration_date",
-      "get_min_funding_amount",
-      "get_recipient_account_id",
-      "is_deposit_allowed",
-      "is_withdrawal_allowed",
-    ],
-    changeMethods: ["deposit", "withdraw", "delegate_funds"],
+    viewMethods: VIEW_METHODS,
+    changeMethods: CHANGE_METHODS,
   });
 
   useEffect(() => {
@@ -84,6 +86,13 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({
 
     getConstantValues();
   }, [contract]);
+
+  const onClickAuthorizeWallet = () => {
+    wallet.onClickConnect({
+      contractId: contractAddress,
+      methodNames: [...VIEW_METHODS, ...CHANGE_METHODS],
+    });
+  };
 
   return (
     <Card shadow>
@@ -139,8 +148,17 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({
         </Grid.Row>
       </Card.Content>
       <Card.Actions>
-        <Button>Invest Now</Button>
-        {values.expirationDate}
+        {!wallet.isConnected ? (
+          <>
+            <Button onClick={onClickAuthorizeWallet}>Authorize Wallet</Button>
+            <Typography.Description>to load the contract details.</Typography.Description>
+          </>
+        ) : (
+          <>
+            <Button>Invest Now</Button>
+            {values.expirationDate}
+          </>
+        )}
       </Card.Actions>
     </Card>
   );

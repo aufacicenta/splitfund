@@ -6,7 +6,7 @@ import { WalletSelectorChain, WalletSelectorContextType } from "../wallet-select
 import { useWalletState } from "hooks/useWalletState/useWalletState";
 import nearUtils from "providers/near";
 
-import { NearWalletContextControllerProps } from "./NearWalletContext.types";
+import { NEARSignInOptions, NearWalletContextControllerProps } from "./NearWalletContext.types";
 
 export const NearWalletContextController = ({ children }: NearWalletContextControllerProps) => {
   const walletState = useWalletState();
@@ -51,7 +51,7 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
     setChain(c);
   };
 
-  const onClickConnect = () => {
+  const onClickConnect = (signInOptions?: NEARSignInOptions) => {
     const wallet = walletConnection?.wallet!;
 
     if (wallet.isSignedIn()) {
@@ -60,7 +60,7 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
       setBalance("0");
       setAddress(undefined);
     } else {
-      wallet.requestSignIn();
+      wallet.requestSignIn(signInOptions);
     }
   };
 

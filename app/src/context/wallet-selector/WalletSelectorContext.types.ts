@@ -1,6 +1,8 @@
 import { WalletConnection as NEARWalletConnection } from "near-api-js";
 import { ReactNode } from "react";
 
+import { NEARSignInOptions } from "context/near-wallet/NearWalletContext.types";
+
 export type WalletSelectorContextControllerProps = {
   children: ReactNode;
 } & WalletSelectorContextType;
@@ -16,7 +18,7 @@ export type WalletSelectorContextType = {
   chain?: WalletSelectorChain;
   isConnected: boolean;
   onSetChain: (chain: WalletSelectorChain) => void;
-  onClickConnect: () => void;
+  onClickConnect: (args?: NEARSignInOptions) => void;
   context: {
     connection: NEARWalletConnection | undefined;
   };
