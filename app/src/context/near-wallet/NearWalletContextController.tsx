@@ -5,8 +5,11 @@ import { WalletSelectorContextController } from "../wallet-selector/WalletSelect
 import { WalletSelectorChain, WalletSelectorContextType } from "../wallet-selector/WalletSelectorContext.types";
 import { useWalletState } from "hooks/useWalletState/useWalletState";
 import nearUtils from "providers/near";
+import getConfig from "providers/near/getConfig";
 
 import { NEARSignInOptions, NearWalletContextControllerProps } from "./NearWalletContext.types";
+
+const DEFAULT_NETWORK_ENV = "testnet";
 
 export const NearWalletContextController = ({ children }: NearWalletContextControllerProps) => {
   const walletState = useWalletState();
@@ -24,8 +27,9 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
       return;
     }
 
-    walletState.network.set("testnet");
+    walletState.network.set(DEFAULT_NETWORK_ENV);
     walletState.chain.set(WalletSelectorChain.near);
+    walletState.explorer.set(getConfig(DEFAULT_NETWORK_ENV).explorerUrl);
 
     (async () => {
       const connection = await nearUtils.initWalletConnection(walletState.network.get());
@@ -43,7 +47,14 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
         walletState.balance.set(nearUtils.formatAccountBalance(accountBalance.available));
       }
     })();
-  }, [walletState.address, walletState.balance, walletState.chain, walletState.isConnected, walletState.network]);
+  }, [
+    walletState.address,
+    walletState.balance,
+    walletState.chain,
+    walletState.explorer,
+    walletState.isConnected,
+    walletState.network,
+  ]);
 
   const onSetChain = (c: WalletSelectorChain) => {
     walletState.chain.set(c);
@@ -66,6 +77,7 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
     onClickConnect,
     isConnected: walletState.isConnected.get(),
     network: walletState.network.get(),
+    explorer: walletState.explorer.get(),
     chain: walletState.chain.get(),
     address: walletState.address.get(),
     balance: walletState.balance.get(),

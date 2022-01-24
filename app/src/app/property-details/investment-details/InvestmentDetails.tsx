@@ -140,7 +140,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
           </Grid.Col>
           <Grid.Col>
             <Typography.Text>
-              <Typography.Anchor href="#" truncate>
+              <Typography.Anchor href={`${wallet.explorer}/accounts/${contractAddress}`} truncate target="_blank">
                 {contractAddress}
               </Typography.Anchor>
             </Typography.Text>
