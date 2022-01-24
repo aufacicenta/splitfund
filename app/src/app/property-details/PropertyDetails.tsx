@@ -8,11 +8,11 @@ import { Typography } from "ui/typography/Typography";
 import { Button } from "ui/button/Button";
 import { Grid } from "ui/grid/Grid";
 import { Card } from "ui/card/Card";
-import { CircularProgress } from "ui/circular-progress/CircularProgress";
 import { Modal } from "ui/modal/Modal";
 
 import styles from "./PropertyDetails.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails.types";
+import { InvestmentDetails } from "./investment-details/InvestmentDetails";
 
 export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) => {
   const [isRegisterInterestModalOpen, setIsRegisterInterestModalOpen] = useState(false);
@@ -143,70 +143,7 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) =
                 </Grid.Col>
                 <Grid.Col lg={4}>
                   <div className={clsx(styles["property-details__sidebar"])}>
-                    <Card shadow>
-                      <Card.Content>
-                        <Typography.Headline2 className={styles["property-details__sidebar--heading2"]}>
-                          Investment Details
-                        </Typography.Headline2>
-                        <div className={styles["property-details__sidebar--sold"]}>
-                          <div className={styles["property-details__sidebar--circular-progress"]}>
-                            <CircularProgress size={70} strokeWidth={5} percentage={80} />
-                          </div>
-                          <div className={styles["property-details__sidebar--sold-description"]}>
-                            <Typography.Description>Funded</Typography.Description>
-                            <Typography.Text flat>345.02 Ⓝ</Typography.Text>
-                            <Typography.MiniDescription>
-                              80% of property price · <Typography.Anchor href="#">1 Ⓝ = 11.99 USD</Typography.Anchor>
-                            </Typography.MiniDescription>
-                          </div>
-                        </div>
-                        <div className={styles["property-details__sidebar--price"]}>
-                          <div className={styles["property-details__sidebar--price-heading"]}>
-                            <Typography.TextBold
-                              className={styles["property-details__sidebar--price-heading-text"]}
-                              flat
-                            >
-                              Price
-                            </Typography.TextBold>
-                          </div>
-                          <div className={styles["property-details__sidebar--price-description"]}>
-                            <Typography.TextBold flat>30,456.00 Ⓝ</Typography.TextBold>
-                            <Typography.MiniDescription>150,000.00 USD</Typography.MiniDescription>
-                          </div>
-                        </div>
-                        <hr />
-                        <Grid.Row>
-                          <Grid.Col lg={6}>
-                            <Typography.TextBold flat># of NEAR wallets</Typography.TextBold>
-                            <Typography.MiniDescription>See current investors</Typography.MiniDescription>
-                          </Grid.Col>
-                          <Grid.Col>
-                            <Typography.Text>123</Typography.Text>
-                          </Grid.Col>
-                        </Grid.Row>
-                        <Grid.Row nowrap>
-                          <Grid.Col lg={6}>
-                            <Typography.TextBold flat>Escrow Contract</Typography.TextBold>
-                            <Typography.MiniDescription>
-                              Your money is secured by the NEAR Protocol
-                            </Typography.MiniDescription>
-                          </Grid.Col>
-                          <Grid.Col>
-                            <Typography.Text>
-                              <Typography.Anchor href="#">ce_gt_123.escrow...</Typography.Anchor>
-                            </Typography.Text>
-                          </Grid.Col>
-                        </Grid.Row>
-                      </Card.Content>
-                      <Card.Actions>
-                        <Button>Invest Now</Button>
-                        <Typography.Description>
-                          Offer expires in 15 days:
-                          <br />
-                          Sun, Feb 26, 2022 00:00:00 GMT-0
-                        </Typography.Description>
-                      </Card.Actions>
-                    </Card>
+                    <InvestmentDetails />
                   </div>
                 </Grid.Col>
               </Grid.Row>

@@ -2,7 +2,7 @@ import * as nearAPI from "near-api-js";
 import React, { useEffect, useState } from "react";
 
 import { WalletSelectorContextController } from "../wallet-selector/WalletSelectorContextController";
-import { WalletSelectorChain } from "../wallet-selector/WalletSelectorContext.types";
+import { WalletSelectorChain, WalletSelectorContextType } from "../wallet-selector/WalletSelectorContext.types";
 import { useWalletState } from "hooks/useWalletState/useWalletState";
 import nearUtils from "providers/near";
 
@@ -64,7 +64,16 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
     }
   };
 
-  const props = { onClickConnect, isConnected, network, chain, address, balance, onSetChain };
+  const props: WalletSelectorContextType = {
+    onClickConnect,
+    isConnected,
+    network,
+    chain,
+    address,
+    balance,
+    onSetChain,
+    context: { connection: walletConnection?.wallet },
+  };
 
   return <WalletSelectorContextController {...props}>{children}</WalletSelectorContextController>;
 };

@@ -11,6 +11,14 @@
     margin-bottom: 0 !important;
   }
 
+  &__truncate {
+    @extend .typography__inline;
+    width: 140px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   &__headline1 {
     @include font-properties($typography-headline-1);
     @include normalizeTypography;

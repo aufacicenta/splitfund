@@ -1,3 +1,4 @@
+import { WalletConnection as NEARWalletConnection } from "near-api-js";
 import { ReactNode } from "react";
 
 export type WalletSelectorContextControllerProps = {
@@ -16,4 +17,7 @@ export type WalletSelectorContextType = {
   isConnected: boolean;
   onSetChain: (chain: WalletSelectorChain) => void;
   onClickConnect: () => void;
+  context: {
+    connection: NEARWalletConnection | undefined;
+  };
 };

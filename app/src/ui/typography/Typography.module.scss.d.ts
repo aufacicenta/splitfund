@@ -17,6 +17,7 @@ export type Styles = {
   typography__text: string;
   "typography__text-bold": string;
   "typography__text-lead": string;
+  typography__truncate: string;
   "z-depth-0": string;
   "z-depth-1": string;
   "z-depth-1-half": string;
