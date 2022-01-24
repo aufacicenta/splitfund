@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { initConditionalEscrowContract } from "providers/near/contract";
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
 
-export const useNearContract = (
+export function useNearContract<M>(
   wallet: WalletSelectorContextType,
   contractAddress: string,
   contractMethods: ContractMethods,
-) => {
-  const [contract, setContract] = useState<Contract | undefined>(undefined);
+) {
+  const [contract, setContract] = useState<(Contract & M) | undefined>(undefined);
 
   useEffect(() => {
     if (!wallet.isConnected || !!contract) {
@@ -22,4 +22,4 @@ export const useNearContract = (
   }, [contract, contractAddress, contractMethods, wallet.context.connection, wallet.isConnected]);
 
   return contract;
-};
+}

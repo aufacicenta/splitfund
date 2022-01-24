@@ -4,7 +4,6 @@ import { WalletSelector } from "ui/wallet-selector/WalletSelector";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 import { MainPanel } from "ui/mainpanel/MainPanel";
 import { Typography } from "ui/typography/Typography";
-import { Button } from "ui/button/Button";
 import { Grid } from "ui/grid/Grid";
 import { Card } from "ui/card/Card";
 
@@ -56,90 +55,6 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className }) =
                         Enim ad nobis officia ipsa. Exercitationem quos velit deserunt, perferendis perspiciatis
                         doloribus quam. Repellat fugit dignissimos illum!
                       </Typography.Text>
-                    </section>
-                    <section>
-                      <Typography.Headline3>Location</Typography.Headline3>
-                      <div className={styles["property-details__location"]}>
-                        <div className={styles["property-details__attachments--overlay"]}>
-                          <div>
-                            <Typography.Text className={styles["property-details__attachments--overlay-text"]}>
-                              Sensitive information is encrypted for security.
-                            </Typography.Text>
-                            <Button size="xs" variant="outlined" onClick={() => setIsRegisterInterestModalOpen(true)}>
-                              Register Interest
-                            </Button>
-                          </div>
-                        </div>
-                        <div
-                          className={styles["property-details__location--map"]}
-                          style={{
-                            backgroundImage: `url(https://bafybeiguy4ekrxh6aohstla5syhk557jzkvvbxib6p6ii4tllqw4llc47y.ipfs.infura-ipfs.io/Screen%20Shot%202021-09-15%20at%2014.13.35.png)`,
-                          }}
-                        />
-                        <Typography.Subtitle>Antigua, Guatemala</Typography.Subtitle>
-                        <Typography.Text>Villas de San Francisco, 33-D</Typography.Text>
-                      </div>
-                    </section>
-                    <section>
-                      <Typography.Headline3>Attachments</Typography.Headline3>
-                      <div className={styles["property-details__attachments"]}>
-                        <div className={styles["property-details__attachments--overlay"]}>
-                          <div>
-                            <Typography.Text className={styles["property-details__attachments--overlay-text"]}>
-                              Sensitive information is encrypted for security.
-                            </Typography.Text>
-                            <Button size="xs" variant="outlined" onClick={() => setIsRegisterInterestModalOpen(true)}>
-                              Register Interest
-                            </Button>
-                          </div>
-                        </div>
-                        <Grid.Row>
-                          <Grid.Col lg={6}>
-                            <Card
-                              className={styles["property-details__attachments--card"]}
-                              backgroundImageUrl="https://img.flaticon.com/icons/png/512/337/337946.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
-                              onClick={() => null}
-                            >
-                              <Card.Content className={styles["property-details__attachments--content"]}>
-                                <Typography.Text>Real Estate Contract</Typography.Text>
-                              </Card.Content>
-                            </Card>
-                          </Grid.Col>
-                          <Grid.Col lg={6}>
-                            <Card
-                              className={styles["property-details__attachments--card"]}
-                              backgroundImageUrl="https://img.flaticon.com/icons/png/512/337/337946.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
-                              onClick={() => null}
-                            >
-                              <Card.Content className={styles["property-details__attachments--content"]}>
-                                <Typography.Text>Bank Statement</Typography.Text>
-                              </Card.Content>
-                            </Card>
-                          </Grid.Col>
-                          <Grid.Col lg={6}>
-                            <Card
-                              className={styles["property-details__attachments--card"]}
-                              backgroundImageUrl="https://img.flaticon.com/icons/png/512/337/337946.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
-                              onClick={() => null}
-                            >
-                              <Card.Content className={styles["property-details__attachments--content"]}>
-                                <Typography.Text>Energy Bill</Typography.Text>
-                              </Card.Content>
-                            </Card>
-                          </Grid.Col>
-                          <Grid.Col lg={6}>
-                            <Card
-                              className={styles["property-details__attachments--card"]}
-                              backgroundImageUrl="https://img.flaticon.com/icons/png/512/337/337946.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
-                              onClick={() => null}
-                            >
-                              <Card.Content className={styles["property-details__attachments--content"]}>
-                                <Typography.Text>Rental Contract</Typography.Text>
-                              </Card.Content>
-                            </Card>
-                          </Grid.Col>
-                        </Grid.Row>
-                      </div>
                     </section>
                   </div>
                 </div>

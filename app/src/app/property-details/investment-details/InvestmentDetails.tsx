@@ -47,7 +47,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
     recipientAccountId?: string;
     isDepositAllowed?: boolean;
     isWithdrawalAllowed?: boolean;
-    deposits?: string[];
+    deposits?: string[][];
     depositsOf?: string;
   }>({
     totalFunds: formatAccountBalance("0"),
@@ -62,8 +62,14 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
 
   const wallet = useWalletSelectorContext();
 
-  // @TODO pass the current contract address by pre-rendered props
-  const contract = useNearContract(wallet, contractAddress, {
+  const contract = useNearContract<{
+    get_total_funds: () => Promise<number>;
+    get_min_funding_amount: () => Promise<number>;
+    get_deposits: () => Promise<string[][]>;
+    get_expiration_date: () => Promise<number>;
+    deposits_of: ({ payee }: { payee: string }) => Promise<number>;
+    deposit: (args: Record<string, string>, gas?: number, amount?: string | null) => Promise<void>;
+  }>(wallet, contractAddress, {
     viewMethods: VIEW_METHODS,
     changeMethods: CHANGE_METHODS,
   });
@@ -78,7 +84,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       const getMinFundingAmountResponse = await contract!.get_min_funding_amount();
       const deposits = await contract!.get_deposits();
       const expirationDate = await contract!.get_expiration_date();
-      const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address });
+      const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address! });
 
       setValues({
         totalFunds: formatAccountBalance(BigInt(getTotalFundsResponse).toString()),
