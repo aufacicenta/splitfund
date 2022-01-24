@@ -14,6 +14,7 @@ export enum WalletSelectorChain {
 export type WalletSelectorContextType = {
   address?: string | null;
   network?: string;
+  explorer?: string;
   balance: string;
   chain?: WalletSelectorChain;
   isConnected: boolean;
