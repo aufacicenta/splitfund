@@ -14,9 +14,15 @@ import { ContractDepositFormProps } from "../contract-deposit-form/ContractDepos
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 import date from "providers/date";
+import { useToastContext } from "hooks/useToastContext/useToastContext";
 
 import styles from "./InvestmentDetails.module.scss";
-import { ConditionalEscrowValues, InvestmentDetailsProps, OnSubmitDeposit } from "./InvestmentDetails.types";
+import {
+  ConditionalEscrowMethods,
+  ConditionalEscrowValues,
+  InvestmentDetailsProps,
+  OnSubmitDeposit,
+} from "./InvestmentDetails.types";
 
 const VIEW_METHODS = [
   "deposits_of",
@@ -39,36 +45,30 @@ const ContractDepositForm = dynamic<ContractDepositFormProps>(
 const getDefaultContractValues = (): ConditionalEscrowValues => ({
   totalFunds: near.formatAccountBalance("0"),
   minFundingAmount: near.formatAccountBalance("0"),
-  depositsOf: near.formatAccountBalance("0"),
+  depositsOf: "0",
   depositsOfPercentage: 0,
   currentCoinPrice: 0,
   priceEquivalence: 0,
   totalFundedPercentage: 0,
   expirationDate: date.toNanoseconds(date.now().toDate().getTime()),
-  recipientAccountId: undefined,
+  recipientAccountId: "",
   isDepositAllowed: false,
   isWithdrawalAllowed: false,
   deposits: [],
 });
 
 export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAddress }) => {
-  // @TODO display an error toast
-  const [, setError] = useState<string | undefined>(undefined);
   const [isBuyOwnershipInfoModalOpen, setIsBuyOwnershipInfoModalOpen] = useState(false);
   const [isCurrentInvestorsModalOpen, setIsCurrentInvestorsModalOpen] = useState(false);
-
+  const [isWithdrawalConditionsModalOpen, setIsWithdrawalConditionsModalOpen] = useState(false);
+  const [isWithdrawalLoading, setIsWithdrawalLoading] = useState(false);
   const [values, setValues] = useState<ConditionalEscrowValues>(getDefaultContractValues());
+
+  const toast = useToastContext();
 
   const wallet = useWalletSelectorContext();
 
-  const contract = useNearContract<{
-    get_total_funds: () => Promise<number>;
-    get_min_funding_amount: () => Promise<number>;
-    get_deposits: () => Promise<string[][]>;
-    get_expiration_date: () => Promise<number>;
-    deposits_of: ({ payee }: { payee: string }) => Promise<number>;
-    deposit: (args: Record<string, string>, gas?: number, amount?: string | null) => Promise<void>;
-  }>(wallet, contractAddress, {
+  const contract = useNearContract<ConditionalEscrowMethods>(wallet, contractAddress, {
     viewMethods: VIEW_METHODS,
     changeMethods: CHANGE_METHODS,
   });
@@ -85,6 +85,9 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       const getMinFundingAmountResponse = await contract!.get_min_funding_amount();
       const totalFundedPercentage = (BigInt(getTotalFundsResponse) * BigInt(100)) / BigInt(getMinFundingAmountResponse);
 
+      const isDepositAllowed = await contract!.is_deposit_allowed();
+      const isWithdrawalAllowed = await contract!.is_withdrawal_allowed();
+
       const deposits = await contract!.get_deposits();
       const expirationDate = await contract!.get_expiration_date();
       const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address ?? wallet.context.guest.address });
@@ -95,21 +98,26 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
         currentCoinPrice *
         Number(near.formatAccountBalanceFlat(BigInt(getMinFundingAmountResponse).toString()).replace(",", ""));
 
+      const recipientAccountId = await contract!.get_recipient_account_id();
+
       setValues({
         totalFunds: near.formatAccountBalance(BigInt(getTotalFundsResponse).toString()),
         minFundingAmount: near.formatAccountBalance(BigInt(getMinFundingAmountResponse).toString()),
-        depositsOf: near.formatAccountBalance(BigInt(depositsOfResponse).toString()),
+        depositsOf: BigInt(depositsOfResponse).toString(),
         totalFundedPercentage: Number(totalFundedPercentage),
         depositsOfPercentage: Number(depositsOfPercentage),
         currentCoinPrice,
         priceEquivalence,
         deposits,
         expirationDate,
+        isDepositAllowed,
+        isWithdrawalAllowed,
+        recipientAccountId,
       });
     };
 
     getConstantValues();
-  }, [contract, wallet.address, wallet.context.guest.address]);
+  }, [contract, wallet.address, wallet.context?.guest?.address]);
 
   const onClickAuthorizeWallet = () => {
     wallet.onClickConnect({
@@ -122,16 +130,97 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
     setIsBuyOwnershipInfoModalOpen(true);
   };
 
+  const onClickWithdraw = async () => {
+    if (!contract) {
+      toast.trigger({
+        variant: "error",
+        title: "No contract is loaded",
+        withTimeout: true,
+        children: <Typography.Text>Check your internet connection and try refreshing the page.</Typography.Text>,
+      });
+    }
+
+    try {
+      setIsWithdrawalLoading(true);
+      await contract!.withdraw();
+      setIsWithdrawalLoading(false);
+
+      // @TODO i18n
+      toast.trigger({
+        variant: "confirmation",
+        title: "Withdrawal successful",
+        withTimeout: true,
+        children: <Typography.Text>Your funds have been withdrawn to your wallet</Typography.Text>,
+      });
+    } catch {
+      // @TODO i18n
+      toast.trigger({
+        variant: "error",
+        title: "Withdrawal error",
+        withTimeout: false,
+        children: <Typography.Text>Your funds are safe, check your internet connection and try again.</Typography.Text>,
+      });
+    }
+  };
+
   const onSubmitDeposit = async ({ amount }: OnSubmitDeposit) => {
     if (!contract) {
-      setError("No contract loaded");
+      toast.trigger({
+        variant: "error",
+        title: "No contract is loaded",
+        withTimeout: true,
+        children: <Typography.Text>Check your internet connection and try refreshing the page.</Typography.Text>,
+      });
     }
 
     try {
       await contract!.deposit({}, undefined, near.parseNearAmount(amount));
     } catch {
-      setError("Error while calling 'deposit' method.");
+      // @TODO i18n
+      toast.trigger({
+        variant: "error",
+        title: "Deposit error",
+        withTimeout: false,
+        children: <Typography.Text>Your funds are safe, check your internet connection and try again.</Typography.Text>,
+      });
     }
+  };
+
+  const getActions = () => {
+    if (!wallet.isConnected) {
+      return (
+        <>
+          <Button onClick={onClickAuthorizeWallet}>Authorize Wallet</Button>
+          <Typography.Description>to load the contract details.</Typography.Description>
+        </>
+      );
+    }
+
+    if (values.isDepositAllowed && !values.isWithdrawalAllowed) {
+      return (
+        <>
+          <Button onClick={onClickInvestNow}>Invest Now</Button>
+          <Typography.Description>
+            Offer expires
+            <br />
+            {date.timeFromNow.calendar(date.fromNanoseconds(values.expirationDate!)).toLowerCase()}
+          </Typography.Description>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Button onClick={onClickWithdraw} isLoading={isWithdrawalLoading} disabled={values.depositsOf === "0"}>
+          Withdraw
+        </Button>
+        <Typography.Description>
+          Offer expired
+          <br />
+          {date.timeFromNow.calendar(date.fromNanoseconds(values.expirationDate!)).toLowerCase()}
+        </Typography.Description>
+      </>
+    );
   };
 
   return (
@@ -150,9 +239,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
               <Typography.Text flat>{values.totalFunds}</Typography.Text>
               <Typography.MiniDescription>
                 {`${values.totalFundedPercentage}% of property price`} ·{" "}
-                {`${date.timeFromNow
-                  .asDefault(date.fromNanoseconds(values.expirationDate!), true)
-                  .toLowerCase()} remaining`}
+                {`${date.timeFromNow.asDefault(date.fromNanoseconds(values.expirationDate!)).toLowerCase()}`}
               </Typography.MiniDescription>
             </div>
           </div>
@@ -188,10 +275,15 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
           <Grid.Row>
             <Grid.Col lg={6}>
               <Typography.TextBold flat>Your current deposit</Typography.TextBold>
-              <Typography.MiniDescription>See withdrawal conditions</Typography.MiniDescription>
+              <Typography.MiniDescription
+                onClick={() => setIsWithdrawalConditionsModalOpen(true)}
+                className={styles["investment-details__clickable"]}
+              >
+                See withdrawal conditions
+              </Typography.MiniDescription>
             </Grid.Col>
             <Grid.Col>
-              <Typography.Text flat>{values.depositsOf}</Typography.Text>
+              <Typography.Text flat>{near.formatAccountBalance(values.depositsOf)}</Typography.Text>
               <Typography.MiniDescription>{`${values.depositsOfPercentage}% of property price`}</Typography.MiniDescription>
             </Grid.Col>
           </Grid.Row>
@@ -218,23 +310,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
             </Grid.Col>
           </Grid.Row>
         </Card.Content>
-        <Card.Actions>
-          {!wallet.isConnected ? (
-            <>
-              <Button onClick={onClickAuthorizeWallet}>Authorize Wallet</Button>
-              <Typography.Description>to load the contract details.</Typography.Description>
-            </>
-          ) : (
-            <>
-              <Button onClick={onClickInvestNow}>Invest Now</Button>
-              <Typography.Description>
-                Offer expires
-                <br />
-                {date.timeFromNow.calendar(date.fromNanoseconds(values.expirationDate!)).toLowerCase()}
-              </Typography.Description>
-            </>
-          )}
-        </Card.Actions>
+        <Card.Actions>{getActions()}</Card.Actions>
       </Card>
 
       {isBuyOwnershipInfoModalOpen && (
@@ -249,11 +325,44 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
               {`Buying NEAR Real Estate NFT properties' ownership is anonymous and as simple as transfering any amount
                 of NEAR to the Property Escrow Contract.`}
             </Typography.Text>
-            <Typography.Headline5>Owner Entitlement Details</Typography.Headline5>
-            <Typography.Description>365 days of the year = 100% of the property value</Typography.Description>
-            <Typography.Headline5>Owner Obligations Details</Typography.Headline5>
-            <Typography.Headline5>Risks</Typography.Headline5>
-            <Typography.Headline5>FAQs</Typography.Headline5>
+            <Typography.Text>
+              Your funds stay securely on-hold and can be withdrawn only if the expiration date is reached and the price
+              has not been totally funded.
+            </Typography.Text>
+            <hr />
+            <Typography.Headline4>FAQs</Typography.Headline4>
+            <Typography.Headline5>What happens if the property is totally funded?</Typography.Headline5>
+            <Typography.Text>
+              The funds will be transfered to a DAO where you will be a member. Your voting power in the DAO will be
+              proportional to your investment.
+            </Typography.Text>
+            <Typography.Headline5>How does voting power is calculated?</Typography.Headline5>
+            <Typography.Text>
+              If the property is totally funded before the expiration date, an equivalent amount of NEP-141 tokens will
+              be minted and you will be transfered the amount proportional to your investment. These tokens represent
+              your voting power in the DAO and you can trade them whenever you like. Their value represents the property
+              value.
+            </Typography.Text>
+            <Typography.Headline5>Who is the real world owner of the property?</Typography.Headline5>
+            <Typography.Text>This is up to each DAO council to decide.</Typography.Text>
+            <Typography.Headline5>
+              If the funds are in NEAR Tokens, how is the property purchased with Fiat currency?
+            </Typography.Headline5>
+            <Typography.Text>
+              Each DAO council can decide how to exchange the NEAT token mutual funds to a currency that the property
+              seller expects.
+            </Typography.Text>
+            <Typography.Headline5>Is there a minimum deposit amount that I can invest?</Typography.Headline5>
+            <Typography.Text>
+              No, but keep in mind that the voting power you will have in the DAO council will be proportional to the
+              investment relative to the property price.
+            </Typography.Text>
+            <hr />
+            <Typography.Headline4>Owner Entitlement Details</Typography.Headline4>
+            <hr />
+            <Typography.Headline4>Owner Obligations Details</Typography.Headline4>
+            <hr />
+            <Typography.Headline4>Risks</Typography.Headline4>
           </Modal.Content>
           <Modal.Actions>
             <ContractDepositForm
@@ -288,6 +397,37 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
           </Modal.Content>
           <Modal.Actions>
             <Button onClick={() => setIsCurrentInvestorsModalOpen(false)}>Close</Button>
+          </Modal.Actions>
+        </Modal>
+      )}
+
+      {isWithdrawalConditionsModalOpen && (
+        <Modal isOpened onClose={() => null} aria-labelledby="Withdrawal Conditions Modal Window">
+          <Modal.Header>
+            <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
+              Withdrawal Conditions
+            </Typography.Headline3>
+          </Modal.Header>
+          <Modal.Content>
+            <Typography.Text>
+              The ability to withdraw your funds is coded into the NEAR Smart Contract that holds the funds temporarily.
+              This contract has been audited to ensure the security of your funds.
+            </Typography.Text>
+            <Typography.Text>
+              {`For this contract, you'll be able to withdraw your funds ${date.timeFromNow
+                .calendar(date.fromNanoseconds(values.expirationDate!))
+                .toLowerCase()} AND if the property price has not been totally funded.`}
+            </Typography.Text>
+            <Typography.Anchor href="#" target="_blank">
+              See contract code
+            </Typography.Anchor>
+            <br />
+            <Typography.Anchor href="#" target="_blank">
+              See in explorer
+            </Typography.Anchor>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button onClick={() => setIsWithdrawalConditionsModalOpen(false)}>Close</Button>
           </Modal.Actions>
         </Modal>
       )}
