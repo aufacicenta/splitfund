@@ -9,3 +9,17 @@ export type InvestmentDetailsProps = {
 export type OnSubmitDeposit = {
   amount: string;
 };
+
+export type ConditionalEscrowValues = {
+  totalFunds?: string;
+  minFundingAmount?: string;
+  totalFundedPercentage?: number;
+  currentCoinPrice?: number;
+  priceEquivalence?: number;
+  expirationDate?: JSX.Element;
+  recipientAccountId?: string;
+  isDepositAllowed?: boolean;
+  isWithdrawalAllowed?: boolean;
+  deposits?: string[][];
+  depositsOf?: string;
+};
