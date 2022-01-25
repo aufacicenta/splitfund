@@ -54,10 +54,10 @@
       color: var(--color-primary);
       background-color: transparent;
 
-      &:hover,
-      &:active,
-      &:focus {
+      &:hover {
+        color: var(--color-typography-text);
         background-color: transparent;
+        cursor: pointer;
       }
     }
 
