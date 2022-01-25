@@ -4,7 +4,7 @@
   "navbar.businessCampaigns.grid": "Lista",
   "navbar.businessCampaigns.table": "Tabla",
   "navbar.howItWorks": "Cómo Funciona",
-  "navbar.apply": "Accede a Capital",
+  "navbar.apply": "Publica tus propiedades",
   "navbar.logout": "Cerrar Sesión",
   "navbar.signIn": "Iniciar Sesión",
   "privacyNotice": "Aviso de Privacidad",
@@ -14,5 +14,6 @@
   "authContextController.success.signInConfirmation.title": "Revisa tu correo",
   "toast.cta.dismiss": "Entendido",
   "authContextController.error.signIn": "No pudimos enviar un correo de ingreso. Intenta de nuevo.",
-  "typeformEmbedForm.buttonLabel": "Accede a Capital"
+  "typeformEmbedForm.buttonLabel": "Publica tus propiedades",
+  "poweredBy": "Hecho con"
 }

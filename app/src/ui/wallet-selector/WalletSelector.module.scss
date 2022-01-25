@@ -1,4 +1,4 @@
-@import "../../theme/base";
+@import "src/theme/base";
 
 .wallet-selector {
   position: relative;
@@ -33,11 +33,15 @@
   }
 
   &__widget {
+    @include atLargeTablet {
+      top: $navbar-height;
+      width: 420px;
+    }
     position: absolute;
-    top: $navbar-height;
+    top: $navbar-height-mobile;
     right: 0;
     z-index: $z-index-navigation;
-    width: 420px;
+    width: calc(100vw - 32px);
     border: 2px solid var(--color-button-secondary);
     border-bottom-right-radius: $border-radius;
     border-bottom-left-radius: $border-radius;

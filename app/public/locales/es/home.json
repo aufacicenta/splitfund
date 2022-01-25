@@ -1,10 +1,9 @@
 {
-  "intro.h1.top": "Invierte en Negocios",
-  "intro.h1.main": "con Bitcoin",
+  "intro.h1.top": "Invierte en Bienes Raíces, desde $10.00 USD",
   "intro.asInvestor.title": "Como inversionista",
-  "intro.asInvestor.description": "Diversifica tu portafolio con ingresos pasivos<br /><strong>desde 1 SAT</strong>.",
-  "intro.asBusinessOwner.title": "Como empresarix",
-  "intro.asBusinessOwner.description": "Accede a capital de inversión global<br />y ejecuta tus ideas.",
-  "intro.bottomBanner.welcome": "Bienvenido a tu banco de inversión y desarrollo,<br />con Bitcoin.",
-  "intro.bottomBanner.cta": "Visita la Sala de Inversión"
+  "intro.asInvestor.description": "Diversifica tu portafolio con<br />ingresos pasivos sobre la renta.",
+  "intro.asBusinessOwner.title": "Como agente inmobiliario",
+  "intro.asBusinessOwner.description": "Accede al mercado global y<br />vende tus propiedades más rápido.",
+  "intro.bottomBanner.welcome": "NEAR Holdings, Bienes Raíces para todos.",
+  "intro.bottomBanner.cta": "Explorar Propiedades"
 }

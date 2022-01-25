@@ -1,10 +1,9 @@
 {
-  "intro.h1.top": "Invest in Businesses",
-  "intro.h1.main": "with Bitcoin",
+  "intro.h1.top": "Buy & Manage Real Estate,<br />Together",
   "intro.asInvestor.title": "As an investor",
-  "intro.asInvestor.description": "Discover passive income investments<br />in businesses worldwide.",
-  "intro.asBusinessOwner.title": "As a business owner",
-  "intro.asBusinessOwner.description": "Access to global investment capital,<br />and stay onwards.",
-  "intro.bottomBanner.welcome": "Banco Satoshi, Bitcoin Investment Banking.",
-  "intro.bottomBanner.cta": "Investment Opportunities"
+  "intro.asInvestor.description": "Discover passive income investments<br />in properties worldwide.",
+  "intro.asBusinessOwner.title": "As a property manager",
+  "intro.asBusinessOwner.description": "Access to global investment capital,<br />and sell faster.",
+  "intro.bottomBanner.welcome": "NEAR Holdings, Real Estate for Everyone.",
+  "intro.bottomBanner.cta": "Browse Properties"
 }
