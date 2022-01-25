@@ -37,8 +37,9 @@ const ContractDepositForm = dynamic<ContractDepositFormProps>(
 
 const getDefaultContractValues = () => ({
   totalFunds: formatAccountBalance("0"),
-  expirationDate: undefined,
   minFundingAmount: formatAccountBalance("0"),
+  totalFundedPercentage: 0,
+  expirationDate: undefined,
   recipientAccountId: undefined,
   isDepositAllowed: false,
   isWithdrawalAllowed: false,
@@ -53,8 +54,9 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
 
   const [values, setValues] = useState<{
     totalFunds?: string;
-    expirationDate?: JSX.Element;
     minFundingAmount?: string;
+    totalFundedPercentage?: number;
+    expirationDate?: JSX.Element;
     recipientAccountId?: string;
     isDepositAllowed?: boolean;
     isWithdrawalAllowed?: boolean;
@@ -86,6 +88,8 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
     const getConstantValues = async () => {
       const getTotalFundsResponse = await contract!.get_total_funds();
       const getMinFundingAmountResponse = await contract!.get_min_funding_amount();
+      const totalFundedPercentage = BigInt(getMinFundingAmountResponse) / BigInt(getTotalFundsResponse);
+
       const deposits = await contract!.get_deposits();
       const expirationDate = await contract!.get_expiration_date();
       const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address! });
@@ -93,6 +97,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       setValues({
         totalFunds: formatAccountBalance(BigInt(getTotalFundsResponse).toString()),
         minFundingAmount: formatAccountBalance(BigInt(getMinFundingAmountResponse).toString()),
+        totalFundedPercentage: Number(totalFundedPercentage),
         deposits,
         depositsOf: formatAccountBalance(BigInt(depositsOfResponse).toString()),
         expirationDate: (
@@ -144,14 +149,12 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
           </Typography.Headline2>
           <div className={styles["investment-details__sold"]}>
             <div className={styles["investment-details__circular-progress"]}>
-              <CircularProgress size={70} strokeWidth={5} percentage={80} />
+              <CircularProgress size={70} strokeWidth={5} percentage={values.totalFundedPercentage} />
             </div>
             <div className={styles["investment-details__sold-description"]}>
               <Typography.Description>Funded</Typography.Description>
               <Typography.Text flat>{values.totalFunds}</Typography.Text>
-              <Typography.MiniDescription>
-                80% of property price · <Typography.Anchor href="#">1 Ⓝ = 11.99 USD</Typography.Anchor>
-              </Typography.MiniDescription>
+              <Typography.MiniDescription>{`${values.totalFundedPercentage}% of property price`}</Typography.MiniDescription>
             </div>
           </div>
           <div className={styles["investment-details__price"]}>
@@ -162,7 +165,9 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
             </div>
             <div className={styles["investment-details__price-description"]}>
               <Typography.TextBold flat>{values.minFundingAmount}</Typography.TextBold>
-              <Typography.MiniDescription>150,000.00 USD</Typography.MiniDescription>
+              <Typography.MiniDescription>
+                150,000.00 USD · <Typography.Anchor href="#">1 Ⓝ = 11.99 USD</Typography.Anchor>
+              </Typography.MiniDescription>
             </div>
           </div>
           <hr />
