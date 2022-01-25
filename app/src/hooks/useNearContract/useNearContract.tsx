@@ -18,7 +18,7 @@ export function useNearContract<M>(
     }
 
     const account = wallet.context.connection?.account()!;
-    setContract(initConditionalEscrowContract(account, contractAddress, contractMethods));
+    setContract(initConditionalEscrowContract<M>(account, contractAddress, contractMethods));
   }, [contract, contractAddress, contractMethods, wallet.context.connection, wallet.isConnected]);
 
   return contract;

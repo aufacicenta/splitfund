@@ -23,7 +23,7 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
   >(undefined);
 
   useEffect(() => {
-    if (walletState.isConnected.get() && !!walletState.address.get() && !!walletState.balance.get()) {
+    if (!!walletConnection?.wallet && !!walletConnection.near) {
       return;
     }
 
@@ -33,6 +33,7 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
 
     (async () => {
       const connection = await nearUtils.initWalletConnection(walletState.network.get());
+
       setWalletConnection(connection);
 
       const { near, wallet } = connection;
@@ -48,6 +49,7 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
       }
     })();
   }, [
+    walletConnection,
     walletState.address,
     walletState.balance,
     walletState.chain,

@@ -35,6 +35,17 @@ const ContractDepositForm = dynamic<ContractDepositFormProps>(
   { ssr: false },
 );
 
+const getDefaultContractValues = () => ({
+  totalFunds: formatAccountBalance("0"),
+  expirationDate: undefined,
+  minFundingAmount: formatAccountBalance("0"),
+  recipientAccountId: undefined,
+  isDepositAllowed: false,
+  isWithdrawalAllowed: false,
+  deposits: [],
+  depositsOf: formatAccountBalance("0"),
+});
+
 export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAddress }) => {
   // @TODO display an error toast
   const [, setError] = useState<string | undefined>(undefined);
@@ -49,16 +60,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
     isWithdrawalAllowed?: boolean;
     deposits?: string[][];
     depositsOf?: string;
-  }>({
-    totalFunds: formatAccountBalance("0"),
-    expirationDate: undefined,
-    minFundingAmount: formatAccountBalance("0"),
-    recipientAccountId: undefined,
-    isDepositAllowed: false,
-    isWithdrawalAllowed: false,
-    deposits: [],
-    depositsOf: undefined,
-  });
+  }>(getDefaultContractValues());
 
   const wallet = useWalletSelectorContext();
 
@@ -75,7 +77,9 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
   });
 
   useEffect(() => {
-    if (!contract) {
+    if (!contract || !wallet.isConnected) {
+      setValues(getDefaultContractValues());
+
       return;
     }
 
@@ -106,7 +110,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
     };
 
     getConstantValues();
-  }, [contract, wallet.address]);
+  }, [contract, wallet.address, wallet.isConnected]);
 
   const onClickAuthorizeWallet = () => {
     wallet.onClickConnect({
