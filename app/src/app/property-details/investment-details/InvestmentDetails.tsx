@@ -72,7 +72,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
   });
 
   useEffect(() => {
-    if (!contract || !wallet.isConnected) {
+    if (!contract) {
       setValues(getDefaultContractValues());
 
       return;
@@ -85,7 +85,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
 
       const deposits = await contract!.get_deposits();
       const expirationDate = await contract!.get_expiration_date();
-      const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address! });
+      const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address ?? wallet.context.guest.address });
 
       const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
       const priceEquivalence =
@@ -105,7 +105,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
     };
 
     getConstantValues();
-  }, [contract, wallet.address, wallet.isConnected]);
+  }, [contract, wallet.address, wallet.context.guest.address]);
 
   const onClickAuthorizeWallet = () => {
     wallet.onClickConnect({

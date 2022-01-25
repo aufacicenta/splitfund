@@ -13,13 +13,43 @@ export function useNearContract<M>(
   const [contract, setContract] = useState<(Contract & M) | undefined>(undefined);
 
   useEffect(() => {
-    if (!wallet.isConnected || !!contract) {
-      return;
+    if (wallet.isConnected && contract?.account.accountId === wallet.context.guest.address) {
+      setContract(undefined);
     }
 
-    const account = wallet.context.connection?.account()!;
-    setContract(initConditionalEscrowContract<M>(account, contractAddress, contractMethods));
-  }, [contract, contractAddress, contractMethods, wallet.context.connection, wallet.isConnected]);
+    const getAccount = () => {
+      if (!wallet.isConnected) {
+        return wallet.context.provider?.account(wallet.context.guest.address);
+      }
+
+      return wallet.context.connection?.account();
+    };
+
+    const initContract = async () => {
+      if (contract) {
+        return;
+      }
+
+      const account = await getAccount();
+
+      if (!account) {
+        // @TODO error toast
+        return;
+      }
+
+      setContract(initConditionalEscrowContract<M>(account, contractAddress, contractMethods));
+    };
+
+    initContract();
+  }, [
+    contract,
+    contractAddress,
+    contractMethods,
+    wallet.context.connection,
+    wallet.context.guest.address,
+    wallet.context.provider,
+    wallet.isConnected,
+  ]);
 
   return contract;
 }
