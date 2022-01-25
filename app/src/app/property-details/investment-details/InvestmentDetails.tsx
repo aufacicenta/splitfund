@@ -40,6 +40,7 @@ const getDefaultContractValues = (): ConditionalEscrowValues => ({
   totalFunds: near.formatAccountBalance("0"),
   minFundingAmount: near.formatAccountBalance("0"),
   depositsOf: near.formatAccountBalance("0"),
+  depositsOfPercentage: 0,
   currentCoinPrice: 0,
   priceEquivalence: 0,
   totalFundedPercentage: 0,
@@ -81,11 +82,12 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
     const getConstantValues = async () => {
       const getTotalFundsResponse = await contract!.get_total_funds();
       const getMinFundingAmountResponse = await contract!.get_min_funding_amount();
-      const totalFundedPercentage = BigInt(getMinFundingAmountResponse) / BigInt(getTotalFundsResponse);
+      const totalFundedPercentage = (BigInt(getTotalFundsResponse) * BigInt(100)) / BigInt(getMinFundingAmountResponse);
 
       const deposits = await contract!.get_deposits();
       const expirationDate = await contract!.get_expiration_date();
       const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address ?? wallet.context.guest.address });
+      const depositsOfPercentage = (BigInt(depositsOfResponse) * BigInt(100)) / BigInt(getMinFundingAmountResponse);
 
       const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
       const priceEquivalence =
@@ -97,6 +99,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
         minFundingAmount: near.formatAccountBalance(BigInt(getMinFundingAmountResponse).toString()),
         depositsOf: near.formatAccountBalance(BigInt(depositsOfResponse).toString()),
         totalFundedPercentage: Number(totalFundedPercentage),
+        depositsOfPercentage: Number(depositsOfPercentage),
         currentCoinPrice,
         priceEquivalence,
         deposits,
@@ -182,7 +185,8 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
               <Typography.MiniDescription>See withdrawal conditions</Typography.MiniDescription>
             </Grid.Col>
             <Grid.Col>
-              <Typography.Text>{values.depositsOf}</Typography.Text>
+              <Typography.Text flat>{values.depositsOf}</Typography.Text>
+              <Typography.MiniDescription>{`${values.depositsOfPercentage}% of property price`}</Typography.MiniDescription>
             </Grid.Col>
           </Grid.Row>
           <Grid.Row>

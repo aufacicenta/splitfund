@@ -22,4 +22,5 @@ export type ConditionalEscrowValues = {
   isWithdrawalAllowed?: boolean;
   deposits?: string[][];
   depositsOf?: string;
+  depositsOfPercentage?: number;
 };
