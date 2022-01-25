@@ -2,26 +2,50 @@
 @import "src/theme/button/primary";
 
 .home {
+  @include withNavbar;
   min-height: 100vh;
-  background-color: var(--color-primary);
+  background-color: var(--color-background);
+
+  &__powered-by {
+    display: flex;
+    margin-bottom: $space-ml;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    svg {
+      width: 112px;
+    }
+  }
 
   &__intro {
     &--headline {
-      margin-bottom: $space-ml;
-      color: var(--color-white);
+      margin-bottom: $space-m;
     }
 
     &--image {
       display: flex;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
 
       img {
-        width: 350px;
+        width: 80%;
         height: auto;
       }
     }
 
     &--cta {
+      @extend .button_primary;
+
+      @include atLargeTablet {
+        display: inline-block;
+        margin-top: 0;
+        margin-left: $space-m;
+      }
       display: block;
       margin-top: $space-s;
       padding: 0;
@@ -35,14 +59,6 @@
       &:focus {
         background-color: transparent;
       }
-
-      @extend .button_primary;
-
-      @include atLargeTablet {
-        display: inline-block;
-        margin-top: 0;
-        margin-left: $space-m;
-      }
     }
 
     &--text-block {
@@ -55,7 +71,7 @@
 
     &--intro {
       padding: $navbar-height 0;
-      background-color: var(--color-secondary);
+      background-color: var(--color-background);
     }
 
     &--cta-banner {
@@ -64,25 +80,22 @@
       background-color: var(--color-primary);
 
       &--welcome {
+        @include font-properties($typography-text);
+        @include atTablet {
+          @include font-properties($typography-headline-4);
+          margin-bottom: 0;
+          text-align: left;
+        }
         margin-bottom: $space-m;
         text-align: right;
         color: var(--color-white);
-
-        @include font-properties($typography-text);
-        @include atTablet {
-          margin-bottom: 0;
-          text-align: left;
-
-          @include font-properties($typography-headline-4);
-        }
       }
 
       &--cta {
+        @include font-properties($typography-headline-3);
         display: block;
         text-align: right;
         color: var(--color-white);
-
-        @include font-properties($typography-headline-3);
       }
     }
 

@@ -11,6 +11,7 @@ export type Styles = {
   "home__intro--headline": string;
   "home__intro--image": string;
   "home__intro--text-block": string;
+  "home__powered-by": string;
   home__section: string;
   "home__section--como-funciona": string;
   "home__section--como-funciona--box": string;

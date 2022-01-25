@@ -23,8 +23,16 @@ export const Typography: React.FC<TypographyProps> & {
   Anchor: React.FC<AnchorProps>;
 } = ({ children, className }) => <div className={clsx(styles.typography, className)}>{children}</div>;
 
-const Headline1: React.FC<TypographyProps> = ({ children, className }) => (
-  <h1 className={clsx(styles.typography__headline1, className)}>{children}</h1>
+const Headline1: React.FC<TypographyProps> = ({ children, className, inline, flat, ...props }) => (
+  <h1
+    className={clsx(styles.typography__headline1, className, {
+      [styles.typography__inline]: inline,
+      [styles.typography__flat]: flat,
+    })}
+    {...props}
+  >
+    {children}
+  </h1>
 );
 
 const Headline2: React.FC<TypographyProps> = ({ children, className }) => (
