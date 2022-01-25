@@ -12,9 +12,11 @@ import { Button } from "ui/button/Button";
 import { useNearContract } from "hooks/useNearContract/useNearContract";
 import near from "providers/near";
 import { ContractDepositFormProps } from "../contract-deposit-form/ContractDepositForm.types";
+import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
+import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 
 import styles from "./InvestmentDetails.module.scss";
-import { InvestmentDetailsProps, OnSubmitDeposit } from "./InvestmentDetails.types";
+import { ConditionalEscrowValues, InvestmentDetailsProps, OnSubmitDeposit } from "./InvestmentDetails.types";
 
 const VIEW_METHODS = [
   "deposits_of",
@@ -34,10 +36,12 @@ const ContractDepositForm = dynamic<ContractDepositFormProps>(
   { ssr: false },
 );
 
-const getDefaultContractValues = () => ({
+const getDefaultContractValues = (): ConditionalEscrowValues => ({
   totalFunds: near.formatAccountBalance("0"),
   minFundingAmount: near.formatAccountBalance("0"),
   depositsOf: near.formatAccountBalance("0"),
+  currentCoinPrice: 0,
+  priceEquivalence: 0,
   totalFundedPercentage: 0,
   expirationDate: undefined,
   recipientAccountId: undefined,
@@ -51,17 +55,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
   const [, setError] = useState<string | undefined>(undefined);
   const [isBuyOwnershipInfoModalOpen, setIsBuyOwnershipInfoModalOpen] = useState(false);
 
-  const [values, setValues] = useState<{
-    totalFunds?: string;
-    minFundingAmount?: string;
-    totalFundedPercentage?: number;
-    expirationDate?: JSX.Element;
-    recipientAccountId?: string;
-    isDepositAllowed?: boolean;
-    isWithdrawalAllowed?: boolean;
-    deposits?: string[][];
-    depositsOf?: string;
-  }>(getDefaultContractValues());
+  const [values, setValues] = useState<ConditionalEscrowValues>(getDefaultContractValues());
 
   const wallet = useWalletSelectorContext();
 
@@ -93,12 +87,19 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       const expirationDate = await contract!.get_expiration_date();
       const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address! });
 
+      const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
+      const priceEquivalence =
+        currentCoinPrice *
+        Number(near.formatAccountBalanceFlat(BigInt(getMinFundingAmountResponse).toString()).replace(",", ""));
+
       setValues({
         totalFunds: near.formatAccountBalance(BigInt(getTotalFundsResponse).toString()),
         minFundingAmount: near.formatAccountBalance(BigInt(getMinFundingAmountResponse).toString()),
-        totalFundedPercentage: Number(totalFundedPercentage),
-        deposits,
         depositsOf: near.formatAccountBalance(BigInt(depositsOfResponse).toString()),
+        totalFundedPercentage: Number(totalFundedPercentage),
+        currentCoinPrice,
+        priceEquivalence,
+        deposits,
         expirationDate: (
           <Typography.Description>
             Offer expires
@@ -165,7 +166,8 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
             <div className={styles["investment-details__price-description"]}>
               <Typography.TextBold flat>{values.minFundingAmount}</Typography.TextBold>
               <Typography.MiniDescription>
-                150,000.00 USD · <Typography.Anchor href="#">1 Ⓝ = 11.99 USD</Typography.Anchor>
+                {formatFiatCurrency(values.priceEquivalence!)} USD ·{" "}
+                <Typography.Anchor href="#">1 Ⓝ = {values.currentCoinPrice} USD</Typography.Anchor>
               </Typography.MiniDescription>
             </div>
           </div>
