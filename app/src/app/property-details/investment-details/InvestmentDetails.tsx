@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import moment from "moment";
 
 import { Card } from "ui/card/Card";
 import { Modal } from "ui/modal/Modal";
@@ -14,6 +13,7 @@ import near from "providers/near";
 import { ContractDepositFormProps } from "../contract-deposit-form/ContractDepositForm.types";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
+import date from "providers/date";
 
 import styles from "./InvestmentDetails.module.scss";
 import { ConditionalEscrowValues, InvestmentDetailsProps, OnSubmitDeposit } from "./InvestmentDetails.types";
@@ -40,10 +40,11 @@ const getDefaultContractValues = (): ConditionalEscrowValues => ({
   totalFunds: near.formatAccountBalance("0"),
   minFundingAmount: near.formatAccountBalance("0"),
   depositsOf: near.formatAccountBalance("0"),
+  depositsOfPercentage: 0,
   currentCoinPrice: 0,
   priceEquivalence: 0,
   totalFundedPercentage: 0,
-  expirationDate: undefined,
+  expirationDate: date.toNanoseconds(date.now().toDate().getTime()),
   recipientAccountId: undefined,
   isDepositAllowed: false,
   isWithdrawalAllowed: false,
@@ -54,6 +55,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
   // @TODO display an error toast
   const [, setError] = useState<string | undefined>(undefined);
   const [isBuyOwnershipInfoModalOpen, setIsBuyOwnershipInfoModalOpen] = useState(false);
+  const [isCurrentInvestorsModalOpen, setIsCurrentInvestorsModalOpen] = useState(false);
 
   const [values, setValues] = useState<ConditionalEscrowValues>(getDefaultContractValues());
 
@@ -72,7 +74,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
   });
 
   useEffect(() => {
-    if (!contract || !wallet.isConnected) {
+    if (!contract) {
       setValues(getDefaultContractValues());
 
       return;
@@ -81,11 +83,12 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
     const getConstantValues = async () => {
       const getTotalFundsResponse = await contract!.get_total_funds();
       const getMinFundingAmountResponse = await contract!.get_min_funding_amount();
-      const totalFundedPercentage = BigInt(getMinFundingAmountResponse) / BigInt(getTotalFundsResponse);
+      const totalFundedPercentage = (BigInt(getTotalFundsResponse) * BigInt(100)) / BigInt(getMinFundingAmountResponse);
 
       const deposits = await contract!.get_deposits();
       const expirationDate = await contract!.get_expiration_date();
-      const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address! });
+      const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address ?? wallet.context.guest.address });
+      const depositsOfPercentage = (BigInt(depositsOfResponse) * BigInt(100)) / BigInt(getMinFundingAmountResponse);
 
       const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
       const priceEquivalence =
@@ -97,25 +100,16 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
         minFundingAmount: near.formatAccountBalance(BigInt(getMinFundingAmountResponse).toString()),
         depositsOf: near.formatAccountBalance(BigInt(depositsOfResponse).toString()),
         totalFundedPercentage: Number(totalFundedPercentage),
+        depositsOfPercentage: Number(depositsOfPercentage),
         currentCoinPrice,
         priceEquivalence,
         deposits,
-        expirationDate: (
-          <Typography.Description>
-            Offer expires
-            <br />
-            {moment(expirationDate / 1000000)
-              .utcOffset(0)
-              .calendar()
-              .toLowerCase()}
-            , GMT-0
-          </Typography.Description>
-        ),
+        expirationDate,
       });
     };
 
     getConstantValues();
-  }, [contract, wallet.address, wallet.isConnected]);
+  }, [contract, wallet.address, wallet.context.guest.address]);
 
   const onClickAuthorizeWallet = () => {
     wallet.onClickConnect({
@@ -154,7 +148,12 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
             <div className={styles["investment-details__sold-description"]}>
               <Typography.Description>Funded</Typography.Description>
               <Typography.Text flat>{values.totalFunds}</Typography.Text>
-              <Typography.MiniDescription>{`${values.totalFundedPercentage}% of property price`}</Typography.MiniDescription>
+              <Typography.MiniDescription>
+                {`${values.totalFundedPercentage}% of property price`} ·{" "}
+                {`${date.timeFromNow
+                  .asDefault(date.fromNanoseconds(values.expirationDate!), true)
+                  .toLowerCase()} remaining`}
+              </Typography.MiniDescription>
             </div>
           </div>
           <div className={styles["investment-details__price"]}>
@@ -175,7 +174,12 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
           <Grid.Row>
             <Grid.Col lg={6}>
               <Typography.TextBold flat># of NEAR wallets</Typography.TextBold>
-              <Typography.MiniDescription>See current investors</Typography.MiniDescription>
+              <Typography.MiniDescription
+                onClick={() => setIsCurrentInvestorsModalOpen(true)}
+                className={styles["investment-details__clickable"]}
+              >
+                See current investors
+              </Typography.MiniDescription>
             </Grid.Col>
             <Grid.Col>
               <Typography.Text>{values.deposits?.length}</Typography.Text>
@@ -187,7 +191,8 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
               <Typography.MiniDescription>See withdrawal conditions</Typography.MiniDescription>
             </Grid.Col>
             <Grid.Col>
-              <Typography.Text>{values.depositsOf}</Typography.Text>
+              <Typography.Text flat>{values.depositsOf}</Typography.Text>
+              <Typography.MiniDescription>{`${values.depositsOfPercentage}% of property price`}</Typography.MiniDescription>
             </Grid.Col>
           </Grid.Row>
           <Grid.Row>
@@ -222,14 +227,18 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
           ) : (
             <>
               <Button onClick={onClickInvestNow}>Invest Now</Button>
-              {values.expirationDate}
+              <Typography.Description>
+                Offer expires
+                <br />
+                {date.timeFromNow.calendar(date.fromNanoseconds(values.expirationDate!)).toLowerCase()}
+              </Typography.Description>
             </>
           )}
         </Card.Actions>
       </Card>
 
       {isBuyOwnershipInfoModalOpen && (
-        <Modal isOpened onClose={() => null} aria-labelledby="Register Interest Modal Window">
+        <Modal isOpened onClose={() => null} aria-labelledby="Buy Ownership Modal Window">
           <Modal.Header>
             <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
               Buy Property Ownership
@@ -253,6 +262,32 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
               autoFocus
               onCancel={() => setIsBuyOwnershipInfoModalOpen(false)}
             />
+          </Modal.Actions>
+        </Modal>
+      )}
+
+      {isCurrentInvestorsModalOpen && (
+        <Modal isOpened onClose={() => null} aria-labelledby="Current Investors Modal Window">
+          <Modal.Header>
+            <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
+              Current Investors
+            </Typography.Headline3>
+          </Modal.Header>
+          <Modal.Content>
+            {values.deposits?.length &&
+              values.deposits?.map((deposit) => (
+                <Grid.Row key={deposit[0]}>
+                  <Grid.Col>
+                    <Typography.Text>{deposit[0]}</Typography.Text>
+                  </Grid.Col>
+                  <Grid.Col>
+                    <Typography.Text>{near.formatAccountBalance(BigInt(deposit[1]).toString())}</Typography.Text>
+                  </Grid.Col>
+                </Grid.Row>
+              ))}
+          </Modal.Content>
+          <Modal.Actions>
+            <Button onClick={() => setIsCurrentInvestorsModalOpen(false)}>Close</Button>
           </Modal.Actions>
         </Modal>
       )}

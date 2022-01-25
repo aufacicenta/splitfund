@@ -1,4 +1,4 @@
-import { WalletConnection as NEARWalletConnection } from "near-api-js";
+import { Near, WalletConnection as NEARWalletConnection } from "near-api-js";
 import { ReactNode } from "react";
 
 import { NEARSignInOptions } from "context/near-wallet/NearWalletContext.types";
@@ -22,5 +22,7 @@ export type WalletSelectorContextType = {
   onClickConnect: (args?: NEARSignInOptions) => void;
   context: {
     connection: NEARWalletConnection | undefined;
+    provider: Near | undefined;
+    guest: { address: string };
   };
 };

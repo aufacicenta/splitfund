@@ -16,10 +16,11 @@ export type ConditionalEscrowValues = {
   totalFundedPercentage?: number;
   currentCoinPrice?: number;
   priceEquivalence?: number;
-  expirationDate?: JSX.Element;
+  expirationDate?: number;
   recipientAccountId?: string;
   isDepositAllowed?: boolean;
   isWithdrawalAllowed?: boolean;
   deposits?: string[][];
   depositsOf?: string;
+  depositsOfPercentage?: number;
 };

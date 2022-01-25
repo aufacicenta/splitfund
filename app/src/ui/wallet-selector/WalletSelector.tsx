@@ -7,6 +7,7 @@ import { Button } from "../button/Button";
 import { Card } from "../card/Card";
 import { ChevronIcon } from "../icons/ChevronIcon";
 import { Typography } from "../typography/Typography";
+import { Icon } from "ui/icon/Icon";
 
 import styles from "./WalletSelector.module.scss";
 import { WalletSelectorProps } from "./WalletSelector.types";
@@ -33,8 +34,19 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
 
   return (
     <div className={clsx(styles["wallet-selector"], className)}>
-      <Button size="xs" variant="outlined" onClick={handleOnConnectWalletClick}>
-        {wallet.isConnected ? `Connected: ${wallet.chain}` : "Connect Wallet"}
+      <Button
+        size="xs"
+        variant="outlined"
+        onClick={handleOnConnectWalletClick}
+        leftIcon={
+          wallet.isConnected && (
+            <div className={clsx(styles["wallet-selector__icon-connected--wrapper"])}>
+              <Icon name="icon-power-switch" className={clsx(styles["wallet-selector__icon-connected--icon"])} />
+            </div>
+          )
+        }
+      >
+        {wallet.isConnected ? `${wallet.chain}: ${wallet.network}` : "Connect Wallet"}
       </Button>
       {isWidgetVisible && (
         <>
@@ -86,7 +98,7 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
               <Typography.Description>Balance</Typography.Description>
               <Typography.Text>{wallet.balance}</Typography.Text>
               <Typography.MiniDescription>
-                <Typography.Anchor href="#" target="_blank">
+                <Typography.Anchor href={`${wallet.explorer}/accounts/${wallet.address}`} target="_blank">
                   {wallet.isConnected && wallet.address}
                 </Typography.Anchor>
               </Typography.MiniDescription>

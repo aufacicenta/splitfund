@@ -85,8 +85,11 @@ const Description: React.FC<TypographyProps> = ({ children, className, inline, .
   </p>
 );
 
-const MiniDescription: React.FC<TypographyProps> = ({ children, className, flat }) => (
-  <p className={clsx(styles["typography__mini-description"], className, { [styles.typography__flat]: flat })}>
+const MiniDescription: React.FC<TypographyProps> = ({ children, className, flat, ...props }) => (
+  <p
+    className={clsx(styles["typography__mini-description"], className, { [styles.typography__flat]: flat })}
+    {...props}
+  >
     {children}
   </p>
 );

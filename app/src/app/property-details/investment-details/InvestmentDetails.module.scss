@@ -38,4 +38,10 @@
       margin-bottom: 0;
     }
   }
+
+  &__clickable {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

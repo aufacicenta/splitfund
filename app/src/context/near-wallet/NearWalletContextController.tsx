@@ -10,6 +10,8 @@ import getConfig from "providers/near/getConfig";
 import { NEARSignInOptions, NearWalletContextControllerProps } from "./NearWalletContext.types";
 
 const DEFAULT_NETWORK_ENV = "testnet";
+const GUEST_WALLET_ID_TESTNET = "escrowfactory.testnet";
+const GUEST_WALLET_ID_MAINNET = "escrowfactory.near";
 
 export const NearWalletContextController = ({ children }: NearWalletContextControllerProps) => {
   const walletState = useWalletState();
@@ -84,7 +86,13 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
     address: walletState.address.get(),
     balance: walletState.balance.get(),
     onSetChain,
-    context: { connection: walletConnection?.wallet },
+    context: {
+      connection: walletConnection?.wallet,
+      provider: walletConnection?.near,
+      guest: {
+        address: walletState.network.get() === "testnet" ? GUEST_WALLET_ID_TESTNET : GUEST_WALLET_ID_MAINNET,
+      },
+    },
   };
 
   return <WalletSelectorContextController {...props}>{children}</WalletSelectorContextController>;

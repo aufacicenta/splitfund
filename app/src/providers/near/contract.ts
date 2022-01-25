@@ -1,9 +1,9 @@
 import * as nearAPI from "near-api-js";
-import { ConnectedWalletAccount, Contract } from "near-api-js";
+import { Account, Contract } from "near-api-js";
 import { ContractMethods } from "near-api-js/lib/contract";
 
 export function initConditionalEscrowContract<M>(
-  account: ConnectedWalletAccount,
+  account: Account,
   contractAddress: string,
   contractMethods: ContractMethods,
 ): Contract & M {

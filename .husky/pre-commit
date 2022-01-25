@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+export PATH="/Users/svpervnder/.local/share/solana/install/active_release/bin:/Users/svpervnder/.yarn/bin:/Users/svpervnder/.config/yarn/global/node_modules/.bin:/Users/svpervnder/Library/Android/sdk/platform-tools:/Users/svpervnder/.nvm/versions/node/v14.16.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin:/Users/svpervnder/.cargo/bin:/Users/svpervnder/go:/Users/svpervnder/flutter/bin:/Users/svpervnder/bin"
+
 yarn lint-staged

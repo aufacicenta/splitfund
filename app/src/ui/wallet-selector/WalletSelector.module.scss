@@ -6,6 +6,32 @@
   align-items: center;
   height: $navbar-height;
 
+  &__icon {
+    &--connected {
+      color: var(--color-white);
+    }
+  }
+
+  &__icon-connected {
+    &--wrapper {
+      @extend .z-depth-1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 18px;
+      height: 18px;
+      margin-top: -5px;
+      border-radius: 50%;
+      background-color: var(--color-status-success);
+    }
+
+    &--icon {
+      font-weight: bold;
+      color: var(--color-white);
+    }
+  }
+
   &__widget {
     position: absolute;
     top: $navbar-height;
