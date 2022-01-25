@@ -8,6 +8,9 @@ export type Styles = {
   "wallet-selector__chain-network-dropdowns--networks-list": string;
   "wallet-selector__chain-network-dropdowns--networks-list-card": string;
   "wallet-selector__connect": string;
+  "wallet-selector__icon--connected": string;
+  "wallet-selector__icon-connected--icon": string;
+  "wallet-selector__icon-connected--wrapper": string;
   "wallet-selector__widget": string;
   "wallet-selector__widget--backdrop": string;
   "z-depth-0": string;
