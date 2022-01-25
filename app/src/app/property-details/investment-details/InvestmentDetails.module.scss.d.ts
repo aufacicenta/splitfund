@@ -1,5 +1,6 @@
 export type Styles = {
   "investment-details__circular-progress": string;
+  "investment-details__clickable": string;
   "investment-details__heading": string;
   "investment-details__heading2": string;
   "investment-details__price": string;

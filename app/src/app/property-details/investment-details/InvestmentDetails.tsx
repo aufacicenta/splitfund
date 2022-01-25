@@ -55,6 +55,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
   // @TODO display an error toast
   const [, setError] = useState<string | undefined>(undefined);
   const [isBuyOwnershipInfoModalOpen, setIsBuyOwnershipInfoModalOpen] = useState(false);
+  const [isCurrentInvestorsModalOpen, setIsCurrentInvestorsModalOpen] = useState(false);
 
   const [values, setValues] = useState<ConditionalEscrowValues>(getDefaultContractValues());
 
@@ -173,7 +174,12 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
           <Grid.Row>
             <Grid.Col lg={6}>
               <Typography.TextBold flat># of NEAR wallets</Typography.TextBold>
-              <Typography.MiniDescription>See current investors</Typography.MiniDescription>
+              <Typography.MiniDescription
+                onClick={() => setIsCurrentInvestorsModalOpen(true)}
+                className={styles["investment-details__clickable"]}
+              >
+                See current investors
+              </Typography.MiniDescription>
             </Grid.Col>
             <Grid.Col>
               <Typography.Text>{values.deposits?.length}</Typography.Text>
@@ -232,7 +238,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       </Card>
 
       {isBuyOwnershipInfoModalOpen && (
-        <Modal isOpened onClose={() => null} aria-labelledby="Register Interest Modal Window">
+        <Modal isOpened onClose={() => null} aria-labelledby="Buy Ownership Modal Window">
           <Modal.Header>
             <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
               Buy Property Ownership
@@ -256,6 +262,32 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
               autoFocus
               onCancel={() => setIsBuyOwnershipInfoModalOpen(false)}
             />
+          </Modal.Actions>
+        </Modal>
+      )}
+
+      {isCurrentInvestorsModalOpen && (
+        <Modal isOpened onClose={() => null} aria-labelledby="Current Investors Modal Window">
+          <Modal.Header>
+            <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
+              Current Investors
+            </Typography.Headline3>
+          </Modal.Header>
+          <Modal.Content>
+            {values.deposits?.length &&
+              values.deposits?.map((deposit) => (
+                <Grid.Row key={deposit[0]}>
+                  <Grid.Col>
+                    <Typography.Text>{deposit[0]}</Typography.Text>
+                  </Grid.Col>
+                  <Grid.Col>
+                    <Typography.Text>{near.formatAccountBalance(BigInt(deposit[1]).toString())}</Typography.Text>
+                  </Grid.Col>
+                </Grid.Row>
+              ))}
+          </Modal.Content>
+          <Modal.Actions>
+            <Button onClick={() => setIsCurrentInvestorsModalOpen(false)}>Close</Button>
           </Modal.Actions>
         </Modal>
       )}
