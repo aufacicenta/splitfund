@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import moment from "moment";
 
 import { Card } from "ui/card/Card";
 import { Modal } from "ui/modal/Modal";
@@ -14,6 +13,7 @@ import near from "providers/near";
 import { ContractDepositFormProps } from "../contract-deposit-form/ContractDepositForm.types";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
+import date from "providers/date";
 
 import styles from "./InvestmentDetails.module.scss";
 import { ConditionalEscrowValues, InvestmentDetailsProps, OnSubmitDeposit } from "./InvestmentDetails.types";
@@ -43,7 +43,7 @@ const getDefaultContractValues = (): ConditionalEscrowValues => ({
   currentCoinPrice: 0,
   priceEquivalence: 0,
   totalFundedPercentage: 0,
-  expirationDate: undefined,
+  expirationDate: date.toNanoseconds(date.now().toDate().getTime()),
   recipientAccountId: undefined,
   isDepositAllowed: false,
   isWithdrawalAllowed: false,
@@ -100,17 +100,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
         currentCoinPrice,
         priceEquivalence,
         deposits,
-        expirationDate: (
-          <Typography.Description>
-            Offer expires
-            <br />
-            {moment(expirationDate / 1000000)
-              .utcOffset(0)
-              .calendar()
-              .toLowerCase()}
-            , GMT-0
-          </Typography.Description>
-        ),
+        expirationDate,
       });
     };
 
@@ -154,7 +144,12 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
             <div className={styles["investment-details__sold-description"]}>
               <Typography.Description>Funded</Typography.Description>
               <Typography.Text flat>{values.totalFunds}</Typography.Text>
-              <Typography.MiniDescription>{`${values.totalFundedPercentage}% of property price`}</Typography.MiniDescription>
+              <Typography.MiniDescription>
+                {`${values.totalFundedPercentage}% of property price`} ·{" "}
+                {`${date.timeFromNow
+                  .asDefault(date.fromNanoseconds(values.expirationDate!), true)
+                  .toLowerCase()} remaining`}
+              </Typography.MiniDescription>
             </div>
           </div>
           <div className={styles["investment-details__price"]}>
@@ -222,7 +217,11 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
           ) : (
             <>
               <Button onClick={onClickInvestNow}>Invest Now</Button>
-              {values.expirationDate}
+              <Typography.Description>
+                Offer expires
+                <br />
+                {date.timeFromNow.calendar(date.fromNanoseconds(values.expirationDate!)).toLowerCase()}
+              </Typography.Description>
             </>
           )}
         </Card.Actions>
