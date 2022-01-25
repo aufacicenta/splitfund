@@ -12,7 +12,7 @@ import { BancoSatoshiLogo } from "ui/icons/BancoSatoshiLogo";
 import { Icon } from "ui/icon/Icon";
 import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
 
-import styles from "./NavBar.module.scss";
+import styles from "./AuthNavBar.module.scss";
 import { AuthNavBarProps } from "./AuthNavBar.types";
 
 export const AuthNavBar: React.FC<AuthNavBarProps> = () => {

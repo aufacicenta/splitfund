@@ -40,6 +40,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <ApolloProvider client={GQLClient}>
         <ToastContextController>
           <LocaleSelector>
+            <div id="modal-root" />
             <main>{children}</main>
           </LocaleSelector>
         </ToastContextController>

@@ -2,20 +2,17 @@ import * as nearAPI from "near-api-js";
 import React, { useEffect, useState } from "react";
 
 import { WalletSelectorContextController } from "../wallet-selector/WalletSelectorContextController";
-import { WalletSelectorChain } from "../wallet-selector/WalletSelectorContext.types";
+import { WalletSelectorChain, WalletSelectorContextType } from "../wallet-selector/WalletSelectorContext.types";
 import { useWalletState } from "hooks/useWalletState/useWalletState";
 import nearUtils from "providers/near";
+import getConfig from "providers/near/getConfig";
 
-import { NearWalletContextControllerProps } from "./NearWalletContext.types";
+import { NEARSignInOptions, NearWalletContextControllerProps } from "./NearWalletContext.types";
+
+const DEFAULT_NETWORK_ENV = "testnet";
 
 export const NearWalletContextController = ({ children }: NearWalletContextControllerProps) => {
   const walletState = useWalletState();
-
-  const [network, setNetwork] = walletState.network;
-  const [chain, setChain] = walletState.chain;
-  const [address, setAddress] = walletState.address;
-  const [balance, setBalance] = walletState.balance;
-  const [isConnected, setIsConnected] = walletState.isConnected;
 
   const [walletConnection, setWalletConnection] = useState<
     | {
@@ -26,45 +23,69 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
   >(undefined);
 
   useEffect(() => {
-    setNetwork("testnet");
-    setChain(WalletSelectorChain.near);
+    if (!!walletConnection?.wallet && !!walletConnection.near) {
+      return;
+    }
+
+    walletState.network.set(DEFAULT_NETWORK_ENV);
+    walletState.chain.set(WalletSelectorChain.near);
+    walletState.explorer.set(getConfig(DEFAULT_NETWORK_ENV).explorerUrl);
 
     (async () => {
-      const connection = await nearUtils.initWalletConnection(network);
+      const connection = await nearUtils.initWalletConnection(walletState.network.get());
+
       setWalletConnection(connection);
 
       const { near, wallet } = connection;
 
       if (wallet.isSignedIn()) {
-        setIsConnected(true);
+        walletState.isConnected.set(true);
 
         const accountId = wallet.getAccountId();
-        setAddress(accountId);
+        walletState.address.set(accountId);
 
         const accountBalance = await nearUtils.getAccountBalance(near, accountId);
-        setBalance(nearUtils.formatAccountBalance(accountBalance.available));
+        walletState.balance.set(nearUtils.formatAccountBalance(accountBalance.available));
       }
     })();
-  }, [network, setAddress, setBalance, setChain, setIsConnected, setNetwork]);
+  }, [
+    walletConnection,
+    walletState.address,
+    walletState.balance,
+    walletState.chain,
+    walletState.explorer,
+    walletState.isConnected,
+    walletState.network,
+  ]);
 
   const onSetChain = (c: WalletSelectorChain) => {
-    setChain(c);
+    walletState.chain.set(c);
   };
 
-  const onClickConnect = () => {
+  const onClickConnect = (signInOptions?: NEARSignInOptions) => {
     const wallet = walletConnection?.wallet!;
 
     if (wallet.isSignedIn()) {
       wallet.signOut();
-      setIsConnected(false);
-      setBalance("0");
-      setAddress(undefined);
+      walletState.isConnected.set(false);
+      walletState.balance.set("0");
+      walletState.address.set(undefined);
     } else {
-      wallet.requestSignIn();
+      wallet.requestSignIn(signInOptions);
     }
   };
 
-  const props = { onClickConnect, isConnected, network, chain, address, balance, onSetChain };
+  const props: WalletSelectorContextType = {
+    onClickConnect,
+    isConnected: walletState.isConnected.get(),
+    network: walletState.network.get(),
+    explorer: walletState.explorer.get(),
+    chain: walletState.chain.get(),
+    address: walletState.address.get(),
+    balance: walletState.balance.get(),
+    onSetChain,
+    context: { connection: walletConnection?.wallet },
+  };
 
   return <WalletSelectorContextController {...props}>{children}</WalletSelectorContextController>;
 };

@@ -1,8 +1,9 @@
-import { Col, Container, Hidden, Row } from "react-grid-system";
+import { Hidden } from "react-grid-system";
 
 import { Typography } from "../typography/Typography";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { NearHoldingsIcon } from "ui/icons/NearHoldingsIcon";
+import { Grid } from "ui/grid/Grid";
 
 import styles from "./WalletSelectorNavbar.module.scss";
 import { WalletSelectorNavbarProps } from "./WalletSelectorNavbar.types";
@@ -12,27 +13,27 @@ export const WalletSelectorNavbar: React.FC<WalletSelectorNavbarProps> = ({ chil
 
   return (
     <div className={styles["wallet-selector-navbar"]}>
-      <Container>
-        <Row>
-          <Col lg={3} sm={3} xs={6}>
+      <Grid.Container>
+        <Grid.Row>
+          <Grid.Col lg={3} sm={3} xs={6}>
             <div className={styles["wallet-selector-navbar__logo"]}>
               <Typography.Link href={routes.home}>
                 <NearHoldingsIcon />
               </Typography.Link>
             </div>
-          </Col>
+          </Grid.Col>
           <Hidden xs>
-            <Col lg={6} sm={6} xs={6}>
+            <Grid.Col lg={6} sm={6} xs={6}>
               <div className={styles["wallet-selector-navbar__center"]} />
-            </Col>
+            </Grid.Col>
           </Hidden>
-          <Col lg={3} sm={3} xs={6}>
+          <Grid.Col lg={3} sm={3} xs={6}>
             <div className={styles["wallet-selector-navbar__right"]}>
               <div className={styles["wallet-selector-navbar__right--item"]}>{children}</div>
             </div>
-          </Col>
-        </Row>
-      </Container>
+          </Grid.Col>
+        </Grid.Row>
+      </Grid.Container>
     </div>
   );
 };
