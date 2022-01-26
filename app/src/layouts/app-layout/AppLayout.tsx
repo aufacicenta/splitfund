@@ -7,6 +7,7 @@ import { GQLClient } from "src/providers/graphql/client";
 
 import { ToastContextController } from "context/toast/ToastContextController";
 import { LocaleSelector } from "ui/locale-selector/LocaleSelector";
+import { NearWalletContextController } from "context/near-wallet/NearWalletContextController";
 
 import { AppLayoutProps } from "./AppLayout.types";
 
@@ -40,8 +41,10 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <ApolloProvider client={GQLClient}>
         <ToastContextController>
           <LocaleSelector>
-            <div id="modal-root" />
-            <main>{children}</main>
+            <NearWalletContextController>
+              <div id="modal-root" />
+              <main>{children}</main>
+            </NearWalletContextController>
           </LocaleSelector>
         </ToastContextController>
       </ApolloProvider>

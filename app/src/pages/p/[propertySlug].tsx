@@ -5,13 +5,10 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { AppLayout } from "layouts/app-layout/AppLayout";
 import { BusinessDetailsProps } from "app/business/BusinessDetails/BusinessDetails.types";
 import { PropertyDetailsContainer } from "app/property-details/PropertyDetailsContainer";
-import { NearWalletContextController } from "context/near-wallet/NearWalletContextController";
 
 const Index: NextPage<BusinessDetailsProps> = () => (
   <AppLayout>
-    <NearWalletContextController>
-      <PropertyDetailsContainer />
-    </NearWalletContextController>
+    <PropertyDetailsContainer />
   </AppLayout>
 );
 
