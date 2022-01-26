@@ -9,11 +9,11 @@ export const Card: React.FC<CardProps> & {
   Actions: React.FC<CardActionsProps>;
 } = ({ children, className, backgroundImageUrl, url, shadow, ...props }) => (
   <div
-    {...props}
     className={clsx(styles.card, className, {
       [styles.card__link]: !!url || !!props.onClick,
       [styles.card__shadow]: !!shadow,
     })}
+    {...props}
   >
     {backgroundImageUrl && (
       <div
