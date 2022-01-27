@@ -18,6 +18,12 @@ export const PropertyContent: React.FC<PropertyContentProps> = ({ content, class
           href="https://cms.bancosatoshi.com/wp-includes/css/dist/block-library/style.min.css?ver=5.8.2"
           media="screen"
         />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cms.bancosatoshi.com/wp-content/plugins/timeline-block/includes/cool-timeline-block/dist/blocks.style.build.css"
+          media="screen"
+        />
         <script
           src="https://cms.bancosatoshi.com/wp-content/plugins/jetpack/_inc/blocks/map/view.js?minify=false&ver=10.5.1"
           defer

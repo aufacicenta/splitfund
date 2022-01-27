@@ -12,6 +12,7 @@
   [class*="uagb-toc__wrap"] {
     margin-bottom: $space-ml;
     border-radius: $border-radius;
+    padding: $space-default;
     background-color: var(--color-status-info-lighter);
   }
 
