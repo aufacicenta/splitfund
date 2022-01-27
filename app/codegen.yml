@@ -1,9 +1,6 @@
-schema: [src/pages/api/business/*.graphql]
+schema: [src/pages/api/business/*.graphql, src/pages/api/property/*.graphql]
 documents: "src/pages/api/**/documents/**/*.graphql"
 generates:
-  ./src/pages/api/business/schema.graphql:
-    plugins:
-      - schema-ast
   ./src/pages/api/codegen/introspection.json:
     plugins:
       - introspection

@@ -1,0 +1,33 @@
+scalar Date
+
+input GetPropertyBySlugInput {
+  slug: String!
+}
+
+type Property {
+  content: PropertyContent!
+}
+
+type PropertyContent {
+  title: String!
+  asHtmlString: String!
+  media: PropertyContentMedia!
+  customFields: PropertyContentCustomFields!
+}
+
+type PropertyContentCustomFields {
+  category: String!
+  countryCode: String!
+  latitude: String!
+  longitude: String!
+  shortDescription: String!
+  nearConditionalEscrowContractAddress: String!
+}
+
+type PropertyContentMedia {
+  featuredImageUrl: String!
+}
+
+type Query {
+  getPropertyBySlug(input: GetPropertyBySlugInput!): Property!
+}

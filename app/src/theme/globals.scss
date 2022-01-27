@@ -1,4 +1,4 @@
-@import "src/theme/variables";
+@import "src/theme/base";
 
 html {
   @media (max-width: $mq-medium) {
@@ -128,8 +128,8 @@ body[data-theme="dark"] {
 body[data-theme="light"] {
   // Status colors
   --color-status-info: #5f8afa;
-  --color-status-info-light: #d6f5ff;
-  --color-status-info-lighter: #f0fbff;
+  --color-status-info-light: rgba(95, 138, 250, 0.6);
+  --color-status-info-lighter: rgba(95, 138, 250, 0.3);
   --color-status-success: #aad055;
   --color-status-success-light: #d6fff5;
   --color-status-success-lighter: #e6fff9;
@@ -243,6 +243,66 @@ code {
 
 .tf-v1-sidetab-button-icon[data-testid="default-icon"] {
   display: none;
+}
+
+// Wordpress Cool Blocks Timeline
+
+.story-time p,
+.story-content h3 {
+  font-family: $font-family-display;
+}
+
+.story-content p {
+  @include font-properties($typography-text);
+  @include normalizeTypography;
+  margin-bottom: $space-s;
+  color: var(--color-typography-text);
+}
+
+.story-image {
+  margin-bottom: $space-default;
+}
+
+.story-details {
+  border-color: var(--color-status-critical) !important;
+
+  &:before {
+    border-right-color: var(--color-status-critical) !important;
+  }
+}
+
+.timeline-block-icon {
+  border-color: var(--color-status-critical) !important;
+  background-color: var(--color-status-critical) !important;
+}
+
+.cool-vertical-timeline-body::before {
+  background: var(--color-status-critical);
+}
+
+#property-content {
+  // @TODO create @mixins to share with Typography.modoule.scss
+
+  h2 {
+    @include font-properties($typography-headline-2);
+    @include normalizeTypography;
+    margin-top: $space-l;
+    margin-bottom: $space-default;
+    color: var(--color-typography-headline-2);
+  }
+
+  p {
+    @include font-properties($typography-text);
+    @include normalizeTypography;
+    margin-bottom: $space-m;
+    font-size: rem(18);
+    color: var(--color-typography-text);
+
+    [class^="icon-"],
+    [class*=" icon-"] {
+      font-size: $font-size-text * 0.75;
+    }
+  }
 }
 
 @import "./forms/forms";
