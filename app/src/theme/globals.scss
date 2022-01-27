@@ -128,8 +128,8 @@ body[data-theme="dark"] {
 body[data-theme="light"] {
   // Status colors
   --color-status-info: #5f8afa;
-  --color-status-info-light: #d6f5ff;
-  --color-status-info-lighter: #f0fbff;
+  --color-status-info-light: rgba(95, 138, 250, 0.6);
+  --color-status-info-lighter: rgba(95, 138, 250, 0.3);
   --color-status-success: #aad055;
   --color-status-success-light: #d6fff5;
   --color-status-success-lighter: #e6fff9;
