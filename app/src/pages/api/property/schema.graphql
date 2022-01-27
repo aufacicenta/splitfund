@@ -9,14 +9,19 @@ type Property {
 }
 
 type PropertyContent {
+  title: String!
   asHtmlString: String!
+  media: PropertyContentMedia!
+  customFields: PropertyContentCustomFields!
+}
+
+type PropertyContentCustomFields {
   category: String!
   countryCode: String!
   latitude: String!
   longitude: String!
-  media: PropertyContentMedia!
   shortDescription: String!
-  title: String!
+  nearConditionalEscrowContractAddress: String!
 }
 
 type PropertyContentMedia {

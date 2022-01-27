@@ -18,13 +18,16 @@ export const getPageContentByPropertySlug = async (slug: string): Promise<Proper
   return {
     asHtmlString: page.content.rendered,
     title: page.title.rendered,
-    shortDescription: page?.custom_fields?.short_description,
-    category: page?.custom_fields?.category,
-    countryCode: page?.custom_fields?.country_code,
-    latitude: page?.custom_fields?.latitude,
-    longitude: page?.custom_fields?.longitude,
     media: {
       featuredImageUrl: media?.media_details?.sizes?.large?.source_url,
+    },
+    customFields: {
+      shortDescription: page?.custom_fields?.short_description,
+      category: page?.custom_fields?.category,
+      countryCode: page?.custom_fields?.country_code,
+      latitude: page?.custom_fields?.latitude,
+      longitude: page?.custom_fields?.longitude,
+      nearConditionalEscrowContractAddress: page?.custom_fields?.near_conditional_escrow_contract_address,
     },
   };
 };

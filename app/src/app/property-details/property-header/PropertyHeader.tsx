@@ -12,8 +12,8 @@ import styles from "./PropertyHeader.module.scss";
 export const PropertyHeader: React.FC<PropertyHeaderProps> = ({ className, property }) => {
   const mapOptions = {
     center: {
-      lat: Number(property.content.latitude),
-      lng: Number(property.content.longitude),
+      lat: Number(property.content.customFields.latitude),
+      lng: Number(property.content.customFields.longitude),
     },
     zoom: 15,
   };

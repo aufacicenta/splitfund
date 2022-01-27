@@ -53,7 +53,9 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
               </Grid.Col>
               <Grid.Col lg={4}>
                 <div className={clsx(styles["property-details__sidebar"])}>
-                  <InvestmentDetails contractAddress="ce-example-property-slug_gt.fac3.escrowfactory.testnet" />
+                  <InvestmentDetails
+                    contractAddress={property.content.customFields.nearConditionalEscrowContractAddress}
+                  />
                 </div>
               </Grid.Col>
             </Grid.Row>
