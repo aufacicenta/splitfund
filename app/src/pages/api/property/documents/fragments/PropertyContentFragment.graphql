@@ -1,0 +1,12 @@
+fragment PropertyContent on PropertyContent {
+  asHtmlString
+  category
+  countryCode
+  shortDescription
+  latitude
+  longitude
+  title
+  media {
+    featuredImageUrl
+  }
+}

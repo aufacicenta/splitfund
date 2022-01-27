@@ -7,14 +7,12 @@ import path from "path";
 import { BusinessDAO } from "@bancosatoshi/database/dao/types";
 import { DocumentNode } from "graphql";
 import { Resolvers } from "api/codegen/resolvers-types";
-import databaseConnection from "src/providers/database";
 
 import { routes } from "hooks/useRoutes/useRoutes";
 
-import getActiveBusinessCampaigns from "./business/resolvers/queries/getActiveBusinessCampaigns";
-import getBusinessCampaignBySlug from "./business/resolvers/queries/getBusinessCampaignBySlug";
+import getPropertyBySlug from "./property/resolvers/queries/getPropertyBySlug";
 
-const schemas = loadTypedefsSync(path.join(process.cwd(), "/src/pages/api/business/schema.graphql"), {
+const schemas = loadTypedefsSync([path.join(process.cwd(), "/src/pages/api/property/schema.graphql")], {
   loaders: [new GraphQLFileLoader()],
 });
 
@@ -22,8 +20,7 @@ const typeDefs = schemas.map((schema) => schema.document) as DocumentNode[];
 
 const resolvers: Resolvers = {
   Query: {
-    getActiveBusinessCampaigns,
-    getBusinessCampaignBySlug,
+    getPropertyBySlug,
   },
 };
 
@@ -36,9 +33,7 @@ export type ResolversContext = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const database = await databaseConnection.init();
-
-  const apolloServer = new ApolloServer({ typeDefs, resolvers, context: { req, database } });
+  const apolloServer = new ApolloServer({ typeDefs, resolvers, context: { req } });
   const startServer = apolloServer.start();
 
   res.setHeader("Access-Control-Allow-Credentials", "true");

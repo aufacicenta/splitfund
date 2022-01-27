@@ -1,0 +1,28 @@
+scalar Date
+
+input GetPropertyBySlugInput {
+  slug: String!
+}
+
+type Property {
+  content: PropertyContent!
+}
+
+type PropertyContent {
+  asHtmlString: String!
+  category: String!
+  countryCode: String!
+  latitude: String!
+  longitude: String!
+  media: PropertyContentMedia!
+  shortDescription: String!
+  title: String!
+}
+
+type PropertyContentMedia {
+  featuredImageUrl: String!
+}
+
+type Query {
+  getPropertyBySlug(input: GetPropertyBySlugInput!): Property!
+}

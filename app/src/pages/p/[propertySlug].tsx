@@ -15,7 +15,9 @@ const Index: NextPage<BusinessDetailsProps> = () => (
 export async function getStaticPaths() {
   // @TODO get all active campaigns' slug and render dynamically
   return {
-    paths: [{ params: { propertySlug: "example-property-slug_gt" }, locale: "es" }],
+    paths: [
+      { params: { propertySlug: "lot-40-in-exclusive-residential-complex-cafetales-de-santa-ana" }, locale: "en" },
+    ],
     fallback: false,
   };
 }
