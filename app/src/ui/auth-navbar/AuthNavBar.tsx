@@ -8,7 +8,7 @@ import { Locale } from "types/Locale";
 import { useAuthContext } from "hooks/useAuthContext/useAuthContext";
 import { Typography } from "../typography/Typography";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
-import { BancoSatoshiLogo } from "ui/icons/BancoSatoshiLogo";
+import { NearHoldingsIcon } from "ui/icons/NearHoldingsIcon";
 import { Icon } from "ui/icon/Icon";
 import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
 
@@ -38,7 +38,7 @@ export const AuthNavBar: React.FC<AuthNavBarProps> = () => {
           <Col lg={3} sm={3} xs={6}>
             <div className={styles.navbar__logo}>
               <Typography.Link href={routes.home}>
-                <BancoSatoshiLogo />
+                <NearHoldingsIcon />
               </Typography.Link>
             </div>
           </Col>
