@@ -36,7 +36,8 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
     <div className={clsx(styles["wallet-selector"], className)}>
       <Button
         size="xs"
-        variant="outlined"
+        variant="text"
+        color="light"
         onClick={handleOnConnectWalletClick}
         leftIcon={
           wallet.isConnected && (
@@ -83,7 +84,7 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
                     onClick={() => handleOnChainCardClick(WalletSelectorChain.near)}
                   >
                     <Card.Content>
-                      <Typography.Text>Near</Typography.Text>
+                      <Typography.Text>NEAR</Typography.Text>
                       <Typography.Description>
                         Through simple, secure, and scalable technology, NEAR empowers millions to invent and explore
                         new experiences. Business, creativity, and community are being reimagined for a more sustainable

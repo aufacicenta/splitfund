@@ -15,18 +15,25 @@
   &__icon-connected {
     &--wrapper {
       @extend .z-depth-1;
+
+      @include atLargeTablet {
+        width: 18px;
+        height: 18px;
+        margin-top: -2px;
+      }
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 18px;
-      height: 18px;
-      margin-top: -5px;
+      width: 16px;
+      height: 16px;
+      margin-top: -2px;
       border-radius: 50%;
-      background-color: var(--color-status-success);
+      background-color: var(--color-primary);
     }
 
     &--icon {
+      margin-right: -2px;
       font-weight: bold;
       color: var(--color-white);
     }
@@ -34,11 +41,11 @@
 
   &__widget {
     @include atLargeTablet {
-      top: $navbar-height;
+      top: $navbar-height + 2;
       width: 420px;
     }
     position: absolute;
-    top: $navbar-height-mobile;
+    top: $navbar-height-mobile + 2;
     right: 0;
     z-index: $z-index-navigation;
     width: calc(100vw - 32px);

@@ -8,7 +8,7 @@
   left: 0;
   z-index: $z-index-navigation;
   width: 100%;
-  background-color: var(--color-background);
+  background-color: var(--color-primary);
 
   &__dropdown {
     @extend .z-depth-1-half;
@@ -66,6 +66,42 @@
         .dropdown {
           display: block;
         }
+      }
+    }
+  }
+
+  &__logo-mobile,
+  &__logo-desktop {
+    a {
+      @include atLargeTablet {
+        height: $navbar-height;
+      }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: $navbar-height-mobile;
+    }
+  }
+
+  &__logo-mobile {
+    @include atLargeTablet {
+      display: none;
+    }
+
+    svg {
+      width: $navbar-logo-width-mobile;
+    }
+  }
+
+  &__logo-desktop {
+    @include atLargeTablet {
+      display: block;
+    }
+    display: none;
+
+    svg {
+      @include atLargeTablet {
+        width: $navbar-logo-width;
       }
     }
   }

@@ -7,6 +7,7 @@ export type Styles = {
   button_primary_large: string;
   button_primary_medium: string;
   home: string;
+  "home__intro--box": string;
   "home__intro--cta": string;
   "home__intro--headline": string;
   "home__intro--image": string;
@@ -17,6 +18,7 @@ export type Styles = {
   "home__section--como-funciona--box": string;
   "home__section--cta-banner": string;
   "home__section--cta-banner--cta": string;
+  "home__section--cta-banner--description": string;
   "home__section--cta-banner--welcome": string;
   "home__section--intro": string;
   "z-depth-0": string;

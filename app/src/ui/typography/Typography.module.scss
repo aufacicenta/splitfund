@@ -23,12 +23,14 @@
     @include font-properties($typography-headline-1);
     @include normalizeTypography;
     margin-bottom: $space-s;
+    font-style: italic;
     color: var(--color-typography-headline-1);
   }
 
   &__headline2 {
     @include font-properties($typography-headline-2);
     @include normalizeTypography;
+    font-style: italic;
     color: var(--color-typography-headline-2);
   }
 
@@ -36,6 +38,7 @@
     @include font-properties($typography-headline-3);
     @include normalizeTypography;
     margin-bottom: $space-s;
+    font-style: italic;
     color: var(--color-typography-headline-3);
   }
 
@@ -43,6 +46,7 @@
     @include font-properties($typography-headline-4);
     @include normalizeTypography;
     margin-bottom: $space-xs;
+    font-style: italic;
     color: var(--color-typography-headline-4);
 
     [class^="icon-"],
@@ -56,6 +60,7 @@
     @include normalizeTypography;
     margin-top: $space-default;
     margin-bottom: $space-xs;
+    font-style: italic;
     color: var(--color-typography-headline-5);
   }
 
@@ -64,6 +69,7 @@
     @include normalizeTypography;
     margin-top: $space-default;
     margin-bottom: $space-xs;
+    font-style: italic;
     color: var(--color-typography-headline-6);
   }
 

@@ -34,34 +34,36 @@ export const Home: React.FC<HomeProps> = ({ className }) => {
           <Container>
             <Grid.Row>
               <Grid.Col lg={7}>
-                <Typography.Headline1 className={styles["home__intro--headline"]}>
-                  <Trans>{t("intro.h1.top")}</Trans>
-                </Typography.Headline1>
-                <div className={styles["home__powered-by"]}>
-                  <div>
-                    <Typography.Text flat>{t("poweredBy", { ns: "common" })}</Typography.Text>
+                <div className={styles["home__intro--box"]}>
+                  <Typography.Headline1 className={styles["home__intro--headline"]}>
+                    <Trans>{t("intro.h1.top")}</Trans>
+                  </Typography.Headline1>
+                  <div className={styles["home__powered-by"]}>
+                    <div>
+                      <Typography.Text flat>{t("poweredBy", { ns: "common" })}</Typography.Text>
+                    </div>
+                    <div>
+                      <NearLogoHorizontal />
+                    </div>
                   </div>
-                  <div>
-                    <NearLogoHorizontal />
+                  <div className={styles["home__intro--text-block"]}>
+                    <Typography.Headline6>{t("intro.asInvestor.title")}</Typography.Headline6>
+                    <Typography.TextLead>
+                      <Trans>{t("intro.asInvestor.description")}</Trans>{" "}
+                      <Typography.Link className={styles["home__intro--cta"]} href={routes.invest.grid}>
+                        {t("intro.bottomBanner.cta")} <Icon name="icon-chevron-right-circle" />
+                      </Typography.Link>
+                    </Typography.TextLead>
                   </div>
-                </div>
-                <div className={styles["home__intro--text-block"]}>
-                  <Typography.TextBold>{t("intro.asInvestor.title")}</Typography.TextBold>
-                  <Typography.TextLead>
-                    <Trans>{t("intro.asInvestor.description")}</Trans>{" "}
-                    <Typography.Link className={styles["home__intro--cta"]} href={routes.invest.grid}>
-                      {t("intro.bottomBanner.cta")} <Icon name="icon-chevron-right-circle" />
-                    </Typography.Link>
-                  </Typography.TextLead>
-                </div>
-                <div className={styles["home__intro--text-block"]}>
-                  <Typography.TextBold>{t("intro.asBusinessOwner.title")}</Typography.TextBold>
-                  <Typography.TextLead>
-                    <Trans>{t("intro.asBusinessOwner.description")}</Trans>{" "}
-                    <PopupButton id={embedFormConfig.formID} size={60} className={styles["home__intro--cta"]}>
-                      {t("navbar.apply", { ns: "common" })} <Icon name="icon-chevron-right-circle" />
-                    </PopupButton>
-                  </Typography.TextLead>
+                  <div className={styles["home__intro--text-block"]}>
+                    <Typography.Headline6>{t("intro.asBusinessOwner.title")}</Typography.Headline6>
+                    <Typography.TextLead>
+                      <Trans>{t("intro.asBusinessOwner.description")}</Trans>{" "}
+                      <PopupButton id={embedFormConfig.formID} size={60} className={styles["home__intro--cta"]}>
+                        {t("navbar.apply", { ns: "common" })} <Icon name="icon-chevron-right-circle" />
+                      </PopupButton>
+                    </Typography.TextLead>
+                  </div>
                 </div>
               </Grid.Col>
               <Grid.Col>
@@ -79,6 +81,9 @@ export const Home: React.FC<HomeProps> = ({ className }) => {
                 <Typography.Headline4 className={styles["home__section--cta-banner--welcome"]}>
                   <Trans>{t("intro.bottomBanner.welcome")}</Trans>
                 </Typography.Headline4>
+                <Typography.Text className={styles["home__section--cta-banner--description"]}>
+                  <Trans>{t("intro.bottomBanner.description")}</Trans>
+                </Typography.Text>
               </Grid.Col>
               <Grid.Col lg={5} xs={12} sm={6}>
                 <Typography.Link className={styles["home__section--cta-banner--cta"]} href={routes.invest.grid}>
