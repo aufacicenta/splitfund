@@ -3,14 +3,14 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { AppLayout } from "layouts/app-layout/AppLayout";
-import { AuthLayout } from "layouts/auth-layout/AuthLayout";
 import { MapContainer } from "app/map/MapContainer";
+import { NearWalletContextController } from "context/near-wallet/NearWalletContextController";
 
 const Map: NextPage = () => (
   <AppLayout>
-    <AuthLayout>
+    <NearWalletContextController>
       <MapContainer />
-    </AuthLayout>
+    </NearWalletContextController>
   </AppLayout>
 );
 

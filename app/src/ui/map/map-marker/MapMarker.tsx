@@ -1,36 +1,25 @@
 import React from "react";
-
-import { useMapContext } from "hooks/useMapContext/useMapContext";
+import { InfoWindow, Marker } from "@react-google-maps/api";
 
 import { MapMarkerProps } from "./MapMarker.types";
 
-export const MapMarker: React.FC<MapMarkerProps> = ({ markerOptions }) => {
-  const [marker, setMarker] = React.useState<google.maps.Marker>();
-  const mapContext = useMapContext();
+export const MapMarker: React.FC<MapMarkerProps> = ({ children, ...props }) => {
+  const [markerInstance, setMarkerInstance] = React.useState<google.maps.Marker>();
+  const [isInfoWindowVisible, setInfoWindowVisibility] = React.useState(false);
 
-  React.useEffect(() => {
-    if (!marker) {
-      setMarker(new google.maps.Marker());
-    }
+  const onLoad = (marker: google.maps.Marker) => {
+    setMarkerInstance(marker);
+  };
 
-    return () => {
-      if (marker) {
-        marker.setMap(null);
-      }
-    };
-  }, [marker]);
-
-  React.useEffect(() => {
-    if (marker && mapContext) {
-      const {
-        map,
-        mapOptions: { center },
-      } = mapContext;
-
-      marker.setOptions({ ...markerOptions, position: center, map });
-    }
-  }, [mapContext, marker, markerOptions]);
-
-  // google maps takes care of the rest
-  return null;
+  return (
+    <>
+      <Marker {...props} onClick={() => setInfoWindowVisibility(true)} onLoad={onLoad}>
+        {children && isInfoWindowVisible && (
+          <InfoWindow onCloseClick={() => setInfoWindowVisibility(false)} anchor={markerInstance}>
+            {children}
+          </InfoWindow>
+        )}
+      </Marker>
+    </>
+  );
 };

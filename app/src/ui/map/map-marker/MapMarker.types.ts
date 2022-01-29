@@ -1,3 +1,7 @@
+import { MarkerProps } from "@react-google-maps/api";
+import { ReactNode } from "react";
+
 export type MapMarkerProps = {
-  markerOptions: google.maps.MarkerOptions;
-};
+  children?: ReactNode;
+  className?: string;
+} & MarkerProps;
