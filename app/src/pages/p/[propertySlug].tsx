@@ -5,20 +5,19 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { AppLayout } from "layouts/app-layout/AppLayout";
 import { BusinessDetailsProps } from "app/business/BusinessDetails/BusinessDetails.types";
 import { PropertyDetailsContainer } from "app/property-details/PropertyDetailsContainer";
-import { NearWalletContextController } from "context/near-wallet/NearWalletContextController";
 
 const Index: NextPage<BusinessDetailsProps> = () => (
   <AppLayout>
-    <NearWalletContextController>
-      <PropertyDetailsContainer />
-    </NearWalletContextController>
+    <PropertyDetailsContainer />
   </AppLayout>
 );
 
 export async function getStaticPaths() {
   // @TODO get all active campaigns' slug and render dynamically
   return {
-    paths: [{ params: { propertySlug: "example-property-slug_gt" }, locale: "es" }],
+    paths: [
+      { params: { propertySlug: "lot-40-in-exclusive-residential-complex-cafetales-de-santa-ana" }, locale: "en" },
+    ],
     fallback: false,
   };
 }

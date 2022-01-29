@@ -1,5 +1,7 @@
 import { useGetActiveBusinessCampaignsQuery } from "api/codegen";
+
 import { GenericLoader } from "ui/generic-loader/GenericLoader";
+
 import { CampaignsGrid } from "./CampaignsGrid";
 
 export const CampaignsGridContainer = () => {

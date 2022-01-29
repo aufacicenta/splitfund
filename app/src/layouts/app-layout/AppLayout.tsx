@@ -7,6 +7,7 @@ import { GQLClient } from "src/providers/graphql/client";
 
 import { ToastContextController } from "context/toast/ToastContextController";
 import { LocaleSelector } from "ui/locale-selector/LocaleSelector";
+import { NearWalletContextController } from "context/near-wallet/NearWalletContextController";
 
 import { AppLayoutProps } from "./AppLayout.types";
 
@@ -24,7 +25,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <Head>
         <title>{t("head.og.title")}</title>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://use.typekit.net/gnn2apg.css" />
+        <link rel="stylesheet" href="https://use.typekit.net/sly7tqd.css" />
         <meta name="description" content={t("head.og.description")} />
         <meta property="og:title" content={t("head.og.title")} />
         <meta property="og:description" content={t("head.og.description")} />
@@ -40,8 +41,10 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <ApolloProvider client={GQLClient}>
         <ToastContextController>
           <LocaleSelector>
-            <div id="modal-root" />
-            <main>{children}</main>
+            <NearWalletContextController>
+              <div id="modal-root" />
+              <main>{children}</main>
+            </NearWalletContextController>
           </LocaleSelector>
         </ToastContextController>
       </ApolloProvider>

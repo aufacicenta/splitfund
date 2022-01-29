@@ -3,14 +3,11 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { AppLayout } from "layouts/app-layout/AppLayout";
-import { AuthLayout } from "layouts/auth-layout/AuthLayout";
-import { CampaignsGridContainer } from "app/campaigns-grid/CampaignsGridContainer";
+import { PropertiesIndexContainer } from "app/properties-index/PropertiesIndex/PropertiesIndexContainer";
 
 const BusinessCampaigns: NextPage = () => (
   <AppLayout>
-    <AuthLayout>
-      <CampaignsGridContainer />
-    </AuthLayout>
+    <PropertiesIndexContainer />
   </AppLayout>
 );
 

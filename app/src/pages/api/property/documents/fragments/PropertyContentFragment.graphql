@@ -1,0 +1,15 @@
+fragment PropertyContent on PropertyContent {
+  asHtmlString
+  title
+  media {
+    featuredImageUrl
+  }
+  customFields {
+    category
+    countryCode
+    shortDescription
+    latitude
+    longitude
+    nearConditionalEscrowContractAddress
+  }
+}
