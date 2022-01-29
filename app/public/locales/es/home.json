@@ -1,9 +1,10 @@
 {
-  "intro.h1.top": "Invierte en Bienes Raíces, desde $10.00 USD",
+  "intro.h1.top": "Bienes Raíces para Todos",
   "intro.asInvestor.title": "Como inversionista",
   "intro.asInvestor.description": "Diversifica tu portafolio con<br />ingresos pasivos sobre la renta.",
   "intro.asBusinessOwner.title": "Como agente inmobiliario",
   "intro.asBusinessOwner.description": "Accede al mercado global y<br />vende tus propiedades más rápido.",
   "intro.bottomBanner.welcome": "NEAR Holdings, Bienes Raíces para todos.",
+  "intro.bottomBanner.description": "near.holdings es una dApp de inversión en FIBRAS (Fideicomisos de Inversión en Bienes Raíces) que atrae capital de todo el mundo. Invierte en Bienes Raíces desde 1 NEAR.",
   "intro.bottomBanner.cta": "Explorar Propiedades"
 }

@@ -26,11 +26,13 @@
       margin-bottom: $space-m;
     }
 
+    &--box,
     &--image {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      padding: $navbar-height 0;
+    }
+
+    &--image {
+      display: none;
 
       img {
         width: 80%;
@@ -70,7 +72,6 @@
     display: block;
 
     &--intro {
-      padding: $navbar-height 0;
       background-color: var(--color-background);
     }
 
@@ -80,13 +81,20 @@
       background-color: var(--color-primary);
 
       &--welcome {
+        @include atTablet {
+          text-align: left;
+        }
+        text-align: right;
+        color: var(--color-white);
+      }
+
+      &--description {
         @include font-properties($typography-text);
         @include atTablet {
-          @include font-properties($typography-headline-4);
           margin-bottom: 0;
           text-align: left;
         }
-        margin-bottom: $space-m;
+        margin-bottom: $space-ml;
         text-align: right;
         color: var(--color-white);
       }

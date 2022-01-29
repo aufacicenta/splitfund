@@ -10,6 +10,8 @@ export type Styles = {
   "wallet-selector-navbar__dropdown--item-text": string;
   "wallet-selector-navbar__language-selector": string;
   "wallet-selector-navbar__logo": string;
+  "wallet-selector-navbar__logo-desktop": string;
+  "wallet-selector-navbar__logo-mobile": string;
   "wallet-selector-navbar__right": string;
   "wallet-selector-navbar__right--item": string;
   "z-depth-0": string;

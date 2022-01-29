@@ -11,6 +11,9 @@
   @if deep-map-check($fs-map, "font", "transform") {
     text-transform: get("font.transform", $fs-map);
   }
+  @if deep-map-check($fs-map, "font", "style") {
+    font-style: get("font.style", $fs-map);
+  }
   @if deep-map-check($fs-map, "font", "stretch") {
     font-stretch: get("font.stretch", $fs-map);
   }
