@@ -30,4 +30,5 @@ type PropertyContentMedia {
 
 type Query {
   getPropertyBySlug(input: GetPropertyBySlugInput!): Property!
+  getProperties: [Property]
 }

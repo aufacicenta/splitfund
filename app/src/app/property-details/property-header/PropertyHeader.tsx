@@ -16,6 +16,10 @@ export const PropertyHeader: React.FC<PropertyHeaderProps> = ({ className, prope
       lng: Number(property.content.customFields.longitude),
     },
     zoom: 15,
+    controls: {
+      mapTypeControl: false,
+      streetViewControl: false,
+    },
   };
 
   return (
@@ -31,13 +35,8 @@ export const PropertyHeader: React.FC<PropertyHeaderProps> = ({ className, prope
         </Grid.Col>
         <Grid.Col>
           <Card shadow className={styles["property-header__map"]}>
-            <MapView mapOptions={mapOptions}>
-              <MapMarker
-                markerOptions={{
-                  // @TODO set a real icon
-                  icon: "some icon",
-                }}
-              />
+            <MapView center={mapOptions.center} zoom={mapOptions.zoom} options={mapOptions.controls}>
+              <MapMarker position={mapOptions.center} />
             </MapView>
           </Card>
         </Grid.Col>

@@ -11,6 +11,7 @@ import { Resolvers } from "api/codegen/resolvers-types";
 import { routes } from "hooks/useRoutes/useRoutes";
 
 import getPropertyBySlug from "./property/resolvers/queries/getPropertyBySlug";
+import getProperties from "./property/resolvers/queries/getProperties";
 
 const schemas = loadTypedefsSync([path.join(process.cwd(), "/src/pages/api/property/schema.graphql")], {
   loaders: [new GraphQLFileLoader()],
@@ -21,11 +22,13 @@ const typeDefs = schemas.map((schema) => schema.document) as DocumentNode[];
 const resolvers: Resolvers = {
   Query: {
     getPropertyBySlug,
+    getProperties,
   },
 };
 
 export type ResolversContext = {
   req: NextApiRequest;
+  res: NextApiResponse;
   database: {
     driver: typeof Driver;
     dao: BusinessDAO;
