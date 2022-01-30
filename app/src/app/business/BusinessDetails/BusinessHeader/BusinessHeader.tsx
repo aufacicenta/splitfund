@@ -3,8 +3,6 @@ import { useTranslation } from "react-i18next";
 
 import { Typography } from "ui/typography/Typography";
 import { Grid } from "ui/grid/Grid";
-import { MapMarker } from "ui/map/map-marker/MapMarker";
-import { MapView } from "ui/map/map-view/MapView";
 import { Icon } from "ui/icon/Icon";
 
 import { BusinessHeaderProps } from "./BusinessHeader.types";
@@ -12,14 +10,6 @@ import styles from "./BusinessHeader.module.scss";
 
 export const BusinessHeader: React.FC<BusinessHeaderProps> = ({ className, content }) => {
   const { t } = useTranslation("campaign");
-
-  const mapOptions = {
-    center: {
-      lat: Number(content.latitude),
-      lng: Number(content.longitude),
-    },
-    zoom: 15,
-  };
 
   return (
     <section className={clsx(styles["business-header"], className)}>
