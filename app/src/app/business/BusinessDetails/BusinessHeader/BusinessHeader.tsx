@@ -30,16 +30,7 @@ export const BusinessHeader: React.FC<BusinessHeaderProps> = ({ className, conte
       <div className={styles["business-header__info"]}>
         <Grid.Row>
           <Grid.Col lg={4}>
-            <div className={styles["business-header__map"]}>
-              <MapView mapOptions={mapOptions}>
-                <MapMarker
-                  markerOptions={{
-                    // @TODO set a real icon
-                    icon: "some icon",
-                  }}
-                />
-              </MapView>
-            </div>
+            <div className={styles["business-header__map"]}></div>
           </Grid.Col>
           <Grid.Col lg={8}>
             <Typography.Headline1>{content.title}</Typography.Headline1>
