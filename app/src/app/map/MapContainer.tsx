@@ -1,9 +1,10 @@
 import React from "react";
-import { useGetPropertiesQuery } from "api/codegen";
+import { Property, useGetPropertiesQuery } from "api/codegen";
 
-import { Map } from "./Map";
 import { GenericLoader } from "ui/generic-loader/GenericLoader";
 import { mapMarkerPropertiesDataParser } from "providers/property/mapMarkerDataParser";
+
+import { Map } from "./Map";
 
 export const MapContainer = () => {
   const {
@@ -20,7 +21,7 @@ export const MapContainer = () => {
     return null;
   }
 
-  const properties = mapMarkerPropertiesDataParser(getPropertiesQueryData?.getProperties);
+  const properties = mapMarkerPropertiesDataParser(getPropertiesQueryData?.getProperties as Property[]);
 
   return <Map properties={properties} />;
 };
