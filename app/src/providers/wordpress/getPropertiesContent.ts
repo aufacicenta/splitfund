@@ -1,8 +1,7 @@
-/* eslint-disable  no-explicit-any */
-import { PropertyContentFragment } from "api/codegen";
+import { Property } from "api/codegen";
 import WPAPI from "wpapi";
 
-export const getPropertiesContent = async (): Promise<Array<PropertyContentFragment>> => {
+export const getPropertiesContent = async (): Promise<Array<Property>> => {
   const wp = new WPAPI({ endpoint: "https://cms.bancosatoshi.com/wp-json" });
 
   const pages = await wp.pages().param("embed");
