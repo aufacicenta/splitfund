@@ -1,4 +1,5 @@
 @import "src/theme/base";
+@import "src/theme/button/primary";
 
 .wallet-selector-navbar {
   @extend .z-depth-1;
@@ -8,7 +9,7 @@
   left: 0;
   z-index: $z-index-navigation;
   width: 100%;
-  background-color: var(--color-primary);
+  background-color: var(--color-white);
 
   &__dropdown {
     @extend .z-depth-1-half;
@@ -182,6 +183,21 @@
         margin: 0;
         font-weight: $font-weight-bold;
       }
+
+      &:nth-child(n + 2) {
+        margin-left: $space-default;
+      }
+    }
+
+    &--cta {
+      @extend .button_primary;
+
+      @include atLargeTablet {
+        display: block;
+      }
+      @include font-properties($typography-mini-button-label);
+      display: none;
+      padding: $space-s 20px;
     }
   }
 

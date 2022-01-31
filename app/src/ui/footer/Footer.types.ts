@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type WalletSelectorNavbarProps = {
+export type FooterProps = {
   children?: ReactNode;
   className?: string;
 };

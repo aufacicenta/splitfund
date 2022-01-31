@@ -6,7 +6,7 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
   size = 250,
   strokeWidth = 20,
   percentage = 25,
-  color = "#6b6ef9",
+  color = "#153fbd",
 }) => {
   const [progress, setProgress] = useState(0);
 

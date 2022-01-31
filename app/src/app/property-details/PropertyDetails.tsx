@@ -1,10 +1,10 @@
 import clsx from "clsx";
 
-import { WalletSelector } from "ui/wallet-selector/WalletSelector";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 import { MainPanel } from "ui/mainpanel/MainPanel";
 import { Grid } from "ui/grid/Grid";
 import { Card } from "ui/card/Card";
+import { Footer } from "ui/footer/Footer";
 
 import styles from "./PropertyDetails.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails.types";
@@ -23,9 +23,7 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
    */
 
   <>
-    <WalletSelectorNavbar>
-      <WalletSelector />
-    </WalletSelectorNavbar>
+    <WalletSelectorNavbar />
     <div className={clsx(styles["property-details"], className)}>
       <main className={styles["property-details__main"]}>
         <MainPanel>
@@ -63,5 +61,6 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
         </MainPanel>
       </main>
     </div>
+    <Footer />
   </>
 );

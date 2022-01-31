@@ -108,7 +108,7 @@ body[data-theme="dark"] {
   --color-typography-mini-button-label: var(--color-white);
   --color-typography-description: var(--color-dark-5);
   --color-typography-mini-description: var(--color-dark-4);
-  --color-typography-link: var(--color-status-info);
+  --color-typography-link: var(--color-primary);
 
   // Tab
   --color-tab-navigation-border: var(--color-dark-7);
@@ -122,14 +122,14 @@ body[data-theme="dark"] {
   --color-value-decrease-bright: #e76823;
 
   // Forms
-  --color-input-border: var(--color-dark-10);
+  --color-input-border: var(--color-black);
 }
 
 body[data-theme="light"] {
   // Status colors
-  --color-status-info: #5f8afa;
-  --color-status-info-light: rgba(95, 138, 250, 0.6);
-  --color-status-info-lighter: rgba(95, 138, 250, 0.3);
+  --color-status-info: #153fbd;
+  --color-status-info-light: rgba(21, 63, 189, 0.6);
+  --color-status-info-lighter: rgba(21, 63, 189, 0.3);
   --color-status-success: #aad055;
   --color-status-success-light: #d6fff5;
   --color-status-success-lighter: #e6fff9;
@@ -143,7 +143,7 @@ body[data-theme="light"] {
 
   //Gray dark
   --color-white: #ffffff;
-  --color-black: #000000;
+  --color-black: #040c24;
   --color-dark-11: #0f0f13;
   --color-dark-10: #040c24;
   --color-dark-9: #2c2c35;
@@ -157,7 +157,7 @@ body[data-theme="light"] {
   --color-dark-1: #ffffff;
 
   // Brand
-  --color-primary: #040c24;
+  --color-primary: var(--color-black);
   --color-secondary: #7fbc94;
 
   // Background
@@ -165,7 +165,7 @@ body[data-theme="light"] {
   --color-background-contrast: var(--color-dark-2);
 
   // Sidebar
-  --color-sidebar-item: var(--color-dark-10);
+  --color-sidebar-item: var(--color-black);
 
   // Navbar
   --color-navbar-logo: var(--color-primary);
@@ -182,17 +182,17 @@ body[data-theme="light"] {
   --color-button-secondary-hover-text: var(--color-white);
 
   // Typography
-  --color-typography-headline-1: var(--color-dark-10);
-  --color-typography-headline-2: var(--color-dark-10);
-  --color-typography-headline-3: var(--color-dark-10);
-  --color-typography-headline-4: var(--color-dark-10);
-  --color-typography-headline-5: var(--color-dark-10);
+  --color-typography-headline-1: var(--color-black);
+  --color-typography-headline-2: var(--color-black);
+  --color-typography-headline-3: var(--color-black);
+  --color-typography-headline-4: var(--color-black);
+  --color-typography-headline-5: var(--color-black);
   --color-typography-headline-6: var(--color-dark-6);
-  --color-typography-text: var(--color-dark-10);
-  --color-typography-text-bold: var(--color-dark-10);
+  --color-typography-text: var(--color-black);
+  --color-typography-text-bold: var(--color-black);
   --color-typography-subtitle: var(--color-dark-7);
-  --color-typography-button-label: var(--color-dark-10);
-  --color-typography-mini-button-label: var(--color-dark-10);
+  --color-typography-button-label: var(--color-black);
+  --color-typography-mini-button-label: var(--color-black);
   --color-typography-description: var(--color-dark-6);
   --color-typography-mini-description: var(--color-dark-5);
   --color-typography-link: var(--color-primary);
@@ -200,16 +200,16 @@ body[data-theme="light"] {
   // Tab
   --color-tab-navigation-border: var(--color-dark-7);
   --color-tab-item-default: var(--color-dark-7);
-  --color-tab-item-active: var(--color-dark-10);
+  --color-tab-item-active: var(--color-black);
 
   // Data Visualization colors
-  --color-value-increase: #6b6ef9;
-  --color-value-increase-bright: #6b6ef9;
+  --color-value-increase: var(--color-status-info);
+  --color-value-increase-bright: var(--color-status-info);
   --color-value-decrease: #e3935b;
   --color-value-decrease-bright: #e3935b;
 
   // Forms
-  --color-input-border: var(--color-dark-10);
+  --color-input-border: var(--color-black);
 }
 
 hr {
