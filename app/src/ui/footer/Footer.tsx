@@ -38,9 +38,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
         <Grid.Container>
           <Grid.Row>
             <Grid.Col lg={7} xs={6} sm={6}>
-              <Typography.Text flat className={styles["footer__copyright--description"]}>
-                © NEAR Holdings 2022
-              </Typography.Text>
+              <Typography.Text flat>© NEAR Holdings 2022</Typography.Text>
             </Grid.Col>
             <Grid.Col lg={5} xs={6} sm={6}>
               <div className={styles["footer__copyright--social"]}>
