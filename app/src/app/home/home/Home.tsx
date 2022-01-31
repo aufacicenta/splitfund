@@ -11,7 +11,6 @@ import { Icon } from "ui/icon/Icon";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
-import { WalletSelector } from "ui/wallet-selector/WalletSelector";
 import { NearLogoHorizontal } from "ui/icons/NearLogoHorizontal";
 
 import styles from "./Home.module.scss";
@@ -26,9 +25,7 @@ export const Home: React.FC<HomeProps> = ({ className }) => {
 
   return (
     <>
-      <WalletSelectorNavbar>
-        <WalletSelector />
-      </WalletSelectorNavbar>
+      <WalletSelectorNavbar />
       <div className={clsx(styles.home, className)}>
         <section id="intro" className={clsx(styles.home__section, styles["home__section--intro"])}>
           <Container>

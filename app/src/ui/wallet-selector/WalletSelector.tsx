@@ -37,7 +37,7 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
       <Button
         size="xs"
         variant="text"
-        color="light"
+        color="primary"
         onClick={handleOnConnectWalletClick}
         leftIcon={
           wallet.isConnected && (

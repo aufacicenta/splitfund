@@ -1,4 +1,11 @@
 export type Styles = {
+  button_primary: string;
+  button_primary__icon: string;
+  button_primary__icon_left: string;
+  button_primary__icon_right: string;
+  button_primary_invert: string;
+  button_primary_large: string;
+  button_primary_medium: string;
   "wallet-selector-navbar": string;
   "wallet-selector-navbar__account-widget": string;
   "wallet-selector-navbar__center": string;
@@ -13,6 +20,7 @@ export type Styles = {
   "wallet-selector-navbar__logo-desktop": string;
   "wallet-selector-navbar__logo-mobile": string;
   "wallet-selector-navbar__right": string;
+  "wallet-selector-navbar__right--cta": string;
   "wallet-selector-navbar__right--item": string;
   "z-depth-0": string;
   "z-depth-1": string;

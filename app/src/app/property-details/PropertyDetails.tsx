@@ -1,6 +1,5 @@
 import clsx from "clsx";
 
-import { WalletSelector } from "ui/wallet-selector/WalletSelector";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 import { MainPanel } from "ui/mainpanel/MainPanel";
 import { Grid } from "ui/grid/Grid";
@@ -23,9 +22,7 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
    */
 
   <>
-    <WalletSelectorNavbar>
-      <WalletSelector />
-    </WalletSelectorNavbar>
+    <WalletSelectorNavbar />
     <div className={clsx(styles["property-details"], className)}>
       <main className={styles["property-details__main"]}>
         <MainPanel>
