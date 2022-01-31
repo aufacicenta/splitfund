@@ -192,7 +192,11 @@
     &--cta {
       @extend .button_primary;
 
+      @include atLargeTablet {
+        display: block;
+      }
       @include font-properties($typography-mini-button-label);
+      display: none;
       padding: $space-s 20px;
     }
   }

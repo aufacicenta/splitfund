@@ -45,9 +45,6 @@ export const WalletSelectorNavbar: React.FC<WalletSelectorNavbarProps> = () => {
           <Grid.Col lg={5} sm={5} xs={6}>
             <div className={styles["wallet-selector-navbar__right"]}>
               <div className={styles["wallet-selector-navbar__right--item"]}>
-                <WalletSelector />
-              </div>
-              <div className={styles["wallet-selector-navbar__right--item"]}>
                 <div>
                   <PopupButton
                     id={embedFormConfig.formID}
@@ -57,6 +54,9 @@ export const WalletSelectorNavbar: React.FC<WalletSelectorNavbarProps> = () => {
                     {t("navbar.apply", { ns: "common" })}
                   </PopupButton>
                 </div>
+              </div>
+              <div className={styles["wallet-selector-navbar__right--item"]}>
+                <WalletSelector />
               </div>
             </div>
           </Grid.Col>

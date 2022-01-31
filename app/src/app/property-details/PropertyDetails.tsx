@@ -4,6 +4,7 @@ import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNa
 import { MainPanel } from "ui/mainpanel/MainPanel";
 import { Grid } from "ui/grid/Grid";
 import { Card } from "ui/card/Card";
+import { Footer } from "ui/footer/Footer";
 
 import styles from "./PropertyDetails.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails.types";
@@ -60,5 +61,6 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
         </MainPanel>
       </main>
     </div>
+    <Footer />
   </>
 );
