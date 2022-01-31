@@ -1,3 +1,3 @@
-# Banco Satoshi
+# NEAR Holdings
 
-Tu Banco de Inversión, con Bitcoin.
+Real Estate for Everyone. Powered by NEAR Protocol.
