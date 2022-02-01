@@ -108,8 +108,14 @@ const Link: React.FC<TypographyProps & LinkProps> = ({ children, className, href
   </NextLink>
 );
 
-const Anchor: React.FC<AnchorProps> = ({ children, className, truncate, ...props }) => (
-  <a className={clsx(styles.typography__link, className, { [styles.typography__truncate]: truncate })} {...props}>
+const Anchor: React.FC<AnchorProps> = ({ children, className, truncate, flat, ...props }) => (
+  <a
+    className={clsx(styles.typography__link, className, {
+      [styles.typography__truncate]: truncate,
+      [styles.typography__flat]: flat,
+    })}
+    {...props}
+  >
     {children}
   </a>
 );

@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { Hidden } from "react-grid-system";
 
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 import { MainPanel } from "ui/mainpanel/MainPanel";
@@ -45,15 +46,22 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
                   </div>
                   <div className={clsx(styles["property-details__details"])}>
                     <PropertyHeader property={property} />
+                    <Hidden lg md xl xxl>
+                      <InvestmentDetails
+                        contractAddress={property.content.customFields.nearConditionalEscrowContractAddress}
+                      />
+                    </Hidden>
                     <PropertyContent content={property.content} />
                   </div>
                 </div>
               </Grid.Col>
               <Grid.Col lg={4}>
                 <div className={clsx(styles["property-details__sidebar"])}>
-                  <InvestmentDetails
-                    contractAddress={property.content.customFields.nearConditionalEscrowContractAddress}
-                  />
+                  <Hidden xs sm>
+                    <InvestmentDetails
+                      contractAddress={property.content.customFields.nearConditionalEscrowContractAddress}
+                    />
+                  </Hidden>
                 </div>
               </Grid.Col>
             </Grid.Row>

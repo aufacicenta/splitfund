@@ -75,6 +75,10 @@
 
   &__sidebar {
     @include withNavbar(2);
+    @include atLargeTablet {
+      display: block;
+    }
+    display: none;
 
     > div {
       margin-bottom: $space-l;

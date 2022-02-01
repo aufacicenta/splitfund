@@ -190,7 +190,9 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
     if (!wallet.isConnected) {
       return (
         <>
-          <Button onClick={onClickAuthorizeWallet}>Authorize Wallet</Button>
+          <Button color="info" onClick={onClickAuthorizeWallet}>
+            Authorize Wallet
+          </Button>
           <Typography.Description>to load the contract details.</Typography.Description>
         </>
       );
@@ -199,7 +201,9 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
     if (values.isDepositAllowed && !values.isWithdrawalAllowed) {
       return (
         <>
-          <Button onClick={onClickInvestNow}>Invest Now</Button>
+          <Button color="info" onClick={onClickInvestNow}>
+            Invest Now
+          </Button>
           <Typography.Description>
             Offer expires
             <br />
@@ -211,7 +215,12 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
 
     return (
       <>
-        <Button onClick={onClickWithdraw} isLoading={isWithdrawalLoading} disabled={values.depositsOf === "0"}>
+        <Button
+          color="info"
+          onClick={onClickWithdraw}
+          isLoading={isWithdrawalLoading}
+          disabled={values.depositsOf === "0"}
+        >
           Withdraw
         </Button>
         <Typography.Description>
@@ -259,7 +268,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
           </div>
           <hr />
           <Grid.Row>
-            <Grid.Col lg={6}>
+            <Grid.Col lg={6} xs={6}>
               <Typography.TextBold flat># of NEAR wallets</Typography.TextBold>
               <Typography.MiniDescription
                 onClick={() => setIsCurrentInvestorsModalOpen(true)}
@@ -273,7 +282,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
             </Grid.Col>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Col lg={6}>
+            <Grid.Col lg={6} xs={6}>
               <Typography.TextBold flat>Your current deposit</Typography.TextBold>
               <Typography.MiniDescription
                 onClick={() => setIsWithdrawalConditionsModalOpen(true)}
@@ -288,7 +297,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
             </Grid.Col>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Col lg={6}>
+            <Grid.Col lg={6} xs={6}>
               <Typography.TextBold flat>Available balance</Typography.TextBold>
               <Typography.MiniDescription>On wallet: {wallet.address}</Typography.MiniDescription>
             </Grid.Col>
@@ -297,7 +306,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
             </Grid.Col>
           </Grid.Row>
           <Grid.Row nowrap>
-            <Grid.Col lg={6}>
+            <Grid.Col lg={6} xs={6}>
               <Typography.TextBold flat>Escrow Contract</Typography.TextBold>
               <Typography.MiniDescription>Your money is secured by the NEAR Protocol</Typography.MiniDescription>
             </Grid.Col>
