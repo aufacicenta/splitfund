@@ -2,7 +2,7 @@ import { AnchorHTMLAttributes, ButtonHTMLAttributes, DetailedHTMLProps, ReactNod
 
 export type ButtonCommonProps = {
   children: ReactNode;
-  color?: "primary" | "secondary" | "success" | "danger" | "dark" | "light";
+  color?: "primary" | "secondary" | "success" | "danger" | "dark" | "light" | "info";
   // auto size means m on destkop and xs on mobile
   size?: "xs" | "s" | "m" | "l" | "auto";
   variant?: "contained" | "outlined" | "inverted" | "text";

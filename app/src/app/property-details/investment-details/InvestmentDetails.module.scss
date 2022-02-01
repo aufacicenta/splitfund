@@ -40,6 +40,8 @@
   }
 
   &__clickable {
+    text-decoration: underline;
+
     &:hover {
       cursor: pointer;
     }

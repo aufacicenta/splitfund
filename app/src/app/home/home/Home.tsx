@@ -11,8 +11,8 @@ import { Icon } from "ui/icon/Icon";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
-import { WalletSelector } from "ui/wallet-selector/WalletSelector";
 import { NearLogoHorizontal } from "ui/icons/NearLogoHorizontal";
+import { Footer } from "ui/footer/Footer";
 
 import styles from "./Home.module.scss";
 import { HomeProps } from "./Home.types";
@@ -26,9 +26,7 @@ export const Home: React.FC<HomeProps> = ({ className }) => {
 
   return (
     <>
-      <WalletSelectorNavbar>
-        <WalletSelector />
-      </WalletSelectorNavbar>
+      <WalletSelectorNavbar />
       <div className={clsx(styles.home, className)}>
         <section id="intro" className={clsx(styles.home__section, styles["home__section--intro"])}>
           <Container>
@@ -51,7 +49,7 @@ export const Home: React.FC<HomeProps> = ({ className }) => {
                     <Typography.TextLead>
                       <Trans>{t("intro.asInvestor.description")}</Trans>{" "}
                       <Typography.Link className={styles["home__intro--cta"]} href={routes.invest.grid}>
-                        {t("intro.bottomBanner.cta")} <Icon name="icon-chevron-right-circle" />
+                        {t("intro.bottomBanner.cta", { ns: "common" })} <Icon name="icon-chevron-right-circle" />
                       </Typography.Link>
                     </Typography.TextLead>
                   </div>
@@ -74,25 +72,7 @@ export const Home: React.FC<HomeProps> = ({ className }) => {
             </Grid.Row>
           </Container>
         </section>
-        <section id="cta-banner" className={clsx(styles.home__section, styles["home__section--cta-banner"])}>
-          <Container>
-            <Grid.Row>
-              <Grid.Col lg={7} xs={12} sm={6}>
-                <Typography.Headline4 className={styles["home__section--cta-banner--welcome"]}>
-                  <Trans>{t("intro.bottomBanner.welcome")}</Trans>
-                </Typography.Headline4>
-                <Typography.Text className={styles["home__section--cta-banner--description"]}>
-                  <Trans>{t("intro.bottomBanner.description")}</Trans>
-                </Typography.Text>
-              </Grid.Col>
-              <Grid.Col lg={5} xs={12} sm={6}>
-                <Typography.Link className={styles["home__section--cta-banner--cta"]} href={routes.invest.grid}>
-                  {t("intro.bottomBanner.cta")} <Icon name="icon-chevron-right-circle" />
-                </Typography.Link>
-              </Grid.Col>
-            </Grid.Row>
-          </Container>
-        </section>
+        <Footer />
       </div>
     </>
   );

@@ -15,5 +15,8 @@
   "toast.cta.dismiss": "Entendido",
   "authContextController.error.signIn": "No pudimos enviar un correo de ingreso. Intenta de nuevo.",
   "typeformEmbedForm.buttonLabel": "Publica tus propiedades",
-  "poweredBy": "Hecho con"
+  "poweredBy": "Hecho con",
+  "intro.bottomBanner.welcome": "NEAR Holdings, Bienes Raíces para todos.",
+  "intro.bottomBanner.description": "near.holdings es una dApp de inversión en FIBRAS (Fideicomisos de Inversión en Bienes Raíces) que atrae capital de todo el mundo.<br />Invierte en Bienes Raíces desde 1 NEAR.",
+  "intro.bottomBanner.cta": "Explorar Propiedades"
 }

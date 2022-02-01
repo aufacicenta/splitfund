@@ -39,8 +39,8 @@ const Headline2: React.FC<TypographyProps> = ({ children, className }) => (
   <h2 className={clsx(styles.typography__headline2, className)}>{children}</h2>
 );
 
-const Headline3: React.FC<TypographyProps> = ({ children, className }) => (
-  <h3 className={clsx(styles.typography__headline3, className)}>{children}</h3>
+const Headline3: React.FC<TypographyProps> = ({ children, className, flat }) => (
+  <h3 className={clsx(styles.typography__headline3, className, { [styles.typography__flat]: flat })}>{children}</h3>
 );
 
 const Headline4: React.FC<TypographyProps> = ({ children, className, inline }) => (
@@ -108,8 +108,14 @@ const Link: React.FC<TypographyProps & LinkProps> = ({ children, className, href
   </NextLink>
 );
 
-const Anchor: React.FC<AnchorProps> = ({ children, className, truncate, ...props }) => (
-  <a className={clsx(styles.typography__link, className, { [styles.typography__truncate]: truncate })} {...props}>
+const Anchor: React.FC<AnchorProps> = ({ children, className, truncate, flat, ...props }) => (
+  <a
+    className={clsx(styles.typography__link, className, {
+      [styles.typography__truncate]: truncate,
+      [styles.typography__flat]: flat,
+    })}
+    {...props}
+  >
     {children}
   </a>
 );

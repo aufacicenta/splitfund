@@ -133,6 +133,21 @@ $HALF_LOADER_SIZE: 15px;
     }
   }
 
+  &--info {
+    color: var(--color-white);
+    background: var(--color-status-info);
+
+    svg {
+      fill: var(--color-button-primary-text);
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      background: rgba(var(--color-status-info), 0.9);
+    }
+  }
+
   &--danger {
     color: var(--color-white);
     background: var(--color-status-critical);
@@ -269,6 +284,7 @@ $HALF_LOADER_SIZE: 15px;
   }
 
   &.button--text {
+    padding: 0;
     transition: opacity $duration-medium;
 
     &.button--primary,

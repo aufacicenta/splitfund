@@ -53,7 +53,7 @@
       padding: 0;
       text-transform: inherit;
       text-decoration: underline;
-      color: var(--color-primary);
+      color: var(--color-black);
       background-color: transparent;
 
       &:hover {
@@ -78,7 +78,7 @@
     &--cta-banner {
       min-height: 30vh;
       padding: $navbar-height 0;
-      background-color: var(--color-primary);
+      background-color: var(--color-black);
 
       &--welcome {
         @include atTablet {

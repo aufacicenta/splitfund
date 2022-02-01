@@ -32,6 +32,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
         [styles["button--primary"]]: color === "primary",
         [styles["button--secondary"]]: color === "secondary",
         [styles["button--success"]]: color === "success",
+        [styles["button--info"]]: color === "info",
         [styles["button--danger"]]: color === "danger",
         [styles["button--dark"]]: color === "dark",
         [styles["button--light"]]: color === "light",

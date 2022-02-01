@@ -12,7 +12,8 @@ export type OnSubmitDeposit = {
 
 export type ConditionalEscrowValues = {
   totalFunds: string;
-  minFundingAmount: string;
+  fundingAmountLimit: string;
+  unpaidFundingAmount: string;
   totalFundedPercentage: number;
   currentCoinPrice: number;
   priceEquivalence: number;
@@ -27,7 +28,8 @@ export type ConditionalEscrowValues = {
 
 export type ConditionalEscrowMethods = {
   get_total_funds: () => Promise<number>;
-  get_min_funding_amount: () => Promise<number>;
+  get_funding_amount_limit: () => Promise<number>;
+  get_unpaid_funding_amount: () => Promise<number>;
   get_deposits: () => Promise<string[][]>;
   get_expiration_date: () => Promise<number>;
   get_recipient_account_id: () => Promise<string>;

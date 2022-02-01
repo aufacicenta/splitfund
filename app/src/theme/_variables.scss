@@ -5,7 +5,7 @@
 
 $navbar-height: 70px;
 $navbar-height-mobile: 56px;
-$navbar-logo-width: 210px;
+$navbar-logo-width: 42px;
 $navbar-logo-width-mobile: 35px;
 
 // Z-index
@@ -251,7 +251,7 @@ $font-size-5: rem(16) !default; //1
 $line-height-baseline: 1.6 !default;
 
 // Spacing
-$space-default: 16px !default;
+$space-default: rem(16) !default;
 $gutter-width: $space-default * 2;
 $space-xxs: $space-default / 8 !default;
 $space-xs: $space-default / 4 !default;

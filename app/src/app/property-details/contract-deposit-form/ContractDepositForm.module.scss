@@ -1,7 +1,10 @@
 @import "src/theme/base";
 
 .contract-deposit-form {
-  width: 80%;
+  @include atLargeTablet {
+    width: 80%;
+  }
+  width: 100%;
 
   &__input {
     input {
@@ -28,6 +31,13 @@
       margin-top: $space-default;
 
       button {
+        @include font-properties($typography-mini-button-label);
+        @include atLargeTablet {
+          @include font-properties($typography-button-label);
+          padding: 13px 24px;
+        }
+        padding: $space-s 20px;
+
         &:nth-child(n + 2) {
           margin-left: $space-default;
         }
