@@ -49,7 +49,7 @@ export const Home: React.FC<HomeProps> = ({ className }) => {
                     <Typography.TextLead>
                       <Trans>{t("intro.asInvestor.description")}</Trans>{" "}
                       <Typography.Link className={styles["home__intro--cta"]} href={routes.invest.grid}>
-                        {t("intro.bottomBanner.cta")} <Icon name="icon-chevron-right-circle" />
+                        {t("intro.bottomBanner.cta", { ns: "common" })} <Icon name="icon-chevron-right-circle" />
                       </Typography.Link>
                     </Typography.TextLead>
                   </div>
