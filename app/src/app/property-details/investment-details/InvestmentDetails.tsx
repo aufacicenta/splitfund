@@ -325,7 +325,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       {isBuyOwnershipInfoModalOpen && (
         <Modal isOpened onClose={() => null} aria-labelledby="Buy Ownership Modal Window">
           <Modal.Header>
-            <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
+            <Typography.Headline3 flat className={styles["investment-details__register-interest-modal--header"]}>
               Buy Property Ownership
             </Typography.Headline3>
           </Modal.Header>
@@ -387,7 +387,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       {isCurrentInvestorsModalOpen && (
         <Modal isOpened onClose={() => null} aria-labelledby="Current Investors Modal Window">
           <Modal.Header>
-            <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
+            <Typography.Headline3 flat className={styles["investment-details__register-interest-modal--header"]}>
               Current Investors
             </Typography.Headline3>
           </Modal.Header>
@@ -413,7 +413,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       {isWithdrawalConditionsModalOpen && (
         <Modal isOpened onClose={() => null} aria-labelledby="Withdrawal Conditions Modal Window">
           <Modal.Header>
-            <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
+            <Typography.Headline3 flat className={styles["investment-details__register-interest-modal--header"]}>
               Withdrawal Conditions
             </Typography.Headline3>
           </Modal.Header>
