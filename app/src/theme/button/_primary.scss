@@ -1,9 +1,9 @@
 .button_primary {
   @include font-properties($typography-button-label);
+  padding: 13px 24px;
   min-width: 88px;
   border: none;
   border-radius: $border-radius-button;
-  padding: 13px 24px;
   text-transform: uppercase;
   color: var(--color-button-primary-text);
   background-color: var(--color-button-primary);

@@ -29,7 +29,8 @@ const VIEW_METHODS = [
   "get_deposits",
   "get_total_funds",
   "get_expiration_date",
-  "get_min_funding_amount",
+  "get_funding_amount_limit",
+  "get_unpaid_funding_amount",
   "get_recipient_account_id",
   "is_deposit_allowed",
   "is_withdrawal_allowed",
@@ -44,7 +45,8 @@ const ContractDepositForm = dynamic<ContractDepositFormProps>(
 
 const getDefaultContractValues = (): ConditionalEscrowValues => ({
   totalFunds: near.formatAccountBalance("0"),
-  minFundingAmount: near.formatAccountBalance("0"),
+  fundingAmountLimit: near.formatAccountBalance("0"),
+  unpaidFundingAmount: near.formatAccountBalance("0"),
   depositsOf: "0",
   depositsOfPercentage: 0,
   currentCoinPrice: 0,
@@ -82,8 +84,10 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
 
     const getConstantValues = async () => {
       const getTotalFundsResponse = await contract!.get_total_funds();
-      const getMinFundingAmountResponse = await contract!.get_min_funding_amount();
-      const totalFundedPercentage = (BigInt(getTotalFundsResponse) * BigInt(100)) / BigInt(getMinFundingAmountResponse);
+      const getFundingAmountLimitResponse = await contract!.get_funding_amount_limit();
+      const getUnpaidFundingAmountResponse = await contract!.get_unpaid_funding_amount();
+      const totalFundedPercentage =
+        (BigInt(getTotalFundsResponse) * BigInt(100)) / BigInt(getFundingAmountLimitResponse);
 
       const isDepositAllowed = await contract!.is_deposit_allowed();
       const isWithdrawalAllowed = await contract!.is_withdrawal_allowed();
@@ -91,18 +95,19 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       const deposits = await contract!.get_deposits();
       const expirationDate = await contract!.get_expiration_date();
       const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address ?? wallet.context.guest.address });
-      const depositsOfPercentage = (BigInt(depositsOfResponse) * BigInt(100)) / BigInt(getMinFundingAmountResponse);
+      const depositsOfPercentage = (BigInt(depositsOfResponse) * BigInt(100)) / BigInt(getFundingAmountLimitResponse);
 
       const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
       const priceEquivalence =
         currentCoinPrice *
-        Number(near.formatAccountBalanceFlat(BigInt(getMinFundingAmountResponse).toString()).replace(",", ""));
+        Number(near.formatAccountBalanceFlat(BigInt(getFundingAmountLimitResponse).toString()).replace(",", ""));
 
       const recipientAccountId = await contract!.get_recipient_account_id();
 
       setValues({
         totalFunds: near.formatAccountBalance(BigInt(getTotalFundsResponse).toString()),
-        minFundingAmount: near.formatAccountBalance(BigInt(getMinFundingAmountResponse).toString()),
+        fundingAmountLimit: near.formatAccountBalance(BigInt(getFundingAmountLimitResponse).toString()),
+        unpaidFundingAmount: near.formatAccountBalance(BigInt(getUnpaidFundingAmountResponse).toString()),
         depositsOf: BigInt(depositsOfResponse).toString(),
         totalFundedPercentage: Number(totalFundedPercentage),
         depositsOfPercentage: Number(depositsOfPercentage),
@@ -259,7 +264,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
               </Typography.TextBold>
             </div>
             <div className={styles["investment-details__price-description"]}>
-              <Typography.TextBold flat>{values.minFundingAmount}</Typography.TextBold>
+              <Typography.TextBold flat>{values.fundingAmountLimit}</Typography.TextBold>
               <Typography.MiniDescription>
                 {formatFiatCurrency(values.priceEquivalence!)} USD ·{" "}
                 <Typography.Anchor href="#">1 Ⓝ = {values.currentCoinPrice} USD</Typography.Anchor>
@@ -325,7 +330,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       {isBuyOwnershipInfoModalOpen && (
         <Modal isOpened onClose={() => null} aria-labelledby="Buy Ownership Modal Window">
           <Modal.Header>
-            <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
+            <Typography.Headline3 flat className={styles["investment-details__register-interest-modal--header"]}>
               Buy Property Ownership
             </Typography.Headline3>
           </Modal.Header>
@@ -387,7 +392,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       {isCurrentInvestorsModalOpen && (
         <Modal isOpened onClose={() => null} aria-labelledby="Current Investors Modal Window">
           <Modal.Header>
-            <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
+            <Typography.Headline3 flat className={styles["investment-details__register-interest-modal--header"]}>
               Current Investors
             </Typography.Headline3>
           </Modal.Header>
@@ -413,7 +418,7 @@ export const InvestmentDetails: React.FC<InvestmentDetailsProps> = ({ contractAd
       {isWithdrawalConditionsModalOpen && (
         <Modal isOpened onClose={() => null} aria-labelledby="Withdrawal Conditions Modal Window">
           <Modal.Header>
-            <Typography.Headline3 className={styles["investment-details__register-interest-modal--header"]}>
+            <Typography.Headline3 flat className={styles["investment-details__register-interest-modal--header"]}>
               Withdrawal Conditions
             </Typography.Headline3>
           </Modal.Header>
