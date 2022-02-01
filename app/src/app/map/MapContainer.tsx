@@ -1,5 +1,5 @@
 import React from "react";
-import { Property, useGetPropertiesQuery } from "api/codegen";
+import { useGetPropertiesQuery } from "api/codegen";
 
 import { GenericLoader } from "ui/generic-loader/GenericLoader";
 import { mapMarkerPropertiesDataParser } from "providers/property/mapMarkerDataParser";
@@ -17,11 +17,11 @@ export const MapContainer = () => {
     return <GenericLoader />;
   }
 
-  if (getPropertiesQueryError) {
+  if (getPropertiesQueryError || !getPropertiesQueryData?.getProperties) {
     return null;
   }
 
-  const properties = mapMarkerPropertiesDataParser(getPropertiesQueryData?.getProperties as Property[]);
+  const properties = mapMarkerPropertiesDataParser(getPropertiesQueryData?.getProperties);
 
   return <Map properties={properties} />;
 };

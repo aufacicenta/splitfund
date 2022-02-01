@@ -12,14 +12,12 @@ export const MapMarker: React.FC<MapMarkerProps> = ({ children, ...props }) => {
   };
 
   return (
-    <>
-      <Marker {...props} onClick={() => setInfoWindowVisibility(true)} onLoad={onLoad}>
-        {children && isInfoWindowVisible && (
-          <InfoWindow onCloseClick={() => setInfoWindowVisibility(false)} anchor={markerInstance}>
-            {children}
-          </InfoWindow>
-        )}
-      </Marker>
-    </>
+    <Marker {...props} onClick={() => setInfoWindowVisibility(true)} onLoad={onLoad}>
+      {children && isInfoWindowVisible && (
+        <InfoWindow onCloseClick={() => setInfoWindowVisibility(false)} anchor={markerInstance}>
+          {children}
+        </InfoWindow>
+      )}
+    </Marker>
   );
 };

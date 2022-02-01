@@ -2,7 +2,6 @@ import React from "react";
 
 import { MapView } from "ui/map/map-view/MapView";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
-import { WalletSelector } from "ui/wallet-selector/WalletSelector";
 import { MapMarker } from "ui/map/map-marker/MapMarker";
 
 import { MapProps, PropertyMapMarker } from "./Map.types";
@@ -27,9 +26,7 @@ export const Map: React.FC<MapProps> = ({ properties }) => {
 
   return (
     <>
-      <WalletSelectorNavbar>
-        <WalletSelector />
-      </WalletSelectorNavbar>
+      <WalletSelectorNavbar />
       <div className={styles.map}>
         <MapView center={location} zoom={8} options={{ mapTypeControl: false }}>
           {properties?.map((property: PropertyMapMarker) => (

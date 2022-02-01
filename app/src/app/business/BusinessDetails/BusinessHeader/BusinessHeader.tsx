@@ -20,7 +20,7 @@ export const BusinessHeader: React.FC<BusinessHeaderProps> = ({ className, conte
       <div className={styles["business-header__info"]}>
         <Grid.Row>
           <Grid.Col lg={4}>
-            <div className={styles["business-header__map"]}></div>
+            <div className={styles["business-header__map"]} />
           </Grid.Col>
           <Grid.Col lg={8}>
             <Typography.Headline1>{content.title}</Typography.Headline1>
