@@ -7,7 +7,7 @@ import { Icon } from "ui/icon/Icon";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { NearHoldingsIcon } from "ui/icons/NearHoldingsIcon";
 import { NearLogoHorizontal } from "ui/icons/NearLogoHorizontal";
-import { AufacicentaIcon } from "ui/icons/Aufacicentaicon";
+import { AufacicentaIcon } from "ui/icons/AufacicentaIcon";
 
 import styles from "./Footer.module.scss";
 import { FooterProps } from "./Footer.types";
