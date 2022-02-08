@@ -3,27 +3,59 @@
 .footer {
   display: block;
 
+  &__powered-by {
+    display: flex;
+
+    p {
+      color: var(--color-background);
+    }
+
+    > div,
+    a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    svg {
+      width: 112px;
+      fill: var(--color-background);
+    }
+  }
+
   &__cta-banner {
-    min-height: 30vh;
     padding: $navbar-height 0;
     background-color: var(--color-black);
 
-    &--welcome {
-      @include atTablet {
-        text-align: left;
+    &--icon {
+      display: block;
+      margin-bottom: $space-ml;
+
+      svg {
+        width: 40px;
       }
-      text-align: right;
+    }
+
+    &--link {
+      @include atLargeTablet {
+        text-align: right;
+      }
+      display: block;
+      margin-bottom: $space-default;
+      text-decoration: none;
+      color: var(--color-background);
+    }
+
+    &--welcome {
       color: var(--color-white);
     }
 
     &--description {
-      @include font-properties($typography-text);
-      @include atTablet {
+      @include atLargeTablet {
         margin-bottom: 0;
-        text-align: left;
+        text-align: right;
       }
-      margin-bottom: $space-ml;
-      text-align: right;
+      margin-bottom: $space-l;
       color: var(--color-white);
     }
 
@@ -37,14 +69,31 @@
 
   &__copyright {
     padding: $space-ml 0;
-    background-color: var(--color-background-contrast);
+    background-color: var(--color-black);
 
     &--social {
       display: flex;
       justify-content: flex-end;
 
+      &-text {
+        color: var(--color-background);
+      }
+
       &-icon {
         font-size: $font-size-headline-5;
+        color: var(--color-background);
+      }
+
+      &-aufacicenta-icon {
+        width: 24px;
+        color: var(--color-background);
+      }
+
+      &-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 43px;
       }
     }
   }

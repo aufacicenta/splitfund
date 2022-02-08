@@ -1,0 +1,51 @@
+@import "src/theme/base";
+@import "src/theme/button/button-outline";
+
+.property-card {
+  display: block;
+
+  &__title {
+    margin-top: 0;
+    color: var(--color-typography-text);
+  }
+
+  &__description {
+    color: var(--color-typography-text);
+  }
+
+  &__sold-by {
+    color: var(--color-typography-text);
+  }
+
+  &__price {
+    display: block;
+  }
+
+  &__exchange-rate {
+    display: block;
+  }
+
+  &__category {
+    display: block;
+    text-align: right;
+  }
+
+  &__cta {
+    @extend .button-outline;
+    display: block;
+    width: 100%;
+    padding: 9px 24px;
+    text-align: center;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  :global {
+    .card__background-image {
+      height: 420px;
+    }
+  }
+}

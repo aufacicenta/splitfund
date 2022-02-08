@@ -2,7 +2,7 @@
   @include font-properties($typography-button-label);
   padding: 13px 24px;
   min-width: 88px;
-  border: none;
+  border: 2px solid var(--color-button-primary);
   border-radius: $border-radius-button;
   text-transform: uppercase;
   color: var(--color-button-primary-text);

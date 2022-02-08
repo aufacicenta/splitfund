@@ -1,3 +1,3 @@
-import { Home } from "./Home";
+import { Home2 } from "./Home2";
 
-export const HomeContainer = () => <Home />;
+export const HomeContainer = () => <Home2 />;

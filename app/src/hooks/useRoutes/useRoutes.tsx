@@ -20,6 +20,7 @@ type RouteMap = {
     data: string;
   };
   campaign: (campaignSlug: string) => string;
+  property: (propertySlug: string) => string;
   home: string;
 };
 
@@ -41,11 +42,12 @@ export const routes: RouteMap = {
   },
   invest: {
     grid: "/i",
-    map: "/i/map", // @TODO resolve i18n paths for all languages
+    map: "/i/map",
     data: "/i/data",
   },
   home: "/",
   campaign: (campaignSlug) => `/c/${campaignSlug}`,
+  property: (propertySlug) => `/p/${propertySlug}`,
 };
 
 export const useRoutes: () => RouteMap = () => routes;
