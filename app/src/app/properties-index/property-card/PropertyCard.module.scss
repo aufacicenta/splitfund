@@ -1,4 +1,5 @@
 @import "src/theme/base";
+@import "src/theme/button/button-outline";
 
 .property-card {
   display: block;
@@ -27,6 +28,19 @@
   &__category {
     display: block;
     text-align: right;
+  }
+
+  &__cta {
+    @extend .button-outline;
+    display: block;
+    width: 100%;
+    padding: 9px 24px;
+    text-align: center;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 
   :global {

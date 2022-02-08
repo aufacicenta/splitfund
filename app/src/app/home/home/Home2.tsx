@@ -33,9 +33,9 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
                     <div>
                       <Typography.Text flat>{t("poweredBy", { ns: "common" })}</Typography.Text>
                     </div>
-                    <div>
+                    <Typography.Anchor href="https://near.org" target="_blank">
                       <NearLogoHorizontal />
-                    </div>
+                    </Typography.Anchor>
                   </div>
                   <div className={styles["home__intro--text-block"]}>
                     <Typography.TextLead>

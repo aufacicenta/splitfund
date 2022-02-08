@@ -4,6 +4,7 @@ export type Styles = {
   "footer__copyright--social": string;
   "footer__copyright--social-aufacicenta-icon": string;
   "footer__copyright--social-icon": string;
+  "footer__copyright--social-item": string;
   "footer__copyright--social-text": string;
   "footer__cta-banner": string;
   "footer__cta-banner--cta": string;

@@ -10,7 +10,8 @@
     display: flex;
     margin-bottom: $space-ml;
 
-    > div {
+    > div,
+    a {
       display: flex;
       flex-direction: column;
       justify-content: center;

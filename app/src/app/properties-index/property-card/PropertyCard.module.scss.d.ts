@@ -1,6 +1,15 @@
 export type Styles = {
+  "button-outline": string;
+  "button-outline__icon": string;
+  "button-outline_inverse": string;
+  "button-outline_inverse-thin": string;
+  "button-outline_large": string;
+  "button-outline_medium": string;
+  "button-outline--large": string;
+  "button-outline--medium": string;
   "property-card": string;
   "property-card__category": string;
+  "property-card__cta": string;
   "property-card__description": string;
   "property-card__exchange-rate": string;
   "property-card__price": string;

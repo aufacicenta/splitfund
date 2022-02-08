@@ -5,13 +5,13 @@
 
   &__powered-by {
     display: flex;
-    margin-bottom: $space-ml;
 
     p {
       color: var(--color-background);
     }
 
-    > div {
+    > div,
+    a {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -37,26 +37,25 @@
     }
 
     &--link {
+      @include atLargeTablet {
+        text-align: right;
+      }
       display: block;
       margin-bottom: $space-default;
-      text-align: right;
       text-decoration: none;
       color: var(--color-background);
     }
 
     &--welcome {
-      @include atTablet {
-        text-align: left;
-      }
-      text-align: right;
       color: var(--color-white);
     }
 
     &--description {
-      @include atTablet {
-        text-align: left;
+      @include atLargeTablet {
+        margin-bottom: 0;
+        text-align: right;
       }
-      text-align: right;
+      margin-bottom: $space-l;
       color: var(--color-white);
     }
 
@@ -88,6 +87,13 @@
       &-aufacicenta-icon {
         width: 24px;
         color: var(--color-background);
+      }
+
+      &-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 43px;
       }
     }
   }
