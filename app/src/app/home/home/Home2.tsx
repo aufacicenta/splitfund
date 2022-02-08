@@ -8,7 +8,7 @@ import { NearLogoHorizontal } from "ui/icons/NearLogoHorizontal";
 import { Footer } from "ui/footer/Footer";
 import { WalletSelectorNavbar2 } from "ui/wallet-selector-navbar/WalletSelectorNavbar2";
 import { Button } from "ui/button/Button";
-import { Card } from "ui/card/Card";
+import { PropertyCard } from "app/properties-index/property-card/PropertyCard";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -64,13 +64,13 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
           <Container>
             <Typography.Headline2>Featured Active Holdings</Typography.Headline2>
             <Typography.TextLead>Submitting an asset is open &amp; decentralized.</Typography.TextLead>
-            <Grid.Row>
-              <Grid.Col lg={4}>
-                <Card>
-                  <Card.Content>content</Card.Content>
-                </Card>
-              </Grid.Col>
-            </Grid.Row>
+            <div className={styles["home__featured-assets--cards"]}>
+              <Grid.Row>
+                <Grid.Col lg={4}>
+                  <PropertyCard />
+                </Grid.Col>
+              </Grid.Row>
+            </div>
           </Container>
         </section>
         <section id="what-is" className={clsx(styles.home__section, styles["home__what-is"])}>

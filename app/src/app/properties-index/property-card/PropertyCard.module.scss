@@ -1,0 +1,37 @@
+@import "src/theme/base";
+
+.property-card {
+  display: block;
+
+  &__title {
+    margin-top: 0;
+    color: var(--color-typography-text);
+  }
+
+  &__description {
+    color: var(--color-typography-text);
+  }
+
+  &__sold-by {
+    color: var(--color-typography-text);
+  }
+
+  &__price {
+    display: block;
+  }
+
+  &__exchange-rate {
+    display: block;
+  }
+
+  &__category {
+    display: block;
+    text-align: right;
+  }
+
+  :global {
+    .card__background-image {
+      height: 420px;
+    }
+  }
+}

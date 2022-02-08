@@ -17,9 +17,12 @@ export const Card: React.FC<CardProps> & {
   >
     {backgroundImageUrl && (
       <div
-        className={clsx({
-          [styles["card__background-image"]]: !!backgroundImageUrl,
-        })}
+        className={clsx(
+          {
+            [styles["card__background-image"]]: !!backgroundImageUrl,
+          },
+          "card__background-image",
+        )}
         style={{ backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : undefined }}
       />
     )}

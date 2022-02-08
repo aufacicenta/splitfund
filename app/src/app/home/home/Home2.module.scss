@@ -88,6 +88,10 @@
     min-height: 30vh;
     padding: $navbar-height 0;
     background-color: var(--color-background);
+
+    &--cards {
+      margin-top: $space-l;
+    }
   }
 
   &__what-is {

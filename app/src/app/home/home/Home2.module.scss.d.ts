@@ -8,6 +8,7 @@ export type Styles = {
   button_primary_medium: string;
   home: string;
   "home__featured-assets": string;
+  "home__featured-assets--cards": string;
   home__intro: string;
   "home__intro--box": string;
   "home__intro--cta": string;
