@@ -1,0 +1,35 @@
+@import "src/theme/base";
+
+.property-details {
+  position: relative;
+
+  &__main {
+    @include withNavbar(1.2);
+  }
+
+  &__card {
+    margin-bottom: $navbar-height;
+  }
+
+  &__row-reverse {
+    @include atLargeTablet {
+      flex-flow: initial;
+    }
+    flex-flow: column-reverse;
+  }
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  &__actions {
+    &--secondary {
+      display: flex;
+      justify-content: space-between;
+      padding: $space-default;
+    }
+  }
+}

@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 
-export type PropertyCardProps = {
+export type HorizontalLineProps = {
   children?: ReactNode;
   className?: string;
-  minimal?: boolean;
-  action: ReactNode;
+  flat?: boolean;
 };

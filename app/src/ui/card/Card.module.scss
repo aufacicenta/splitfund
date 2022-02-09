@@ -1,6 +1,9 @@
 @import "src/theme/base";
 
 .card {
+  border-radius: $border-radius;
+  background-color: var(--color-background);
+
   &__shadow {
     @extend .z-depth-1;
   }
@@ -10,15 +13,19 @@
   }
 
   &__actions {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid var(--color-background-contrast);
+    padding: $space-default;
+
     > button,
     > p {
+      align-self: center;
+
       &:nth-child(n + 2) {
         margin-left: $space-default;
       }
     }
-    display: flex;
-    border-top: 1px solid var(--color-background-contrast);
-    padding: $space-default;
   }
 
   &__background-image {
@@ -33,6 +40,4 @@
   &__link {
     cursor: pointer;
   }
-  border-radius: $border-radius;
-  background-color: var(--color-background);
 }

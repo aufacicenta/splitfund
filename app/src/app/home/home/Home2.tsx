@@ -9,12 +9,14 @@ import { Footer } from "ui/footer/Footer";
 import { WalletSelectorNavbar2 } from "ui/wallet-selector-navbar/WalletSelectorNavbar2";
 import { Button } from "ui/button/Button";
 import { PropertyCard } from "app/properties-index/property-card/PropertyCard";
+import { useRoutes } from "hooks/useRoutes/useRoutes";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
 
 export const Home2: React.FC<HomeProps> = ({ className }) => {
   const { t } = useTranslation(["home", "common"]);
+  const routes = useRoutes();
 
   return (
     <>
@@ -67,7 +69,14 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
             <div className={styles["home__featured-assets--cards"]}>
               <Grid.Row>
                 <Grid.Col lg={4}>
-                  <PropertyCard />
+                  <PropertyCard
+                    minimal
+                    action={
+                      <Typography.Link href={routes.property("123")} className={styles["home__property-card--cta"]}>
+                        Buy Shares
+                      </Typography.Link>
+                    }
+                  />
                 </Grid.Col>
               </Grid.Row>
             </div>

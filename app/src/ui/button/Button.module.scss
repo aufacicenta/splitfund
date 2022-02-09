@@ -204,11 +204,13 @@ $HALF_LOADER_SIZE: 15px;
     }
 
     &.button--secondary {
+      border: none;
       background-color: transparent;
 
       &:active,
       &:hover,
       &:focus {
+        color: var(--color-button-secondary-text);
         background-color: transparent;
       }
 
@@ -341,8 +343,22 @@ $HALF_LOADER_SIZE: 15px;
       &:hover,
       &:focus {
         border-color: var(--color-button-secondary-hover);
-        color: var(--color-button-secondary-hover-text);
+        color: var(--color-button-secondary-text);
         background: var(--color-button-secondary-hover);
+      }
+
+      &[disabled] {
+        border-color: var(--color-dark-1);
+        color: var(--color-dark-1);
+        background-color: var(--color-white);
+
+        &:active,
+        &:hover,
+        &:focus {
+          border-color: var(--color-button-secondary-hover);
+          color: var(--color-button-secondary-text);
+          background: var(--color-button-secondary-hover);
+        }
       }
     }
 

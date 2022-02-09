@@ -26,3 +26,7 @@ export type ModalNotFullscreenProps = ModalCommonProps & {
 export type ModalProps = ModalFullscreenProps | ModalNotFullscreenProps;
 
 export type ModalItemProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+
+export type ModalHeaderProps = ModalItemProps & {
+  onClose?: () => void;
+};

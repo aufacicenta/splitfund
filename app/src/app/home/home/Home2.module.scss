@@ -1,5 +1,6 @@
 @import "src/theme/base";
 @import "src/theme/button/primary";
+@import "src/theme/button/button-outline";
 
 .home {
   @include withNavbar;
@@ -107,5 +108,18 @@
 
   &__section {
     display: block;
+  }
+
+  &__property-card--cta {
+    @extend .button-outline;
+    display: block;
+    width: 100%;
+    padding: 9px 24px;
+    text-align: center;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
