@@ -6,6 +6,14 @@ export type Styles = {
   button_primary_invert: string;
   button_primary_large: string;
   button_primary_medium: string;
+  "button-outline": string;
+  "button-outline__icon": string;
+  "button-outline_inverse": string;
+  "button-outline_inverse-thin": string;
+  "button-outline_large": string;
+  "button-outline_medium": string;
+  "button-outline--large": string;
+  "button-outline--medium": string;
   home: string;
   "home__featured-assets": string;
   "home__featured-assets--cards": string;
@@ -17,6 +25,7 @@ export type Styles = {
   "home__intro--linear-gradient": string;
   "home__intro--text-block": string;
   "home__powered-by": string;
+  "home__property-card--cta": string;
   home__section: string;
   "home__what-is": string;
   "home__what-is--row": string;

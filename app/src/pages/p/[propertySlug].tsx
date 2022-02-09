@@ -18,7 +18,7 @@ export async function getStaticPaths() {
     paths: [
       { params: { propertySlug: "lot-40-in-exclusive-residential-complex-cafetales-de-santa-ana" }, locale: "en" },
       {
-        params: { propertySlug: "lote-7-en-cafetales-de-santa-ana-5-minutos-a-pie-de-antigua-guatemala-centro_en" },
+        params: { propertySlug: "123" },
         locale: "en",
       },
     ],

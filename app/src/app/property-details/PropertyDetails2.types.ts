@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 
-export type PropertyCardProps = {
+export type PropertyDetailsProps = {
   children?: ReactNode;
   className?: string;
-  minimal?: boolean;
-  action: ReactNode;
 };
