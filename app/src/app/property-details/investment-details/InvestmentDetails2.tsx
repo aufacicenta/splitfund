@@ -35,6 +35,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contractA
   const [isCurrentInvestorsModalOpen, setIsCurrentInvestorsModalOpen] = useState(false);
   const [isWithdrawalConditionsModalOpen, setIsWithdrawalConditionsModalOpen] = useState(false);
   const [isWithdrawalLoading, setIsWithdrawalLoading] = useState(false);
+  const [isContractDataLoading, setIsContractDataLoading] = useState(false);
   const [values, setValues] = useState<ConditionalEscrowValues>(getDefaultContractValues());
 
   const toast = useToastContext();
@@ -54,7 +55,10 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contractA
     }
 
     (async () => {
-      setValues(await getConstantValues(contract, wallet));
+      setIsContractDataLoading(true);
+      const contractData = await getConstantValues(contract, wallet);
+      setValues(contractData);
+      setIsContractDataLoading(false);
     })();
   }, [contract, wallet]);
 
@@ -128,7 +132,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contractA
   const getActions = () => {
     if (!wallet.isConnected) {
       return (
-        <Button color="primary" onClick={onClickAuthorizeWallet}>
+        <Button color="primary" onClick={onClickAuthorizeWallet} isLoading={isContractDataLoading}>
           Authorize Wallet
         </Button>
       );
@@ -140,7 +144,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contractA
           <Typography.Description flat>
             {`Offer expires ${date.timeFromNow.calendar(date.fromNanoseconds(values.expirationDate!)).toLowerCase()}`}
           </Typography.Description>
-          <Button color="primary" onClick={onClickInvestNow}>
+          <Button color="primary" onClick={onClickInvestNow} isLoading={isContractDataLoading}>
             Invest Now
           </Button>
         </>
@@ -155,7 +159,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contractA
         <Button
           color="primary"
           onClick={onClickWithdraw}
-          isLoading={isWithdrawalLoading}
+          isLoading={isWithdrawalLoading || isContractDataLoading}
           disabled={values.depositsOf === "0"}
         >
           Withdraw
