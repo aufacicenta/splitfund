@@ -3,12 +3,20 @@ import React, { KeyboardEvent, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
+import { Button } from "ui/button/Button";
+import { Grid } from "ui/grid/Grid";
 import { IconButton } from "../iconButton/IconButton";
 import { CloseIcon } from "../icons/CloseIcon";
 
 import { CloseButton } from "./CloseButton/CloseButton";
 import styles from "./Modal.module.scss";
-import { ModalFullscreenProps, ModalItemProps, ModalNotFullscreenProps, ModalProps } from "./Modal.types";
+import {
+  ModalFullscreenProps,
+  ModalHeaderProps,
+  ModalItemProps,
+  ModalNotFullscreenProps,
+  ModalProps,
+} from "./Modal.types";
 
 export const MODAL_ANIMATION_TIME = 300;
 
@@ -113,9 +121,30 @@ export const Modal = ({
   return createPortal(modalElement, document.querySelector("#modal-root")!);
 };
 
-Modal.Header = ({ className, ...props }: ModalItemProps) => (
-  <div className={clsx(styles.modal__header, className)} {...props} />
-);
+Modal.Header = ({ children, className, onClose, ...props }: ModalHeaderProps) => {
+  if (onClose) {
+    return (
+      <div className={clsx(styles.modal__header, className)} {...props}>
+        <Grid.Row justify="between" align="center">
+          <Grid.Col lg={8}>{children}</Grid.Col>
+          <Grid.Col lg={4}>
+            <div className={styles["modal__header--on-close"]}>
+              <Button size="xs" onClick={onClose} color="secondary" variant="text">
+                Close
+              </Button>
+            </div>
+          </Grid.Col>
+        </Grid.Row>
+      </div>
+    );
+  }
+
+  return (
+    <div className={clsx(styles.modal__header, className)} {...props}>
+      {children}
+    </div>
+  );
+};
 
 Modal.Content = ({ className, ...props }: ModalItemProps) => (
   <div className={clsx(styles.modal__content, className)} {...props} />

@@ -94,6 +94,11 @@
     border-bottom: $border-divider;
     padding: $space-ml;
     color: var(--color-typography-text);
+
+    &--on-close {
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 
   &__content {
