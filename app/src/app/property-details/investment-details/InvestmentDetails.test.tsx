@@ -1,12 +1,12 @@
 import { screen, render } from "tests";
 
-import { InvestmentDetails } from "./InvestmentDetails";
+import { InvestmentDetails2 } from "./InvestmentDetails2";
 
-describe("InvestmentDetails", () => {
+describe("InvestmentDetails2", () => {
   it("renders children correctly", () => {
-    render(<InvestmentDetails>InvestmentDetails</InvestmentDetails>);
+    render(<InvestmentDetails2 contractAddress="address">InvestmentDetails2</InvestmentDetails2>);
 
-    const element = screen.getByText("InvestmentDetails");
+    const element = screen.getByText("InvestmentDetails2");
 
     expect(element).toBeInTheDocument();
   });
