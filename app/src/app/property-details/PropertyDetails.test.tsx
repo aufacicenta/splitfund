@@ -1,12 +1,12 @@
 import { screen, render } from "tests";
 
-import { PropertyDetails } from "./PropertyDetails";
+import { PropertyDetails2 } from "./PropertyDetails2";
 
-describe("PropertyDetails", () => {
+describe("PropertyDetails2", () => {
   it("renders children correctly", () => {
-    render(<PropertyDetails>PropertyDetails</PropertyDetails>);
+    render(<PropertyDetails2>PropertyDetails2</PropertyDetails2>);
 
-    const element = screen.getByText("PropertyDetails");
+    const element = screen.getByText("PropertyDetails2");
 
     expect(element).toBeInTheDocument();
   });

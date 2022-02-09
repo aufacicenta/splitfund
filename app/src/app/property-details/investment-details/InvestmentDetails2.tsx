@@ -11,59 +11,31 @@ import { Button } from "ui/button/Button";
 import { useNearContract } from "hooks/useNearContract/useNearContract";
 import near from "providers/near";
 import { ContractDepositFormProps } from "../contract-deposit-form/ContractDepositForm.types";
-import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 import date from "providers/date";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
+import {
+  CHANGE_METHODS,
+  getConstantValues,
+  getDefaultContractValues,
+  VIEW_METHODS,
+} from "providers/near/contract/conditional-escrow";
+import { ConditionalEscrowMethods, ConditionalEscrowValues } from "providers/near/contract/conditional-escrow.types";
 
 import styles from "./InvestmentDetails.module.scss";
-import {
-  ConditionalEscrowMethods,
-  ConditionalEscrowValues,
-  InvestmentDetailsProps,
-  OnSubmitDeposit,
-} from "./InvestmentDetails.types";
-
-const VIEW_METHODS = [
-  "deposits_of",
-  "get_deposits",
-  "get_total_funds",
-  "get_expiration_date",
-  "get_funding_amount_limit",
-  "get_unpaid_funding_amount",
-  "get_recipient_account_id",
-  "is_deposit_allowed",
-  "is_withdrawal_allowed",
-];
-
-const CHANGE_METHODS = ["deposit", "withdraw", "delegate_funds"];
+import { InvestmentDetailsProps, OnSubmitDeposit } from "./InvestmentDetails.types";
 
 const ContractDepositForm = dynamic<ContractDepositFormProps>(
   () => import("../contract-deposit-form/ContractDepositForm").then((mod) => mod.ContractDepositForm),
   { ssr: false },
 );
 
-const getDefaultContractValues = (): ConditionalEscrowValues => ({
-  totalFunds: near.formatAccountBalance("0"),
-  fundingAmountLimit: near.formatAccountBalance("0"),
-  unpaidFundingAmount: near.formatAccountBalance("0"),
-  depositsOf: "0",
-  depositsOfPercentage: 0,
-  currentCoinPrice: 0,
-  priceEquivalence: 0,
-  totalFundedPercentage: 0,
-  expirationDate: date.toNanoseconds(date.now().toDate().getTime()),
-  recipientAccountId: "",
-  isDepositAllowed: false,
-  isWithdrawalAllowed: false,
-  deposits: [],
-});
-
 export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contractAddress }) => {
   const [isBuyOwnershipInfoModalOpen, setIsBuyOwnershipInfoModalOpen] = useState(false);
   const [isCurrentInvestorsModalOpen, setIsCurrentInvestorsModalOpen] = useState(false);
   const [isWithdrawalConditionsModalOpen, setIsWithdrawalConditionsModalOpen] = useState(false);
   const [isWithdrawalLoading, setIsWithdrawalLoading] = useState(false);
+  const [isContractDataLoading, setIsContractDataLoading] = useState(false);
   const [values, setValues] = useState<ConditionalEscrowValues>(getDefaultContractValues());
 
   const toast = useToastContext();
@@ -82,47 +54,13 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contractA
       return;
     }
 
-    const getConstantValues = async () => {
-      const getTotalFundsResponse = await contract!.get_total_funds();
-      const getFundingAmountLimitResponse = await contract!.get_funding_amount_limit();
-      const getUnpaidFundingAmountResponse = await contract!.get_unpaid_funding_amount();
-      const totalFundedPercentage =
-        (BigInt(getTotalFundsResponse) * BigInt(100)) / BigInt(getFundingAmountLimitResponse);
-
-      const isDepositAllowed = await contract!.is_deposit_allowed();
-      const isWithdrawalAllowed = await contract!.is_withdrawal_allowed();
-
-      const deposits = await contract!.get_deposits();
-      const expirationDate = await contract!.get_expiration_date();
-      const depositsOfResponse = await contract!.deposits_of({ payee: wallet.address ?? wallet.context.guest.address });
-      const depositsOfPercentage = (BigInt(depositsOfResponse) * BigInt(100)) / BigInt(getFundingAmountLimitResponse);
-
-      const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
-      const priceEquivalence =
-        currentCoinPrice *
-        Number(near.formatAccountBalanceFlat(BigInt(getFundingAmountLimitResponse).toString()).replace(",", ""));
-
-      const recipientAccountId = await contract!.get_recipient_account_id();
-
-      setValues({
-        totalFunds: near.formatAccountBalance(BigInt(getTotalFundsResponse).toString()),
-        fundingAmountLimit: near.formatAccountBalance(BigInt(getFundingAmountLimitResponse).toString()),
-        unpaidFundingAmount: near.formatAccountBalance(BigInt(getUnpaidFundingAmountResponse).toString()),
-        depositsOf: BigInt(depositsOfResponse).toString(),
-        totalFundedPercentage: Number(totalFundedPercentage),
-        depositsOfPercentage: Number(depositsOfPercentage),
-        currentCoinPrice,
-        priceEquivalence,
-        deposits,
-        expirationDate,
-        isDepositAllowed,
-        isWithdrawalAllowed,
-        recipientAccountId,
-      });
-    };
-
-    getConstantValues();
-  }, [contract, wallet.address, wallet.context?.guest?.address]);
+    (async () => {
+      setIsContractDataLoading(true);
+      const contractData = await getConstantValues(contract, wallet);
+      setValues(contractData);
+      setIsContractDataLoading(false);
+    })();
+  }, [contract, wallet]);
 
   const onClickAuthorizeWallet = () => {
     wallet.onClickConnect({
@@ -194,7 +132,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contractA
   const getActions = () => {
     if (!wallet.isConnected) {
       return (
-        <Button color="primary" onClick={onClickAuthorizeWallet}>
+        <Button color="primary" onClick={onClickAuthorizeWallet} isLoading={isContractDataLoading}>
           Authorize Wallet
         </Button>
       );
@@ -206,7 +144,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contractA
           <Typography.Description flat>
             {`Offer expires ${date.timeFromNow.calendar(date.fromNanoseconds(values.expirationDate!)).toLowerCase()}`}
           </Typography.Description>
-          <Button color="primary" onClick={onClickInvestNow}>
+          <Button color="primary" onClick={onClickInvestNow} isLoading={isContractDataLoading}>
             Invest Now
           </Button>
         </>
@@ -221,7 +159,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contractA
         <Button
           color="primary"
           onClick={onClickWithdraw}
-          isLoading={isWithdrawalLoading}
+          isLoading={isWithdrawalLoading || isContractDataLoading}
           disabled={values.depositsOf === "0"}
         >
           Withdraw

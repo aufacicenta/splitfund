@@ -7,7 +7,6 @@ import { Button } from "../button/Button";
 import { Card } from "../card/Card";
 import { ChevronIcon } from "../icons/ChevronIcon";
 import { Typography } from "../typography/Typography";
-import { Icon } from "ui/icon/Icon";
 
 import styles from "./WalletSelector.module.scss";
 import { WalletSelectorProps } from "./WalletSelector.types";
@@ -34,19 +33,7 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
 
   return (
     <div className={clsx(styles["wallet-selector"], className)}>
-      <Button
-        size="xs"
-        variant="text"
-        color="primary"
-        onClick={handleOnConnectWalletClick}
-        leftIcon={
-          wallet.isConnected && (
-            <div className={clsx(styles["wallet-selector__icon-connected--wrapper"])}>
-              <Icon name="icon-power-switch" className={clsx(styles["wallet-selector__icon-connected--icon"])} />
-            </div>
-          )
-        }
-      >
+      <Button size="xs" variant="outlined" color="secondary" onClick={handleOnConnectWalletClick}>
         {wallet.isConnected ? `${wallet.chain}: ${wallet.network}` : "Connect Wallet"}
       </Button>
       {isWidgetVisible && (
@@ -60,7 +47,7 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
             <div className={styles["wallet-selector__chain-network-dropdowns"]}>
               <Button
                 variant="outlined"
-                color="primary"
+                color="secondary"
                 size="s"
                 fullWidth
                 rightIcon={<ChevronIcon variant="down" />}
@@ -70,7 +57,7 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
               </Button>
               <Button
                 variant="outlined"
-                color="primary"
+                color="secondary"
                 size="s"
                 fullWidth
                 className={styles["wallet-selector__button--disable-hover"]}
@@ -105,7 +92,7 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
               </Typography.MiniDescription>
             </div>
             <div className={styles["wallet-selector__connect"]}>
-              <Button size="xs" onClick={() => wallet.onClickConnect()}>
+              <Button size="xs" variant="outlined" color="secondary" onClick={() => wallet.onClickConnect()}>
                 {wallet.isConnected ? "Disconnect" : "Connect"}
               </Button>
             </div>
