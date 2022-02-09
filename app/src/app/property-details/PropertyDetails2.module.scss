@@ -11,6 +11,13 @@
     margin-bottom: $navbar-height;
   }
 
+  &__row-reverse {
+    @include atLargeTablet {
+      flex-flow: initial;
+    }
+    flex-flow: column-reverse;
+  }
+
   &__left {
     display: flex;
     flex-direction: column;

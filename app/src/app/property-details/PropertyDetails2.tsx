@@ -28,7 +28,7 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({ className }) 
               <Grid.Row>
                 <Grid.Col lg={10} offset={{ lg: 1 }}>
                   <Card shadow className={styles["property-details__card"]}>
-                    <Grid.Row nogutter>
+                    <Grid.Row nogutter className={styles["property-details__row-reverse"]}>
                       <Grid.Col lg={6}>
                         <div className={styles["property-details__left"]}>
                           <Card.Content>

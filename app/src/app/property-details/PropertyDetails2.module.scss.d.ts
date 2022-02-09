@@ -4,6 +4,7 @@ export type Styles = {
   "property-details__card": string;
   "property-details__left": string;
   "property-details__main": string;
+  "property-details__row-reverse": string;
   "z-depth-0": string;
   "z-depth-1": string;
   "z-depth-1-half": string;

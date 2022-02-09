@@ -126,8 +126,10 @@ Modal.Header = ({ children, className, onClose, ...props }: ModalHeaderProps) =>
     return (
       <div className={clsx(styles.modal__header, className)} {...props}>
         <Grid.Row justify="between" align="center">
-          <Grid.Col lg={8}>{children}</Grid.Col>
-          <Grid.Col lg={4}>
+          <Grid.Col lg={8} xs={8}>
+            {children}
+          </Grid.Col>
+          <Grid.Col lg={4} xs={4}>
             <div className={styles["modal__header--on-close"]}>
               <Button size="xs" onClick={onClose} color="secondary" variant="text">
                 Close
