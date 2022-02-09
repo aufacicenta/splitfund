@@ -5,11 +5,11 @@ import { MainPanel } from "ui/mainpanel/MainPanel";
 import { Grid } from "ui/grid/Grid";
 import { Card } from "ui/card/Card";
 import { Footer } from "ui/footer/Footer";
-import { WalletSelectorNavbar2 } from "ui/wallet-selector-navbar/WalletSelectorNavbar2";
 import { Typography } from "ui/typography/Typography";
 import { Button } from "ui/button/Button";
 import { PropertyCard } from "app/properties-index/property-card/PropertyCard";
 import { Modal } from "ui/modal/Modal";
+import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 
 import styles from "./PropertyDetails2.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails2.types";
@@ -20,7 +20,7 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({ className }) 
 
   return (
     <>
-      <WalletSelectorNavbar2 />
+      <WalletSelectorNavbar />
       <div className={clsx(styles["property-details"], className)}>
         <main className={styles["property-details__main"]}>
           <MainPanel className={styles["property-details__main"]}>
