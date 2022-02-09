@@ -38,11 +38,33 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({ className }) 
                               internal team, but there are still risks involded.
                             </Typography.TextLead>
                             <Typography.TextLead>Read carefully:</Typography.TextLead>
-                            <Typography.TextBold>What happens upon buying shares</Typography.TextBold>
-                            <Typography.Text>
-                              When you click on “Buy Shares”, you’ll be redirected to the NEAR Wallet page to make a
-                              transfer transaction.
-                            </Typography.Text>
+                            <div className={styles["property-details__left--content"]}>
+                              <Typography.TextBold>What happens upon buying shares</Typography.TextBold>
+                              <Typography.Text>
+                                Once you connect your NEAR wallet, you’ll be redirected to https://wallet.near.org page
+                                to make a <em>deposit</em> transaction for the amount of NEAR tokens you've input.
+                              </Typography.Text>
+                              <Typography.Text>
+                                If the transaction completes successfully, your funds will securely be kept on-hold in
+                                the CONTRACT_NAME_HERE contract. This contract is open-source and auditable.
+                              </Typography.Text>
+                              <Typography.TextBold>
+                                Depositing does not mean you already own the shares
+                              </Typography.TextBold>
+                              <Typography.Text>
+                                Shares of the asset are represented by NEP141 tokens, minted and transfered to your
+                                wallet only if the asset price is funded by a 100%.
+                              </Typography.Text>
+                              <Typography.TextBold>
+                                If the asset does not get funded within the expiration date
+                              </Typography.TextBold>
+                              <Typography.Text>
+                                The expiration date has been programmed into the contract and it cannot be changed. If
+                                the expiration date comes to an end and the asset price is not totally funded, you will
+                                be able to withdraw your funds entirely (minus transaction and gas fees, but these are
+                                very low).
+                              </Typography.Text>
+                            </div>
                           </Card.Content>
                           <div className={styles["property-details__actions--secondary"]}>
                             <Button color="secondary" variant="outlined">
@@ -55,7 +77,7 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({ className }) 
                         <PropertyCard
                           action={
                             <Button color="primary" fullWidth onClick={() => setIsInvestmentDetailsModalOpen(true)}>
-                              Buy Shares
+                              Investment Details
                             </Button>
                           }
                         />
