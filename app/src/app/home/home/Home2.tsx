@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import { Container } from "react-grid-system";
 import { Trans, useTranslation } from "react-i18next";
+import { PopupButton } from "@typeform/embed-react";
+import { useRouter } from "next/router";
 
 import { Typography } from "ui/typography/Typography";
 import { Grid } from "ui/grid/Grid";
@@ -10,6 +12,8 @@ import { WalletSelectorNavbar2 } from "ui/wallet-selector-navbar/WalletSelectorN
 import { Button } from "ui/button/Button";
 import { PropertyCard } from "app/properties-index/property-card/PropertyCard";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
+import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
+import { Locale } from "types/Locale";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -17,6 +21,16 @@ import { HomeProps } from "./Home.types";
 export const Home2: React.FC<HomeProps> = ({ className }) => {
   const { t } = useTranslation(["home", "common"]);
   const routes = useRoutes();
+  const router = useRouter();
+  const { locale } = useRouter();
+
+  const embedFormConfig = getEmbedFormConfig(locale as Locale);
+
+  const onSubmitEmbedForm = (data: { responseId: string }) => {
+    setTimeout(() => {
+      router.push(routes.property.preview(data.responseId));
+    }, 2500);
+  };
 
   return (
     <>
@@ -65,15 +79,42 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
         <section id="featured-assets" className={clsx(styles.home__section, styles["home__featured-assets"])}>
           <Container>
             <Typography.Headline2>Featured Active Holdings</Typography.Headline2>
-            <Typography.TextLead>Submitting an asset is open &amp; decentralized.</Typography.TextLead>
+            <Grid.Row justify="between" align="center">
+              <Grid.Col width="auto">
+                <Typography.TextLead flat>Submitting an asset is open &amp; decentralized.</Typography.TextLead>
+              </Grid.Col>
+              <Grid.Col width="auto">
+                <PopupButton
+                  id={embedFormConfig.formID}
+                  size={80}
+                  className={styles["home__intro--cta"]}
+                  onSubmit={onSubmitEmbedForm}
+                >
+                  {t("navbar.apply", { ns: "common" })}
+                </PopupButton>
+              </Grid.Col>
+            </Grid.Row>
             <div className={styles["home__featured-assets--cards"]}>
               <Grid.Row>
                 <Grid.Col lg={4}>
                   <PropertyCard
                     minimal
+                    property={{
+                      title: "",
+                      price: 0,
+                      shortDescription: "",
+                      longDescription: "",
+                      category: "Art",
+                      expirationDate: "",
+                      media: { featuredImageUrl: "" },
+                      owner: { name: "", url: "" },
+                    }}
                     action={
-                      <Typography.Link href={routes.property("123")} className={styles["home__property-card--cta"]}>
-                        Buy Shares
+                      <Typography.Link
+                        href={routes.property.details("123")}
+                        className={styles["home__property-card--cta"]}
+                      >
+                        See Details
                       </Typography.Link>
                     }
                   />

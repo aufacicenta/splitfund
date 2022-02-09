@@ -67,8 +67,16 @@ const Text: React.FC<TypographyProps> = ({ children, className, inline, flat, ..
   </p>
 );
 
-const TextLead: React.FC<TypographyProps> = ({ children, className }) => (
-  <p className={clsx(styles["typography__text-lead"], className)}>{children}</p>
+const TextLead: React.FC<TypographyProps> = ({ children, className, flat, inline, ...props }) => (
+  <p
+    className={clsx(styles["typography__text-lead"], className, {
+      [styles.typography__inline]: inline,
+      [styles.typography__flat]: flat,
+    })}
+    {...props}
+  >
+    {children}
+  </p>
 );
 
 const TextBold: React.FC<TypographyProps> = ({ children, className, flat }) => (

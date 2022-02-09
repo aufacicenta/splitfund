@@ -20,8 +20,12 @@ type RouteMap = {
     data: string;
   };
   campaign: (campaignSlug: string) => string;
-  property: (propertySlug: string) => string;
+  property: {
+    details: (propertySlug: string) => string;
+    preview: (responseId: string) => string;
+  };
   home: string;
+  notFound: string;
 };
 
 export const routes: RouteMap = {
@@ -46,8 +50,12 @@ export const routes: RouteMap = {
     data: "/i/data",
   },
   home: "/",
+  notFound: "/404",
   campaign: (campaignSlug) => `/c/${campaignSlug}`,
-  property: (propertySlug) => `/p/${propertySlug}`,
+  property: {
+    details: (propertySlug) => `/p/${propertySlug}`,
+    preview: (responseId) => `/p/preview?responseId=${responseId}`,
+  },
 };
 
 export const useRoutes: () => RouteMap = () => routes;
