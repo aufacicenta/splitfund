@@ -4,8 +4,28 @@ input GetPropertyBySlugInput {
   slug: String!
 }
 
+input GetPropertyCardByResponseIdInput {
+  responseId: String!
+}
+
 type Property {
   content: PropertyContent!
+}
+
+type PropertyCard {
+  title: String!
+  price: Float!
+  shortDescription: String!
+  longDescription: String!
+  category: String!
+  expirationDate: Date!
+  media: PropertyContentMedia!
+  owner: PropertyCardOwner
+}
+
+type PropertyCardOwner {
+  name: String!
+  url: String
 }
 
 type PropertyContent {
@@ -30,4 +50,5 @@ type PropertyContentMedia {
 
 type Query {
   getPropertyBySlug(input: GetPropertyBySlugInput!): Property!
+  getPropertyCardByResponseId(input: GetPropertyCardByResponseIdInput!): PropertyCard
 }

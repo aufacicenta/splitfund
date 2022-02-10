@@ -1,4 +1,14 @@
 export type Styles = {
+  button: string;
+  button__content: string;
+  "button__content--disabled": string;
+  "button__content--loading": string;
+  button__icon: string;
+  "button__icon--left": string;
+  "button__icon--on-left": string;
+  "button__icon--right": string;
+  button__loader: string;
+  "button__loading-floating-border": string;
   button_primary: string;
   button_primary__icon: string;
   button_primary__icon_left: string;
@@ -6,6 +16,24 @@ export type Styles = {
   button_primary_invert: string;
   button_primary_large: string;
   button_primary_medium: string;
+  "button--auto-size": string;
+  "button--danger": string;
+  "button--dark": string;
+  "button--extra-small": string;
+  "button--full-width": string;
+  "button--info": string;
+  "button--inverted": string;
+  "button--large": string;
+  "button--light": string;
+  "button--link": string;
+  "button--loading": string;
+  "button--medium": string;
+  "button--outlined": string;
+  "button--primary": string;
+  "button--secondary": string;
+  "button--small": string;
+  "button--success": string;
+  "button--text": string;
   "button-outline": string;
   "button-outline__icon": string;
   "button-outline_inverse": string;
@@ -29,6 +57,7 @@ export type Styles = {
   home__section: string;
   "home__what-is": string;
   "home__what-is--row": string;
+  spin: string;
   "z-depth-0": string;
   "z-depth-1": string;
   "z-depth-1-half": string;

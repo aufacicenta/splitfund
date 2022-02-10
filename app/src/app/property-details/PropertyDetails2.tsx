@@ -75,6 +75,16 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({ className }) 
                       </Grid.Col>
                       <Grid.Col lg={6}>
                         <PropertyCard
+                          property={{
+                            title: "",
+                            price: 0,
+                            shortDescription: "",
+                            longDescription: "",
+                            category: "Art",
+                            expirationDate: "",
+                            media: { featuredImageUrl: "" },
+                            owner: { name: "", url: "" },
+                          }}
                           action={
                             <Button color="primary" fullWidth onClick={() => setIsInvestmentDetailsModalOpen(true)}>
                               Investment Details

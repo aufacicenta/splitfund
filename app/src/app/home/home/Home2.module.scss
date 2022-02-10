@@ -1,6 +1,5 @@
 @import "src/theme/base";
-@import "src/theme/button/primary";
-@import "src/theme/button/button-outline";
+@import "src/ui/button/Button.module";
 
 .home {
   @include withNavbar;
@@ -59,26 +58,7 @@
     }
 
     &--cta {
-      @extend .button_primary;
-
-      @include atLargeTablet {
-        display: inline-block;
-        margin-top: 0;
-        margin-left: $space-m;
-      }
-      display: block;
-      margin-top: $space-s;
-      padding: 0;
-      text-transform: inherit;
-      text-decoration: underline;
-      color: var(--color-black);
-      background-color: transparent;
-
-      &:hover {
-        color: var(--color-typography-text);
-        background-color: transparent;
-        cursor: pointer;
-      }
+      @extend .button--outlined;
     }
 
     &--text-block {
