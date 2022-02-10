@@ -2,18 +2,23 @@ import { PropertyCard } from "api/codegen";
 
 import { Answer, TypeformResponse } from "./typeform.types";
 
-const getTextTypeAnswerFieldValue = (answers: Answer[], ref: string) =>
-  answers.filter((answer) => answer.field.ref === ref && answer.text)[0].text || "";
-const getWebsiteTypeAnswerFieldValue = (answers: Answer[], ref: string) =>
-  answers.filter((answer) => answer.field.ref === ref && answer.url)[0].url || "";
-const getNumberTypeAnswerFieldValue = (answers: Answer[], ref: string) =>
-  answers.filter((answer) => answer.field.ref === ref && answer.number)[0].number || 0;
-const getImageTypeAnswerFieldValue = (answers: Answer[], ref: string) =>
-  answers.filter((answer) => answer.field.ref === ref && answer.file_url)[0].file_url || "";
-const getDateTypeAnswerFieldValue = (answers: Answer[], ref: string) =>
-  answers.filter((answer) => answer.field.ref === ref && answer.date)[0].date || "";
-const getChoiceTypeAnswerFieldValue = (answers: Answer[], ref: string) =>
-  answers.filter((answer) => answer.field.ref === ref && answer.choice?.label)[0]?.choice?.label || "";
+const getTextTypeAnswerFieldValue = (answersRefKeyMap: Map<string, Answer>, ref: string) =>
+  answersRefKeyMap.get(ref)?.text || "";
+
+const getWebsiteTypeAnswerFieldValue = (answersRefKeyMap: Map<string, Answer>, ref: string) =>
+  answersRefKeyMap.get(ref)?.url || "";
+
+const getNumberTypeAnswerFieldValue = (answersRefKeyMap: Map<string, Answer>, ref: string) =>
+  answersRefKeyMap.get(ref)?.number || 0;
+
+const getImageTypeAnswerFieldValue = (answersRefKeyMap: Map<string, Answer>, ref: string) =>
+  answersRefKeyMap.get(ref)?.file_url || "";
+
+const getDateTypeAnswerFieldValue = (answersRefKeyMap: Map<string, Answer>, ref: string) =>
+  answersRefKeyMap.get(ref)?.date || "";
+
+const getChoiceTypeAnswerFieldValue = (answersRefKeyMap: Map<string, Answer>, ref: string) =>
+  answersRefKeyMap.get(ref)?.choice?.label || "";
 
 const parseAnswerFromResponseData = (data: TypeformResponse): PropertyCard | null => {
   const { answers } = data.items[0];
@@ -22,19 +27,25 @@ const parseAnswerFromResponseData = (data: TypeformResponse): PropertyCard | nul
     return null;
   }
 
+  const answersRefKeyMap = new Map<string, Answer>();
+
+  answers.forEach((answer) => {
+    answersRefKeyMap.set(answer.field.ref, answer);
+  });
+
   return {
-    title: getTextTypeAnswerFieldValue(answers, "asset_title"),
-    price: getNumberTypeAnswerFieldValue(answers, "asset_price"),
-    shortDescription: getTextTypeAnswerFieldValue(answers, "asset_short_description"),
-    longDescription: getTextTypeAnswerFieldValue(answers, "asset_long_description"),
-    category: getChoiceTypeAnswerFieldValue(answers, "asset_category"),
-    expirationDate: getDateTypeAnswerFieldValue(answers, "asset_campaign_expiration_date"),
+    title: getTextTypeAnswerFieldValue(answersRefKeyMap, "asset_title"),
+    price: getNumberTypeAnswerFieldValue(answersRefKeyMap, "asset_price"),
+    shortDescription: getTextTypeAnswerFieldValue(answersRefKeyMap, "asset_short_description"),
+    longDescription: getTextTypeAnswerFieldValue(answersRefKeyMap, "asset_long_description"),
+    category: getChoiceTypeAnswerFieldValue(answersRefKeyMap, "asset_category"),
+    expirationDate: getDateTypeAnswerFieldValue(answersRefKeyMap, "asset_campaign_expiration_date"),
     media: {
-      featuredImageUrl: getImageTypeAnswerFieldValue(answers, "asset_featured_image"),
+      featuredImageUrl: getImageTypeAnswerFieldValue(answersRefKeyMap, "asset_featured_image"),
     },
     owner: {
-      name: getTextTypeAnswerFieldValue(answers, "asset_owner"),
-      url: getWebsiteTypeAnswerFieldValue(answers, "asset_owner_url"),
+      name: getTextTypeAnswerFieldValue(answersRefKeyMap, "asset_owner"),
+      url: getWebsiteTypeAnswerFieldValue(answersRefKeyMap, "asset_owner_url"),
     },
   };
 };

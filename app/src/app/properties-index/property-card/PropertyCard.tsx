@@ -36,7 +36,10 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ className, action, m
     </Card.Content>
     {!minimal && (
       <div className={styles["property-card__details"]}>
-        <Typography.Text>{property.longDescription}</Typography.Text>
+        {property.longDescription.split("\n").map((description, i) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Typography.Text key={`id-${i}`}>{description}</Typography.Text>
+        ))}
       </div>
     )}
     <HorizontalLine flat />
