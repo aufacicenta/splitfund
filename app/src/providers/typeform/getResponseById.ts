@@ -20,7 +20,24 @@ const getDateTypeAnswerFieldValue = (answersRefKeyMap: Map<string, Answer>, ref:
 const getChoiceTypeAnswerFieldValue = (answersRefKeyMap: Map<string, Answer>, ref: string) =>
   answersRefKeyMap.get(ref)?.choice?.label || "";
 
-const parseAnswerFromResponseData = (data: TypeformResponse): PropertyCard | null => {
+const getResponseFileAsBase64String = async (url: string): Promise<string> => {
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${process.env.TYPEFORM_PAT}`,
+      },
+    });
+
+    const blob = await response.arrayBuffer();
+
+    return `data:${response.headers.get("content-type")};base64,${Buffer.from(blob).toString("base64")}`;
+  } catch {
+    return "";
+  }
+};
+
+const parseAnswerFromResponseData = async (data: TypeformResponse): Promise<PropertyCard | null> => {
   const { answers } = data.items[0];
 
   if (!answers.length) {
@@ -41,7 +58,9 @@ const parseAnswerFromResponseData = (data: TypeformResponse): PropertyCard | nul
     category: getChoiceTypeAnswerFieldValue(answersRefKeyMap, "asset_category"),
     expirationDate: getDateTypeAnswerFieldValue(answersRefKeyMap, "asset_campaign_expiration_date"),
     media: {
-      featuredImageUrl: getImageTypeAnswerFieldValue(answersRefKeyMap, "asset_featured_image"),
+      featuredImageUrl: await getResponseFileAsBase64String(
+        getImageTypeAnswerFieldValue(answersRefKeyMap, "asset_featured_image"),
+      ),
     },
     owner: {
       name: getTextTypeAnswerFieldValue(answersRefKeyMap, "asset_owner"),
@@ -62,13 +81,13 @@ export default async (responseId: string): Promise<PropertyCard | null> => {
       },
     );
 
-    const data: TypeformResponse = await response.json();
+    const data = (await response.json()) as TypeformResponse;
 
     if (!data?.items && !data.items.length) {
       return null;
     }
 
-    return parseAnswerFromResponseData(data);
+    return await parseAnswerFromResponseData(data);
   } catch {
     //   @TODO log error
     return null;

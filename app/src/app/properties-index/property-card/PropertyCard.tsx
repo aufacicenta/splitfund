@@ -11,7 +11,7 @@ import styles from "./PropertyCard.module.scss";
 export const PropertyCard: React.FC<PropertyCardProps> = ({ className, action, minimal, property }) => (
   <Card
     shadow
-    backgroundImageUrl="https://bafybeid2lakmlzuifkf6nlgnyqf4vylzwlaxqlusm64rxtie33gw3x6qpq.ipfs.infura-ipfs.io/simon-lee-hbFKxsIqclc-unsplash.jpeg"
+    backgroundImageUrl={property.media.featuredImageUrl}
     className={clsx(styles["property-card"], className)}
   >
     <Card.Content>
