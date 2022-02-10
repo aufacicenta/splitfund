@@ -46,6 +46,7 @@ type PropertyContentCustomFields {
 
 type PropertyContentMedia {
   featuredImageUrl: String!
+  ipfsURL: String!
 }
 
 type Query {

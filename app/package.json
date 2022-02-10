@@ -1,9 +1,9 @@
 {
-  "name": "@bancosatoshi/app",
+  "name": "@nearholdings/app",
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bancosatoshi/web.git"
+    "url": "https://github.com/aufacicenta/near.holdings-web.git"
   },
   "scripts": {
     "dev": "next dev -p 3001",
@@ -29,6 +29,7 @@
     "clsx": "^1.1.1",
     "final-form": "^4.20.4",
     "graphql": "^16.0.1",
+    "ipfs-http-client": "^49.0.4",
     "lodash": "^4.17.21",
     "materialize-css": "^1.0.0-rc.2",
     "micro": "^9.3.4",
@@ -43,6 +44,7 @@
     "react-transition-group": "^4.4.1",
     "rxjs": "^6.6.6",
     "sequelize": "^6.12.0-alpha.1",
+    "slugify": "^1.6.5",
     "wpapi": "^1.2.2"
   },
   "devDependencies": {

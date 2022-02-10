@@ -8,6 +8,7 @@ query GetPropertyCardByResponseId($input: GetPropertyCardByResponseIdInput!) {
     expirationDate
     media {
       featuredImageUrl
+      ipfsURL
     }
     owner {
       name
