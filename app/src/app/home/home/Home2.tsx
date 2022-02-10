@@ -106,7 +106,7 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
                       longDescription: "",
                       category: "Art",
                       expirationDate: "",
-                      media: { featuredImageUrl: "" },
+                      media: { featuredImageUrl: "", ipfsURL: "" },
                       owner: { name: "", url: "" },
                     }}
                     action={
