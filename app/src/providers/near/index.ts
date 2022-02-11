@@ -1,9 +1,8 @@
 import getConfig from "./getConfig";
 import initWalletConnection from "./initWalletConnection";
 import getAccountBalance from "./getAccountBalance";
-import formatAccountBalance from "./formatAccountBalance";
-import formatAccountBalanceFlat from "./formatAccountBalanceFlat";
 import parseNearAmount from "./parseNearAmount";
+import { formatAccountBalance, formatAccountBalanceFlat, formatGasValue } from "./format";
 
 export default {
   getConfig,
@@ -12,4 +11,5 @@ export default {
   formatAccountBalance,
   formatAccountBalanceFlat,
   parseNearAmount,
+  formatGasValue,
 };

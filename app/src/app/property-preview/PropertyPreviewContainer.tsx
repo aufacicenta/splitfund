@@ -35,5 +35,5 @@ export const PropertyPreviewContainer = () => {
 
   const property = getPropertyCardByResponseIdQueryData!.getPropertyCardByResponseId!;
 
-  return <PropertyPreview property={property} />;
+  return <PropertyPreview property={property} responseId={responseId as string} />;
 };

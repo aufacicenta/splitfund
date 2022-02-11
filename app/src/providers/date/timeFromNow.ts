@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "./client";
 
 export const asDefault = (date?: Date | string | number, withoutSuffix?: boolean) =>
   moment(date).fromNow(withoutSuffix);
