@@ -1,4 +1,7 @@
 import { PropertyCard } from "api/codegen";
+import slugify from "slugify";
+
+import ipfs from "providers/ipfs";
 
 import { Answer, TypeformResponse } from "./typeform.types";
 
@@ -50,7 +53,7 @@ const parseAnswerFromResponseData = async (data: TypeformResponse): Promise<Prop
     answersRefKeyMap.set(answer.field.ref, answer);
   });
 
-  return {
+  const content = {
     title: getTextTypeAnswerFieldValue(answersRefKeyMap, "asset_title"),
     price: getNumberTypeAnswerFieldValue(answersRefKeyMap, "asset_price"),
     shortDescription: getTextTypeAnswerFieldValue(answersRefKeyMap, "asset_short_description"),
@@ -67,6 +70,11 @@ const parseAnswerFromResponseData = async (data: TypeformResponse): Promise<Prop
       url: getWebsiteTypeAnswerFieldValue(answersRefKeyMap, "asset_owner_url"),
     },
   };
+
+  const fileName = slugify(`${content.title} ${content.category} ${content.expirationDate}`);
+  const ipfsResponse = await ipfs.upload(JSON.stringify(content), fileName);
+
+  return { ...content, media: { ...content.media, ipfsURL: ipfs.asHttpsURL(ipfsResponse?.path) } };
 };
 
 export default async (responseId: string): Promise<PropertyCard | null> => {

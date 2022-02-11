@@ -80,10 +80,10 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
           <Container>
             <Typography.Headline2>Featured Active Holdings</Typography.Headline2>
             <Grid.Row justify="between" align="center">
-              <Grid.Col width="auto">
+              <Grid.Col width="auto" xs={6}>
                 <Typography.TextLead flat>Submitting an asset is open &amp; decentralized.</Typography.TextLead>
               </Grid.Col>
-              <Grid.Col width="auto">
+              <Grid.Col width="auto" xs={6}>
                 <PopupButton
                   id={embedFormConfig.formID}
                   size={80}
@@ -106,7 +106,7 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
                       longDescription: "",
                       category: "Art",
                       expirationDate: "",
-                      media: { featuredImageUrl: "" },
+                      media: { featuredImageUrl: "", ipfsURL: "" },
                       owner: { name: "", url: "" },
                     }}
                     action={

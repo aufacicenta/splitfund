@@ -82,7 +82,7 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({ className }) 
                             longDescription: "",
                             category: "Art",
                             expirationDate: "",
-                            media: { featuredImageUrl: "" },
+                            media: { featuredImageUrl: "", ipfsURL: "" },
                             owner: { name: "", url: "" },
                           }}
                           action={

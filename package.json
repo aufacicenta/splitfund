@@ -1,9 +1,9 @@
 {
-  "name": "@bancosatoshi/root",
+  "name": "@nearholdings/root",
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bancosatoshi/web.git"
+    "url": "https://github.com/aufacicenta/near.holdings-web.git"
   },
   "scripts": {
     "prepare": "husky install",

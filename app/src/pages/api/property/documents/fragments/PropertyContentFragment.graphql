@@ -3,6 +3,7 @@ fragment PropertyContent on PropertyContent {
   title
   media {
     featuredImageUrl
+    ipfsURL
   }
   customFields {
     category

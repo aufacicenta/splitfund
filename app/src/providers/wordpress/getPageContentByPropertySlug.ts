@@ -20,6 +20,7 @@ export const getPageContentByPropertySlug = async (slug: string): Promise<Proper
     title: page.title.rendered,
     media: {
       featuredImageUrl: media?.media_details?.sizes?.large?.source_url,
+      ipfsURL: "ipfs://",
     },
     customFields: {
       shortDescription: page?.custom_fields?.short_description,

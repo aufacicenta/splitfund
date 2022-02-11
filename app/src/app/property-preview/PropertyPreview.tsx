@@ -39,10 +39,22 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
                           </Typography.TextLead>
                           <Typography.TextLead>This is what happens after you submit:</Typography.TextLead>
                           <div className={styles["property-preview__left--content"]}>
-                            <Typography.TextBold>A NEAR contract will be created</Typography.TextBold>
+                            <Typography.TextBold>1. The asset information is uploaded to IPFS</Typography.TextBold>
                             <Typography.Text>
-                              The information of this asset will be stored in the NEAR blockchain in a new Conditional
-                              Escrow contract. It is open-source and auditable. You can{" "}
+                              IPFS is a decentralized storage technology. The information gets encoded using advanced
+                              cryptography and it is retrievable by a URL, in fact{" "}
+                              <Typography.Anchor href={property.media.ipfsURL} target="_blank">
+                                here's your asset metadata
+                              </Typography.Anchor>
+                              .
+                            </Typography.Text>
+                            <Typography.Text>
+                              The information stored in IPFS cannot be removed, censored or changed.
+                            </Typography.Text>
+                            <Typography.TextBold>2. A NEAR contract will be created</Typography.TextBold>
+                            <Typography.Text>
+                              The IPFS URL that holds the information of this asset will be stored in the NEAR
+                              blockchain in a new Conditional Escrow contract. It is open-source and auditable. You can{" "}
                               <Typography.Anchor
                                 href="https://github.com/aufacicenta/near.holdings/blob/master/rust-escrow/conditional-escrow/src/lib.rs"
                                 target="_blank"
