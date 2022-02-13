@@ -32,7 +32,6 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
   const toast = useToastContext();
 
   const onClickSubmitAsset = async () => {
-    // @TODO call the NEAR Holdings Sputnik2 DAO contract to create a function_call proposal to the Conditional Escrow factory
     if (!wallet.isConnected) {
       setIsAuthorizeWalletModalOpen(true);
 
@@ -52,7 +51,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
         }),
       ).toString("base64");
 
-      const outcome = await wallet.context.connection?.account().functionCall({
+      await wallet.context.connection?.account().functionCall({
         methodName: "add_proposal",
         walletCallbackUrl: `${window.origin}/p/confirm?responseId=${responseId}`,
         contractId: near.getConfig(wallet.network).daoContractName,
@@ -78,8 +77,6 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
         attachedDeposit: new BN(near.parseNearAmount(PROPOSAL_BOND)!),
       });
 
-      console.log(outcome);
-
       toast.trigger({
         variant: "confirmation",
         title: "Success",
@@ -90,9 +87,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
           </Typography.Text>
         ),
       });
-    } catch (error) {
-      console.log(error);
-
+    } catch {
       toast.trigger({
         variant: "error",
         title: "Error",

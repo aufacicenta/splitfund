@@ -4,7 +4,7 @@ import getDefaultDateFormat, {
   toNanoseconds,
   now,
   fromNanoseconds,
-  toUtcoffsetNanoseconds,
+  toUtcOffsetNanoseconds,
 } from "./getDefaultDateFormat";
 
 export default {
@@ -14,5 +14,5 @@ export default {
   fromNanoseconds,
   now,
   client,
-  toUtcoffsetNanoseconds,
+  toUtcoffsetNanoseconds: toUtcOffsetNanoseconds,
 };
