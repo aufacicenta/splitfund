@@ -14,5 +14,5 @@ export default {
   fromNanoseconds,
   now,
   client,
-  toUtcoffsetNanoseconds: toUtcOffsetNanoseconds,
+  toUtcOffsetNanoseconds,
 };

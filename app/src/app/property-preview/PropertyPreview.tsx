@@ -43,7 +43,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
         JSON.stringify({
           name: `ce_${responseId}`,
           args: {
-            expires_at: date.toUtcoffsetNanoseconds(property.expirationDate),
+            expires_at: date.toUtcOffsetNanoseconds(property.expirationDate),
             funding_amount_limit: near.parseNearAmount(property.price.toString()),
             recipient_account_id: near.getConfig(wallet.network).daoFactoryContractName,
             metadata_url: property.media.ipfsURL,
