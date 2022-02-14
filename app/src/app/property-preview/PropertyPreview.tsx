@@ -35,46 +35,28 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
     }
 
     try {
+      const conditionalEscrowContractName = `ce_${responseId}`.slice(0, 25);
+
       const conditionalEscrowArgs = Buffer.from(
         JSONBigInt.stringify({
           expires_at: date.toUtcOffsetNanoseconds(property.expirationDate),
-          funding_amount_limit: new BN(near.parseNearAmount(property.price.toString())!),
-          recipient_account_id: near.getConfig(wallet.network).daoFactoryContractName,
+          funding_amount_limit: BigInt(near.parseNearAmount(property.price.toString())!),
+          dao_factory_account_id: near.getConfig(wallet.network).daoFactoryContractName,
+          ft_factory_account_id: near.getConfig(wallet.network).ftFactoryContractName,
           metadata_url: property.media.ipfsURL,
         }),
       ).toString("base64");
 
-      const args = Buffer.from(
-        JSON.stringify({
-          name: `ce_${responseId}`.slice(0, 25),
-          args: conditionalEscrowArgs,
-        }),
-      ).toString("base64");
+      const args = {
+        name: conditionalEscrowContractName,
+        args: conditionalEscrowArgs,
+      };
 
       await wallet.context.connection?.account().functionCall({
-        methodName: "add_proposal",
-        walletCallbackUrl: `${
-          near.getConfig(wallet.network).astroDaoURLOrigin
-        }/dao/realstate.sputnikv2.testnet/proposals?category=&status=active`,
-        contractId: near.getConfig(wallet.network).daoContractName,
-        args: {
-          proposal: {
-            description: `https://near.holdings/p/preview?responseId=${responseId}`,
-            kind: {
-              FunctionCall: {
-                receiver_id: near.getConfig(wallet.network).escrowFactoryContractName,
-                actions: [
-                  {
-                    method_name: "create_conditional_escrow",
-                    args,
-                    deposit: "0",
-                    gas: near.formatGasValue(DEFAULT_PROPOSAL_GAS).toString(),
-                  },
-                ],
-              },
-            },
-          },
-        },
+        methodName: "create_conditional_escrow",
+        walletCallbackUrl: `${window.origin}/p/${conditionalEscrowContractName}`,
+        contractId: near.getConfig(wallet.network).escrowFactoryContractName,
+        args,
         gas: near.formatGasValue(DEFAULT_PROPOSAL_GAS),
         attachedDeposit: new BN(near.parseNearAmount(PROPOSAL_BOND)!),
       });
@@ -107,7 +89,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
 
   const onClickAuthorizeWallet = () => {
     wallet.onClickConnect({
-      contractId: near.getConfig(wallet.network).daoContractName,
+      contractId: near.getConfig(wallet.network).escrowFactoryContractName,
       methodNames: CHANGE_METHODS,
       successUrl: `${window.origin}/p/preview?responseId=${responseId}`,
     });
@@ -190,7 +172,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
                           property={property}
                           action={
                             <Button color="primary" fullWidth onClick={onClickSubmitAsset}>
-                              Submit for Review
+                              Submit
                             </Button>
                           }
                         />

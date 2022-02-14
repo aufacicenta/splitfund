@@ -18,6 +18,7 @@ export const PropertyPreviewContainer = () => {
     loading: isGetPropertyCardByResponseIdQueryLoading,
   } = useGetPropertyCardByResponseIdQuery({
     variables: { input: { responseId: responseId as string } },
+    fetchPolicy: "network-only",
   });
 
   if (isGetPropertyCardByResponseIdQueryLoading) {

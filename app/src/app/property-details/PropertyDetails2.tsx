@@ -107,7 +107,7 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({ className }) 
           <Modal.Header onClose={() => setIsInvestmentDetailsModalOpen(false)}>
             <Typography.Headline3 flat>Investment Details</Typography.Headline3>
           </Modal.Header>
-          <InvestmentDetails2 contractAddress="ce_98-2_gt.escrowfactory.nearholdings.testnet" />
+          <InvestmentDetails2 contractAddress="ce_biurqtr03g4yc5yti9oybiurqtr016a8.escrowfactory.nearholdings.testnet" />
         </Modal>
       )}
     </>
