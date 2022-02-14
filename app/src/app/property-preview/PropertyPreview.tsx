@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { BN } from "bn.js";
+import JSONBigInt from "json-bigint";
 
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 import { Footer } from "ui/footer/Footer";
@@ -13,12 +14,7 @@ import { Button } from "ui/button/Button";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { Modal } from "ui/modal/Modal";
 import near from "providers/near";
-import {
-  CHANGE_METHODS,
-  DEFAULT_PROPOSAL_GAS,
-  EXTERNAL_LINK_SEPARATOR,
-  PROPOSAL_BOND,
-} from "providers/near/contract/sputnik2-dao";
+import { CHANGE_METHODS, DEFAULT_PROPOSAL_GAS, PROPOSAL_BOND } from "providers/near/contract/sputnik2-dao";
 import date from "providers/date";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
 
@@ -39,25 +35,31 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
     }
 
     try {
+      const conditionalEscrowArgs = Buffer.from(
+        JSONBigInt.stringify({
+          expires_at: date.toUtcOffsetNanoseconds(property.expirationDate),
+          funding_amount_limit: new BN(near.parseNearAmount(property.price.toString())!),
+          recipient_account_id: near.getConfig(wallet.network).daoFactoryContractName,
+          metadata_url: property.media.ipfsURL,
+        }),
+      ).toString("base64");
+
       const args = Buffer.from(
         JSON.stringify({
-          name: `ce_${responseId}`,
-          args: {
-            expires_at: date.toUtcOffsetNanoseconds(property.expirationDate),
-            funding_amount_limit: near.parseNearAmount(property.price.toString()),
-            recipient_account_id: near.getConfig(wallet.network).daoFactoryContractName,
-            metadata_url: property.media.ipfsURL,
-          },
+          name: `ce_${responseId}`.slice(0, 25),
+          args: conditionalEscrowArgs,
         }),
       ).toString("base64");
 
       await wallet.context.connection?.account().functionCall({
         methodName: "add_proposal",
-        walletCallbackUrl: `${window.origin}/p/confirm?responseId=${responseId}`,
+        walletCallbackUrl: `${
+          near.getConfig(wallet.network).astroDaoURLOrigin
+        }/dao/realstate.sputnikv2.testnet/proposals?category=&status=active`,
         contractId: near.getConfig(wallet.network).daoContractName,
         args: {
           proposal: {
-            description: `${property.shortDescription}${EXTERNAL_LINK_SEPARATOR}${property.longDescription}`,
+            description: `https://near.holdings/p/preview?responseId=${responseId}`,
             kind: {
               FunctionCall: {
                 receiver_id: near.getConfig(wallet.network).escrowFactoryContractName,
@@ -107,6 +109,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
     wallet.onClickConnect({
       contractId: near.getConfig(wallet.network).daoContractName,
       methodNames: CHANGE_METHODS,
+      successUrl: `${window.origin}/p/preview?responseId=${responseId}`,
     });
   };
 
