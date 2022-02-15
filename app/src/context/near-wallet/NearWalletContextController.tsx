@@ -47,7 +47,7 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
         walletState.address.set(accountId);
 
         const accountBalance = await nearUtils.getAccountBalance(near, accountId);
-        walletState.balance.set(nearUtils.formatAccountBalance(accountBalance.available));
+        walletState.balance.set(nearUtils.formatAccountBalance(accountBalance.available, 8));
       }
     })();
   }, [

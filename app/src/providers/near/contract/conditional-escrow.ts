@@ -70,9 +70,9 @@ export const getConstantValues = async (
   const metadataURL = await contract.get_metadata_url();
 
   return {
-    totalFunds: near.formatAccountBalance(BigInt(getTotalFundsResponse).toString()),
-    fundingAmountLimit: near.formatAccountBalance(BigInt(getFundingAmountLimitResponse).toString()),
-    unpaidFundingAmount: near.formatAccountBalance(BigInt(getUnpaidFundingAmountResponse).toString()),
+    totalFunds: near.formatAccountBalance(BigInt(getTotalFundsResponse).toString(), 8),
+    fundingAmountLimit: near.formatAccountBalance(BigInt(getFundingAmountLimitResponse).toString(), 8),
+    unpaidFundingAmount: near.formatAccountBalance(BigInt(getUnpaidFundingAmountResponse).toString(), 8),
     depositsOf: BigInt(depositsOfResponse).toString(),
     totalFundedPercentage: Number(totalFundedPercentage),
     depositsOfPercentage: Number(depositsOfPercentage),
