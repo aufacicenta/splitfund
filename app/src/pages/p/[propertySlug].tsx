@@ -16,10 +16,10 @@ export async function getStaticPaths() {
   // @TODO get all active campaigns' slug and render dynamically
   return {
     paths: [
-      { params: { propertySlug: "lot-40-in-exclusive-residential-complex-cafetales-de-santa-ana" }, locale: "en" },
+      { params: { propertySlug: "ce_4f0psbxazblxwqyhpz4f0p.escrowfactory3.nearholdings.testnet" }, locale: "en" },
       {
-        params: { propertySlug: "123" },
-        locale: "en",
+        params: { propertySlug: "ce_4f0psbxazblxwqyhpz4f0p.escrowfactory3.nearholdings.testnet" },
+        locale: "es",
       },
     ],
     fallback: false,

@@ -6,7 +6,9 @@ export type ConditionalEscrowValues = {
   currentCoinPrice: number;
   priceEquivalence: number;
   expirationDate: number;
-  recipientAccountId: string;
+  daoFactoryAccountId: string;
+  ftFactoryAccountId: string;
+  metadataURL: string;
   isDepositAllowed: boolean;
   isWithdrawalAllowed: boolean;
   deposits: string[][];
@@ -20,7 +22,9 @@ export type ConditionalEscrowMethods = {
   get_unpaid_funding_amount: () => Promise<number>;
   get_deposits: () => Promise<string[][]>;
   get_expiration_date: () => Promise<number>;
-  get_recipient_account_id: () => Promise<string>;
+  get_dao_factory_account_id: () => Promise<string>;
+  get_ft_factory_account_id: () => Promise<string>;
+  get_metadata_url: () => Promise<string>;
   is_deposit_allowed: () => Promise<boolean>;
   is_withdrawal_allowed: () => Promise<boolean>;
   deposits_of: ({ payee }: { payee: string }) => Promise<number>;

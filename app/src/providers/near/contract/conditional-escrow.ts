@@ -16,7 +16,9 @@ export const VIEW_METHODS = [
   "get_expiration_date",
   "get_funding_amount_limit",
   "get_unpaid_funding_amount",
-  "get_recipient_account_id",
+  "get_dao_factory_account_id",
+  "get_ft_factory_account_id",
+  "get_metadata_url",
   "is_deposit_allowed",
   "is_withdrawal_allowed",
 ];
@@ -33,7 +35,9 @@ export const getDefaultContractValues = (): ConditionalEscrowValues => ({
   priceEquivalence: 0,
   totalFundedPercentage: 0,
   expirationDate: date.toNanoseconds(date.now().toDate().getTime()),
-  recipientAccountId: "",
+  daoFactoryAccountId: "",
+  ftFactoryAccountId: "",
+  metadataURL: "",
   isDepositAllowed: false,
   isWithdrawalAllowed: false,
   deposits: [],
@@ -42,7 +46,7 @@ export const getDefaultContractValues = (): ConditionalEscrowValues => ({
 export const getConstantValues = async (
   contract: Contract & ConditionalEscrowMethods,
   wallet: WalletSelectorContextType,
-) => {
+): Promise<ConditionalEscrowValues> => {
   const getTotalFundsResponse = await contract.get_total_funds();
   const getFundingAmountLimitResponse = await contract.get_funding_amount_limit();
   const getUnpaidFundingAmountResponse = await contract.get_unpaid_funding_amount();
@@ -61,7 +65,9 @@ export const getConstantValues = async (
     currentCoinPrice *
     Number(near.formatAccountBalanceFlat(BigInt(getFundingAmountLimitResponse).toString()).replace(",", ""));
 
-  const recipientAccountId = await contract.get_recipient_account_id();
+  const daoFactoryAccountId = await contract.get_dao_factory_account_id();
+  const ftFactoryAccountId = await contract.get_ft_factory_account_id();
+  const metadataURL = await contract.get_metadata_url();
 
   return {
     totalFunds: near.formatAccountBalance(BigInt(getTotalFundsResponse).toString()),
@@ -76,7 +82,9 @@ export const getConstantValues = async (
     expirationDate,
     isDepositAllowed,
     isWithdrawalAllowed,
-    recipientAccountId,
+    daoFactoryAccountId,
+    ftFactoryAccountId,
+    metadataURL,
   };
 };
 

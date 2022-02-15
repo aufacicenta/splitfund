@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { BN } from "bn.js";
-import JSONBigInt from "json-bigint";
 
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 import { Footer } from "ui/footer/Footer";
@@ -14,7 +13,6 @@ import { Button } from "ui/button/Button";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { Modal } from "ui/modal/Modal";
 import near from "providers/near";
-import { CHANGE_METHODS, DEFAULT_PROPOSAL_GAS, PROPOSAL_BOND } from "providers/near/contract/sputnik2-dao";
 import date from "providers/date";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
 
@@ -38,9 +36,9 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
       const conditionalEscrowContractName = `ce_${responseId}`.slice(0, 25);
 
       const conditionalEscrowArgs = Buffer.from(
-        JSONBigInt.stringify({
+        JSON.stringify({
           expires_at: date.toUtcOffsetNanoseconds(property.expirationDate),
-          funding_amount_limit: BigInt(near.parseNearAmount(property.price.toString())!),
+          funding_amount_limit: near.parseNearAmount(property.price.toString()),
           dao_factory_account_id: near.getConfig(wallet.network).daoFactoryContractName,
           ft_factory_account_id: near.getConfig(wallet.network).ftFactoryContractName,
           metadata_url: property.media.ipfsURL,
@@ -57,8 +55,8 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
         walletCallbackUrl: `${window.origin}/p/${conditionalEscrowContractName}`,
         contractId: near.getConfig(wallet.network).escrowFactoryContractName,
         args,
-        gas: near.formatGasValue(DEFAULT_PROPOSAL_GAS),
-        attachedDeposit: new BN(near.parseNearAmount(PROPOSAL_BOND)!),
+        gas: new BN("300000000000000"),
+        attachedDeposit: new BN(near.parseNearAmount("19")!),
       });
 
       toast.trigger({
@@ -90,7 +88,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
   const onClickAuthorizeWallet = () => {
     wallet.onClickConnect({
       contractId: near.getConfig(wallet.network).escrowFactoryContractName,
-      methodNames: CHANGE_METHODS,
+      methodNames: ["create_conditional_escrow"],
       successUrl: `${window.origin}/p/preview?responseId=${responseId}`,
     });
   };
