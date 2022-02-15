@@ -3,7 +3,7 @@ const CONTRACT_NAME = process.env.CONTRACT_NAME || "testnet";
 const TESTNET_DAO_CONTRACT_NAME = "realstate.sputnikv2.testnet";
 const MAINNET_DAO_CONTRACT_NAME = "nearholdings.sputnik-dao.near";
 
-const TESTNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory3.nearholdings.testnet";
+const TESTNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory4.nearholdings.testnet";
 const MAINNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory.communitycapital.near";
 
 const TESTNET_DAOFACTORY_CONTRACT_NAME = "daofactory2.nearholdings.testnet";

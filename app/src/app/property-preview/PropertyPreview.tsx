@@ -1,6 +1,8 @@
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BN } from "bn.js";
+import { useGetPropertyCardByResponseIdQuery } from "api/codegen";
+import { useRouter } from "next/router";
 
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 import { Footer } from "ui/footer/Footer";
@@ -16,16 +18,58 @@ import near from "providers/near";
 import date from "providers/date";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
+import { GenericLoader } from "ui/generic-loader/GenericLoader";
+import { PropertyCardProps } from "app/properties-index/property-card/PropertyCard.types";
 
 import { PropertyPreviewProps } from "./PropertyPreview.types";
 import styles from "./PropertyPreview.module.scss";
 
-export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, property, responseId }) => {
+export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, responseId }) => {
   const [isAuthorizeWalletModalOpen, setIsAuthorizeWalletModalOpen] = useState(false);
+  const [property, setProperty] = useState<PropertyCardProps["property"]>({
+    title: "Loading",
+    price: 0,
+    shortDescription: "Loading",
+    longDescription: "Loading",
+    category: "Loading",
+    expirationDate: "MM/DD/YYYY",
+    media: { featuredImageUrl: "/property-details/near-holdings-icon-loading-template.jpg", ipfsURL: "ipfs://" },
+  });
 
   const wallet = useWalletSelectorContext();
   const toast = useToastContext();
   const routes = useRoutes();
+  const router = useRouter();
+
+  const {
+    data: getPropertyCardByResponseIdQueryData,
+    error: getPropertyCardByResponseIdQueryError,
+    loading: isGetPropertyCardByResponseIdQueryLoading,
+  } = useGetPropertyCardByResponseIdQuery({
+    variables: { input: { responseId } },
+    fetchPolicy: "network-only",
+  });
+
+  useEffect(() => {
+    if (!getPropertyCardByResponseIdQueryData?.getPropertyCardByResponseId) {
+      return;
+    }
+
+    setProperty(getPropertyCardByResponseIdQueryData.getPropertyCardByResponseId);
+  }, [getPropertyCardByResponseIdQueryData]);
+
+  if (isGetPropertyCardByResponseIdQueryLoading) {
+    return <GenericLoader />;
+  }
+
+  if (
+    getPropertyCardByResponseIdQueryError ||
+    (!isGetPropertyCardByResponseIdQueryLoading && !getPropertyCardByResponseIdQueryData?.getPropertyCardByResponseId)
+  ) {
+    router.push(routes.notFound);
+
+    return null;
+  }
 
   const onClickSubmitAsset = async () => {
     if (!wallet.isConnected) {
@@ -60,7 +104,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
         contractId: near.getConfig(wallet.network).escrowFactoryContractName,
         args,
         gas: new BN("300000000000000"),
-        attachedDeposit: new BN(near.parseNearAmount("19")!),
+        attachedDeposit: new BN(near.parseNearAmount("2")!),
       });
 
       toast.trigger({

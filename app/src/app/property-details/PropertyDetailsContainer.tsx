@@ -13,11 +13,12 @@ import {
 } from "providers/near/contract/conditional-escrow";
 import { ConditionalEscrowMethods, ConditionalEscrowValues } from "providers/near/contract/conditional-escrow.types";
 import { Typography } from "ui/typography/Typography";
+import ipfs from "providers/ipfs";
 
 import { PropertyDetails2 } from "./PropertyDetails2";
 
 async function getPropertyFromMetadataUrl(url: string) {
-  const response = await fetch(url, {
+  const response = await fetch(ipfs.asHttpsURL(url), {
     method: "GET",
   });
 
