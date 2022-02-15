@@ -1,5 +1,4 @@
 import { PropertyCard } from "api/codegen";
-import slugify from "slugify";
 
 import ipfs from "providers/ipfs";
 
@@ -40,7 +39,10 @@ const getResponseFileAsBase64String = async (url: string): Promise<string> => {
   }
 };
 
-const parseAnswerFromResponseData = async (data: TypeformResponse): Promise<PropertyCard | null> => {
+const parseAnswerFromResponseData = async (
+  data: TypeformResponse,
+  responseId: string,
+): Promise<PropertyCard | null> => {
   const { answers } = data.items[0];
 
   if (!answers.length) {
@@ -71,10 +73,10 @@ const parseAnswerFromResponseData = async (data: TypeformResponse): Promise<Prop
     },
   };
 
-  const fileName = slugify(`${content.title} ${content.category} ${content.expirationDate}`);
+  const fileName = responseId;
   const ipfsResponse = await ipfs.upload(JSON.stringify(content), fileName);
 
-  return { ...content, media: { ...content.media, ipfsURL: ipfs.asHttpsURL(ipfsResponse?.path) } };
+  return { ...content, media: { ...content.media, ipfsURL: ipfsResponse?.path! } };
 };
 
 export default async (responseId: string): Promise<PropertyCard | null> => {
@@ -92,10 +94,10 @@ export default async (responseId: string): Promise<PropertyCard | null> => {
     const data = (await response.json()) as TypeformResponse;
 
     if (!data?.items && !data.items.length) {
-      return null;
+      throw new Error(`[getResponseById]: typeform data is empty for responseId=${responseId}`);
     }
 
-    return await parseAnswerFromResponseData(data);
+    return await parseAnswerFromResponseData(data, responseId);
   } catch {
     //   @TODO log error
     return null;

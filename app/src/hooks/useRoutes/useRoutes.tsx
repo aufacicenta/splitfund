@@ -23,6 +23,7 @@ type RouteMap = {
   property: {
     details: (propertySlug: string) => string;
     preview: (responseId: string) => string;
+    index: (contractAddress: string) => string;
   };
   home: string;
   notFound: string;
@@ -55,6 +56,7 @@ export const routes: RouteMap = {
   property: {
     details: (propertySlug) => `/p/${propertySlug}`,
     preview: (responseId) => `/p/preview?responseId=${responseId}`,
+    index: (contractAddress: string) => `/p?contractAddress=${contractAddress}`,
   },
 };
 

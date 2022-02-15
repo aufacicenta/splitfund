@@ -1,5 +1,11 @@
 import timeFromNow from "./timeFromNow";
-import getDefaultDateFormat, { toNanoseconds, now, fromNanoseconds } from "./getDefaultDateFormat";
+import client from "./client";
+import getDefaultDateFormat, {
+  toNanoseconds,
+  now,
+  fromNanoseconds,
+  toUtcOffsetNanoseconds,
+} from "./getDefaultDateFormat";
 
 export default {
   timeFromNow,
@@ -7,4 +13,6 @@ export default {
   toNanoseconds,
   fromNanoseconds,
   now,
+  client,
+  toUtcOffsetNanoseconds,
 };

@@ -15,7 +15,14 @@ import styles from "./PropertyDetails2.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails2.types";
 import { InvestmentDetails2 } from "./investment-details/InvestmentDetails2";
 
-export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({ className }) => {
+export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
+  className,
+  contract,
+  contractData,
+  property,
+  isContractDataLoading,
+  contractAddress,
+}) => {
   const [isInvestmentDetailsModalOpen, setIsInvestmentDetailsModalOpen] = useState(false);
 
   return (
@@ -75,18 +82,15 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({ className }) 
                       </Grid.Col>
                       <Grid.Col lg={6}>
                         <PropertyCard
-                          property={{
-                            title: "",
-                            price: 0,
-                            shortDescription: "",
-                            longDescription: "",
-                            category: "Art",
-                            expirationDate: "",
-                            media: { featuredImageUrl: "", ipfsURL: "" },
-                            owner: { name: "", url: "" },
-                          }}
+                          property={property}
                           action={
-                            <Button color="primary" fullWidth onClick={() => setIsInvestmentDetailsModalOpen(true)}>
+                            <Button
+                              color="primary"
+                              fullWidth
+                              onClick={() => setIsInvestmentDetailsModalOpen(true)}
+                              isLoading={isContractDataLoading}
+                              disabled={isContractDataLoading}
+                            >
                               Investment Details
                             </Button>
                           }
@@ -107,7 +111,12 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({ className }) 
           <Modal.Header onClose={() => setIsInvestmentDetailsModalOpen(false)}>
             <Typography.Headline3 flat>Investment Details</Typography.Headline3>
           </Modal.Header>
-          <InvestmentDetails2 contractAddress="ce_98-2_gt.escrowfactory.nearholdings.testnet" />
+          <InvestmentDetails2
+            contractAddress={contractAddress}
+            contract={contract}
+            contractData={contractData}
+            isContractDataLoading={isContractDataLoading}
+          />
         </Modal>
       )}
     </>
