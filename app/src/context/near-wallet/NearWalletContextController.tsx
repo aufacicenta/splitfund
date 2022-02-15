@@ -5,7 +5,6 @@ import { WalletSelectorContextController } from "../wallet-selector/WalletSelect
 import { WalletSelectorChain, WalletSelectorContextType } from "../wallet-selector/WalletSelectorContext.types";
 import { useWalletState } from "hooks/useWalletState/useWalletState";
 import nearUtils from "providers/near";
-import getConfig from "providers/near/getConfig";
 
 import { NEARSignInOptions, NearWalletContextControllerProps } from "./NearWalletContext.types";
 
@@ -31,7 +30,7 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
 
     walletState.network.set(DEFAULT_NETWORK_ENV);
     walletState.chain.set(WalletSelectorChain.near);
-    walletState.explorer.set(getConfig(DEFAULT_NETWORK_ENV).explorerUrl);
+    walletState.explorer.set(nearUtils.getConfig(DEFAULT_NETWORK_ENV).explorerUrl);
 
     (async () => {
       const connection = await nearUtils.initWalletConnection(walletState.network.get());

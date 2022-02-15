@@ -13,7 +13,7 @@ export function useNearContract<M>(
   const [contract, setContract] = useState<(Contract & M) | undefined>(undefined);
 
   useEffect(() => {
-    if (wallet.isConnected && contract?.account.accountId === wallet.context.guest.address) {
+    if ((wallet.isConnected && contract?.account.accountId === wallet.context.guest.address) || !contractAddress) {
       setContract(undefined);
     }
 

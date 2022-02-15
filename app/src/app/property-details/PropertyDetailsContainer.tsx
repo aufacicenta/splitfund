@@ -43,7 +43,7 @@ export const PropertyDetailsContainer = () => {
   const wallet = useWalletSelectorContext();
   const toast = useToastContext();
 
-  const contractAddress = router.query.propertySlug;
+  const { contractAddress } = router.query;
 
   const contract = useNearContract<ConditionalEscrowMethods>(wallet, contractAddress as string, {
     viewMethods: VIEW_METHODS,
@@ -51,7 +51,7 @@ export const PropertyDetailsContainer = () => {
   });
 
   useEffect(() => {
-    if (!contract) {
+    if (!contract || !router.isReady) {
       setContractData(getDefaultContractValues());
 
       return;
@@ -77,7 +77,7 @@ export const PropertyDetailsContainer = () => {
         });
       }
     })();
-  }, [contract, toast, wallet]);
+  }, [contract, router.isReady, toast, wallet]);
 
   return (
     <PropertyDetails2

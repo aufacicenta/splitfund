@@ -15,6 +15,7 @@ import { Modal } from "ui/modal/Modal";
 import near from "providers/near";
 import date from "providers/date";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
+import { useRoutes } from "hooks/useRoutes/useRoutes";
 
 import { PropertyPreviewProps } from "./PropertyPreview.types";
 import styles from "./PropertyPreview.module.scss";
@@ -24,6 +25,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
 
   const wallet = useWalletSelectorContext();
   const toast = useToastContext();
+  const routes = useRoutes();
 
   const onClickSubmitAsset = async () => {
     if (!wallet.isConnected) {
@@ -52,7 +54,9 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, pro
 
       await wallet.context.connection?.account().functionCall({
         methodName: "create_conditional_escrow",
-        walletCallbackUrl: `${window.origin}/p/${conditionalEscrowContractName}`,
+        walletCallbackUrl: `${window.origin}${routes.property.index(
+          `${conditionalEscrowContractName}.${near.getConfig(wallet.network).escrowFactoryContractName}`,
+        )}`,
         contractId: near.getConfig(wallet.network).escrowFactoryContractName,
         args,
         gas: new BN("300000000000000"),
