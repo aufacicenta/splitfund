@@ -111,7 +111,7 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
                     }}
                     action={
                       <Typography.Link
-                        href={routes.property.details("123")}
+                        href={routes.property.index("123")}
                         className={styles["home__property-card--cta"]}
                       >
                         See Details

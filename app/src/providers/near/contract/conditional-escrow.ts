@@ -1,11 +1,10 @@
-import * as nearAPI from "near-api-js";
-import { Account, Contract } from "near-api-js";
-import { ContractMethods } from "near-api-js/lib/contract";
+import { Contract } from "near-api-js";
 
 import near from "providers/near";
 import date from "providers/date";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
+import ipfs from "providers/ipfs";
 
 import { ConditionalEscrowMethods, ConditionalEscrowValues } from "./conditional-escrow.types";
 
@@ -25,6 +24,16 @@ export const VIEW_METHODS = [
 
 export const CHANGE_METHODS = ["deposit", "withdraw", "delegate_funds"];
 
+export async function getPropertyFromMetadataUrl(url: string) {
+  const response = await fetch(ipfs.asHttpsURL(url), {
+    method: "GET",
+  });
+
+  const data = await response.json();
+
+  return data;
+}
+
 export const getDefaultContractValues = (): ConditionalEscrowValues => ({
   totalFunds: near.formatAccountBalance("0"),
   fundingAmountLimit: near.formatAccountBalance("0"),
@@ -42,6 +51,12 @@ export const getDefaultContractValues = (): ConditionalEscrowValues => ({
   isWithdrawalAllowed: false,
   deposits: [],
 });
+
+export const getMetadataUrl = async (contract: Contract & ConditionalEscrowMethods): Promise<string> => {
+  const metadataURL = await contract.get_metadata_url();
+
+  return metadataURL;
+};
 
 export const getConstantValues = async (
   contract: Contract & ConditionalEscrowMethods,
@@ -87,13 +102,3 @@ export const getConstantValues = async (
     metadataURL,
   };
 };
-
-export function initConditionalEscrowContract<M>(
-  account: Account,
-  contractAddress: string,
-  contractMethods: ContractMethods,
-): Contract & M {
-  const contract = new nearAPI.Contract(account, contractAddress, contractMethods);
-
-  return contract as Contract & M;
-}

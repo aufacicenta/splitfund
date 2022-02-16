@@ -25,6 +25,9 @@ type RouteMap = {
     preview: (responseId: string) => string;
     index: (contractAddress: string) => string;
   };
+  properties: {
+    explorer: () => string;
+  };
   home: string;
   notFound: string;
 };
@@ -57,6 +60,9 @@ export const routes: RouteMap = {
     details: (propertySlug) => `/p/${propertySlug}`,
     preview: (responseId) => `/p/preview?responseId=${responseId}`,
     index: (contractAddress: string) => `/p?contractAddress=${contractAddress}`,
+  },
+  properties: {
+    explorer: () => `/p/explorer`,
   },
 };
 

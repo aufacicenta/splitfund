@@ -3,7 +3,7 @@ import { ContractMethods } from "near-api-js/lib/contract";
 import { useEffect, useState } from "react";
 
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
-import { initConditionalEscrowContract } from "providers/near/contract/conditional-escrow";
+import near from "providers/near";
 
 export function useNearContract<M>(
   wallet: WalletSelectorContextType,
@@ -37,7 +37,7 @@ export function useNearContract<M>(
         return;
       }
 
-      setContract(initConditionalEscrowContract<M>(account, contractAddress, contractMethods));
+      setContract(near.initContract<M>(account, contractAddress, contractMethods));
     };
 
     initContract();

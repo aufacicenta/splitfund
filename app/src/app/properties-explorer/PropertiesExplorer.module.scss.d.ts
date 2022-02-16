@@ -1,5 +1,8 @@
 export type Styles = {
   "properties-explorer": string;
+  "properties-explorer__main": string;
+  "properties-explorer__page-title": string;
+  "properties-explorer__property-card": string;
   "z-depth-0": string;
   "z-depth-1": string;
   "z-depth-1-half": string;
