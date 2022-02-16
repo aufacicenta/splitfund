@@ -22,7 +22,7 @@ const getDateTypeAnswerFieldValue = (answersRefKeyMap: Map<string, Answer>, ref:
 const getChoiceTypeAnswerFieldValue = (answersRefKeyMap: Map<string, Answer>, ref: string) =>
   answersRefKeyMap.get(ref)?.choice?.label || "";
 
-const getResponseFileAsBase64String = async (url: string): Promise<string> => {
+const getResponseFileAsIPFSUrl = async (url: string): Promise<string> => {
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -32,8 +32,11 @@ const getResponseFileAsBase64String = async (url: string): Promise<string> => {
     });
 
     const blob = await response.arrayBuffer();
+    const fileName = url.split("/").pop();
 
-    return `data:${response.headers.get("content-type")};base64,${Buffer.from(blob).toString("base64")}`;
+    const ipfsResponse = await ipfs.upload(Buffer.from(blob), fileName!);
+
+    return ipfsResponse?.path || "";
   } catch {
     return "";
   }
@@ -63,7 +66,7 @@ const parseAnswerFromResponseData = async (
     category: getChoiceTypeAnswerFieldValue(answersRefKeyMap, "asset_category"),
     expirationDate: getDateTypeAnswerFieldValue(answersRefKeyMap, "asset_campaign_expiration_date"),
     media: {
-      featuredImageUrl: await getResponseFileAsBase64String(
+      featuredImageUrl: await getResponseFileAsIPFSUrl(
         getImageTypeAnswerFieldValue(answersRefKeyMap, "asset_featured_image"),
       ),
     },
@@ -73,8 +76,8 @@ const parseAnswerFromResponseData = async (
     },
   };
 
-  const fileName = responseId;
-  const ipfsResponse = await ipfs.upload(JSON.stringify(content), fileName);
+  const fileName = `${responseId}.json`;
+  const ipfsResponse = await ipfs.upload(Buffer.from(JSON.stringify(content)), fileName);
 
   return { ...content, media: { ...content.media, ipfsURL: ipfsResponse?.path! } };
 };

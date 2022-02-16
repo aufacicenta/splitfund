@@ -45,14 +45,13 @@ async function addFileToIPFS(
   };
 }
 
-export default async (content: string, name: string): Promise<IpfsResponse | null> => {
+export default async (content: Buffer, name: string): Promise<IpfsResponse | null> => {
   try {
-    const jsonFileName = `${name}.json`;
-    const result = await addFileToIPFS(Buffer.from(content), { path: jsonFileName });
+    const result = await addFileToIPFS(content, { path: name });
 
     return {
       ...result,
-      name: jsonFileName,
+      name,
     };
   } catch (error) {
     console.error(error);
