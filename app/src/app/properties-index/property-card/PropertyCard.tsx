@@ -4,14 +4,30 @@ import { Card } from "ui/card/Card";
 import { Typography } from "ui/typography/Typography";
 import { Grid } from "ui/grid/Grid";
 import { HorizontalLine } from "ui/horizontal-line/HorizontalLine";
+import ipfs from "providers/ipfs";
+import date from "providers/date";
 
 import { PropertyCardProps } from "./PropertyCard.types";
 import styles from "./PropertyCard.module.scss";
 
+export const DEFAULT_PROPERTY_CARD_PROPS = {
+  title: "Loading",
+  price: 0,
+  shortDescription: "Loading",
+  longDescription: "Loading",
+  category: "Loading",
+  expirationDate: date.now().format(),
+  media: {
+    featuredImageUrl:
+      "bafybeictugtlj7ixe5u2ylavxzhm7dvs6nqzgykv7pgrvlfsxccbfai6pm/near-holdings-icon-loading-template.jpg",
+    ipfsURL: "ipfs://",
+  },
+};
+
 export const PropertyCard: React.FC<PropertyCardProps> = ({ className, action, minimal, property }) => (
   <Card
     shadow
-    backgroundImageUrl={property.media.featuredImageUrl}
+    backgroundImageUrl={ipfs.asHttpsURL(property.media.featuredImageUrl)}
     className={clsx(styles["property-card"], className)}
   >
     <Card.Content>

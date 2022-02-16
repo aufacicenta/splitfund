@@ -10,7 +10,7 @@ import { MainPanel } from "ui/mainpanel/MainPanel";
 import { Grid } from "ui/grid/Grid";
 import { Card } from "ui/card/Card";
 import { Typography } from "ui/typography/Typography";
-import { PropertyCard } from "app/properties-index/property-card/PropertyCard";
+import { DEFAULT_PROPERTY_CARD_PROPS, PropertyCard } from "app/properties-index/property-card/PropertyCard";
 import { Button } from "ui/button/Button";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { Modal } from "ui/modal/Modal";
@@ -26,15 +26,7 @@ import styles from "./PropertyPreview.module.scss";
 
 export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, responseId }) => {
   const [isAuthorizeWalletModalOpen, setIsAuthorizeWalletModalOpen] = useState(false);
-  const [property, setProperty] = useState<PropertyCardProps["property"]>({
-    title: "Loading",
-    price: 0,
-    shortDescription: "Loading",
-    longDescription: "Loading",
-    category: "Loading",
-    expirationDate: "MM/DD/YYYY",
-    media: { featuredImageUrl: "/property-details/near-holdings-icon-loading-template.jpg", ipfsURL: "ipfs://" },
-  });
+  const [property, setProperty] = useState<PropertyCardProps["property"]>(DEFAULT_PROPERTY_CARD_PROPS);
 
   const wallet = useWalletSelectorContext();
   const toast = useToastContext();
