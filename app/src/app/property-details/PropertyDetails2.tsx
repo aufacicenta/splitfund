@@ -7,7 +7,7 @@ import { Card } from "ui/card/Card";
 import { Footer } from "ui/footer/Footer";
 import { Typography } from "ui/typography/Typography";
 import { Button } from "ui/button/Button";
-import { PropertyCard } from "app/properties-index/property-card/PropertyCard";
+import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 import { Modal } from "ui/modal/Modal";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 

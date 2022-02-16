@@ -10,7 +10,7 @@ import { MainPanel } from "ui/mainpanel/MainPanel";
 import { Grid } from "ui/grid/Grid";
 import { Card } from "ui/card/Card";
 import { Typography } from "ui/typography/Typography";
-import { DEFAULT_PROPERTY_CARD_PROPS, PropertyCard } from "app/properties-index/property-card/PropertyCard";
+import { DEFAULT_PROPERTY_CARD_PROPS, PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 import { Button } from "ui/button/Button";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { Modal } from "ui/modal/Modal";
@@ -19,7 +19,7 @@ import date from "providers/date";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { GenericLoader } from "ui/generic-loader/GenericLoader";
-import { PropertyCardProps } from "app/properties-index/property-card/PropertyCard.types";
+import { PropertyCardProps } from "app/properties-explorer/property-card/PropertyCard.types";
 
 import { PropertyPreviewProps } from "./PropertyPreview.types";
 import styles from "./PropertyPreview.module.scss";

@@ -37,7 +37,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ className, action, m
           <Typography.Description flat className={styles["property-card__description"]}>
             {property.shortDescription}
           </Typography.Description>
-          {property.owner && (
+          {property.owner?.name && (
             <Typography.Description flat className={styles["property-card__sold-by"]}>
               Listed by {property.owner.name}
             </Typography.Description>
