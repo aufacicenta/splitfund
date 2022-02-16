@@ -1,4 +1,3 @@
-import { PropertyCard } from "api/codegen";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -14,6 +13,8 @@ import {
 import { ConditionalEscrowMethods, ConditionalEscrowValues } from "providers/near/contract/conditional-escrow.types";
 import { Typography } from "ui/typography/Typography";
 import ipfs from "providers/ipfs";
+import { DEFAULT_PROPERTY_CARD_PROPS } from "app/properties-index/property-card/PropertyCard";
+import { PropertyCardProps } from "app/properties-index/property-card/PropertyCard.types";
 
 import { PropertyDetails2 } from "./PropertyDetails2";
 
@@ -30,15 +31,7 @@ async function getPropertyFromMetadataUrl(url: string) {
 export const PropertyDetailsContainer = () => {
   const [contractData, setContractData] = useState<ConditionalEscrowValues>(getDefaultContractValues());
   const [isContractDataLoading, setIsContractDataLoading] = useState(false);
-  const [property, setProperty] = useState<PropertyCard>({
-    title: "Loading",
-    price: 0,
-    shortDescription: "Loading",
-    longDescription: "Loading",
-    category: "Loading",
-    expirationDate: "MM/DD/YYYY",
-    media: { featuredImageUrl: "/property-details/near-holdings-icon-loading-template.jpg", ipfsURL: "ipfs://" },
-  });
+  const [property, setProperty] = useState<PropertyCardProps["property"]>(DEFAULT_PROPERTY_CARD_PROPS);
 
   const router = useRouter();
   const wallet = useWalletSelectorContext();
