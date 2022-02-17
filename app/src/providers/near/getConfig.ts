@@ -3,7 +3,7 @@ const CONTRACT_NAME = process.env.CONTRACT_NAME || "testnet";
 const TESTNET_DAO_CONTRACT_NAME = "sputnikv2.testnet";
 const MAINNET_DAO_CONTRACT_NAME = "sputnik-dao.near";
 
-const TESTNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory4.nearholdings.testnet";
+const TESTNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory12.nearholdings.testnet";
 const MAINNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory.communitycapital.near";
 
 const TESTNET_DAOFACTORY_CONTRACT_NAME = "daofactory2.nearholdings.testnet";
@@ -11,6 +11,9 @@ const MAINNET_DAOFACTORY_CONTRACT_NAME = "daofactory.communitycapital.near";
 
 const TESTNET_FTFACTORY_CONTRACT_NAME = "ftfactory2.nearholdings.testnet";
 const MAINNET_FTFACTORY_CONTRACT_NAME = "ftfactory.communitycapital.near";
+
+const TESTNET_SKFACTORY_CONTRACT_NAME = "stakingfactory.nearholdings.testnet";
+const MAINNET_SKFACTORY_CONTRACT_NAME = "stakingfactory.communitycapital.near";
 
 const TESTNET_ASTRODAO_URL_ORIGIN = "https://dev.app.astrodao.com";
 const MAINNET_ASTRODAO_URL_ORIGIN = "https://app.astrodao.com";
@@ -26,6 +29,7 @@ export default (network: string | undefined) => {
         escrowFactoryContractName: MAINNET_ESCROWFACTORY_CONTRACT_NAME,
         daoFactoryContractName: MAINNET_DAOFACTORY_CONTRACT_NAME,
         ftFactoryContractName: MAINNET_FTFACTORY_CONTRACT_NAME,
+        skFactoryContractName: MAINNET_SKFACTORY_CONTRACT_NAME,
         astroDaoURLOrigin: MAINNET_ASTRODAO_URL_ORIGIN,
         walletUrl: "https://wallet.near.org",
         helperUrl: "https://helper.mainnet.near.org",
@@ -41,6 +45,7 @@ export default (network: string | undefined) => {
         escrowFactoryContractName: TESTNET_ESCROWFACTORY_CONTRACT_NAME,
         daoFactoryContractName: TESTNET_DAOFACTORY_CONTRACT_NAME,
         ftFactoryContractName: TESTNET_FTFACTORY_CONTRACT_NAME,
+        skFactoryContractName: TESTNET_SKFACTORY_CONTRACT_NAME,
         astroDaoURLOrigin: TESTNET_ASTRODAO_URL_ORIGIN,
         walletUrl: "https://wallet.testnet.near.org",
         helperUrl: "https://helper.testnet.near.org",
@@ -55,6 +60,7 @@ export default (network: string | undefined) => {
         escrowFactoryContractName: TESTNET_ESCROWFACTORY_CONTRACT_NAME,
         daoFactoryContractName: TESTNET_DAOFACTORY_CONTRACT_NAME,
         ftFactoryContractName: TESTNET_FTFACTORY_CONTRACT_NAME,
+        skFactoryContractName: TESTNET_SKFACTORY_CONTRACT_NAME,
         astroDaoURLOrigin: TESTNET_ASTRODAO_URL_ORIGIN,
         walletUrl: "https://wallet.betanet.near.org",
         helperUrl: "https://helper.betanet.near.org",
@@ -70,6 +76,7 @@ export default (network: string | undefined) => {
         escrowFactoryContractName: TESTNET_ESCROWFACTORY_CONTRACT_NAME,
         daoFactoryContractName: TESTNET_DAOFACTORY_CONTRACT_NAME,
         ftFactoryContractName: TESTNET_FTFACTORY_CONTRACT_NAME,
+        skFactoryContractName: TESTNET_SKFACTORY_CONTRACT_NAME,
         astroDaoURLOrigin: TESTNET_ASTRODAO_URL_ORIGIN,
       };
     case "ci":
@@ -81,6 +88,7 @@ export default (network: string | undefined) => {
         escrowFactoryContractName: TESTNET_ESCROWFACTORY_CONTRACT_NAME,
         daoFactoryContractName: TESTNET_DAOFACTORY_CONTRACT_NAME,
         ftFactoryContractName: TESTNET_FTFACTORY_CONTRACT_NAME,
+        skFactoryContractName: TESTNET_SKFACTORY_CONTRACT_NAME,
         astroDaoURLOrigin: TESTNET_ASTRODAO_URL_ORIGIN,
         masterAccount: "test.near",
       };
@@ -93,6 +101,7 @@ export default (network: string | undefined) => {
         escrowFactoryContractName: TESTNET_ESCROWFACTORY_CONTRACT_NAME,
         daoFactoryContractName: TESTNET_DAOFACTORY_CONTRACT_NAME,
         ftFactoryContractName: TESTNET_FTFACTORY_CONTRACT_NAME,
+        skFactoryContractName: TESTNET_SKFACTORY_CONTRACT_NAME,
         astroDaoURLOrigin: TESTNET_ASTRODAO_URL_ORIGIN,
         masterAccount: "test.near",
       };
@@ -105,6 +114,7 @@ export default (network: string | undefined) => {
         escrowFactoryContractName: TESTNET_ESCROWFACTORY_CONTRACT_NAME,
         daoFactoryContractName: TESTNET_DAOFACTORY_CONTRACT_NAME,
         ftFactoryContractName: TESTNET_FTFACTORY_CONTRACT_NAME,
+        skFactoryContractName: TESTNET_SKFACTORY_CONTRACT_NAME,
         astroDaoURLOrigin: TESTNET_ASTRODAO_URL_ORIGIN,
         walletUrl: "https://wallet.testnet.near.org",
         helperUrl: "https://helper.testnet.near.org",

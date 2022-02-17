@@ -96,7 +96,8 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
         contractId: near.getConfig(wallet.network).escrowFactoryContractName,
         args,
         gas: new BN("300000000000000"),
-        attachedDeposit: new BN(near.parseNearAmount("2")!),
+        // @TODO we should dramatically reduce the cost of deploying. I'm pretty sure we are doing something wrong in the EscrowFactory contract. Why does it cost so much to cover storage?
+        attachedDeposit: new BN(near.parseNearAmount("20")!),
       });
 
       toast.trigger({

@@ -8,7 +8,6 @@ export type ConditionalEscrowValues = {
   expirationDate: number;
   daoFactoryAccountId: string;
   ftFactoryAccountId: string;
-  skFactoryAccountId: string;
   daoName: string;
   metadataURL: string;
   isDepositAllowed: boolean;
@@ -26,7 +25,6 @@ export type ConditionalEscrowMethods = {
   get_expiration_date: () => Promise<number>;
   get_dao_factory_account_id: () => Promise<string>;
   get_ft_factory_account_id: () => Promise<string>;
-  get_sk_factory_account_id: () => Promise<string>;
   get_dao_name: () => Promise<string>;
   get_metadata_url: () => Promise<string>;
   is_deposit_allowed: () => Promise<boolean>;
@@ -35,5 +33,4 @@ export type ConditionalEscrowMethods = {
   deposit: (args: Record<string, string>, gas?: number, amount?: string | null) => Promise<void>;
   withdraw: () => Promise<void>;
   delegate_funds: ({ dao_name }: { dao_name: string }, gas: string | number) => Promise<boolean>;
-  enable_staking: () => Promise<boolean>;
 };

@@ -17,12 +17,13 @@ export const VIEW_METHODS = [
   "get_unpaid_funding_amount",
   "get_dao_factory_account_id",
   "get_ft_factory_account_id",
+  "get_dao_name",
   "get_metadata_url",
   "is_deposit_allowed",
   "is_withdrawal_allowed",
 ];
 
-export const CHANGE_METHODS = ["deposit", "withdraw", "delegate_funds", "enable_staking"];
+export const CHANGE_METHODS = ["deposit", "withdraw", "delegate_funds"];
 
 export async function getPropertyFromMetadataUrl(url: string) {
   const response = await fetch(ipfs.asHttpsURL(url), {
@@ -46,7 +47,6 @@ export const getDefaultContractValues = (): ConditionalEscrowValues => ({
   expirationDate: date.toNanoseconds(date.now().toDate().getTime()),
   daoFactoryAccountId: "",
   ftFactoryAccountId: "",
-  skFactoryAccountId: "",
   daoName: "",
   metadataURL: "",
   isDepositAllowed: false,
@@ -84,7 +84,6 @@ export const getConstantValues = async (
 
   const daoFactoryAccountId = await contract.get_dao_factory_account_id();
   const ftFactoryAccountId = await contract.get_ft_factory_account_id();
-  const skFactoryAccountId = await contract.get_sk_factory_account_id();
   const daoName = await contract.get_dao_name();
   const metadataURL = await contract.get_metadata_url();
 
@@ -103,7 +102,6 @@ export const getConstantValues = async (
     isWithdrawalAllowed,
     daoFactoryAccountId,
     ftFactoryAccountId,
-    skFactoryAccountId,
     daoName,
     metadataURL,
   };
