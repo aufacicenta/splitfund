@@ -16,17 +16,13 @@ export const PropertiesExplorer: React.FC<PropertiesExplorerProps> = ({ classNam
       <MainPanel className={styles["properties-explorer__main"]}>
         <Grid.Container>
           <Grid.Row>
-            <Grid.Col lg={12}>
-              <Grid.Row>
-                {contractAddresses.map((contractAddress) => (
-                  <Grid.Col lg={4} xs={1} key={contractAddress}>
-                    <div className={styles["properties-explorer__property-card"]}>
-                      <PropertyCardContainer contractAddress={contractAddress} />
-                    </div>
-                  </Grid.Col>
-                ))}
-              </Grid.Row>
-            </Grid.Col>
+            {contractAddresses.map((contractAddress) => (
+              <Grid.Col lg={4} xs={12} key={contractAddress}>
+                <div className={styles["properties-explorer__property-card"]}>
+                  <PropertyCardContainer contractAddress={contractAddress} />
+                </div>
+              </Grid.Col>
+            ))}
           </Grid.Row>
         </Grid.Container>
       </MainPanel>

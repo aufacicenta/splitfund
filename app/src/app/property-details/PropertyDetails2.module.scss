@@ -13,9 +13,9 @@
 
   &__row-reverse {
     @include atLargeTablet {
-      flex-flow: initial;
+      flex-flow: initial !important;
     }
-    flex-flow: column-reverse;
+    flex-flow: column-reverse !important;
   }
 
   &__left {

@@ -171,9 +171,9 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
     if (contractData.daoName !== "") {
       return (
         <>
-          <Typography.Description flat>The asset is 100% funded</Typography.Description>
+          <Typography.Description flat>TBD</Typography.Description>
           {/* @TODO onClickEnableStaking */}
-          <Button color="primary" onClick={() => undefined} isLoading={isContractDataLoading}>
+          <Button color="primary" onClick={() => undefined} isLoading={isContractDataLoading} disabled>
             Enable Staking
           </Button>
         </>
