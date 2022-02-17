@@ -6,6 +6,19 @@
   min-height: 100vh;
   background-color: var(--color-background);
 
+  &__property-card {
+    &--row {
+      > div {
+        &:nth-child(n + 2) {
+          @include atLargeTablet {
+            margin-top: 0;
+          }
+          margin-top: $space-l;
+        }
+      }
+    }
+  }
+
   &__powered-by {
     display: flex;
     margin-bottom: $space-ml;
