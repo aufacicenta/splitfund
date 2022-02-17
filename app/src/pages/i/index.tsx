@@ -3,7 +3,7 @@ import { i18n } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { AppLayout } from "layouts/app-layout/AppLayout";
-import { PropertiesIndexContainer } from "app/properties-index/PropertiesIndex/PropertiesIndexContainer";
+import { PropertiesIndexContainer } from "app/properties-explorer/PropertiesIndex/PropertiesIndexContainer";
 
 const BusinessCampaigns: NextPage = () => (
   <AppLayout>

@@ -1,12 +1,8 @@
 export type Styles = {
-  "property-card": string;
-  "property-card__category": string;
-  "property-card__description": string;
-  "property-card__details": string;
-  "property-card__exchange-rate": string;
-  "property-card__price": string;
-  "property-card__sold-by": string;
-  "property-card__title": string;
+  "properties-explorer": string;
+  "properties-explorer__main": string;
+  "properties-explorer__page-title": string;
+  "properties-explorer__property-card": string;
   "z-depth-0": string;
   "z-depth-1": string;
   "z-depth-1-half": string;

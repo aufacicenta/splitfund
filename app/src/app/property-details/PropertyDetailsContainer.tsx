@@ -8,29 +8,19 @@ import {
   CHANGE_METHODS,
   getConstantValues,
   getDefaultContractValues,
+  getPropertyFromMetadataUrl,
   VIEW_METHODS,
 } from "providers/near/contract/conditional-escrow";
 import { ConditionalEscrowMethods, ConditionalEscrowValues } from "providers/near/contract/conditional-escrow.types";
 import { Typography } from "ui/typography/Typography";
-import ipfs from "providers/ipfs";
-import { DEFAULT_PROPERTY_CARD_PROPS } from "app/properties-index/property-card/PropertyCard";
-import { PropertyCardProps } from "app/properties-index/property-card/PropertyCard.types";
+import { DEFAULT_PROPERTY_CARD_PROPS } from "app/properties-explorer/property-card/PropertyCard";
+import { PropertyCardProps } from "app/properties-explorer/property-card/PropertyCard.types";
 
 import { PropertyDetails2 } from "./PropertyDetails2";
 
-async function getPropertyFromMetadataUrl(url: string) {
-  const response = await fetch(ipfs.asHttpsURL(url), {
-    method: "GET",
-  });
-
-  const data = await response.json();
-
-  return data;
-}
-
 export const PropertyDetailsContainer = () => {
   const [contractData, setContractData] = useState<ConditionalEscrowValues>(getDefaultContractValues());
-  const [isContractDataLoading, setIsContractDataLoading] = useState(false);
+  const [isContractDataLoading, setIsContractDataLoading] = useState(true);
   const [property, setProperty] = useState<PropertyCardProps["property"]>(DEFAULT_PROPERTY_CARD_PROPS);
 
   const router = useRouter();
@@ -53,8 +43,6 @@ export const PropertyDetailsContainer = () => {
 
     (async () => {
       try {
-        setIsContractDataLoading(true);
-
         const values = await getConstantValues(contract, wallet);
         const propertyData = await getPropertyFromMetadataUrl(values.metadataURL);
 
@@ -63,6 +51,8 @@ export const PropertyDetailsContainer = () => {
 
         setIsContractDataLoading(false);
       } catch {
+        setIsContractDataLoading(false);
+
         toast.trigger({
           variant: "error",
           title: "Failed to load contract data",

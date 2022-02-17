@@ -31,24 +31,26 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ className, action, m
     className={clsx(styles["property-card"], className)}
   >
     <Card.Content>
-      <Grid.Row>
-        <Grid.Col lg={9} xs={9}>
-          <Typography.Headline6 className={styles["property-card__title"]}>{property.title}</Typography.Headline6>
-          <Typography.Description flat className={styles["property-card__description"]}>
-            {property.shortDescription}
-          </Typography.Description>
-          {property.owner && (
-            <Typography.Description flat className={styles["property-card__sold-by"]}>
-              Listed by {property.owner.name}
+      <div className={styles["property-card__header"]}>
+        <Grid.Row>
+          <Grid.Col lg={9} xs={9}>
+            <Typography.Headline6 className={styles["property-card__title"]}>{property.title}</Typography.Headline6>
+            <Typography.Description flat className={styles["property-card__description"]}>
+              {property.shortDescription}
             </Typography.Description>
-          )}
-        </Grid.Col>
-        <Grid.Col lg={3} xs={3}>
-          <Typography.Description flat className={styles["property-card__category"]}>
-            {property.category}
-          </Typography.Description>
-        </Grid.Col>
-      </Grid.Row>
+            {property.owner?.name && (
+              <Typography.Description flat className={styles["property-card__sold-by"]}>
+                Listed by {property.owner.name}
+              </Typography.Description>
+            )}
+          </Grid.Col>
+          <Grid.Col lg={3} xs={3}>
+            <Typography.Description flat className={styles["property-card__category"]}>
+              {property.category}
+            </Typography.Description>
+          </Grid.Col>
+        </Grid.Row>
+      </div>
     </Card.Content>
     {!minimal && (
       <div className={styles["property-card__details"]}>

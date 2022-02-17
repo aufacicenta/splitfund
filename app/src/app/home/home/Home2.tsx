@@ -10,7 +10,7 @@ import { NearLogoHorizontal } from "ui/icons/NearLogoHorizontal";
 import { Footer } from "ui/footer/Footer";
 import { WalletSelectorNavbar2 } from "ui/wallet-selector-navbar/WalletSelectorNavbar2";
 import { Button } from "ui/button/Button";
-import { PropertyCard } from "app/properties-index/property-card/PropertyCard";
+import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
 import { Locale } from "types/Locale";
@@ -111,7 +111,7 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
                     }}
                     action={
                       <Typography.Link
-                        href={routes.property.details("123")}
+                        href={routes.property.index("123")}
                         className={styles["home__property-card--cta"]}
                       >
                         See Details

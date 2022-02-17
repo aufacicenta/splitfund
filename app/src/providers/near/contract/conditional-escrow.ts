@@ -1,11 +1,10 @@
-import * as nearAPI from "near-api-js";
-import { Account, Contract } from "near-api-js";
-import { ContractMethods } from "near-api-js/lib/contract";
+import { Contract } from "near-api-js";
 
 import near from "providers/near";
 import date from "providers/date";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
+import ipfs from "providers/ipfs";
 
 import { ConditionalEscrowMethods, ConditionalEscrowValues } from "./conditional-escrow.types";
 
@@ -18,6 +17,7 @@ export const VIEW_METHODS = [
   "get_unpaid_funding_amount",
   "get_dao_factory_account_id",
   "get_ft_factory_account_id",
+  "get_dao_name",
   "get_metadata_url",
   "is_deposit_allowed",
   "is_withdrawal_allowed",
@@ -25,8 +25,18 @@ export const VIEW_METHODS = [
 
 export const CHANGE_METHODS = ["deposit", "withdraw", "delegate_funds"];
 
+export async function getPropertyFromMetadataUrl(url: string) {
+  const response = await fetch(ipfs.asHttpsURL(url), {
+    method: "GET",
+  });
+
+  const data = await response.json();
+
+  return data;
+}
+
 export const getDefaultContractValues = (): ConditionalEscrowValues => ({
-  totalFunds: near.formatAccountBalance("0"),
+  totalFunds: "0",
   fundingAmountLimit: near.formatAccountBalance("0"),
   unpaidFundingAmount: near.formatAccountBalance("0"),
   depositsOf: "0",
@@ -37,11 +47,18 @@ export const getDefaultContractValues = (): ConditionalEscrowValues => ({
   expirationDate: date.toNanoseconds(date.now().toDate().getTime()),
   daoFactoryAccountId: "",
   ftFactoryAccountId: "",
+  daoName: "",
   metadataURL: "",
   isDepositAllowed: false,
   isWithdrawalAllowed: false,
   deposits: [],
 });
+
+export const getMetadataUrl = async (contract: Contract & ConditionalEscrowMethods): Promise<string> => {
+  const metadataURL = await contract.get_metadata_url();
+
+  return metadataURL;
+};
 
 export const getConstantValues = async (
   contract: Contract & ConditionalEscrowMethods,
@@ -67,10 +84,11 @@ export const getConstantValues = async (
 
   const daoFactoryAccountId = await contract.get_dao_factory_account_id();
   const ftFactoryAccountId = await contract.get_ft_factory_account_id();
+  const daoName = await contract.get_dao_name();
   const metadataURL = await contract.get_metadata_url();
 
   return {
-    totalFunds: near.formatAccountBalance(BigInt(getTotalFundsResponse).toString(), 8),
+    totalFunds: BigInt(getTotalFundsResponse).toString(),
     fundingAmountLimit: near.formatAccountBalance(BigInt(getFundingAmountLimitResponse).toString(), 8),
     unpaidFundingAmount: near.formatAccountBalance(BigInt(getUnpaidFundingAmountResponse).toString(), 8),
     depositsOf: BigInt(depositsOfResponse).toString(),
@@ -84,16 +102,7 @@ export const getConstantValues = async (
     isWithdrawalAllowed,
     daoFactoryAccountId,
     ftFactoryAccountId,
+    daoName,
     metadataURL,
   };
 };
-
-export function initConditionalEscrowContract<M>(
-  account: Account,
-  contractAddress: string,
-  contractMethods: ContractMethods,
-): Contract & M {
-  const contract = new nearAPI.Contract(account, contractAddress, contractMethods);
-
-  return contract as Contract & M;
-}
