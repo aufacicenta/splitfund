@@ -10,15 +10,15 @@ import { NearLogoHorizontal } from "ui/icons/NearLogoHorizontal";
 import { Footer } from "ui/footer/Footer";
 import { WalletSelectorNavbar2 } from "ui/wallet-selector-navbar/WalletSelectorNavbar2";
 import { Button } from "ui/button/Button";
-import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
 import { Locale } from "types/Locale";
+import { PropertyCardContainer } from "app/properties-explorer/property-card/PropertyCardContainer";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
 
-export const Home2: React.FC<HomeProps> = ({ className }) => {
+export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings }) => {
   const { t } = useTranslation(["home", "common"]);
   const routes = useRoutes();
   const router = useRouter();
@@ -60,7 +60,9 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
                   </div>
                   <Grid.Row justify="start">
                     <Grid.Col width="auto">
-                      <Button color="primary">Explore Assets</Button>
+                      <Button color="primary" as="a" href={routes.properties.explorer()}>
+                        Explore Assets
+                      </Button>
                     </Grid.Col>
                     <Grid.Col width="auto">
                       <Button variant="outlined">Learn More</Button>
@@ -95,30 +97,14 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
               </Grid.Col>
             </Grid.Row>
             <div className={styles["home__featured-assets--cards"]}>
-              <Grid.Row>
-                <Grid.Col lg={4}>
-                  <PropertyCard
-                    minimal
-                    property={{
-                      title: "",
-                      price: 0,
-                      shortDescription: "",
-                      longDescription: "",
-                      category: "Art",
-                      expirationDate: "",
-                      media: { featuredImageUrl: "", ipfsURL: "" },
-                      owner: { name: "", url: "" },
-                    }}
-                    action={
-                      <Typography.Link
-                        href={routes.property.index("123")}
-                        className={styles["home__property-card--cta"]}
-                      >
-                        See Details
-                      </Typography.Link>
-                    }
-                  />
-                </Grid.Col>
+              <Grid.Row className={styles["home__property-card--row"]}>
+                {featuredActiveHoldings.map((contractAddress) => (
+                  <Grid.Col lg={4} xs={12} key={contractAddress}>
+                    <div>
+                      <PropertyCardContainer contractAddress={contractAddress} />
+                    </div>
+                  </Grid.Col>
+                ))}
               </Grid.Row>
             </div>
           </Container>

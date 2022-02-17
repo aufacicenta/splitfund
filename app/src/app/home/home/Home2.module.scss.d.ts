@@ -54,6 +54,7 @@ export type Styles = {
   "home__intro--text-block": string;
   "home__powered-by": string;
   "home__property-card--cta": string;
+  "home__property-card--row": string;
   home__section: string;
   "home__what-is": string;
   "home__what-is--row": string;
