@@ -12,13 +12,14 @@ export const ContractDepositForm: React.FC<ContractDepositFormProps> = ({
   onSubmit,
   onCancel,
   isLoading,
+  label,
 }) => (
   <Form className={clsx(styles["contract-deposit-form"], className)} onSubmit={onSubmit}>
     <div className={styles["contract-deposit-form__inline-wrapper"]}>
       <div className={styles["contract-deposit-form__inline-wrapper--form"]}>
         <Form.TextInput
           autoFocus={autoFocus}
-          label="Amount (in NEAR token units)"
+          label={label}
           id="amount"
           type="text"
           className={styles["contract-deposit-form__input"]}

@@ -19,7 +19,7 @@ export const PropertiesExplorer: React.FC<PropertiesExplorerProps> = ({ classNam
             <Grid.Col lg={12}>
               <Grid.Row>
                 {contractAddresses.map((contractAddress) => (
-                  <Grid.Col lg={4} xs={1}>
+                  <Grid.Col lg={4} xs={1} key={contractAddress}>
                     <div className={styles["properties-explorer__property-card"]}>
                       <PropertyCardContainer contractAddress={contractAddress} />
                     </div>

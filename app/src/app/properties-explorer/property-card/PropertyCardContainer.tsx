@@ -15,6 +15,7 @@ import { useRoutes } from "hooks/useRoutes/useRoutes";
 
 import { PropertyCard, DEFAULT_PROPERTY_CARD_PROPS } from "./PropertyCard";
 import { PropertyCardProps } from "./PropertyCard.types";
+import styles from "./PropertyCard.module.scss";
 
 export const PropertyCardContainer = ({ contractAddress }: { contractAddress: string }) => {
   const [isContractDataLoading, setIsContractDataLoading] = useState(true);
@@ -64,7 +65,11 @@ export const PropertyCardContainer = ({ contractAddress }: { contractAddress: st
     <PropertyCard
       minimal
       property={property}
-      action={<Typography.Link href={routes.property.index(contractAddress)}>See Details</Typography.Link>}
+      action={
+        <Typography.Link href={routes.property.index(contractAddress)} className={styles["property-card__cta"]}>
+          See Details
+        </Typography.Link>
+      }
     />
   );
 };
