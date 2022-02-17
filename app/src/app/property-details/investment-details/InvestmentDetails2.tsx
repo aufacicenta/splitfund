@@ -34,6 +34,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
   const [isCurrentInvestorsModalOpen, setIsCurrentInvestorsModalOpen] = useState(false);
   const [isWithdrawalConditionsModalOpen, setIsWithdrawalConditionsModalOpen] = useState(false);
   const [isWithdrawalLoading, setIsWithdrawalLoading] = useState(false);
+  const [isDelegateFundsLoading, setIsDelegateFundsLoading] = useState(false);
 
   const toast = useToastContext();
 
@@ -53,6 +54,52 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
 
   const onClickInvestNow = async () => {
     setIsBuyOwnershipInfoModalOpen(true);
+  };
+
+  const onClickDelegateFunds = async () => {
+    if (!contract) {
+      toast.trigger({
+        variant: "error",
+        title: "No contract is loaded",
+        withTimeout: true,
+        children: <Typography.Text>Check your internet connection and try refreshing the page.</Typography.Text>,
+      });
+    }
+
+    try {
+      const daoName = contractAddress.split(".").shift();
+
+      setIsDelegateFundsLoading(true);
+      await contract!.delegate_funds({ dao_name: daoName! }, 300000000000000);
+      setIsDelegateFundsLoading(false);
+
+      const daoContractName = `${daoName}.${near.getConfig(wallet.network).daoContractName}`;
+
+      // @TODO i18n
+      toast.trigger({
+        variant: "confirmation",
+        title: "Delegate funds successful",
+        withTimeout: true,
+        children: (
+          <Typography.Text>
+            Great.{" "}
+            <Typography.Anchor href={`${near.getConfig(wallet.network).astroDaoURLOrigin}/${daoContractName}`}>
+              {daoContractName}
+            </Typography.Anchor>{" "}
+            has been created.
+          </Typography.Text>
+        ),
+      });
+    } catch {
+      setIsDelegateFundsLoading(false);
+      // @TODO i18n
+      toast.trigger({
+        variant: "error",
+        title: "Delegate Funds error",
+        withTimeout: false,
+        children: <Typography.Text>Your funds are safe, check your internet connection and try again.</Typography.Text>,
+      });
+    }
   };
 
   const onClickWithdraw = async () => {
@@ -78,6 +125,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
         children: <Typography.Text>Your funds have been withdrawn to your wallet</Typography.Text>,
       });
     } catch {
+      setIsWithdrawalLoading(false);
       // @TODO i18n
       toast.trigger({
         variant: "error",
@@ -117,6 +165,35 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
         <Button color="primary" onClick={onClickAuthorizeWallet} isLoading={isContractDataLoading}>
           Authorize Wallet
         </Button>
+      );
+    }
+
+    if (contractData.daoName !== "") {
+      return (
+        <>
+          <Typography.Description flat>The asset is 100% funded</Typography.Description>
+          {/* @TODO onClickEnableStaking */}
+          <Button color="primary" onClick={() => undefined} isLoading={isContractDataLoading}>
+            Enable Staking
+          </Button>
+        </>
+      );
+    }
+
+    const isDelegateFundsEnabled = !contractData.isDepositAllowed && !contractData.isWithdrawalAllowed;
+
+    if (isDelegateFundsEnabled) {
+      return (
+        <>
+          <Typography.Description flat>The asset is 100% funded</Typography.Description>
+          <Button
+            color="primary"
+            onClick={onClickDelegateFunds}
+            isLoading={isContractDataLoading || isDelegateFundsLoading}
+          >
+            Delegate Funds
+          </Button>
+        </>
       );
     }
 
@@ -164,7 +241,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
             </div>
             <div className={styles["investment-details__sold-description"]}>
               <Typography.Description>Funded</Typography.Description>
-              <Typography.Text flat>{contractData.totalFunds}</Typography.Text>
+              <Typography.Text flat>{near.formatAccountBalance(contractData.totalFunds, 8)}</Typography.Text>
               <Typography.MiniDescription>
                 {`${contractData.totalFundedPercentage}% of property price`} ·{" "}
                 {`${date.timeFromNow.asDefault(date.fromNanoseconds(contractData.expirationDate!)).toLowerCase()}`}
@@ -297,6 +374,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
               isLoading={false}
               onSubmit={(val) => onSubmitDeposit(val as OnSubmitDeposit)}
               autoFocus
+              label={`Amount (${contractData.unpaidFundingAmount} remaining)`}
               onCancel={() => setIsBuyOwnershipInfoModalOpen(false)}
             />
           </Modal.Actions>

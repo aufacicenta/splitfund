@@ -1,7 +1,7 @@
 const CONTRACT_NAME = process.env.CONTRACT_NAME || "testnet";
 
-const TESTNET_DAO_CONTRACT_NAME = "realstate.sputnikv2.testnet";
-const MAINNET_DAO_CONTRACT_NAME = "nearholdings.sputnik-dao.near";
+const TESTNET_DAO_CONTRACT_NAME = "sputnikv2.testnet";
+const MAINNET_DAO_CONTRACT_NAME = "sputnik-dao.near";
 
 const TESTNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory4.nearholdings.testnet";
 const MAINNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory.communitycapital.near";
@@ -12,11 +12,11 @@ const MAINNET_DAOFACTORY_CONTRACT_NAME = "daofactory.communitycapital.near";
 const TESTNET_FTFACTORY_CONTRACT_NAME = "ftfactory2.nearholdings.testnet";
 const MAINNET_FTFACTORY_CONTRACT_NAME = "ftfactory.communitycapital.near";
 
-const TESTNET_ASTRODAO_URL_ORIGIN = "https://dev.app.astrodao.com/";
-const MAINNET_ASTRODAO_URL_ORIGIN = "https://dev.app.astrodao.com/";
+const TESTNET_ASTRODAO_URL_ORIGIN = "https://dev.app.astrodao.com";
+const MAINNET_ASTRODAO_URL_ORIGIN = "https://app.astrodao.com";
 
-export default (env: string | undefined) => {
-  switch (env) {
+export default (network: string | undefined) => {
+  switch (network) {
     case "mainnet":
       return {
         networkId: "mainnet",

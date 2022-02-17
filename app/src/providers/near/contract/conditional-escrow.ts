@@ -22,7 +22,7 @@ export const VIEW_METHODS = [
   "is_withdrawal_allowed",
 ];
 
-export const CHANGE_METHODS = ["deposit", "withdraw", "delegate_funds"];
+export const CHANGE_METHODS = ["deposit", "withdraw", "delegate_funds", "enable_staking"];
 
 export async function getPropertyFromMetadataUrl(url: string) {
   const response = await fetch(ipfs.asHttpsURL(url), {
@@ -35,7 +35,7 @@ export async function getPropertyFromMetadataUrl(url: string) {
 }
 
 export const getDefaultContractValues = (): ConditionalEscrowValues => ({
-  totalFunds: near.formatAccountBalance("0"),
+  totalFunds: "0",
   fundingAmountLimit: near.formatAccountBalance("0"),
   unpaidFundingAmount: near.formatAccountBalance("0"),
   depositsOf: "0",
@@ -46,6 +46,8 @@ export const getDefaultContractValues = (): ConditionalEscrowValues => ({
   expirationDate: date.toNanoseconds(date.now().toDate().getTime()),
   daoFactoryAccountId: "",
   ftFactoryAccountId: "",
+  skFactoryAccountId: "",
+  daoName: "",
   metadataURL: "",
   isDepositAllowed: false,
   isWithdrawalAllowed: false,
@@ -82,10 +84,12 @@ export const getConstantValues = async (
 
   const daoFactoryAccountId = await contract.get_dao_factory_account_id();
   const ftFactoryAccountId = await contract.get_ft_factory_account_id();
+  const skFactoryAccountId = await contract.get_sk_factory_account_id();
+  const daoName = await contract.get_dao_name();
   const metadataURL = await contract.get_metadata_url();
 
   return {
-    totalFunds: near.formatAccountBalance(BigInt(getTotalFundsResponse).toString(), 8),
+    totalFunds: BigInt(getTotalFundsResponse).toString(),
     fundingAmountLimit: near.formatAccountBalance(BigInt(getFundingAmountLimitResponse).toString(), 8),
     unpaidFundingAmount: near.formatAccountBalance(BigInt(getUnpaidFundingAmountResponse).toString(), 8),
     depositsOf: BigInt(depositsOfResponse).toString(),
@@ -99,6 +103,8 @@ export const getConstantValues = async (
     isWithdrawalAllowed,
     daoFactoryAccountId,
     ftFactoryAccountId,
+    skFactoryAccountId,
+    daoName,
     metadataURL,
   };
 };
