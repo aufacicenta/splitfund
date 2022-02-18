@@ -26,7 +26,7 @@ export const PropertyCardContainer = ({
 }: {
   contractAddress: string;
   action?: ReactNode;
-  minimal: boolean;
+  minimal?: boolean;
 }) => {
   const [isContractDataLoading, setIsContractDataLoading] = useState(true);
   const [property, setProperty] = useState<PropertyCardProps["property"]>();
