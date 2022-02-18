@@ -24,7 +24,13 @@ export const DEFAULT_PROPERTY_CARD_PROPS = {
   },
 };
 
-export const PropertyCard: React.FC<PropertyCardProps> = ({ className, action, minimal, property }) => (
+export const PropertyCard: React.FC<PropertyCardProps> = ({
+  className,
+  action,
+  minimal,
+  property,
+  priceEquivalence,
+}) => (
   <Card
     shadow
     backgroundImageUrl={ipfs.asHttpsURL(property.media.featuredImageUrl)}
@@ -71,7 +77,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ className, action, m
             {property.price} Ⓝ
           </Typography.Text>
           <Typography.MiniDescription flat className={styles["property-card__exchange-rate"]}>
-            USD 500,890.00
+            {priceEquivalence}
           </Typography.MiniDescription>
         </Grid.Col>
         <Grid.Col>{action}</Grid.Col>
