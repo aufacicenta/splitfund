@@ -18,7 +18,11 @@ const MAINNET_SKFACTORY_CONTRACT_NAME = "stakingfactory.communitycapital.near";
 const TESTNET_ASTRODAO_URL_ORIGIN = "https://dev.app.astrodao.com";
 const MAINNET_ASTRODAO_URL_ORIGIN = "https://app.astrodao.com";
 
-const TESTNET_FEATURED_ACTIVE_HOLDINGS = ["ce_k95zme9rxsppqvjfw2gyvj.escrowfactory12.nearholdings.testnet"];
+const TESTNET_FEATURED_ACTIVE_HOLDINGS = [
+  "ce_k95zme9rxsppqvjfw2gyvj.escrowfactory12.nearholdings.testnet",
+  "ce_qlhse3j9k0cu7j8lzqlhsy.escrowfactory12.nearholdings.testnet",
+  "ce_rmpq8o4604ruprmpqw6lty.escrowfactory12.nearholdings.testnet",
+];
 const MAINNET_FEATURED_ACTIVE_HOLDINGS = ["ce_k95zme9rxsppqvjfw2gyvj.escrowfactory12.nearholdings.testnet"];
 
 export default (network: string | undefined) => {
