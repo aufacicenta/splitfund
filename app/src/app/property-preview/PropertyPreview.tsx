@@ -20,6 +20,8 @@ import { useToastContext } from "hooks/useToastContext/useToastContext";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { GenericLoader } from "ui/generic-loader/GenericLoader";
 import { PropertyCardProps } from "app/properties-explorer/property-card/PropertyCard.types";
+import { getCurrentPriceEquivalence } from "providers/near/contract/conditional-escrow";
+import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 
 import { PropertyPreviewProps } from "./PropertyPreview.types";
 import styles from "./PropertyPreview.module.scss";
@@ -27,6 +29,7 @@ import styles from "./PropertyPreview.module.scss";
 export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, responseId }) => {
   const [isAuthorizeWalletModalOpen, setIsAuthorizeWalletModalOpen] = useState(false);
   const [property, setProperty] = useState<PropertyCardProps["property"]>(DEFAULT_PROPERTY_CARD_PROPS);
+  const [priceEquivalence, setPriceEquivalence] = useState<PropertyCardProps["priceEquivalence"]>("USD 0.00");
 
   const wallet = useWalletSelectorContext();
   const toast = useToastContext();
@@ -49,6 +52,17 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
 
     setProperty(getPropertyCardByResponseIdQueryData.getPropertyCardByResponseId);
   }, [getPropertyCardByResponseIdQueryData]);
+
+  useEffect(() => {
+    if (!property) {
+      return;
+    }
+
+    (async () => {
+      const priceEquivalenceResponse = await getCurrentPriceEquivalence(property.price);
+      setPriceEquivalence(`USD ${formatFiatCurrency(priceEquivalenceResponse)}`);
+    })();
+  }, [property]);
 
   if (isGetPropertyCardByResponseIdQueryLoading) {
     return <GenericLoader />;
@@ -208,6 +222,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
                       </Grid.Col>
                       <Grid.Col lg={6}>
                         <PropertyCard
+                          priceEquivalence={priceEquivalence}
                           property={property}
                           action={
                             <Button color="primary" fullWidth onClick={onClickSubmitAsset}>

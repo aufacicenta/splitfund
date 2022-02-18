@@ -7,9 +7,9 @@ import { Card } from "ui/card/Card";
 import { Footer } from "ui/footer/Footer";
 import { Typography } from "ui/typography/Typography";
 import { Button } from "ui/button/Button";
-import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 import { Modal } from "ui/modal/Modal";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
+import { PropertyCardContainer } from "app/properties-explorer/property-card/PropertyCardContainer";
 
 import styles from "./PropertyDetails2.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails2.types";
@@ -19,7 +19,6 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
   className,
   contract,
   contractData,
-  property,
   isContractDataLoading,
   contractAddress,
 }) => {
@@ -81,8 +80,9 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
                         </div>
                       </Grid.Col>
                       <Grid.Col lg={6}>
-                        <PropertyCard
-                          property={property}
+                        <PropertyCardContainer
+                          minimal={false}
+                          contractAddress={contractAddress}
                           action={
                             <Button
                               color="primary"

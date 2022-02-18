@@ -60,6 +60,12 @@ export const getMetadataUrl = async (contract: Contract & ConditionalEscrowMetho
   return metadataURL;
 };
 
+export const getCurrentPriceEquivalence = async (price: number): Promise<number> => {
+  const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
+
+  return currentCoinPrice * price;
+};
+
 export const getConstantValues = async (
   contract: Contract & ConditionalEscrowMethods,
   wallet: WalletSelectorContextType,
