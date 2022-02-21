@@ -30,12 +30,25 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
   minimal,
   property,
   priceEquivalence,
+  fundedPercentage = "0",
 }) => (
   <Card
     shadow
     backgroundImageUrl={ipfs.asHttpsURL(property.media.featuredImageUrl)}
     className={clsx(styles["property-card"], className)}
   >
+    <div className={styles["property-card__stats-pill"]}>
+      <div className={styles["property-card__stats-pill--expiration-date"]}>
+        <Typography.MiniDescription flat>
+          {date.timeFromNow.asDefault(property.expirationDate, true)} left
+        </Typography.MiniDescription>
+      </div>
+      {minimal && (
+        <div className={styles["property-card__stats-pill--funded"]}>
+          <Typography.MiniDescription flat>{`${fundedPercentage}% funded`}</Typography.MiniDescription>
+        </div>
+      )}
+    </div>
     <Card.Content>
       <div className={styles["property-card__header"]}>
         <Grid.Row>

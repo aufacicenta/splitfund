@@ -10,6 +10,8 @@ import { Button } from "ui/button/Button";
 import { Modal } from "ui/modal/Modal";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 import { PropertyCardContainer } from "app/properties-explorer/property-card/PropertyCardContainer";
+import near from "providers/near";
+import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 
 import styles from "./PropertyDetails2.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails2.types";
@@ -23,6 +25,7 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
   contractAddress,
 }) => {
   const [isInvestmentDetailsModalOpen, setIsInvestmentDetailsModalOpen] = useState(false);
+  const wallet = useWalletSelectorContext();
 
   return (
     <>
@@ -52,7 +55,20 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
                               </Typography.Text>
                               <Typography.Text>
                                 If the transaction completes successfully, your funds will securely be kept on-hold in
-                                the CONTRACT_NAME_HERE contract. This contract is open-source and auditable.
+                                the{" "}
+                                <Typography.Anchor
+                                  href={`${near.getConfig(wallet.network).explorerUrl}/accounts/${contractAddress}`}
+                                  target="_blank"
+                                >
+                                  {contractAddress}
+                                </Typography.Anchor>{" "}
+                                contract. This contract is{" "}
+                                <Typography.Anchor
+                                  href="https://github.com/aufacicenta/near.holdings/blob/master/rust-escrow/conditional-escrow/src/lib.rs"
+                                  target="_blank"
+                                >
+                                  open-source and auditable.
+                                </Typography.Anchor>
                               </Typography.Text>
                               <Typography.TextBold>
                                 Depositing does not mean you already own the shares

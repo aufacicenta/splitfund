@@ -66,14 +66,32 @@ export const getCurrentPriceEquivalence = async (price: number): Promise<number>
   return currentCoinPrice * price;
 };
 
+export const getTotalFundedPercentage = (
+  getTotalFundsResponse: number,
+  getFundingAmountLimitResponse: number,
+): bigint => (BigInt(getTotalFundsResponse) * BigInt(100)) / BigInt(getFundingAmountLimitResponse);
+
+export const getTotalFunds = async (contract: Contract & ConditionalEscrowMethods): Promise<number> => {
+  const response = await contract.get_total_funds();
+
+  return response;
+};
+
+export const getFundingAmountLimit = async (contract: Contract & ConditionalEscrowMethods): Promise<number> => {
+  const response = await contract.get_funding_amount_limit();
+
+  return response;
+};
+
 export const getConstantValues = async (
   contract: Contract & ConditionalEscrowMethods,
   wallet: WalletSelectorContextType,
 ): Promise<ConditionalEscrowValues> => {
-  const getTotalFundsResponse = await contract.get_total_funds();
-  const getFundingAmountLimitResponse = await contract.get_funding_amount_limit();
+  const getTotalFundsResponse = await getTotalFunds(contract);
+  const getFundingAmountLimitResponse = await getFundingAmountLimit(contract);
+  const totalFundedPercentage = getTotalFundedPercentage(getTotalFundsResponse, getFundingAmountLimitResponse);
+
   const getUnpaidFundingAmountResponse = await contract.get_unpaid_funding_amount();
-  const totalFundedPercentage = (BigInt(getTotalFundsResponse) * BigInt(100)) / BigInt(getFundingAmountLimitResponse);
 
   const isDepositAllowed = await contract.is_deposit_allowed();
   const isWithdrawalAllowed = await contract.is_withdrawal_allowed();
@@ -84,9 +102,9 @@ export const getConstantValues = async (
   const depositsOfPercentage = (BigInt(depositsOfResponse) * BigInt(100)) / BigInt(getFundingAmountLimitResponse);
 
   const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
-  const priceEquivalence =
-    currentCoinPrice *
-    Number(near.formatAccountBalanceFlat(BigInt(getFundingAmountLimitResponse).toString()).replace(",", ""));
+  const priceEquivalence = await getCurrentPriceEquivalence(
+    Number(near.formatAccountBalanceFlat(BigInt(getFundingAmountLimitResponse).toString()).replace(",", "")),
+  );
 
   const daoFactoryAccountId = await contract.get_dao_factory_account_id();
   const ftFactoryAccountId = await contract.get_ft_factory_account_id();

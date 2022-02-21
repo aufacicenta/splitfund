@@ -8,8 +8,11 @@ import { ConditionalEscrowMethods } from "providers/near/contract/conditional-es
 import {
   CHANGE_METHODS,
   getCurrentPriceEquivalence,
+  getFundingAmountLimit,
   getMetadataUrl,
   getPropertyFromMetadataUrl,
+  getTotalFundedPercentage,
+  getTotalFunds,
   VIEW_METHODS,
 } from "providers/near/contract/conditional-escrow";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
@@ -31,6 +34,7 @@ export const PropertyCardContainer = ({
   const [isContractDataLoading, setIsContractDataLoading] = useState(true);
   const [property, setProperty] = useState<PropertyCardProps["property"]>();
   const [priceEquivalence, setPriceEquivalence] = useState<PropertyCardProps["priceEquivalence"]>("USD 0.00");
+  const [fundedPercentage, setFundedPercentage] = useState<PropertyCardProps["fundedPercentage"]>("0");
 
   const wallet = useWalletSelectorContext();
   const routes = useRoutes();
@@ -50,9 +54,16 @@ export const PropertyCardContainer = ({
         const metadataURL = await getMetadataUrl(contract);
         const propertyData = await getPropertyFromMetadataUrl(metadataURL);
         const priceEquivalenceResponse = await getCurrentPriceEquivalence(propertyData.price);
+        const getTotalFundsResponse = await getTotalFunds(contract);
+        const getFundingAmountLimitResponse = await getFundingAmountLimit(contract);
+        const fundedPercentageResponse = await getTotalFundedPercentage(
+          getTotalFundsResponse,
+          getFundingAmountLimitResponse,
+        );
 
         setProperty(propertyData);
         setPriceEquivalence(`USD ${formatFiatCurrency(priceEquivalenceResponse)}`);
+        setFundedPercentage(fundedPercentageResponse.toString());
         setIsContractDataLoading(false);
       } catch {
         setIsContractDataLoading(false);
@@ -82,6 +93,7 @@ export const PropertyCardContainer = ({
       minimal={minimal}
       property={property}
       priceEquivalence={priceEquivalence}
+      fundedPercentage={fundedPercentage}
       action={
         action || (
           <Typography.Link href={routes.property.index(contractAddress)} className={styles["property-card__cta"]}>
