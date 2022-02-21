@@ -5,7 +5,9 @@
   display: block;
 
   &__header {
-    min-height: 92px;
+    @include atLargeTablet {
+      min-height: 117px;
+    }
   }
 
   &__title {

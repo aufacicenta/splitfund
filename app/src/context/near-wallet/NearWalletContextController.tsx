@@ -33,20 +33,24 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
     walletState.explorer.set(nearUtils.getConfig(DEFAULT_NETWORK_ENV).explorerUrl);
 
     (async () => {
-      const connection = await nearUtils.initWalletConnection(walletState.network.get());
+      try {
+        const connection = await nearUtils.initWalletConnection(walletState.network.get());
 
-      setWalletConnection(connection);
+        setWalletConnection(connection);
 
-      const { near, wallet } = connection;
+        const { near, wallet } = connection;
 
-      if (wallet.isSignedIn()) {
-        walletState.isConnected.set(true);
+        if (wallet.isSignedIn()) {
+          walletState.isConnected.set(true);
 
-        const accountId = wallet.getAccountId();
-        walletState.address.set(accountId);
+          const accountId = wallet.getAccountId();
+          walletState.address.set(accountId);
 
-        const accountBalance = await nearUtils.getAccountBalance(near, accountId);
-        walletState.balance.set(nearUtils.formatAccountBalance(accountBalance.available, 8));
+          const accountBalance = await nearUtils.getAccountBalance(near, accountId);
+          walletState.balance.set(nearUtils.formatAccountBalance(accountBalance.available, 8));
+        }
+      } catch {
+        // @TODO log error
       }
     })();
   }, [

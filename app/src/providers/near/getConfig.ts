@@ -3,7 +3,7 @@ const CONTRACT_NAME = process.env.CONTRACT_NAME || "testnet";
 const TESTNET_DAO_CONTRACT_NAME = "sputnikv2.testnet";
 const MAINNET_DAO_CONTRACT_NAME = "sputnik-dao.near";
 
-const TESTNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory12.nearholdings.testnet";
+const TESTNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory.nearholdings.testnet";
 const MAINNET_ESCROWFACTORY_CONTRACT_NAME = "escrowfactory.communitycapital.near";
 
 const TESTNET_DAOFACTORY_CONTRACT_NAME = "daofactory2.nearholdings.testnet";
@@ -19,9 +19,9 @@ const TESTNET_ASTRODAO_URL_ORIGIN = "https://dev.app.astrodao.com";
 const MAINNET_ASTRODAO_URL_ORIGIN = "https://app.astrodao.com";
 
 const TESTNET_FEATURED_ACTIVE_HOLDINGS = [
-  "ce_k95zme9rxsppqvjfw2gyvj.escrowfactory12.nearholdings.testnet",
-  "ce_qlhse3j9k0cu7j8lzqlhsy.escrowfactory12.nearholdings.testnet",
-  "ce_rmpq8o4604ruprmpqw6lty.escrowfactory12.nearholdings.testnet",
+  "ce_eay7eydcxk8nwp8rvo6zpo.escrowfactory.nearholdings.testnet",
+  "ce_1t0tchrruu9l8zmkknpi1t.escrowfactory.nearholdings.testnet",
+  "ce_ybjelbhl158naqbcun5aes.escrowfactory.nearholdings.testnet",
 ];
 const MAINNET_FEATURED_ACTIVE_HOLDINGS = ["ce_k95zme9rxsppqvjfw2gyvj.escrowfactory12.nearholdings.testnet"];
 
