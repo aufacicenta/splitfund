@@ -37,14 +37,8 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
               </Typography.TextLead>
             </Grid.Col>
             <Grid.Col lg={7} xs={12} sm={6}>
-              <Typography.Link className={styles["footer__cta-banner--link"]} href={routes.invest.grid}>
-                FAQs
-              </Typography.Link>
               <Typography.Link className={styles["footer__cta-banner--link"]} href={routes.properties.explorer()}>
                 Asset Explorer
-              </Typography.Link>
-              <Typography.Link className={styles["footer__cta-banner--link"]} href={routes.invest.grid}>
-                About Us
               </Typography.Link>
             </Grid.Col>
           </Grid.Row>
