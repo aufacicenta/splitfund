@@ -20,6 +20,7 @@
   "dependencies": {
     "@apollo/client": "^3.4.17",
     "@bancosatoshi/database": "^2.0.5",
+    "@crustio/crust-pin": "^1.0.0",
     "@googlemaps/react-wrapper": "^1.1.12",
     "@supabase/supabase-js": "^1.28.0",
     "@typeform/embed-react": "^1.2.1",
