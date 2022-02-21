@@ -229,6 +229,16 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings }
                   <Typography.Text>
                     Perhaps there's a community out there thinking about making a similar endeavor a reality!
                   </Typography.Text>
+                  <div className={styles["home__button-box"]}>
+                    <PopupButton
+                      id={embedFormConfig.formID}
+                      size={80}
+                      className={styles["home__intro--cta"]}
+                      onSubmit={onSubmitEmbedForm}
+                    >
+                      {t("navbar.apply", { ns: "common" })}
+                    </PopupButton>
+                  </div>
                 </div>
               </Grid.Col>
               <Grid.Col lg={8}>
