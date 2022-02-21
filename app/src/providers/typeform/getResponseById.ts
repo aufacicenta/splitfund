@@ -1,5 +1,6 @@
 import { PropertyCard } from "api/codegen";
 
+import crust from "providers/crust";
 import ipfs from "providers/ipfs";
 
 import { Answer, TypeformResponse } from "./typeform.types";
@@ -78,6 +79,12 @@ const parseAnswerFromResponseData = async (
 
   const fileName = `${responseId}.json`;
   const ipfsResponse = await ipfs.upload(Buffer.from(JSON.stringify(content)), fileName);
+
+  try {
+    await crust.pin(ipfsResponse?.path!);
+  } catch {
+    // @TODO log error. File was not pinned to Crust Network successfully
+  }
 
   return { ...content, media: { ...content.media, ipfsURL: ipfsResponse?.path! } };
 };
