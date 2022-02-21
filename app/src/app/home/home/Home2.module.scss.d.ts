@@ -43,6 +43,7 @@ export type Styles = {
   "button-outline--large": string;
   "button-outline--medium": string;
   home: string;
+  "home__button-box": string;
   "home__featured-assets": string;
   "home__featured-assets--cards": string;
   home__intro: string;
@@ -56,7 +57,10 @@ export type Styles = {
   "home__property-card--cta": string;
   "home__property-card--row": string;
   home__section: string;
+  "home__use-cases": string;
+  "home__use-cases--col": string;
   "home__what-is": string;
+  "home__what-is--image": string;
   "home__what-is--row": string;
   spin: string;
   "z-depth-0": string;

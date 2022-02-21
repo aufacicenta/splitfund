@@ -62,10 +62,14 @@
     }
 
     &--image {
+      @include atLargeTablet {
+        display: block;
+      }
       display: none;
+      padding-top: $navbar-height / 2;
 
       img {
-        width: 80%;
+        width: 81%;
         height: auto;
       }
     }
@@ -97,10 +101,36 @@
     &--row {
       padding-top: $navbar-height;
     }
+
+    &--image {
+      @include atLargeTablet {
+        display: none;
+      }
+      display: block;
+      padding: ($navbar-height / 2) 0;
+      text-align: center;
+
+      img {
+        width: 80%;
+        height: auto;
+      }
+    }
+  }
+
+  &__use-cases {
+    padding: $navbar-height 0;
+
+    &--col {
+      margin-bottom: $space-l;
+    }
   }
 
   &__section {
     display: block;
+  }
+
+  &__button-box {
+    margin-top: $space-ml;
   }
 
   &__property-card--cta {
