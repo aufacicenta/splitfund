@@ -40,7 +40,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
     <div className={styles["property-card__stats-pill"]}>
       <div className={styles["property-card__stats-pill--expiration-date"]}>
         <Typography.MiniDescription flat>
-          {date.timeFromNow.asDefault(property.expirationDate, true)} left
+          {date.timeFromNow.asDefault(property.expirationDate, true)}{" "}
+          {date.now().isAfter(property.expirationDate) ? "ago" : "left"}
         </Typography.MiniDescription>
       </div>
       {minimal && (
