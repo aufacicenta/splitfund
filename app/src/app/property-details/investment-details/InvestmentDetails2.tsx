@@ -15,7 +15,7 @@ import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 import date from "providers/date";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
 import { CHANGE_METHODS, VIEW_METHODS } from "providers/near/contract/conditional-escrow";
-import { ConditionalEscrowMethods } from "providers/near/contract/conditional-escrow.types";
+import { ConditionalEscrowMethods } from "providers/near/conditional-escrow/conditional-escrow.types";
 
 import styles from "./InvestmentDetails.module.scss";
 import { InvestmentDetailsProps, OnSubmitDeposit } from "./InvestmentDetails.types";

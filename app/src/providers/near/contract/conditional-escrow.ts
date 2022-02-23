@@ -5,8 +5,7 @@ import date from "providers/date";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
 import ipfs from "providers/ipfs";
-
-import { ConditionalEscrowMethods, ConditionalEscrowValues } from "./conditional-escrow.types";
+import { ConditionalEscrowMethods, ConditionalEscrowValues } from "../conditional-escrow/conditional-escrow.types";
 
 export const VIEW_METHODS = [
   "deposits_of",
