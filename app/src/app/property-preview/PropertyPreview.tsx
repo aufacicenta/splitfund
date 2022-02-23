@@ -20,8 +20,8 @@ import { useToastContext } from "hooks/useToastContext/useToastContext";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { GenericLoader } from "ui/generic-loader/GenericLoader";
 import { PropertyCardProps } from "app/properties-explorer/property-card/PropertyCard.types";
-import { getCurrentPriceEquivalence } from "providers/near/contract/conditional-escrow";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
+import { ConditionalEscrow } from "providers/near/conditional-escrow";
 
 import { PropertyPreviewProps } from "./PropertyPreview.types";
 import styles from "./PropertyPreview.module.scss";
@@ -59,7 +59,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
     }
 
     (async () => {
-      const priceEquivalenceResponse = await getCurrentPriceEquivalence(property.price);
+      const priceEquivalenceResponse = await ConditionalEscrow.getCurrentPriceEquivalence(property.price);
       setPriceEquivalence(`USD ${formatFiatCurrency(priceEquivalenceResponse)}`);
     })();
   }, [property]);

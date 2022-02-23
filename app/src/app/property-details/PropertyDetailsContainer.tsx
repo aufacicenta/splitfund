@@ -4,22 +4,22 @@ import { useEffect, useState } from "react";
 import { useNearContract } from "hooks/useNearContract/useNearContract";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
+import { CHANGE_METHODS, VIEW_METHODS } from "providers/near/conditional-escrow/constants";
 import {
-  CHANGE_METHODS,
-  getConstantValues,
-  getDefaultContractValues,
-  getPropertyFromMetadataUrl,
-  VIEW_METHODS,
-} from "providers/near/contract/conditional-escrow";
-import { ConditionalEscrowMethods, ConditionalEscrowValues } from "providers/near/contract/conditional-escrow.types";
+  ConditionalEscrowMethods,
+  ConditionalEscrowValues,
+} from "providers/near/conditional-escrow/conditional-escrow.types";
 import { Typography } from "ui/typography/Typography";
 import { DEFAULT_PROPERTY_CARD_PROPS } from "app/properties-explorer/property-card/PropertyCard";
 import { PropertyCardProps } from "app/properties-explorer/property-card/PropertyCard.types";
+import { ConditionalEscrow } from "providers/near/conditional-escrow";
 
 import { PropertyDetails2 } from "./PropertyDetails2";
 
 export const PropertyDetailsContainer = () => {
-  const [contractData, setContractData] = useState<ConditionalEscrowValues>(getDefaultContractValues());
+  const [contractData, setContractData] = useState<ConditionalEscrowValues>(
+    ConditionalEscrow.getDefaultContractValues(),
+  );
   const [isContractDataLoading, setIsContractDataLoading] = useState(true);
   const [property, setProperty] = useState<PropertyCardProps["property"]>(DEFAULT_PROPERTY_CARD_PROPS);
 
@@ -36,15 +36,16 @@ export const PropertyDetailsContainer = () => {
 
   useEffect(() => {
     if (!contract || !router.isReady) {
-      setContractData(getDefaultContractValues());
+      setContractData(ConditionalEscrow.getDefaultContractValues());
 
       return;
     }
 
     (async () => {
       try {
-        const values = await getConstantValues(contract, wallet);
-        const propertyData = await getPropertyFromMetadataUrl(values.metadataURL);
+        const conditionalEscrow = new ConditionalEscrow(contract);
+        const values = await conditionalEscrow.getConstantValues(wallet);
+        const propertyData = await ConditionalEscrow.getPropertyFromMetadataUrl(values.metadataURL);
 
         setContractData(values);
         setProperty(propertyData);

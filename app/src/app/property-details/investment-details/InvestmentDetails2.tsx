@@ -8,14 +8,12 @@ import { Grid } from "ui/grid/Grid";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { CircularProgress } from "ui/circular-progress/CircularProgress";
 import { Button } from "ui/button/Button";
-import { useNearContract } from "hooks/useNearContract/useNearContract";
 import near from "providers/near";
 import { ContractDepositFormProps } from "../contract-deposit-form/ContractDepositForm.types";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 import date from "providers/date";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
-import { CHANGE_METHODS, VIEW_METHODS } from "providers/near/contract/conditional-escrow";
-import { ConditionalEscrowMethods } from "providers/near/conditional-escrow/conditional-escrow.types";
+import { CHANGE_METHODS, VIEW_METHODS } from "providers/near/conditional-escrow/constants";
 
 import styles from "./InvestmentDetails.module.scss";
 import { InvestmentDetailsProps, OnSubmitDeposit } from "./InvestmentDetails.types";
@@ -29,6 +27,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
   contractAddress,
   contractData,
   isContractDataLoading,
+  contract,
 }) => {
   const [isBuyOwnershipInfoModalOpen, setIsBuyOwnershipInfoModalOpen] = useState(false);
   const [isCurrentInvestorsModalOpen, setIsCurrentInvestorsModalOpen] = useState(false);
@@ -37,13 +36,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
   const [isDelegateFundsLoading, setIsDelegateFundsLoading] = useState(false);
 
   const toast = useToastContext();
-
   const wallet = useWalletSelectorContext();
-
-  const contract = useNearContract<ConditionalEscrowMethods>(wallet, contractAddress, {
-    viewMethods: VIEW_METHODS,
-    changeMethods: CHANGE_METHODS,
-  });
 
   const onClickAuthorizeWallet = () => {
     wallet.onClickConnect({

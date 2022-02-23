@@ -5,7 +5,7 @@ import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWall
 import { Typography } from "ui/typography/Typography";
 import { Button } from "ui/button/Button";
 import { ConditionalEscrowMethods } from "providers/near/conditional-escrow/conditional-escrow.types";
-import { CHANGE_METHODS, VIEW_METHODS } from "providers/near/contract/conditional-escrow";
+import { CHANGE_METHODS, VIEW_METHODS } from "providers/near/conditional-escrow/constants";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 import { ConditionalEscrow } from "providers/near/conditional-escrow";
