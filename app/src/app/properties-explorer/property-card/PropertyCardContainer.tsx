@@ -4,19 +4,11 @@ import { useNearContract } from "hooks/useNearContract/useNearContract";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { Typography } from "ui/typography/Typography";
 import { Button } from "ui/button/Button";
-import { ConditionalEscrowMethods } from "providers/near/contract/conditional-escrow.types";
-import {
-  CHANGE_METHODS,
-  getCurrentPriceEquivalence,
-  getFundingAmountLimit,
-  getMetadataUrl,
-  getPropertyFromMetadataUrl,
-  getTotalFundedPercentage,
-  getTotalFunds,
-  VIEW_METHODS,
-} from "providers/near/contract/conditional-escrow";
+import { ConditionalEscrowMethods } from "providers/near/conditional-escrow/conditional-escrow.types";
+import { CHANGE_METHODS, VIEW_METHODS } from "providers/near/contract/conditional-escrow";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
+import { ConditionalEscrow } from "providers/near/conditional-escrow";
 
 import { PropertyCard, DEFAULT_PROPERTY_CARD_PROPS } from "./PropertyCard";
 import { PropertyCardProps } from "./PropertyCard.types";
@@ -51,15 +43,12 @@ export const PropertyCardContainer = ({
 
     (async () => {
       try {
-        const metadataURL = await getMetadataUrl(contract);
-        const propertyData = await getPropertyFromMetadataUrl(metadataURL);
-        const priceEquivalenceResponse = await getCurrentPriceEquivalence(propertyData.price);
-        const getTotalFundsResponse = await getTotalFunds(contract);
-        const getFundingAmountLimitResponse = await getFundingAmountLimit(contract);
-        const fundedPercentageResponse = await getTotalFundedPercentage(
-          getTotalFundsResponse,
-          getFundingAmountLimitResponse,
-        );
+        const conditionalEscrow = new ConditionalEscrow(contract);
+
+        const metadataURL = await conditionalEscrow.getMetadataUrl();
+        const propertyData = await ConditionalEscrow.getPropertyFromMetadataUrl(metadataURL);
+        const priceEquivalenceResponse = await ConditionalEscrow.getCurrentPriceEquivalence(propertyData.price);
+        const fundedPercentageResponse = await conditionalEscrow.getTotalFundedPercentage();
 
         setProperty(propertyData);
         setPriceEquivalence(`USD ${formatFiatCurrency(priceEquivalenceResponse)}`);
