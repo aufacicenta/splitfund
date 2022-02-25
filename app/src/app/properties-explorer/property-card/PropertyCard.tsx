@@ -58,9 +58,12 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
             <Typography.Description flat className={styles["property-card__description"]}>
               {property.shortDescription}
             </Typography.Description>
-            {property.owner?.name && (
+            {property.owner?.name && property.owner?.url && (
               <Typography.Description flat className={styles["property-card__sold-by"]}>
-                Listed by {property.owner.name}
+                Listed by{" "}
+                <Typography.Anchor href={property.owner.url} target="_blank" rel="nofollow">
+                  {property.owner.name}
+                </Typography.Anchor>
               </Typography.Description>
             )}
           </Grid.Col>
