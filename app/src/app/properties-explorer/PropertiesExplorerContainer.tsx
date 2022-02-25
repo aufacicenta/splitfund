@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 import { useNearContract } from "hooks/useNearContract/useNearContract";
 import { EscrowFactoryMethods } from "providers/near/contract/escrow-factory.types";
@@ -14,6 +17,8 @@ import { PropertiesExplorer } from "./PropertiesExplorer";
 export const PropertiesExplorerContainer = () => {
   const [contractAddresses, setContractAddresses] = useState<string[]>();
   const [isContractDataLoading, setIsContractDataLoading] = useState(true);
+  const { t } = useTranslation("properties-explorer");
+  const { locale } = useRouter();
 
   const wallet = useWalletSelectorContext();
   const toast = useToastContext();
@@ -53,5 +58,16 @@ export const PropertiesExplorerContainer = () => {
     return <GenericLoader />;
   }
 
-  return <PropertiesExplorer contractAddresses={contractAddresses} />;
+  return (
+    <>
+      <Head>
+        <title>{t("head.og.title")}</title>
+        <meta name="description" content={t("head.og.description")} />
+        <meta property="og:title" content={t("head.og.title")} />
+        <meta property="og:description" content={t("head.og.description")} />
+        <meta property="og:image" content={`/shared/og-image_${locale}.png`} />
+      </Head>
+      <PropertiesExplorer contractAddresses={contractAddresses} />
+    </>
+  );
 };

@@ -16,7 +16,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
 
   return {
     props: {
-      ...(await serverSideTranslations(locale!, ["common", "head"])),
+      ...(await serverSideTranslations(locale!, ["common", "head", "properties-explorer"])),
     },
   };
 }

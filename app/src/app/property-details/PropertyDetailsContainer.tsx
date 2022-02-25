@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Head from "next/head";
 
 import { useNearContract } from "hooks/useNearContract/useNearContract";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
@@ -13,6 +14,7 @@ import { Typography } from "ui/typography/Typography";
 import { DEFAULT_PROPERTY_CARD_PROPS } from "app/properties-explorer/property-card/PropertyCard";
 import { PropertyCardProps } from "app/properties-explorer/property-card/PropertyCard.types";
 import { ConditionalEscrow } from "providers/near/conditional-escrow";
+import ipfs from "providers/ipfs";
 
 import { PropertyDetails2 } from "./PropertyDetails2";
 
@@ -65,12 +67,21 @@ export const PropertyDetailsContainer = () => {
   }, [contract, router.isReady, toast, wallet]);
 
   return (
-    <PropertyDetails2
-      contractData={contractData}
-      contract={contract}
-      property={property}
-      isContractDataLoading={isContractDataLoading}
-      contractAddress={contractAddress as string}
-    />
+    <>
+      <Head>
+        <title>{property.title}</title>
+        <meta name="description" content={property.shortDescription} />
+        <meta property="og:title" content={property.title} />
+        <meta property="og:description" content={property.shortDescription} />
+        <meta property="og:image" content={ipfs.asHttpsURL(property.media.featuredImageUrl)} />
+      </Head>
+      <PropertyDetails2
+        contractData={contractData}
+        contract={contract}
+        property={property}
+        isContractDataLoading={isContractDataLoading}
+        contractAddress={contractAddress as string}
+      />
+    </>
   );
 };

@@ -21,7 +21,7 @@ const MAINNET_ASTRODAO_URL_ORIGIN = "https://app.astrodao.com";
 const TESTNET_FEATURED_ACTIVE_HOLDINGS = [
   "ce_eay7eydcxk8nwp8rvo6zpo.escrowfactory.nearholdings.testnet",
   "ce_1t0tchrruu9l8zmkknpi1t.escrowfactory.nearholdings.testnet",
-  "ce_ybjelbhl158naqbcun5aes.escrowfactory.nearholdings.testnet",
+  "ce_fjfpt2dryzyfyfjsf597lq.escrowfactory.nearholdings.testnet",
 ];
 const MAINNET_FEATURED_ACTIVE_HOLDINGS = ["ce_k95zme9rxsppqvjfw2gyvj.escrowfactory12.nearholdings.testnet"];
 
