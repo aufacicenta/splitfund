@@ -21,9 +21,8 @@ type RouteMap = {
   };
   campaign: (campaignSlug: string) => string;
   property: {
-    details: (propertySlug: string) => string;
     preview: (responseId: string) => string;
-    index: (contractAddress: string) => string;
+    details: (contractAddress: string) => string;
   };
   properties: {
     explorer: () => string;
@@ -57,9 +56,8 @@ export const routes: RouteMap = {
   notFound: "/404",
   campaign: (campaignSlug) => `/c/${campaignSlug}`,
   property: {
-    details: (propertySlug) => `/p/${propertySlug}`,
     preview: (responseId) => `/p/preview?responseId=${responseId}`,
-    index: (contractAddress: string) => `/p?contractAddress=${contractAddress}`,
+    details: (contractAddress: string) => `/p/${contractAddress}`,
   },
   properties: {
     explorer: () => `/p/explorer`,

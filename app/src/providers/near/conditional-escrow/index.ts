@@ -1,4 +1,5 @@
 import { Contract } from "near-api-js";
+import { PropertyCard } from "api/codegen";
 
 import ipfs from "providers/ipfs";
 import near from "providers/near";
@@ -41,7 +42,7 @@ export class ConditionalEscrow {
     return currentCoinPrice * price;
   }
 
-  static async getPropertyFromMetadataUrl(url: string) {
+  static async getPropertyFromMetadataUrl(url: string): Promise<PropertyCard> {
     const response = await fetch(ipfs.asHttpsURL(url), {
       method: "GET",
     });

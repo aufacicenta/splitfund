@@ -85,7 +85,7 @@ export const PropertyCardContainer = ({
       fundedPercentage={fundedPercentage}
       action={
         action || (
-          <Typography.Link href={routes.property.index(contractAddress)} className={styles["property-card__cta"]}>
+          <Typography.Link href={routes.property.details(contractAddress)} className={styles["property-card__cta"]}>
             See Details
           </Typography.Link>
         )

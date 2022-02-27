@@ -16,3 +16,7 @@ export type PropertyDetailsProps = {
   children?: ReactNode;
   className?: string;
 };
+
+export type PropertyDetailsContainerProps = {
+  property: PropertyCard;
+};

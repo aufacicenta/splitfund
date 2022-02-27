@@ -11,19 +11,17 @@ import {
   ConditionalEscrowValues,
 } from "providers/near/conditional-escrow/conditional-escrow.types";
 import { Typography } from "ui/typography/Typography";
-import { DEFAULT_PROPERTY_CARD_PROPS } from "app/properties-explorer/property-card/PropertyCard";
-import { PropertyCardProps } from "app/properties-explorer/property-card/PropertyCard.types";
 import { ConditionalEscrow } from "providers/near/conditional-escrow";
 import ipfs from "providers/ipfs";
 
 import { PropertyDetails2 } from "./PropertyDetails2";
+import { PropertyDetailsContainerProps } from "./PropertyDetails2.types";
 
-export const PropertyDetailsContainer = () => {
+export const PropertyDetailsContainer = ({ property }: PropertyDetailsContainerProps) => {
   const [contractData, setContractData] = useState<ConditionalEscrowValues>(
     ConditionalEscrow.getDefaultContractValues(),
   );
   const [isContractDataLoading, setIsContractDataLoading] = useState(true);
-  const [property, setProperty] = useState<PropertyCardProps["property"]>(DEFAULT_PROPERTY_CARD_PROPS);
 
   const router = useRouter();
   const wallet = useWalletSelectorContext();
@@ -47,11 +45,8 @@ export const PropertyDetailsContainer = () => {
       try {
         const conditionalEscrow = new ConditionalEscrow(contract);
         const values = await conditionalEscrow.getConstantValues(wallet);
-        const propertyData = await ConditionalEscrow.getPropertyFromMetadataUrl(values.metadataURL);
 
         setContractData(values);
-        setProperty(propertyData);
-
         setIsContractDataLoading(false);
       } catch {
         setIsContractDataLoading(false);

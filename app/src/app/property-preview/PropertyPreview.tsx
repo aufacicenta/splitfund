@@ -104,7 +104,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
 
       await wallet.context.connection?.account().functionCall({
         methodName: "create_conditional_escrow",
-        walletCallbackUrl: `${window.origin}${routes.property.index(
+        walletCallbackUrl: `${window.origin}${routes.property.details(
           `${conditionalEscrowContractName}.${near.getConfig(wallet.network).escrowFactoryContractName}`,
         )}`,
         contractId: near.getConfig(wallet.network).escrowFactoryContractName,
