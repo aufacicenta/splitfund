@@ -24,7 +24,7 @@ export async function getServerSideProps({ locale }: GetServerSidePropsContext) 
   return {
     props: {
       featuredActiveHoldings,
-      ...(await serverSideTranslations(locale!, ["common", "head"])),
+      ...(await serverSideTranslations(locale!, ["common", "home", "head"])),
     },
   };
 }
