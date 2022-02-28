@@ -10,21 +10,7 @@ import date from "providers/date";
 import { PropertyCardProps } from "./PropertyCard.types";
 import styles from "./PropertyCard.module.scss";
 
-export const DEFAULT_PROPERTY_CARD_PROPS = {
-  title: "Loading",
-  price: 0,
-  shortDescription: "Loading",
-  longDescription: "Loading",
-  category: "Loading",
-  expirationDate: date.now().format(),
-  media: {
-    featuredImageUrl:
-      "bafybeictugtlj7ixe5u2ylavxzhm7dvs6nqzgykv7pgrvlfsxccbfai6pm/near-holdings-icon-loading-template.jpg",
-    ipfsURL: "ipfs://",
-  },
-};
-
-export const PropertyCard: React.FC<PropertyCardProps> = ({ className, action, minimal, property }) => (
+export const PropertyCard = ({ className, action, minimal, property }: PropertyCardProps) => (
   <Card
     shadow
     backgroundImageUrl={ipfs.asHttpsURL(property.media.featuredImageUrl)}
@@ -37,11 +23,9 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ className, action, m
           {date.now().isAfter(property.expirationDate) ? "ago" : "left"}
         </Typography.MiniDescription>
       </div>
-      {minimal && (
-        <div className={styles["property-card__stats-pill--funded"]}>
-          <Typography.MiniDescription flat>{`${property.price.fundedPercentage}% funded`}</Typography.MiniDescription>
-        </div>
-      )}
+      <div className={styles["property-card__stats-pill--funded"]}>
+        <Typography.MiniDescription flat>{`${property.price.fundedPercentage}% funded`}</Typography.MiniDescription>
+      </div>
     </div>
     <Card.Content>
       <div className={styles["property-card__header"]}>
