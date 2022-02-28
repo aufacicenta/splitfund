@@ -61,7 +61,7 @@ export class ConditionalEscrow {
     return data;
   }
 
-  static async getPropertyCard(contractAddress: string): Promise<PropertyCard> {
+  static async getFromConnection(contractAddress: string) {
     const near = await nearAPI.connect({
       keyStore: new nearAPI.keyStores.InMemoryKeyStore(),
       headers: {},
@@ -72,11 +72,11 @@ export class ConditionalEscrow {
     const account = await near.account(nearUtils.getConfig(DEFAULT_NETWORK_ENV).guestWalletId);
     const contractMethods = { viewMethods: VIEW_METHODS, changeMethods: [] };
 
-    const contract = nearUtils.initContract<ConditionalEscrowMethods>(
-      account,
-      contractAddress as string,
-      contractMethods,
-    );
+    return nearUtils.initContract<ConditionalEscrowMethods>(account, contractAddress, contractMethods);
+  }
+
+  static async getPropertyCard(contractAddress: string): Promise<PropertyCard> {
+    const contract = await ConditionalEscrow.getFromConnection(contractAddress);
 
     const conditionalEscrow = new ConditionalEscrow(contract);
     const metadataUrl = await conditionalEscrow.getMetadataUrl();
