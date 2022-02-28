@@ -14,7 +14,7 @@ type Property {
 
 type PropertyCard {
   title: String!
-  price: Float!
+  price: PropertyCardPrice!
   shortDescription: String!
   longDescription: String!
   category: String!
@@ -26,6 +26,18 @@ type PropertyCard {
 type PropertyCardOwner {
   name: String!
   url: String
+}
+
+type PropertyCardPrice {
+  value: Float!
+  fundedPercentage: String!
+  exchangeRate: ExchangeRate!
+}
+
+type ExchangeRate {
+  price: String!
+  currencySymbol: String!
+  equivalence: String!
 }
 
 type PropertyContent {

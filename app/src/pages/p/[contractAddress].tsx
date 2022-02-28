@@ -10,8 +10,10 @@ import { ConditionalEscrowMethods } from "providers/near/conditional-escrow/cond
 import { DEFAULT_NETWORK_ENV } from "providers/near/getConfig";
 import { VIEW_METHODS } from "providers/near/conditional-escrow/constants";
 import { ConditionalEscrow } from "providers/near/conditional-escrow";
+import { PropertyDetailsContainerProps } from "app/property-details/PropertyDetails2.types";
+import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 
-const PropertyDetails: NextPage<{ property: PropertyCard }> = ({ property }) => (
+const PropertyDetails: NextPage<PropertyDetailsContainerProps> = ({ property }) => (
   <AppLayout>
     <PropertyDetailsContainer property={property} />
   </AppLayout>
@@ -38,10 +40,29 @@ export async function getServerSideProps({ params, locale }: GetServerSidePropsC
 
   const conditionalEscrow = new ConditionalEscrow(contract);
   const metadataUrl = await conditionalEscrow.getMetadataUrl();
-  const property = await ConditionalEscrow.getPropertyFromMetadataUrl(metadataUrl);
+  const propertyMetadata = await ConditionalEscrow.getPropertyFromMetadataUrl(metadataUrl);
+
+  const { price, equivalence } = await ConditionalEscrow.getCurrentPriceEquivalence(propertyMetadata.price);
+  const fundedPercentageResponse = await conditionalEscrow.getTotalFundedPercentage();
+
+  const property: PropertyCard = {
+    ...propertyMetadata,
+    price: {
+      value: propertyMetadata.price,
+      fundedPercentage: fundedPercentageResponse.toString(),
+      exchangeRate: {
+        price: formatFiatCurrency(price),
+        currencySymbol: "USD",
+        equivalence: formatFiatCurrency(equivalence),
+      },
+    },
+  };
 
   return {
-    props: { property, ...(await serverSideTranslations(locale!, ["common", "head"])) },
+    props: {
+      property,
+      ...(await serverSideTranslations(locale!, ["common", "head"])),
+    },
   };
 }
 

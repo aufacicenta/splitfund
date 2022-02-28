@@ -24,14 +24,7 @@ export const DEFAULT_PROPERTY_CARD_PROPS = {
   },
 };
 
-export const PropertyCard: React.FC<PropertyCardProps> = ({
-  className,
-  action,
-  minimal,
-  property,
-  priceEquivalence,
-  fundedPercentage = "0",
-}) => (
+export const PropertyCard: React.FC<PropertyCardProps> = ({ className, action, minimal, property }) => (
   <Card
     shadow
     backgroundImageUrl={ipfs.asHttpsURL(property.media.featuredImageUrl)}
@@ -46,7 +39,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
       </div>
       {minimal && (
         <div className={styles["property-card__stats-pill--funded"]}>
-          <Typography.MiniDescription flat>{`${fundedPercentage}% funded`}</Typography.MiniDescription>
+          <Typography.MiniDescription flat>{`${property.price.fundedPercentage}% funded`}</Typography.MiniDescription>
         </div>
       )}
     </div>
@@ -91,10 +84,10 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
             Price
           </Typography.MiniDescription>
           <Typography.Text flat className={styles["property-card__price"]}>
-            {property.price} Ⓝ
+            {property.price.value} Ⓝ
           </Typography.Text>
           <Typography.MiniDescription flat className={styles["property-card__exchange-rate"]}>
-            {priceEquivalence}
+            {property.price.exchangeRate.equivalence}
           </Typography.MiniDescription>
         </Grid.Col>
         <Grid.Col>{action}</Grid.Col>

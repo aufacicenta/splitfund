@@ -1,18 +1,12 @@
 import { PropertyCard } from "api/codegen";
-import { Contract } from "near-api-js";
 import { ReactNode } from "react";
 
-import {
-  ConditionalEscrowMethods,
-  ConditionalEscrowValues,
-} from "providers/near/conditional-escrow/conditional-escrow.types";
+import { ConditionalEscrow } from "providers/near/conditional-escrow";
 
 export type PropertyDetailsProps = {
-  contractData: ConditionalEscrowValues;
-  contract: (Contract & ConditionalEscrowMethods) | undefined;
   property: PropertyCard;
   isContractDataLoading: boolean;
-  contractAddress: string;
+  contract?: ConditionalEscrow;
   children?: ReactNode;
   className?: string;
 };

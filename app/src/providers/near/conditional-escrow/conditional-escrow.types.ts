@@ -1,3 +1,16 @@
+import { PropertyCardOwner, PropertyContentMedia } from "api/codegen";
+
+export type PropertyMetadata = {
+  title: string;
+  price: number;
+  shortDescription: string;
+  longDescription: string;
+  category: string;
+  expirationDate: string;
+  media: PropertyContentMedia;
+  owner: PropertyCardOwner;
+};
+
 export type ConditionalEscrowValues = {
   totalFunds: string;
   fundingAmountLimit: string;

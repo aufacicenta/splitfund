@@ -1,5 +1,4 @@
 import { Contract } from "near-api-js";
-import { PropertyCard } from "api/codegen";
 
 import ipfs from "providers/ipfs";
 import near from "providers/near";
@@ -8,13 +7,18 @@ import currency from "providers/currency";
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
 
-import { ConditionalEscrowMethods, ConditionalEscrowValues } from "./conditional-escrow.types";
+import { ConditionalEscrowMethods, ConditionalEscrowValues, PropertyMetadata } from "./conditional-escrow.types";
 
 export class ConditionalEscrow {
+  values: ConditionalEscrowValues | undefined;
+
   contract: Contract & ConditionalEscrowMethods;
+
+  contractAddress: string;
 
   constructor(contract: Contract & ConditionalEscrowMethods) {
     this.contract = contract;
+    this.contractAddress = contract.contractId;
   }
 
   static getDefaultContractValues = (): ConditionalEscrowValues => ({
@@ -36,13 +40,13 @@ export class ConditionalEscrow {
     deposits: [],
   });
 
-  static async getCurrentPriceEquivalence(price: number): Promise<number> {
+  static async getCurrentPriceEquivalence(price: number): Promise<{ price: number; equivalence: number }> {
     const currentCoinPrice = await currency.getCoinCurrentPrice("near", "usd");
 
-    return currentCoinPrice * price;
+    return { price: currentCoinPrice, equivalence: currentCoinPrice * price };
   }
 
-  static async getPropertyFromMetadataUrl(url: string): Promise<PropertyCard> {
+  static async getPropertyFromMetadataUrl(url: string): Promise<PropertyMetadata> {
     const response = await fetch(ipfs.asHttpsURL(url), {
       method: "GET",
     });
@@ -74,7 +78,25 @@ export class ConditionalEscrow {
     return response;
   }
 
-  async getConstantValues(wallet: WalletSelectorContextType): Promise<ConditionalEscrowValues> {
+  async delegateFunds(args: { dao_name: string }, gas: string | number): Promise<boolean> {
+    const response = await this.contract.delegate_funds(args, gas);
+
+    return response;
+  }
+
+  async withdraw(): Promise<void> {
+    const response = await this.contract.withdraw();
+
+    return response;
+  }
+
+  async deposit(args: Record<string, string>, gas?: number, amount?: string | null): Promise<void> {
+    const response = await this.contract.deposit(args, gas, amount);
+
+    return response;
+  }
+
+  async setConstantValues(wallet: WalletSelectorContextType) {
     const getTotalFundsResponse = await this.getTotalFunds();
     const getFundingAmountLimitResponse = await this.getFundingAmountLimit();
     const totalFundedPercentage = await this.getTotalFundedPercentage();
@@ -92,7 +114,7 @@ export class ConditionalEscrow {
     const depositsOfPercentage = (BigInt(depositsOfResponse) * BigInt(100)) / BigInt(getFundingAmountLimitResponse);
 
     const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
-    const priceEquivalence = await ConditionalEscrow.getCurrentPriceEquivalence(
+    const { equivalence: priceEquivalence } = await ConditionalEscrow.getCurrentPriceEquivalence(
       Number(near.formatAccountBalanceFlat(BigInt(getFundingAmountLimitResponse).toString()).replace(",", "")),
     );
 
@@ -101,7 +123,7 @@ export class ConditionalEscrow {
     const daoName = await this.contract.get_dao_name();
     const metadataURL = await this.contract.get_metadata_url();
 
-    return {
+    this.values = {
       totalFunds: BigInt(getTotalFundsResponse).toString(),
       fundingAmountLimit: near.formatAccountBalance(BigInt(getFundingAmountLimitResponse).toString(), 8),
       unpaidFundingAmount: near.formatAccountBalance(BigInt(getUnpaidFundingAmountResponse).toString(), 8),

@@ -9,9 +9,9 @@ import { Typography } from "ui/typography/Typography";
 import { Button } from "ui/button/Button";
 import { Modal } from "ui/modal/Modal";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
-import { PropertyCardContainer } from "app/properties-explorer/property-card/PropertyCardContainer";
 import near from "providers/near";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
+import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 
 import styles from "./PropertyDetails2.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails2.types";
@@ -20,9 +20,8 @@ import { InvestmentDetails2 } from "./investment-details/InvestmentDetails2";
 export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
   className,
   contract,
-  contractData,
   isContractDataLoading,
-  contractAddress,
+  property,
 }) => {
   const [isInvestmentDetailsModalOpen, setIsInvestmentDetailsModalOpen] = useState(false);
   const wallet = useWalletSelectorContext();
@@ -57,10 +56,12 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
                                 If the transaction completes successfully, your funds will securely be kept on-hold in
                                 the{" "}
                                 <Typography.Anchor
-                                  href={`${near.getConfig(wallet.network).explorerUrl}/accounts/${contractAddress}`}
+                                  href={`${near.getConfig(wallet.network).explorerUrl}/accounts/${
+                                    contract?.contractAddress
+                                  }`}
                                   target="_blank"
                                 >
-                                  {contractAddress}
+                                  {contract?.contractAddress || "CONTRACT_ADDRESS"}
                                 </Typography.Anchor>{" "}
                                 contract. This contract is{" "}
                                 <Typography.Anchor
@@ -96,9 +97,9 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
                         </div>
                       </Grid.Col>
                       <Grid.Col lg={6}>
-                        <PropertyCardContainer
+                        <PropertyCard
                           minimal={false}
-                          contractAddress={contractAddress}
+                          property={property}
                           action={
                             <Button
                               color="primary"
@@ -127,12 +128,7 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
           <Modal.Header onClose={() => setIsInvestmentDetailsModalOpen(false)}>
             <Typography.Headline3 flat>Investment Details</Typography.Headline3>
           </Modal.Header>
-          <InvestmentDetails2
-            contractAddress={contractAddress}
-            contract={contract}
-            contractData={contractData}
-            isContractDataLoading={isContractDataLoading}
-          />
+          <InvestmentDetails2 contract={contract} isContractDataLoading={isContractDataLoading} />
         </Modal>
       )}
     </>
