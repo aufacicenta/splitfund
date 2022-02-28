@@ -12,7 +12,7 @@ import { Button } from "ui/button/Button";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
 import { Locale } from "types/Locale";
-import { PropertyCardContainer } from "app/properties-explorer/property-card/PropertyCardContainer";
+import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -103,10 +103,21 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings }
             </Grid.Row>
             <div className={styles["home__featured-assets--cards"]}>
               <Grid.Row className={styles["home__property-card--row"]}>
-                {featuredActiveHoldings.map((contractAddress) => (
-                  <Grid.Col lg={4} xs={12} key={contractAddress}>
+                {featuredActiveHoldings.map((property) => (
+                  <Grid.Col lg={4} xs={12} key={property.contract!.id}>
                     <div>
-                      <PropertyCardContainer contractAddress={contractAddress} />
+                      <PropertyCard
+                        minimal
+                        property={property}
+                        action={
+                          <Typography.Link
+                            href={routes.property.details(property.contract!.id)}
+                            className={styles["home__property-card--cta"]}
+                          >
+                            See Details
+                          </Typography.Link>
+                        }
+                      />
                     </div>
                   </Grid.Col>
                 ))}

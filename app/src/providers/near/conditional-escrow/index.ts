@@ -1,13 +1,18 @@
 import { Contract } from "near-api-js";
+import * as nearAPI from "near-api-js";
+import { PropertyCard } from "api/codegen";
 
+import nearUtils from "providers/near";
 import ipfs from "providers/ipfs";
-import near from "providers/near";
 import date from "providers/date";
 import currency from "providers/currency";
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
+import { DEFAULT_NETWORK_ENV } from "../getConfig";
+import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 
 import { ConditionalEscrowMethods, ConditionalEscrowValues, PropertyMetadata } from "./conditional-escrow.types";
+import { VIEW_METHODS } from "./constants";
 
 export class ConditionalEscrow {
   values: ConditionalEscrowValues | undefined;
@@ -23,8 +28,8 @@ export class ConditionalEscrow {
 
   static getDefaultContractValues = (): ConditionalEscrowValues => ({
     totalFunds: "0",
-    fundingAmountLimit: near.formatAccountBalance("0"),
-    unpaidFundingAmount: near.formatAccountBalance("0"),
+    fundingAmountLimit: nearUtils.formatAccountBalance("0"),
+    unpaidFundingAmount: nearUtils.formatAccountBalance("0"),
     depositsOf: "0",
     depositsOfPercentage: 0,
     currentCoinPrice: 0,
@@ -41,7 +46,7 @@ export class ConditionalEscrow {
   });
 
   static async getCurrentPriceEquivalence(price: number): Promise<{ price: number; equivalence: number }> {
-    const currentCoinPrice = await currency.getCoinCurrentPrice("near", "usd");
+    const currentCoinPrice = await currency.getCoinCurrentPrice("near", currency.constants.DEFAULT_VS_CURRENCY);
 
     return { price: currentCoinPrice, equivalence: currentCoinPrice * price };
   }
@@ -54,6 +59,47 @@ export class ConditionalEscrow {
     const data = await response.json();
 
     return data;
+  }
+
+  static async getPropertyCard(contractAddress: string): Promise<PropertyCard> {
+    const near = await nearAPI.connect({
+      keyStore: new nearAPI.keyStores.InMemoryKeyStore(),
+      headers: {},
+      // @TODO DEFAULT_NETWORK_ENV should be dynamic from client headers: testnet or mainnet
+      ...nearUtils.getConfig(DEFAULT_NETWORK_ENV),
+    });
+
+    const account = await near.account(nearUtils.getConfig(DEFAULT_NETWORK_ENV).guestWalletId);
+    const contractMethods = { viewMethods: VIEW_METHODS, changeMethods: [] };
+
+    const contract = nearUtils.initContract<ConditionalEscrowMethods>(
+      account,
+      contractAddress as string,
+      contractMethods,
+    );
+
+    const conditionalEscrow = new ConditionalEscrow(contract);
+    const metadataUrl = await conditionalEscrow.getMetadataUrl();
+    const propertyMetadata = await ConditionalEscrow.getPropertyFromMetadataUrl(metadataUrl);
+
+    const { price, equivalence } = await ConditionalEscrow.getCurrentPriceEquivalence(propertyMetadata.price);
+    const fundedPercentageResponse = await conditionalEscrow.getTotalFundedPercentage();
+
+    return {
+      ...propertyMetadata,
+      contract: {
+        id: contractAddress,
+      },
+      price: {
+        value: propertyMetadata.price,
+        fundedPercentage: fundedPercentageResponse.toString(),
+        exchangeRate: {
+          price: formatFiatCurrency(price),
+          currencySymbol: currency.constants.DEFAULT_VS_CURRENCY,
+          equivalence: formatFiatCurrency(equivalence),
+        },
+      },
+    };
   }
 
   async getMetadataUrl(): Promise<string> {
@@ -115,7 +161,7 @@ export class ConditionalEscrow {
 
     const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
     const { equivalence: priceEquivalence } = await ConditionalEscrow.getCurrentPriceEquivalence(
-      Number(near.formatAccountBalanceFlat(BigInt(getFundingAmountLimitResponse).toString()).replace(",", "")),
+      Number(nearUtils.formatAccountBalanceFlat(BigInt(getFundingAmountLimitResponse).toString()).replace(",", "")),
     );
 
     const daoFactoryAccountId = await this.contract.get_dao_factory_account_id();
@@ -125,8 +171,8 @@ export class ConditionalEscrow {
 
     this.values = {
       totalFunds: BigInt(getTotalFundsResponse).toString(),
-      fundingAmountLimit: near.formatAccountBalance(BigInt(getFundingAmountLimitResponse).toString(), 8),
-      unpaidFundingAmount: near.formatAccountBalance(BigInt(getUnpaidFundingAmountResponse).toString(), 8),
+      fundingAmountLimit: nearUtils.formatAccountBalance(BigInt(getFundingAmountLimitResponse).toString(), 8),
+      unpaidFundingAmount: nearUtils.formatAccountBalance(BigInt(getUnpaidFundingAmountResponse).toString(), 8),
       depositsOf: BigInt(depositsOfResponse).toString(),
       totalFundedPercentage: Number(totalFundedPercentage),
       depositsOfPercentage: Number(depositsOfPercentage),

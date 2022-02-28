@@ -1,15 +1,6 @@
 query GetPropertyCardByResponseId($input: GetPropertyCardByResponseIdInput!) {
   getPropertyCardByResponseId(input: $input) {
     title
-    price {
-      value
-      fundedPercentage
-      exchangeRate {
-        price
-        currencySymbol
-        equivalence
-      }
-    }
     shortDescription
     longDescription
     category

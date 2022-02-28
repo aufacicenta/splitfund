@@ -2,17 +2,12 @@ import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 
-import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
-import near from "providers/near";
-
 import { Home2 } from "./Home2";
+import { HomeProps } from "./Home.types";
 
-export const HomeContainer = () => {
+export const HomeContainer = ({ featuredActiveHoldings }: HomeProps) => {
   const { t } = useTranslation("head");
   const { locale } = useRouter();
-  const wallet = useWalletSelectorContext();
-
-  const { featuredActiveHoldings } = near.getConfig(wallet.network);
 
   return (
     <>

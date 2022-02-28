@@ -20,12 +20,17 @@ type PropertyCard {
   category: String!
   expirationDate: Date!
   media: PropertyContentMedia!
+  contract: Contract
   owner: PropertyCardOwner
 }
 
 type PropertyCardOwner {
   name: String!
   url: String
+}
+
+type Contract {
+  id: String!
 }
 
 type PropertyCardPrice {

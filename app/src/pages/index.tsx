@@ -1,24 +1,32 @@
-import { GetStaticPropsContext, NextPage } from "next";
+import { GetServerSidePropsContext, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { i18n } from "next-i18next";
 
 import { HomeContainer } from "app/home/home/HomeContainer";
 import { AppLayout } from "layouts/app-layout/AppLayout";
+import { ConditionalEscrow } from "providers/near/conditional-escrow";
+import near from "providers/near";
+import { HomeProps } from "app/home/home/Home.types";
+import { DEFAULT_NETWORK_ENV } from "providers/near/getConfig";
 
-const Index: NextPage = () => (
+const Index: NextPage<HomeProps> = ({ featuredActiveHoldings }) => (
   <AppLayout>
-    <HomeContainer />
+    <HomeContainer featuredActiveHoldings={featuredActiveHoldings} />
   </AppLayout>
 );
 
-export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
-  await i18n?.reloadResources();
+export async function getServerSideProps({ locale }: GetServerSidePropsContext) {
+  const { featuredActiveHoldings: featuredActiveHoldingsIds } = near.getConfig(DEFAULT_NETWORK_ENV);
+
+  const featuredActiveHoldings = await Promise.all(
+    featuredActiveHoldingsIds.map((contractAddress) => ConditionalEscrow.getPropertyCard(contractAddress)),
+  );
 
   return {
     props: {
-      ...(await serverSideTranslations(locale!, ["common", "home", "head"])),
+      featuredActiveHoldings,
+      ...(await serverSideTranslations(locale!, ["common", "head"])),
     },
   };
-};
+}
 
 export default Index;
