@@ -3,5 +3,22 @@
   "intro.asInvestor.title": "As an investor",
   "intro.asInvestor.description": "Be part of the development of the future,<br />by owning a share of it.",
   "intro.asBusinessOwner.title": "As a property manager",
-  "intro.asBusinessOwner.description": "Access to global investment capital,<br />and sell faster."
+  "intro.asBusinessOwner.description": "Access to global investment capital,<br />and sell faster.",
+  "intro.cta.exploreAssets": "Explore Assets",
+  "intro.cta.learnMore": "Learn More",
+  "how-it-works.title": "How It Works",
+  "how-it-works.1.title": "Submit an Asset",
+  "how-it-works.1.subtitle": "Need funding for your big idea?",
+  "how-it-works.1.description": "Set your price, preview and create a smart-contract tied to your asset.",
+  "how-it-works.2.title": "Get Investment",
+  "how-it-works.2.subtitle": "Expect NEAR deposits from all around the world.",
+  "how-it-works.2.description": "Funds are withdrawn at any time if the price goal is not met before the expiration date.",
+  "how-it-works.3.title": "Become a DAO member",
+  "how-it-works.3.subtitle": "Investors (and you) become members of a new Sputnik2 DAO.",
+  "how-it-works.3.description": "The money is transferred to the DAO. Decide the future of your idea as a worldwide team.",
+  "featured-assets.title": "Featured Active Holdings",
+  "featured-assets.subtitle": "Submitting an asset is open &amp; decentralized.",
+  "what-is-fasst.1.title": "What is Fractionalized<br />Asset Trading?",
+  "what-is-fasst.1.subtitle": "Similar to traditional investment trusts, FASSTs use the power of group buying to bet over real-world & digital assets.",
+  "what-is-fasst.1.description": "Using blockchain technology, you can now purchase part of any asset, eg. a Real Estate property, and earning passive income from rent."
 }

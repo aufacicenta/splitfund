@@ -3,5 +3,22 @@
   "intro.asInvestor.title": "Como inversionista",
   "intro.asInvestor.description": "Sé parte del desarrollo del futuro<br />comprando una parte de él.",
   "intro.asBusinessOwner.title": "Como agente inmobiliario",
-  "intro.asBusinessOwner.description": "Accede al mercado global y<br />vende tus propiedades más rápido."
+  "intro.asBusinessOwner.description": "Accede al mercado global y<br />vende tus propiedades más rápido.",
+  "intro.cta.exploreAssets": "Explora los Activos",
+  "intro.cta.learnMore": "Aprende Más",
+  "how-it-works.title": "Cómo Funciona",
+  "how-it-works.1.title": "Publica un Activo",
+  "how-it-works.1.subtitle": "Necesitas financiamiento para tu gran idea?",
+  "how-it-works.1.description": "Fija un precio, revisa y crea un smart-contract atado a tu activo.",
+  "how-it-works.2.title": "Atrae Inversión",
+  "how-it-works.2.subtitle": "Espera depósitos en NEAR de inversionistas de todo el mundo.",
+  "how-it-works.2.description": "Los fondos se liberan en cualquier momento si el valor del activo no es financiado antes de la fecha de expiración.",
+  "how-it-works.3.title": "Sé un miembro de la DAO",
+  "how-it-works.3.subtitle": "Los inversionistas (y tú) se vuelven accionistas de una nueva Sputnik2 DAO.",
+  "how-it-works.3.description": "El dinero es transferido a la DAO. Decide sobre el futuro de la idea como un equipo global.",
+  "featured-assets.title": "Campañas de Activos en Marcha",
+  "featured-assets.subtitle": "Publicar un activo es abierto y descentralizado.",
+  "what-is-fasst.1.title": "Qué es Inversión<br />Fraccionada sobre Activos? FASST",
+  "what-is-fasst.1.subtitle": "Similar a las sociedades de inversión tradicionales, FASST utiliza el poder de las compras grupales para apostar sobre activos reales o digitales.",
+  "what-is-fasst.1.description": "Utilizando blockchain, ahora puedes comprar parte de cualquier activo. eg. Una propiedad de Bienes Raíces y ganar ingresos pasivos de la renta."
 }

@@ -42,7 +42,9 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
     <>
       <WalletSelectorNavbar2>
         <div className={styles["home__total-value-locked"]}>
-          <Typography.Description>Total Value Locked · {wallet.network}</Typography.Description>
+          <Typography.Description>
+            {t("navbar.totalValueLocked", { ns: "common" })} · {wallet.network}
+          </Typography.Description>
           <Typography.Text className={styles["home__total-value-locked--amount"]}>{totalValueLocked}</Typography.Text>
         </div>
       </WalletSelectorNavbar2>
@@ -72,12 +74,12 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                   <Grid.Row justify="start">
                     <Grid.Col width="auto">
                       <Button color="primary" as="a" href={routes.properties.explorer()}>
-                        Explore Assets
+                        {t("intro.cta.exploreAssets")}
                       </Button>
                     </Grid.Col>
                     <Grid.Col width="auto">
                       <Button variant="outlined" onClick={() => scrollTo("#what-is-fasst")}>
-                        Learn More
+                        {t("intro.cta.learnMore")}
                       </Button>
                     </Grid.Col>
                   </Grid.Row>
@@ -93,18 +95,26 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
         </section>
         <section id="how-it-works" className={clsx(styles.home__section, styles["home__how-it-works"])}>
           <Grid.Container>
-            <Typography.Headline2>How It Works</Typography.Headline2>
+            <Typography.Headline2>{t("how-it-works.title")}</Typography.Headline2>
             <Grid.Row>
               <Grid.Col lg={4} xs={12}>
                 <div className={styles["home__how-it-works--box"]}>
                   <div className={styles["home__how-it-works--icon"]}>
                     <Icon name="icon-rocket" />
                   </div>
-                  <Typography.Headline3>Submit a Project</Typography.Headline3>
-                  <Typography.TextLead>Need funding for your big idea?</Typography.TextLead>
-                  <Typography.TextLead>
-                    Set your price, preview and create a smart-contract tied to your asset.
-                  </Typography.TextLead>
+                  <Typography.Headline3>{t("how-it-works.1.title")}</Typography.Headline3>
+                  <Typography.TextLead>{t("how-it-works.1.subtitle")}</Typography.TextLead>
+                  <Typography.TextLead>{t("how-it-works.1.description")}</Typography.TextLead>
+                  <div className={styles["home__button-box"]}>
+                    <PopupButton
+                      id={embedFormConfig.formID}
+                      size={80}
+                      className={styles["home__intro--cta"]}
+                      onSubmit={onSubmitEmbedForm}
+                    >
+                      {t("navbar.apply", { ns: "common" })}
+                    </PopupButton>
+                  </div>
                 </div>
               </Grid.Col>
               <Grid.Col lg={4} xs={12}>
@@ -112,11 +122,9 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                   <div className={styles["home__how-it-works--icon"]}>
                     <Icon name="icon-network-lock" />
                   </div>
-                  <Typography.Headline3>Get Investment</Typography.Headline3>
-                  <Typography.TextLead>Expect NEAR deposits from all around the world.</Typography.TextLead>
-                  <Typography.TextLead>
-                    Funds are withdrawn at any time if the price goal is not met before the expiration date.
-                  </Typography.TextLead>
+                  <Typography.Headline3>{t("how-it-works.2.title")}</Typography.Headline3>
+                  <Typography.TextLead>{t("how-it-works.2.subtitle")}</Typography.TextLead>
+                  <Typography.TextLead>{t("how-it-works.2.description")}</Typography.TextLead>
                 </div>
               </Grid.Col>
               <Grid.Col lg={4} xs={12}>
@@ -124,11 +132,9 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                   <div className={styles["home__how-it-works--icon"]}>
                     <Icon name="icon-users-plus" />
                   </div>
-                  <Typography.Headline3>Become a DAO member</Typography.Headline3>
-                  <Typography.TextLead>Investors (and you) become members of a new Sputnik2 DAO.</Typography.TextLead>
-                  <Typography.TextLead>
-                    The money is transferred to the DAO. Decide the future of your idea as a worldwide team.
-                  </Typography.TextLead>
+                  <Typography.Headline3>{t("how-it-works.3.title")}</Typography.Headline3>
+                  <Typography.TextLead>{t("how-it-works.3.subtitle")}</Typography.TextLead>
+                  <Typography.TextLead>{t("how-it-works.3.description")}</Typography.TextLead>
                 </div>
               </Grid.Col>
             </Grid.Row>
@@ -136,10 +142,10 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
         </section>
         <section id="featured-assets" className={clsx(styles.home__section, styles["home__featured-assets"])}>
           <Grid.Container>
-            <Typography.Headline2>Featured Active Holdings</Typography.Headline2>
+            <Typography.Headline2>{t("featured-assets.title")}</Typography.Headline2>
             <Grid.Row justify="between" align="center">
               <Grid.Col width="auto" xs={6}>
-                <Typography.TextLead flat>Submitting an asset is open &amp; decentralized.</Typography.TextLead>
+                <Typography.TextLead flat>{t("featured-assets.subtitle")}</Typography.TextLead>
               </Grid.Col>
               <Grid.Col width="auto" xs={6}>
                 <PopupButton
@@ -165,7 +171,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                             href={routes.property.details(property.contract!.id)}
                             className={styles["home__property-card--cta"]}
                           >
-                            See Details
+                            {t("button.seeDetails", { ns: "common" })}
                           </Typography.Link>
                         }
                       />
@@ -182,22 +188,14 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
               <Grid.Row>
                 <Grid.Col lg={5} xs={12}>
                   <Typography.Headline2>
-                    What is Fractionalized
-                    <br />
-                    Asset Trading?
+                    <Trans>{t("what-is-fasst.1.title")}</Trans>
                   </Typography.Headline2>
-                  <Typography.TextLead>
-                    Similar to traditional investment trusts, FASSTs use the power of group buying to bet over
-                    real-world &amp; digital assets.
-                  </Typography.TextLead>
+                  <Typography.TextLead>{t("what-is-fasst.1.subtitle")}</Typography.TextLead>
                   <div className={styles["home__what-is--image"]}>
                     <img src="/home/near-holdings-doughnut.png" alt="fractionalized ownership graphic" />
                   </div>
                   <hr />
-                  <Typography.Text>
-                    Using blockchain technology, you can now purchase part of any asset, eg. a Real Estate property, and
-                    earning passive income from rent.
-                  </Typography.Text>
+                  <Typography.Text>{t("what-is-fasst.1.description")}</Typography.Text>
                   <div className={styles["home__button-box"]}>
                     <Button variant="outlined" onClick={() => scrollTo("#use-cases")}>
                       Use Cases
