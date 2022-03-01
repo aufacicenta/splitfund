@@ -35,7 +35,7 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
   const wallet = useWalletSelectorContext();
   const router = useRouter();
 
-  const onCopyTextValue = `${process.env.NEXT_PUBLIC_BASE_URL}/${router.locale}${router.asPath}`;
+  const onCopyTextValue = `${process.env.NEXT_PUBLIC_VERCEL_URL}/${router.locale}${router.asPath}`;
 
   return (
     <>
