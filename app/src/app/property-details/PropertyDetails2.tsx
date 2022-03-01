@@ -1,5 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 import { MainPanel } from "ui/mainpanel/MainPanel";
 import { Grid } from "ui/grid/Grid";
@@ -12,10 +14,16 @@ import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNa
 import near from "providers/near";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
+import { ClipboardButtonProps } from "ui/button/clipboard-button/ClipboardButton.types";
 
 import styles from "./PropertyDetails2.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails2.types";
 import { InvestmentDetails2 } from "./investment-details/InvestmentDetails2";
+
+export const ClipboardButton = dynamic<ClipboardButtonProps>(
+  () => import("ui/button/clipboard-button/ClipboardButton").then((mod) => mod.ClipboardButton),
+  { ssr: false },
+);
 
 export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
   className,
@@ -25,6 +33,9 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
 }) => {
   const [isInvestmentDetailsModalOpen, setIsInvestmentDetailsModalOpen] = useState(false);
   const wallet = useWalletSelectorContext();
+  const router = useRouter();
+
+  const onCopyTextValue = `${process.env.NEXT_PUBLIC_BASE_URL}/${router.locale}${router.asPath}`;
 
   return (
     <>
@@ -90,9 +101,7 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
                             </div>
                           </Card.Content>
                           <div className={styles["property-details__actions--secondary"]}>
-                            <Button color="secondary" variant="outlined">
-                              Back
-                            </Button>
+                            <ClipboardButton onCopyTextValue={onCopyTextValue}>Share</ClipboardButton>
                           </div>
                         </div>
                       </Grid.Col>
