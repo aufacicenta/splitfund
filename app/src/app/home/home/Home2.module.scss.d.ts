@@ -46,6 +46,9 @@ export type Styles = {
   "home__button-box": string;
   "home__featured-assets": string;
   "home__featured-assets--cards": string;
+  "home__how-it-works": string;
+  "home__how-it-works--box": string;
+  "home__how-it-works--icon": string;
   home__intro: string;
   "home__intro--box": string;
   "home__intro--cta": string;

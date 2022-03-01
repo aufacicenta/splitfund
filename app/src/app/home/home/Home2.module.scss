@@ -43,6 +43,24 @@
     }
   }
 
+  &__how-it-works {
+    position: relative;
+    padding: $navbar-height 0;
+
+    &--box {
+      @include atLargeTablet {
+        margin-bottom: 0;
+      }
+      margin-bottom: $space-l;
+    }
+
+    &--icon {
+      margin-bottom: $space-m;
+      font-size: $font-size-headline-1;
+      color: var(--color-primary);
+    }
+  }
+
   &__intro {
     position: relative;
     overflow: hidden;

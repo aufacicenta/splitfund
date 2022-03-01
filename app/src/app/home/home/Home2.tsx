@@ -14,6 +14,7 @@ import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
 import { Locale } from "types/Locale";
 import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
+import { Icon } from "ui/icon/Icon";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -85,6 +86,49 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
               <Grid.Col lg={6}>
                 <div className={styles["home__intro--image"]}>
                   <img src="/home/near-holdings-doughnut.png" alt="fractionalized ownership graphic" />
+                </div>
+              </Grid.Col>
+            </Grid.Row>
+          </Grid.Container>
+        </section>
+        <section id="how-it-works" className={clsx(styles.home__section, styles["home__how-it-works"])}>
+          <Grid.Container>
+            <Typography.Headline2>How It Works</Typography.Headline2>
+            <Grid.Row>
+              <Grid.Col lg={4} xs={12}>
+                <div className={styles["home__how-it-works--box"]}>
+                  <div className={styles["home__how-it-works--icon"]}>
+                    <Icon name="icon-rocket" />
+                  </div>
+                  <Typography.Headline3>Submit a Project</Typography.Headline3>
+                  <Typography.TextLead>Need funding for your big idea?</Typography.TextLead>
+                  <Typography.TextLead>
+                    Set your price, preview and create a smart-contract tied to your asset.
+                  </Typography.TextLead>
+                </div>
+              </Grid.Col>
+              <Grid.Col lg={4} xs={12}>
+                <div className={styles["home__how-it-works--box"]}>
+                  <div className={styles["home__how-it-works--icon"]}>
+                    <Icon name="icon-network-lock" />
+                  </div>
+                  <Typography.Headline3>Get Investment</Typography.Headline3>
+                  <Typography.TextLead>Expect NEAR deposits from all around the world.</Typography.TextLead>
+                  <Typography.TextLead>
+                    Funds are withdrawn at any time if the price goal is not met before the expiration date.
+                  </Typography.TextLead>
+                </div>
+              </Grid.Col>
+              <Grid.Col lg={4} xs={12}>
+                <div className={styles["home__how-it-works--box"]}>
+                  <div className={styles["home__how-it-works--icon"]}>
+                    <Icon name="icon-users-plus" />
+                  </div>
+                  <Typography.Headline3>Become a DAO member</Typography.Headline3>
+                  <Typography.TextLead>Investors (and you) become members of a new Sputnik2 DAO.</Typography.TextLead>
+                  <Typography.TextLead>
+                    The money is transferred to the DAO. Decide the future of your idea as a worldwide team.
+                  </Typography.TextLead>
                 </div>
               </Grid.Col>
             </Grid.Row>
