@@ -57,6 +57,8 @@ export type Styles = {
   "home__property-card--cta": string;
   "home__property-card--row": string;
   home__section: string;
+  "home__total-value-locked": string;
+  "home__total-value-locked--amount": string;
   "home__use-cases": string;
   "home__use-cases--col": string;
   "home__what-is": string;

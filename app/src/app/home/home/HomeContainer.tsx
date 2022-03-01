@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { Home2 } from "./Home2";
 import { HomeProps } from "./Home.types";
 
-export const HomeContainer = ({ featuredActiveHoldings }: HomeProps) => {
+export const HomeContainer = ({ featuredActiveHoldings, totalValueLocked }: HomeProps) => {
   const { t } = useTranslation("head");
   const { locale } = useRouter();
 
@@ -18,7 +18,7 @@ export const HomeContainer = ({ featuredActiveHoldings }: HomeProps) => {
         <meta property="og:description" content={t("head.og.description")} />
         <meta property="og:image" content={`/shared/og-image_${locale}.png`} />
       </Head>
-      <Home2 featuredActiveHoldings={featuredActiveHoldings} />
+      <Home2 featuredActiveHoldings={featuredActiveHoldings} totalValueLocked={totalValueLocked} />
     </>
   );
 };

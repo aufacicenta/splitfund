@@ -6,6 +6,14 @@
   min-height: 100vh;
   background-color: var(--color-background);
 
+  &__total-value-locked {
+    text-align: right;
+
+    &--amount {
+      color: var(--color-primary);
+    }
+  }
+
   &__property-card {
     &--row {
       > div {

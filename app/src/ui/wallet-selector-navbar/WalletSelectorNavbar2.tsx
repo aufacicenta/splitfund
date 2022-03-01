@@ -8,7 +8,7 @@ import { Grid } from "ui/grid/Grid";
 import styles from "./WalletSelectorNavbar2.module.scss";
 import { WalletSelectorNavbarProps } from "./WalletSelectorNavbar.types";
 
-export const WalletSelectorNavbar2: React.FC<WalletSelectorNavbarProps> = () => {
+export const WalletSelectorNavbar2: React.FC<WalletSelectorNavbarProps> = ({ children }) => {
   const routes = useRoutes();
 
   return (
@@ -33,7 +33,9 @@ export const WalletSelectorNavbar2: React.FC<WalletSelectorNavbarProps> = () => 
             </Grid.Col>
           </Hidden>
           <Grid.Col lg={5} sm={5} xs={6}>
-            <div className={styles["wallet-selector-navbar__right"]} />
+            <div className={styles["wallet-selector-navbar__right"]}>
+              <div className={styles["wallet-selector-navbar__right--item"]}>{children}</div>
+            </div>
           </Grid.Col>
         </Grid.Row>
       </Grid.Container>

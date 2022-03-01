@@ -13,6 +13,7 @@ import { useRoutes } from "hooks/useRoutes/useRoutes";
 import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
 import { Locale } from "types/Locale";
 import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
+import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -21,11 +22,12 @@ const scrollTo = (selector: string) => {
   document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
 };
 
-export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings }) => {
+export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, totalValueLocked }) => {
   const { t } = useTranslation(["home", "common"]);
   const routes = useRoutes();
   const router = useRouter();
   const { locale } = useRouter();
+  const wallet = useWalletSelectorContext();
 
   const embedFormConfig = getEmbedFormConfig(locale as Locale);
 
@@ -37,7 +39,12 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings }
 
   return (
     <>
-      <WalletSelectorNavbar2 />
+      <WalletSelectorNavbar2>
+        <div className={styles["home__total-value-locked"]}>
+          <Typography.Description>Total Value Locked · {wallet.network}</Typography.Description>
+          <Typography.Text className={styles["home__total-value-locked--amount"]}>{totalValueLocked}</Typography.Text>
+        </div>
+      </WalletSelectorNavbar2>
       <div className={clsx(styles.home, className)}>
         <section id="intro" className={clsx(styles.home__section, styles.home__intro)}>
           <div className={styles["home__intro--linear-gradient"]} />
