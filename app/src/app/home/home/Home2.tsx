@@ -198,7 +198,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                   <Typography.Text>{t("what-is-fasst.1.description")}</Typography.Text>
                   <div className={styles["home__button-box"]}>
                     <Button variant="outlined" onClick={() => scrollTo("#use-cases")}>
-                      Use Cases
+                      {t("button.useCases", { ns: "common" })}
                     </Button>
                   </div>
                 </Grid.Col>
@@ -207,16 +207,12 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             <div className={styles["home__what-is--row"]}>
               <Grid.Row>
                 <Grid.Col lg={5} xs={12} offset={{ lg: 7 }}>
-                  <Typography.Headline2>What happens to the money?</Typography.Headline2>
-                  <Typography.TextLead>
-                    Your NEAR tokens stay on-hold until the price of the asset is 100% funded.
-                  </Typography.TextLead>
-                  <Typography.TextLead>
-                    Withdraw your funds entirely if the price is not reached under a given timeframe.
-                  </Typography.TextLead>
+                  <Typography.Headline2>{t("what-is-fasst.2.title")}</Typography.Headline2>
+                  <Typography.TextLead>{t("what-is-fasst.2.subtitle")}</Typography.TextLead>
+                  <Typography.TextLead>{t("what-is-fasst.2.subtitle2")}</Typography.TextLead>
                   <hr />
-                  <Typography.Text>This is completely handled by orchestrated NEAR smart-contracts.</Typography.Text>
-                  <Typography.Text>No middlemen involded, seriously.</Typography.Text>
+                  <Typography.Text>{t("what-is-fasst.2.description")}</Typography.Text>
+                  <Typography.Text>{t("what-is-fasst.2.description2")}</Typography.Text>
                   <div className={styles["home__button-box"]}>
                     <Button
                       as="a"
@@ -224,7 +220,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                       href="https://github.com/aufacicenta/near.holdings/blob/master/rust-escrow/conditional-escrow/src/lib.rs"
                       target="_blank"
                     >
-                      Audit Contracts
+                      {t("button.auditContracts", { ns: "common" })}
                     </Button>
                   </div>
                 </Grid.Col>
@@ -233,21 +229,14 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             <div className={styles["home__what-is--row"]}>
               <Grid.Row>
                 <Grid.Col lg={5} xs={12}>
-                  <Typography.Headline2>And if the asset gets funded?</Typography.Headline2>
-                  <Typography.TextLead>This is where the magic happens.</Typography.TextLead>
-                  <Typography.TextLead>The funds are transfered to a new NEAR Sputnik2 DAO.</Typography.TextLead>
-                  <Typography.TextLead>
-                    As an investor, you have proportional voting power over the future of the asset.
-                  </Typography.TextLead>
+                  <Typography.Headline2>{t("what-is-fasst.3.title")}</Typography.Headline2>
+                  <Typography.TextLead>{t("what-is-fasst.3.subtitle")}</Typography.TextLead>
+                  <Typography.TextLead>{t("what-is-fasst.3.subtitle2")}</Typography.TextLead>
+                  <Typography.TextLead>{t("what-is-fasst.3.subtitle3")}</Typography.TextLead>
                   <hr />
-                  <Typography.Text>
-                    With the funds in the DAO, it is up to the council to decide what to do with the asset.
-                  </Typography.Text>
-                  <Typography.Text>
-                    Put the asset to work, or use it as collateral. Earn passive income from rent or interests. The
-                    possibilities are endless.
-                  </Typography.Text>
-                  <Typography.Text>Aim high!</Typography.Text>
+                  <Typography.Text>{t("what-is-fasst.3.description")}</Typography.Text>
+                  <Typography.Text>{t("what-is-fasst.3.description2")}</Typography.Text>
+                  <Typography.Text>{t("what-is-fasst.3.description3")}</Typography.Text>
                   <div className={styles["home__button-box"]}>
                     <PopupButton
                       id={embedFormConfig.formID}
@@ -264,16 +253,11 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             <div className={styles["home__what-is--row"]}>
               <Grid.Row>
                 <Grid.Col lg={5} offset={{ lg: 7 }} xs={12}>
-                  <Typography.Headline2>What about the trading part?</Typography.Headline2>
-                  <Typography.TextLead>
-                    Upon a successful asset funding campaign, you’ll be accounted new NEP-141 tokens, 1:1 to your
-                    deposit.
-                  </Typography.TextLead>
+                  <Typography.Headline2>{t("what-is-fasst.4.title")}</Typography.Headline2>
+                  <Typography.TextLead>{t("what-is-fasst.4.subtitle")}</Typography.TextLead>
                   <hr />
-                  <Typography.Text>
-                    The initial value of the tokens being the value of the property at the time of funding.
-                  </Typography.Text>
-                  <Typography.Text>They can cost more in the future 🤷.</Typography.Text>
+                  <Typography.Text>{t("what-is-fasst.4.description")}</Typography.Text>
+                  <Typography.Text>{t("what-is-fasst.4.description2")}</Typography.Text>
                 </Grid.Col>
               </Grid.Row>
             </div>
@@ -284,11 +268,9 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             <Grid.Row>
               <Grid.Col lg={4}>
                 <div className={styles["home__use-cases--col"]}>
-                  <Typography.Headline2>FASST Use Cases</Typography.Headline2>
-                  <Typography.TextLead>Go ahead and submit your craziest idea.</Typography.TextLead>
-                  <Typography.Text>
-                    Perhaps there's a community out there thinking about making a similar endeavor a reality!
-                  </Typography.Text>
+                  <Typography.Headline2>{t("use-cases.title")}</Typography.Headline2>
+                  <Typography.TextLead>{t("use-cases.subtitle")}</Typography.TextLead>
+                  <Typography.Text>{t("use-cases.description")}</Typography.Text>
                   <div className={styles["home__button-box"]}>
                     <PopupButton
                       id={embedFormConfig.formID}
@@ -305,53 +287,37 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                 <Grid.Row>
                   <Grid.Col lg={4}>
                     <div className={styles["home__use-cases--col"]}>
-                      <Typography.Headline3>Art</Typography.Headline3>
-                      <Typography.TextLead>
-                        Invest in an art piece, even in one that doesn't exist yet.
-                      </Typography.TextLead>
-                      <Typography.Text>
-                        Build a new museum or buy part of an entire collection. Make a new movie, or revolutionize the
-                        film industry.
-                      </Typography.Text>
+                      <Typography.Headline3>{t("use-cases.art.title")}</Typography.Headline3>
+                      <Typography.TextLead>{t("use-cases.art.subtitle")}</Typography.TextLead>
+                      <Typography.Text>{t("use-cases.art.description")}</Typography.Text>
                     </div>
                   </Grid.Col>
                   <Grid.Col lg={4}>
                     <div className={styles["home__use-cases--col"]}>
-                      <Typography.Headline3>Real Estate</Typography.Headline3>
-                      <Typography.TextLead>Buy and manage land, together.</Typography.TextLead>
-                      <Typography.Text>
-                        Have a stake at the next residential building revolution, earn from the next harvest.
-                      </Typography.Text>
+                      <Typography.Headline3>{t("use-cases.real-estate.title")}</Typography.Headline3>
+                      <Typography.TextLead>{t("use-cases.real-estate.subtitle")}</Typography.TextLead>
+                      <Typography.Text>{t("use-cases.real-estate.description")}</Typography.Text>
                     </div>
                   </Grid.Col>
                   <Grid.Col lg={4}>
                     <div className={styles["home__use-cases--col"]}>
-                      <Typography.Headline3>Events</Typography.Headline3>
-                      <Typography.TextLead>
-                        Pre-purchase tickets and bring your favorite artist to town.
-                      </Typography.TextLead>
-                      <Typography.Text>
-                        Test if an event is feasable, put the money into action if it turns out it is!
-                      </Typography.Text>
+                      <Typography.Headline3>{t("use-cases.events.title")}</Typography.Headline3>
+                      <Typography.TextLead>{t("use-cases.events.subtitle")}</Typography.TextLead>
+                      <Typography.Text>{t("use-cases.events.description")}</Typography.Text>
                     </div>
                   </Grid.Col>
                   <Grid.Col lg={4}>
                     <div className={styles["home__use-cases--col"]}>
-                      <Typography.Headline3>Commodity (Stock)</Typography.Headline3>
-                      <Typography.TextLead>Put something on sale, and sell it faster.</Typography.TextLead>
-                      <Typography.Text>
-                        Buy a lot of coffee beans, 10 tons of corn, 1,000,000 worth of, socks? Decide on how profit from
-                        it.
-                      </Typography.Text>
+                      <Typography.Headline3>{t("use-cases.commodity.title")}</Typography.Headline3>
+                      <Typography.TextLead>{t("use-cases.commodity.subtitle")}</Typography.TextLead>
+                      <Typography.Text>{t("use-cases.commodity.description")}</Typography.Text>
                     </div>
                   </Grid.Col>
                   <Grid.Col lg={4}>
                     <div className={styles["home__use-cases--col"]}>
-                      <Typography.Headline3>Business</Typography.Headline3>
-                      <Typography.TextLead>Fund a startup, let the community decide on its future.</Typography.TextLead>
-                      <Typography.Text>
-                        Have this crazy business idea? Test out how interested the community is and make it a reality!
-                      </Typography.Text>
+                      <Typography.Headline3>{t("use-cases.business.title")}</Typography.Headline3>
+                      <Typography.TextLead>{t("use-cases.business.subtitle")}</Typography.TextLead>
+                      <Typography.Text>{t("use-cases.business.description")}</Typography.Text>
                     </div>
                   </Grid.Col>
                 </Grid.Row>

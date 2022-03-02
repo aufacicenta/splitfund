@@ -7,7 +7,7 @@
   "navbar.apply": "Publica un Activo",
   "navbar.logout": "Cerrar Sesión",
   "navbar.signIn": "Iniciar Sesión",
-  "navbar.totalValueLocked": "Valor Total Guardado",
+  "navbar.totalValueLocked": "Valor Total Almacenado",
   "privacyNotice": "Aviso de Privacidad",
   "termsAndConditions": "Términos y Condiciones",
   "checkoutContextController.error.getCheckoutURL": "No pudimos generar un link de depósito de BTC. Intenta de nuevo.",
@@ -20,5 +20,7 @@
   "intro.bottomBanner.welcome": "NEAR Holdings, Bienes Raíces para todos.",
   "intro.bottomBanner.description": "near.holdings es una dApp de inversión en FIBRAS (Fideicomisos de Inversión en Bienes Raíces) que atrae capital de todo el mundo.<br />Invierte en Bienes Raíces desde 1 NEAR.",
   "intro.bottomBanner.cta": "Explorar Propiedades",
-  "button.seeDetails": "Ver Detalles"
+  "button.seeDetails": "Ver Detalles",
+  "button.useCases": "Casos de Uso",
+  "button.auditContracts": "Audita los Contratos"
 }
