@@ -1,12 +1,12 @@
 import clsx from "clsx";
 
-import { WalletSelectorNavbar2 } from "ui/wallet-selector-navbar/WalletSelectorNavbar2";
 import { Typography } from "ui/typography/Typography";
 import { Grid } from "ui/grid/Grid";
 import { Button } from "ui/button/Button";
 import { Footer } from "ui/footer/Footer";
 import { TypeformButton } from "ui/button/typeform-button/TypeformButton";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
+import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 
 import { PropertyPreviewErrorProps } from "./PropertyPreviewError.types";
 import styles from "./PropertyPreviewError.module.scss";
@@ -16,7 +16,7 @@ export const PropertyPreviewError: React.FC<PropertyPreviewErrorProps> = ({ clas
 
   return (
     <>
-      <WalletSelectorNavbar2 />
+      <WalletSelectorNavbar />
       <div className={clsx(styles["property-preview-error"], className)}>
         <Grid.Container>
           <Typography.Headline3 flat>An error occurred while creating the contract.</Typography.Headline3>

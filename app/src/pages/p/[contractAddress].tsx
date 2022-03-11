@@ -26,6 +26,7 @@ const PropertyDetails: NextPage<PropertyDetailsContainerProps> = ({ property }) 
 
 export async function getServerSideProps({ params, locale }: GetServerSidePropsContext<{ contractAddress: string }>) {
   const contractAddress = params?.contractAddress;
+  const serverSideTranslationsProps = await serverSideTranslations(locale!, ["common", "head"]);
 
   try {
     const property: PropertyCard = await ConditionalEscrow.getPropertyCard(contractAddress!);
@@ -33,14 +34,14 @@ export async function getServerSideProps({ params, locale }: GetServerSidePropsC
     return {
       props: {
         property,
-        ...(await serverSideTranslations(locale!, ["common", "head"])),
+        ...serverSideTranslationsProps,
       },
     };
   } catch {
     // @TODO log error
   }
 
-  return { props: { property: null } };
+  return { props: { property: null, ...serverSideTranslationsProps } };
 }
 
 export default PropertyDetails;
