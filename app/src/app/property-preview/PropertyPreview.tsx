@@ -101,7 +101,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
       const conditionalEscrowArgs = Buffer.from(
         JSON.stringify({
           expires_at: date.toUtcOffsetNanoseconds(property.expirationDate),
-          funding_amount_limit: near.parseNearAmount(property.price.toString()),
+          funding_amount_limit: near.parseNearAmount(property.price.value.toString()),
           dao_factory_account_id: near.getConfig(wallet.network).daoFactoryContractName,
           ft_factory_account_id: near.getConfig(wallet.network).ftFactoryContractName,
           metadata_url: property.media.ipfsURL,
@@ -122,7 +122,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
         args,
         gas: new BN("300000000000000"),
         // @TODO we should dramatically reduce the cost of deploying. I'm pretty sure we are doing something wrong in the EscrowFactory contract. Why does it cost so much to cover storage?
-        attachedDeposit: new BN(near.parseNearAmount("1.95")!),
+        attachedDeposit: new BN(near.parseNearAmount("0.05")!),
       });
 
       toast.trigger({
