@@ -1,7 +1,5 @@
 import clsx from "clsx";
 import { Trans, useTranslation } from "react-i18next";
-import { PopupButton } from "@typeform/embed-react";
-import { useRouter } from "next/router";
 
 import { Typography } from "ui/typography/Typography";
 import { Grid } from "ui/grid/Grid";
@@ -10,11 +8,10 @@ import { Footer } from "ui/footer/Footer";
 import { WalletSelectorNavbar2 } from "ui/wallet-selector-navbar/WalletSelectorNavbar2";
 import { Button } from "ui/button/Button";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
-import getEmbedFormConfig from "providers/typeform/getEmbedFormConfig";
-import { Locale } from "types/Locale";
 import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { Icon } from "ui/icon/Icon";
+import { TypeformButton } from "ui/button/typeform-button/TypeformButton";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -26,17 +23,7 @@ const scrollTo = (selector: string) => {
 export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, totalValueLocked }) => {
   const { t } = useTranslation(["home", "common"]);
   const routes = useRoutes();
-  const router = useRouter();
-  const { locale } = useRouter();
   const wallet = useWalletSelectorContext();
-
-  const embedFormConfig = getEmbedFormConfig(locale as Locale);
-
-  const onSubmitEmbedForm = (data: { responseId: string }) => {
-    setTimeout(() => {
-      router.push(routes.property.preview(data.responseId));
-    }, 2500);
-  };
 
   return (
     <>
@@ -106,14 +93,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                   <Typography.TextLead>{t("how-it-works.1.subtitle")}</Typography.TextLead>
                   <Typography.TextLead>{t("how-it-works.1.description")}</Typography.TextLead>
                   <div className={styles["home__button-box"]}>
-                    <PopupButton
-                      id={embedFormConfig.formID}
-                      size={80}
-                      className={styles["home__intro--cta"]}
-                      onSubmit={onSubmitEmbedForm}
-                    >
-                      {t("navbar.apply", { ns: "common" })}
-                    </PopupButton>
+                    <TypeformButton>{t("navbar.apply", { ns: "common" })}</TypeformButton>
                   </div>
                 </div>
               </Grid.Col>
@@ -148,14 +128,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                 <Typography.TextLead flat>{t("featured-assets.subtitle")}</Typography.TextLead>
               </Grid.Col>
               <Grid.Col width="auto" xs={6}>
-                <PopupButton
-                  id={embedFormConfig.formID}
-                  size={80}
-                  className={styles["home__intro--cta"]}
-                  onSubmit={onSubmitEmbedForm}
-                >
-                  {t("navbar.apply", { ns: "common" })}
-                </PopupButton>
+                <TypeformButton>{t("navbar.apply", { ns: "common" })}</TypeformButton>
               </Grid.Col>
             </Grid.Row>
             <div className={styles["home__featured-assets--cards"]}>
@@ -238,14 +211,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                   <Typography.Text>{t("what-is-fasst.3.description2")}</Typography.Text>
                   <Typography.Text>{t("what-is-fasst.3.description3")}</Typography.Text>
                   <div className={styles["home__button-box"]}>
-                    <PopupButton
-                      id={embedFormConfig.formID}
-                      size={80}
-                      className={styles["home__intro--cta"]}
-                      onSubmit={onSubmitEmbedForm}
-                    >
-                      {t("navbar.apply", { ns: "common" })}
-                    </PopupButton>
+                    <TypeformButton>{t("navbar.apply", { ns: "common" })}</TypeformButton>
                   </div>
                 </Grid.Col>
               </Grid.Row>
@@ -272,14 +238,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                   <Typography.TextLead>{t("use-cases.subtitle")}</Typography.TextLead>
                   <Typography.Text>{t("use-cases.description")}</Typography.Text>
                   <div className={styles["home__button-box"]}>
-                    <PopupButton
-                      id={embedFormConfig.formID}
-                      size={80}
-                      className={styles["home__intro--cta"]}
-                      onSubmit={onSubmitEmbedForm}
-                    >
-                      {t("navbar.apply", { ns: "common" })}
-                    </PopupButton>
+                    <TypeformButton>{t("navbar.apply", { ns: "common" })}</TypeformButton>
                   </div>
                 </div>
               </Grid.Col>
