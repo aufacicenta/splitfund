@@ -115,6 +115,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
 
       await wallet.context.connection?.account().functionCall({
         methodName: "create_conditional_escrow",
+        // TODO create a wallet callback page to determine if the transaction went through succesfully
         walletCallbackUrl: `${window.origin}${routes.property.details(
           `${conditionalEscrowContractName}.${near.getConfig(wallet.network).escrowFactoryContractName}`,
         )}`,
@@ -122,7 +123,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
         args,
         gas: new BN("300000000000000"),
         // @TODO we should dramatically reduce the cost of deploying. I'm pretty sure we are doing something wrong in the EscrowFactory contract. Why does it cost so much to cover storage?
-        attachedDeposit: new BN(near.parseNearAmount("0.05")!),
+        attachedDeposit: new BN(near.parseNearAmount("1.95")!),
       });
 
       toast.trigger({
