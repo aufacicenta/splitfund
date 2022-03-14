@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { BN } from "bn.js";
-import { useGetPropertyCardByResponseIdQuery } from "api/codegen";
+import { Property, useGetPropertyByResponseIdQuery } from "api/codegen";
 import { useRouter } from "next/router";
 
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
@@ -21,6 +21,7 @@ import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { GenericLoader } from "ui/generic-loader/GenericLoader";
 import { PropertyCardProps } from "app/properties-explorer/property-card/PropertyCard.types";
 import currency from "providers/currency";
+import { useLocalStorage } from "hooks/useLocalStorage/useLocalStorage";
 
 import { PropertyPreviewProps } from "./PropertyPreview.types";
 import styles from "./PropertyPreview.module.scss";
@@ -28,6 +29,7 @@ import styles from "./PropertyPreview.module.scss";
 export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, responseId }) => {
   const [isAuthorizeWalletModalOpen, setIsAuthorizeWalletModalOpen] = useState(false);
   const [property, setProperty] = useState<PropertyCardProps["property"]>({
+    id: "id",
     title: "Loading",
     price: {
       value: 0,
@@ -53,39 +55,52 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
   const toast = useToastContext();
   const routes = useRoutes();
   const router = useRouter();
+  const ls = useLocalStorage();
+
+  const lsProperty = ls.get<Property>("my-properties", "{}", responseId);
 
   const {
-    data: getPropertyCardByResponseIdQueryData,
-    error: getPropertyCardByResponseIdQueryError,
+    data: getPropertyByResponseIdQueryData,
+    error: getPropertyByResponseIdQueryError,
     loading: isGetPropertyCardByResponseIdQueryLoading,
-  } = useGetPropertyCardByResponseIdQuery({
+  } = useGetPropertyByResponseIdQuery({
     variables: { input: { responseId } },
     fetchPolicy: "network-only",
+    skip: !!lsProperty,
   });
 
   useEffect(() => {
-    if (!getPropertyCardByResponseIdQueryData?.getPropertyCardByResponseId) {
+    if (!lsProperty || property.id !== "id") {
       return;
     }
 
-    setProperty(getPropertyCardByResponseIdQueryData.getPropertyCardByResponseId);
-  }, [getPropertyCardByResponseIdQueryData]);
+    setProperty(lsProperty);
+  }, [lsProperty, property.id]);
+
+  useEffect(() => {
+    if (!getPropertyByResponseIdQueryData?.getPropertyByResponseId) {
+      return;
+    }
+
+    const propertyByResponseId = getPropertyByResponseIdQueryData.getPropertyByResponseId;
+    setProperty(propertyByResponseId);
+
+    const myProperties = ls.get<Record<string, Property>>("my-properties");
+    ls.set<Record<string, Property>>("my-properties", { [responseId]: propertyByResponseId, ...myProperties });
+  }, [getPropertyByResponseIdQueryData, ls, responseId]);
 
   if (isGetPropertyCardByResponseIdQueryLoading) {
     return <GenericLoader />;
   }
 
-  if (
-    getPropertyCardByResponseIdQueryError ||
-    (!isGetPropertyCardByResponseIdQueryLoading && !getPropertyCardByResponseIdQueryData?.getPropertyCardByResponseId)
-  ) {
+  if (getPropertyByResponseIdQueryError) {
     router.push(routes.notFound);
 
     return null;
   }
 
   const onClickBack = () => {
-    router.push(routes.home);
+    router.back();
   };
 
   const onClickSubmitAsset = async () => {

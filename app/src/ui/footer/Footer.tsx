@@ -40,6 +40,9 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
               <Typography.Link className={styles["footer__cta-banner--link"]} href={routes.properties.explorer()}>
                 Asset Explorer
               </Typography.Link>
+              <Typography.Link className={styles["footer__cta-banner--link"]} href={routes.properties.my()}>
+                Your Properties
+              </Typography.Link>
             </Grid.Col>
           </Grid.Row>
         </Grid.Container>

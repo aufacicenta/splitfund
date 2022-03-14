@@ -26,6 +26,7 @@ type RouteMap = {
   };
   properties: {
     explorer: () => string;
+    my: () => string;
   };
   home: string;
   notFound: string;
@@ -61,6 +62,7 @@ export const routes: RouteMap = {
   },
   properties: {
     explorer: () => `/p/explorer`,
+    my: () => `/p/my`,
   },
 };
 

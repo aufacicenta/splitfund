@@ -23,9 +23,11 @@ export const PropertyCard = ({ className, action, minimal, property }: PropertyC
           {date.now().isAfter(property.expirationDate) ? "ago" : "left"}
         </Typography.MiniDescription>
       </div>
-      <div className={styles["property-card__stats-pill--funded"]}>
-        <Typography.MiniDescription flat>{`${property.price.fundedPercentage}% funded`}</Typography.MiniDescription>
-      </div>
+      {!minimal && (
+        <div className={styles["property-card__stats-pill--funded"]}>
+          <Typography.MiniDescription flat>{`${property.price.fundedPercentage}% funded`}</Typography.MiniDescription>
+        </div>
+      )}
     </div>
     <Card.Content>
       <div className={styles["property-card__header"]}>
