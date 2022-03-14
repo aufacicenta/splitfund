@@ -32,6 +32,22 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         <link rel="preload" href="/icons/icomoon.ttf" as="font" crossOrigin="" />
         <link rel="preload" href="/icons/icomoon.woff" as="font" crossOrigin="" />
         <link rel="preload" href="/icons/icomoon.svg" as="font" crossOrigin="" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2BT20MG97S" />
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-2BT20MG97S');
+                gtag('consent', 'default', {
+                  'ad_storage': 'denied',
+                  'analytics_storage': 'denied'
+                });
+            `,
+          }}
+        />
       </Head>
       <ApolloProvider client={GQLClient}>
         <ToastContextController>
