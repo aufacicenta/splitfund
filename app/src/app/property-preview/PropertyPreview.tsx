@@ -100,7 +100,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
   }
 
   const onClickBack = () => {
-    router.back();
+    router.push(routes.properties.my());
   };
 
   const onClickSubmitAsset = async () => {
