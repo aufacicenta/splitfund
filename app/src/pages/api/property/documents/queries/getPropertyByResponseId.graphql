@@ -1,5 +1,6 @@
-query GetPropertyCardByResponseId($input: GetPropertyCardByResponseIdInput!) {
-  getPropertyCardByResponseId(input: $input) {
+query GetPropertyByResponseId($input: GetPropertyByResponseIdInput!) {
+  getPropertyByResponseId(input: $input) {
+    id
     title
     price {
       value

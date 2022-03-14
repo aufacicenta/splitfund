@@ -1,10 +1,10 @@
-import { PropertyCard } from "api/codegen";
+import { Property } from "api/codegen";
 import { ReactNode } from "react";
 
 import { ConditionalEscrow } from "providers/near/conditional-escrow";
 
 export type PropertyDetailsProps = {
-  property: PropertyCard;
+  property: Property;
   isContractDataLoading: boolean;
   contract?: ConditionalEscrow;
   children?: ReactNode;
@@ -12,5 +12,5 @@ export type PropertyDetailsProps = {
 };
 
 export type PropertyDetailsContainerProps = {
-  property: PropertyCard;
+  property: Property;
 };

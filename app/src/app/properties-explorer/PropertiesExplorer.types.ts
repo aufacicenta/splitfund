@@ -1,8 +1,8 @@
-import { PropertyCard } from "api/codegen";
+import { Property } from "api/codegen";
 import { ReactNode } from "react";
 
 export type PropertiesExplorerProps = {
-  properties: PropertyCard[];
+  properties: Property[];
   children?: ReactNode;
   className?: string;
 };

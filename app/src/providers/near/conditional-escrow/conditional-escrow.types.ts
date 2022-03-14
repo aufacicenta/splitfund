@@ -1,6 +1,7 @@
-import { PropertyCardOwner, PropertyContentMedia } from "api/codegen";
+import { PropertyOwner, PropertyContentMedia } from "api/codegen";
 
 export type PropertyMetadata = {
+  id: string;
   title: string;
   price: number;
   shortDescription: string;
@@ -8,7 +9,7 @@ export type PropertyMetadata = {
   category: string;
   expirationDate: string;
   media: PropertyContentMedia;
-  owner: PropertyCardOwner;
+  owner: PropertyOwner;
 };
 
 export type ConditionalEscrowValues = {

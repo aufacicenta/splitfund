@@ -1,7 +1,7 @@
-import { PropertyCard } from "api/codegen";
+import { Property } from "api/codegen";
 
 export type HomeProps = {
-  featuredActiveHoldings: PropertyCard[];
+  featuredActiveHoldings: Property[];
   totalValueLocked: string;
   className?: string;
 };

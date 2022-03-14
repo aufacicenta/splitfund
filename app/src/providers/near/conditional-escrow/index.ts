@@ -1,6 +1,6 @@
 import { Contract } from "near-api-js";
 import * as nearAPI from "near-api-js";
-import { PropertyCard } from "api/codegen";
+import { Property } from "api/codegen";
 
 import nearUtils from "providers/near";
 import ipfs from "providers/ipfs";
@@ -75,7 +75,7 @@ export class ConditionalEscrow {
     return nearUtils.initContract<ConditionalEscrowMethods>(account, contractAddress, contractMethods);
   }
 
-  static async getPropertyCard(contractAddress: string): Promise<PropertyCard> {
+  static async getPropertyCard(contractAddress: string): Promise<Property> {
     const contract = await ConditionalEscrow.getFromConnection(contractAddress);
 
     const conditionalEscrow = new ConditionalEscrow(contract);

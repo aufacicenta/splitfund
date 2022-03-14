@@ -1,30 +1,23 @@
 scalar Date
 
-input GetPropertyBySlugInput {
-  slug: String!
-}
-
-input GetPropertyCardByResponseIdInput {
+input GetPropertyByResponseIdInput {
   responseId: String!
 }
 
 type Property {
-  content: PropertyContent!
-}
-
-type PropertyCard {
+  id: String!
   title: String!
-  price: PropertyCardPrice!
+  price: PropertyPrice!
   shortDescription: String!
   longDescription: String!
   category: String!
   expirationDate: Date!
   media: PropertyContentMedia!
   contract: Contract
-  owner: PropertyCardOwner
+  owner: PropertyOwner
 }
 
-type PropertyCardOwner {
+type PropertyOwner {
   name: String!
   url: String
 }
@@ -33,7 +26,7 @@ type Contract {
   id: String!
 }
 
-type PropertyCardPrice {
+type PropertyPrice {
   value: Float!
   fundedPercentage: String!
   exchangeRate: ExchangeRate!
@@ -67,6 +60,5 @@ type PropertyContentMedia {
 }
 
 type Query {
-  getPropertyBySlug(input: GetPropertyBySlugInput!): Property!
-  getPropertyCardByResponseId(input: GetPropertyCardByResponseIdInput!): PropertyCard
+  getPropertyByResponseId(input: GetPropertyByResponseIdInput!): Property
 }
