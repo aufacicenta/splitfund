@@ -1,13 +1,10 @@
-import { Contract } from "near-api-js";
 import { ReactNode } from "react";
 
-import { ConditionalEscrowMethods, ConditionalEscrowValues } from "providers/near/contract/conditional-escrow.types";
+import { ConditionalEscrow } from "providers/near/conditional-escrow";
 
 export type InvestmentDetailsProps = {
-  contractAddress: string;
-  contractData: ConditionalEscrowValues;
-  contract: (Contract & ConditionalEscrowMethods) | undefined;
   isContractDataLoading: boolean;
+  contract?: ConditionalEscrow;
   children?: ReactNode;
   className?: string;
 };

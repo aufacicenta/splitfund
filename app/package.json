@@ -28,6 +28,7 @@
     "aws-sdk": "^2.1037.0",
     "bitcoin-units": "^0.3.0",
     "bn.js": "^5.2.0",
+    "clipboard": "^2.0.10",
     "clsx": "^1.1.1",
     "final-form": "^4.20.4",
     "graphql": "^16.0.1",

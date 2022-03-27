@@ -1,7 +1,8 @@
+import { Property } from "api/codegen";
 import { ReactNode } from "react";
 
 export type PropertiesExplorerProps = {
-  contractAddresses: string[];
+  properties: Property[];
   children?: ReactNode;
   className?: string;
 };

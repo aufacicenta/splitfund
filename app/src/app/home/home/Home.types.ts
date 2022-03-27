@@ -1,4 +1,7 @@
+import { Property } from "api/codegen";
+
 export type HomeProps = {
-  featuredActiveHoldings: string[];
+  featuredActiveHoldings: Property[];
+  totalValueLocked: string;
   className?: string;
 };

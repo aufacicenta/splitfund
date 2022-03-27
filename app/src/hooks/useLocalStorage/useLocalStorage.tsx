@@ -7,16 +7,16 @@ function get<T>(key: string, type: string = "{}", chain: string = "", fallback?:
     return value as unknown as T;
   }
 
-  if (typeof value === "object") {
+  if (typeof value === "object" && chain) {
     return _.get(value, chain, fallback || "");
   }
 
   return value;
 }
 
-const set = (key: string, value: unknown = {}) => {
+function set<T>(key: string, value: T) {
   localStorage.setItem(key, JSON.stringify(value));
-};
+}
 
 export const useLocalStorage = () => ({
   set,

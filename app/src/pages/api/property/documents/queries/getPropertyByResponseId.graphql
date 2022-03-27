@@ -1,0 +1,27 @@
+query GetPropertyByResponseId($input: GetPropertyByResponseIdInput!) {
+  getPropertyByResponseId(input: $input) {
+    id
+    title
+    price {
+      value
+      fundedPercentage
+      exchangeRate {
+        price
+        currencySymbol
+        equivalence
+      }
+    }
+    shortDescription
+    longDescription
+    category
+    expirationDate
+    media {
+      featuredImageUrl
+      ipfsURL
+    }
+    owner {
+      name
+      url
+    }
+  }
+}

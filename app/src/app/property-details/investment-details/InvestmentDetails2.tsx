@@ -8,14 +8,13 @@ import { Grid } from "ui/grid/Grid";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { CircularProgress } from "ui/circular-progress/CircularProgress";
 import { Button } from "ui/button/Button";
-import { useNearContract } from "hooks/useNearContract/useNearContract";
 import near from "providers/near";
 import { ContractDepositFormProps } from "../contract-deposit-form/ContractDepositForm.types";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 import date from "providers/date";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
-import { CHANGE_METHODS, VIEW_METHODS } from "providers/near/contract/conditional-escrow";
-import { ConditionalEscrowMethods } from "providers/near/contract/conditional-escrow.types";
+import { CHANGE_METHODS, VIEW_METHODS } from "providers/near/conditional-escrow/constants";
+import { ConditionalEscrow } from "providers/near/conditional-escrow";
 
 import styles from "./InvestmentDetails.module.scss";
 import { InvestmentDetailsProps, OnSubmitDeposit } from "./InvestmentDetails.types";
@@ -25,11 +24,7 @@ const ContractDepositForm = dynamic<ContractDepositFormProps>(
   { ssr: false },
 );
 
-export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
-  contractAddress,
-  contractData,
-  isContractDataLoading,
-}) => {
+export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({ contract, isContractDataLoading }) => {
   const [isBuyOwnershipInfoModalOpen, setIsBuyOwnershipInfoModalOpen] = useState(false);
   const [isCurrentInvestorsModalOpen, setIsCurrentInvestorsModalOpen] = useState(false);
   const [isWithdrawalConditionsModalOpen, setIsWithdrawalConditionsModalOpen] = useState(false);
@@ -37,13 +32,10 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
   const [isDelegateFundsLoading, setIsDelegateFundsLoading] = useState(false);
 
   const toast = useToastContext();
-
   const wallet = useWalletSelectorContext();
 
-  const contract = useNearContract<ConditionalEscrowMethods>(wallet, contractAddress, {
-    viewMethods: VIEW_METHODS,
-    changeMethods: CHANGE_METHODS,
-  });
+  const contractAddress = contract?.contractAddress || "";
+  const contractData = contract?.values || ConditionalEscrow.getDefaultContractValues();
 
   const onClickAuthorizeWallet = () => {
     wallet.onClickConnect({
@@ -70,7 +62,7 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
       const daoName = contractAddress.split(".").shift();
 
       setIsDelegateFundsLoading(true);
-      await contract!.delegate_funds({ dao_name: daoName! }, 300000000000000);
+      await contract!.delegateFunds({ dao_name: daoName! }, 300000000000000);
       setIsDelegateFundsLoading(false);
 
       const daoContractName = `${daoName}.${near.getConfig(wallet.network).daoContractName}`;
@@ -292,15 +284,17 @@ export const InvestmentDetails2: React.FC<InvestmentDetailsProps> = ({
               <Typography.MiniDescription>{`${contractData.depositsOfPercentage}% of property price`}</Typography.MiniDescription>
             </Grid.Col>
           </Grid.Row>
-          <Grid.Row>
-            <Grid.Col lg={6} xs={6}>
-              <Typography.TextBold flat>Available balance</Typography.TextBold>
-              <Typography.MiniDescription>On wallet: {wallet.address}</Typography.MiniDescription>
-            </Grid.Col>
-            <Grid.Col>
-              <Typography.Text>{wallet.balance}</Typography.Text>
-            </Grid.Col>
-          </Grid.Row>
+          {wallet.isConnected && (
+            <Grid.Row>
+              <Grid.Col lg={6} xs={6}>
+                <Typography.TextBold flat>Available balance</Typography.TextBold>
+                <Typography.MiniDescription>On wallet: {wallet.address}</Typography.MiniDescription>
+              </Grid.Col>
+              <Grid.Col>
+                <Typography.Text>{wallet.balance}</Typography.Text>
+              </Grid.Col>
+            </Grid.Row>
+          )}
           <Grid.Row nowrap>
             <Grid.Col lg={6} xs={6}>
               <Typography.TextBold flat>Escrow Contract</Typography.TextBold>

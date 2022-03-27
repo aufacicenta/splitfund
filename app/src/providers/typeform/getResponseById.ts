@@ -1,7 +1,10 @@
-import { PropertyCard } from "api/codegen";
+import { Property } from "api/codegen";
 
 import crust from "providers/crust";
+import currency from "providers/currency";
+import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 import ipfs from "providers/ipfs";
+import { ConditionalEscrow } from "providers/near/conditional-escrow";
 
 import { Answer, TypeformResponse } from "./typeform.types";
 
@@ -43,10 +46,7 @@ const getResponseFileAsIPFSUrl = async (url: string): Promise<string> => {
   }
 };
 
-const parseAnswerFromResponseData = async (
-  data: TypeformResponse,
-  responseId: string,
-): Promise<PropertyCard | null> => {
+const parseAnswerFromResponseData = async (data: TypeformResponse, responseId: string): Promise<Property | null> => {
   const { answers } = data.items[0];
 
   if (!answers.length) {
@@ -60,8 +60,8 @@ const parseAnswerFromResponseData = async (
   });
 
   const content = {
+    id: responseId,
     title: getTextTypeAnswerFieldValue(answersRefKeyMap, "asset_title"),
-    price: getNumberTypeAnswerFieldValue(answersRefKeyMap, "asset_price"),
     shortDescription: getTextTypeAnswerFieldValue(answersRefKeyMap, "asset_short_description"),
     longDescription: getTextTypeAnswerFieldValue(answersRefKeyMap, "asset_long_description"),
     category: getChoiceTypeAnswerFieldValue(answersRefKeyMap, "asset_category"),
@@ -86,10 +86,26 @@ const parseAnswerFromResponseData = async (
     // @TODO log error. File was not pinned to Crust Network successfully
   }
 
-  return { ...content, media: { ...content.media, ipfsURL: ipfsResponse?.path! } };
+  const priceFieldValue = getNumberTypeAnswerFieldValue(answersRefKeyMap, "asset_price");
+  const { equivalence } = await ConditionalEscrow.getCurrentPriceEquivalence(priceFieldValue);
+  const price = {
+    value: priceFieldValue,
+    fundedPercentage: "80",
+    exchangeRate: {
+      price: formatFiatCurrency(priceFieldValue),
+      currencySymbol: currency.constants.DEFAULT_VS_CURRENCY,
+      equivalence: formatFiatCurrency(equivalence),
+    },
+  };
+
+  return {
+    ...content,
+    price,
+    media: { ...content.media, ipfsURL: ipfsResponse?.path! },
+  };
 };
 
-export default async (responseId: string): Promise<PropertyCard | null> => {
+export default async (responseId: string): Promise<Property | null> => {
   try {
     const response = await fetch(
       `https://api.typeform.com/forms/miiVVTw3/responses?included_response_ids=${responseId}`,

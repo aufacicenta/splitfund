@@ -46,6 +46,9 @@ export type Styles = {
   "home__button-box": string;
   "home__featured-assets": string;
   "home__featured-assets--cards": string;
+  "home__how-it-works": string;
+  "home__how-it-works--box": string;
+  "home__how-it-works--icon": string;
   home__intro: string;
   "home__intro--box": string;
   "home__intro--cta": string;
@@ -57,6 +60,8 @@ export type Styles = {
   "home__property-card--cta": string;
   "home__property-card--row": string;
   home__section: string;
+  "home__total-value-locked": string;
+  "home__total-value-locked--amount": string;
   "home__use-cases": string;
   "home__use-cases--col": string;
   "home__what-is": string;

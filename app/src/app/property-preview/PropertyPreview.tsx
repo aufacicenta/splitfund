@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { BN } from "bn.js";
-import { useGetPropertyCardByResponseIdQuery } from "api/codegen";
+import { Property, useGetPropertyByResponseIdQuery } from "api/codegen";
 import { useRouter } from "next/router";
 
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
@@ -10,7 +10,7 @@ import { MainPanel } from "ui/mainpanel/MainPanel";
 import { Grid } from "ui/grid/Grid";
 import { Card } from "ui/card/Card";
 import { Typography } from "ui/typography/Typography";
-import { DEFAULT_PROPERTY_CARD_PROPS, PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
+import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 import { Button } from "ui/button/Button";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { Modal } from "ui/modal/Modal";
@@ -20,62 +20,88 @@ import { useToastContext } from "hooks/useToastContext/useToastContext";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { GenericLoader } from "ui/generic-loader/GenericLoader";
 import { PropertyCardProps } from "app/properties-explorer/property-card/PropertyCard.types";
-import { getCurrentPriceEquivalence } from "providers/near/contract/conditional-escrow";
-import formatFiatCurrency from "providers/currency/formatFiatCurrency";
+import currency from "providers/currency";
+import { useLocalStorage } from "hooks/useLocalStorage/useLocalStorage";
 
 import { PropertyPreviewProps } from "./PropertyPreview.types";
 import styles from "./PropertyPreview.module.scss";
 
 export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, responseId }) => {
   const [isAuthorizeWalletModalOpen, setIsAuthorizeWalletModalOpen] = useState(false);
-  const [property, setProperty] = useState<PropertyCardProps["property"]>(DEFAULT_PROPERTY_CARD_PROPS);
-  const [priceEquivalence, setPriceEquivalence] = useState<PropertyCardProps["priceEquivalence"]>("USD 0.00");
+  const [property, setProperty] = useState<PropertyCardProps["property"]>({
+    id: "id",
+    title: "Loading",
+    price: {
+      value: 0,
+      fundedPercentage: "0",
+      exchangeRate: {
+        price: "0",
+        currencySymbol: currency.constants.DEFAULT_VS_CURRENCY,
+        equivalence: "0",
+      },
+    },
+    shortDescription: "Loading",
+    longDescription: "Loading",
+    category: "Loading",
+    expirationDate: date.now().format(),
+    media: {
+      featuredImageUrl:
+        "bafybeictugtlj7ixe5u2ylavxzhm7dvs6nqzgykv7pgrvlfsxccbfai6pm/near-holdings-icon-loading-template.jpg",
+      ipfsURL: "ipfs://",
+    },
+  });
 
   const wallet = useWalletSelectorContext();
   const toast = useToastContext();
   const routes = useRoutes();
   const router = useRouter();
+  const ls = useLocalStorage();
+
+  const lsProperty = ls.get<Property>("my-properties", "{}", responseId);
 
   const {
-    data: getPropertyCardByResponseIdQueryData,
-    error: getPropertyCardByResponseIdQueryError,
+    data: getPropertyByResponseIdQueryData,
+    error: getPropertyByResponseIdQueryError,
     loading: isGetPropertyCardByResponseIdQueryLoading,
-  } = useGetPropertyCardByResponseIdQuery({
+  } = useGetPropertyByResponseIdQuery({
     variables: { input: { responseId } },
     fetchPolicy: "network-only",
+    skip: !!lsProperty,
   });
 
   useEffect(() => {
-    if (!getPropertyCardByResponseIdQueryData?.getPropertyCardByResponseId) {
+    if (!lsProperty || property.id !== "id") {
       return;
     }
 
-    setProperty(getPropertyCardByResponseIdQueryData.getPropertyCardByResponseId);
-  }, [getPropertyCardByResponseIdQueryData]);
+    setProperty(lsProperty);
+  }, [lsProperty, property.id]);
 
   useEffect(() => {
-    if (!property) {
+    if (!getPropertyByResponseIdQueryData?.getPropertyByResponseId) {
       return;
     }
 
-    (async () => {
-      const priceEquivalenceResponse = await getCurrentPriceEquivalence(property.price);
-      setPriceEquivalence(`USD ${formatFiatCurrency(priceEquivalenceResponse)}`);
-    })();
-  }, [property]);
+    const propertyByResponseId = getPropertyByResponseIdQueryData.getPropertyByResponseId;
+    setProperty(propertyByResponseId);
+
+    const myProperties = ls.get<Record<string, Property>>("my-properties");
+    ls.set<Record<string, Property>>("my-properties", { [responseId]: propertyByResponseId, ...myProperties });
+  }, [getPropertyByResponseIdQueryData, ls, responseId]);
 
   if (isGetPropertyCardByResponseIdQueryLoading) {
     return <GenericLoader />;
   }
 
-  if (
-    getPropertyCardByResponseIdQueryError ||
-    (!isGetPropertyCardByResponseIdQueryLoading && !getPropertyCardByResponseIdQueryData?.getPropertyCardByResponseId)
-  ) {
+  if (getPropertyByResponseIdQueryError) {
     router.push(routes.notFound);
 
     return null;
   }
+
+  const onClickBack = () => {
+    router.push(routes.properties.my());
+  };
 
   const onClickSubmitAsset = async () => {
     if (!wallet.isConnected) {
@@ -90,7 +116,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
       const conditionalEscrowArgs = Buffer.from(
         JSON.stringify({
           expires_at: date.toUtcOffsetNanoseconds(property.expirationDate),
-          funding_amount_limit: near.parseNearAmount(property.price.toString()),
+          funding_amount_limit: near.parseNearAmount(property.price.value.toString()),
           dao_factory_account_id: near.getConfig(wallet.network).daoFactoryContractName,
           ft_factory_account_id: near.getConfig(wallet.network).ftFactoryContractName,
           metadata_url: property.media.ipfsURL,
@@ -104,7 +130,8 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
 
       await wallet.context.connection?.account().functionCall({
         methodName: "create_conditional_escrow",
-        walletCallbackUrl: `${window.origin}${routes.property.index(
+        // TODO create a wallet callback page to determine if the transaction went through succesfully
+        walletCallbackUrl: `${window.origin}${routes.property.details(
           `${conditionalEscrowContractName}.${near.getConfig(wallet.network).escrowFactoryContractName}`,
         )}`,
         contractId: near.getConfig(wallet.network).escrowFactoryContractName,
@@ -214,7 +241,7 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
                             </div>
                           </Card.Content>
                           <div className={styles["property-preview__actions--secondary"]}>
-                            <Button color="secondary" variant="outlined">
+                            <Button color="secondary" variant="outlined" onClick={onClickBack}>
                               Back
                             </Button>
                           </div>
@@ -222,7 +249,6 @@ export const PropertyPreview: React.FC<PropertyPreviewProps> = ({ className, res
                       </Grid.Col>
                       <Grid.Col lg={6}>
                         <PropertyCard
-                          priceEquivalence={priceEquivalence}
                           property={property}
                           action={
                             <Button color="primary" fullWidth onClick={onClickSubmitAsset}>

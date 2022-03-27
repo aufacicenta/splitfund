@@ -51,6 +51,9 @@ export type Styles = {
   "property-card__header": string;
   "property-card__price": string;
   "property-card__sold-by": string;
+  "property-card__stats-pill": string;
+  "property-card__stats-pill--expiration-date": string;
+  "property-card__stats-pill--funded": string;
   "property-card__title": string;
   spin: string;
   "z-depth-0": string;

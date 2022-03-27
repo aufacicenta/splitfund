@@ -1,0 +1,31 @@
+@import "src/theme/base";
+@import "src/ui/button/Button.module";
+
+.my-properties {
+  display: block;
+
+  &__main {
+    @include withNavbar(1.2);
+  }
+
+  &__page-title {
+    margin-bottom: $space-xl;
+  }
+
+  &__property-card {
+    margin-bottom: $space-l;
+
+    &--cta {
+      @extend .button-outline;
+      display: block;
+      width: 100%;
+      padding: 9px 24px;
+      text-align: center;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

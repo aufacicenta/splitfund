@@ -1,27 +1,22 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { useNearContract } from "hooks/useNearContract/useNearContract";
 import { useToastContext } from "hooks/useToastContext/useToastContext";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
-import {
-  CHANGE_METHODS,
-  getConstantValues,
-  getDefaultContractValues,
-  getPropertyFromMetadataUrl,
-  VIEW_METHODS,
-} from "providers/near/contract/conditional-escrow";
-import { ConditionalEscrowMethods, ConditionalEscrowValues } from "providers/near/contract/conditional-escrow.types";
+import ipfs from "providers/ipfs";
+import { ConditionalEscrow } from "providers/near/conditional-escrow";
+import { ConditionalEscrowMethods } from "providers/near/conditional-escrow/conditional-escrow.types";
+import { CHANGE_METHODS, VIEW_METHODS } from "providers/near/conditional-escrow/constants";
 import { Typography } from "ui/typography/Typography";
-import { DEFAULT_PROPERTY_CARD_PROPS } from "app/properties-explorer/property-card/PropertyCard";
-import { PropertyCardProps } from "app/properties-explorer/property-card/PropertyCard.types";
 
 import { PropertyDetails2 } from "./PropertyDetails2";
+import { PropertyDetailsContainerProps } from "./PropertyDetails2.types";
 
-export const PropertyDetailsContainer = () => {
-  const [contractData, setContractData] = useState<ConditionalEscrowValues>(getDefaultContractValues());
+export const PropertyDetailsContainer = ({ property }: PropertyDetailsContainerProps) => {
+  const [contract, setContract] = useState<ConditionalEscrow>();
   const [isContractDataLoading, setIsContractDataLoading] = useState(true);
-  const [property, setProperty] = useState<PropertyCardProps["property"]>(DEFAULT_PROPERTY_CARD_PROPS);
 
   const router = useRouter();
   const wallet = useWalletSelectorContext();
@@ -29,26 +24,22 @@ export const PropertyDetailsContainer = () => {
 
   const { contractAddress } = router.query;
 
-  const contract = useNearContract<ConditionalEscrowMethods>(wallet, contractAddress as string, {
+  const nearContract = useNearContract<ConditionalEscrowMethods>(wallet, contractAddress as string, {
     viewMethods: VIEW_METHODS,
     changeMethods: CHANGE_METHODS,
   });
 
   useEffect(() => {
-    if (!contract || !router.isReady) {
-      setContractData(getDefaultContractValues());
-
+    if (!nearContract || !router.isReady) {
       return;
     }
 
     (async () => {
       try {
-        const values = await getConstantValues(contract, wallet);
-        const propertyData = await getPropertyFromMetadataUrl(values.metadataURL);
+        const conditionalEscrow = new ConditionalEscrow(nearContract);
+        await conditionalEscrow.setConstantValues(wallet);
 
-        setContractData(values);
-        setProperty(propertyData);
-
+        setContract(conditionalEscrow);
         setIsContractDataLoading(false);
       } catch {
         setIsContractDataLoading(false);
@@ -61,15 +52,18 @@ export const PropertyDetailsContainer = () => {
         });
       }
     })();
-  }, [contract, router.isReady, toast, wallet]);
+  }, [nearContract, router.isReady, toast, wallet]);
 
   return (
-    <PropertyDetails2
-      contractData={contractData}
-      contract={contract}
-      property={property}
-      isContractDataLoading={isContractDataLoading}
-      contractAddress={contractAddress as string}
-    />
+    <>
+      <Head>
+        <title>{property.title}</title>
+        <meta name="description" content={property.shortDescription} />
+        <meta property="og:title" content={property.title} />
+        <meta property="og:description" content={property.shortDescription} />
+        <meta property="og:image" content={ipfs.asHttpsURL(property.media.featuredImageUrl)} />
+      </Head>
+      <PropertyDetails2 contract={contract} property={property} isContractDataLoading={isContractDataLoading} />
+    </>
   );
 };

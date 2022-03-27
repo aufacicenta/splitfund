@@ -1,5 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 import { MainPanel } from "ui/mainpanel/MainPanel";
 import { Grid } from "ui/grid/Grid";
@@ -9,20 +11,31 @@ import { Typography } from "ui/typography/Typography";
 import { Button } from "ui/button/Button";
 import { Modal } from "ui/modal/Modal";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
-import { PropertyCardContainer } from "app/properties-explorer/property-card/PropertyCardContainer";
+import near from "providers/near";
+import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
+import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
+import { ClipboardButtonProps } from "ui/button/clipboard-button/ClipboardButton.types";
 
 import styles from "./PropertyDetails2.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails2.types";
 import { InvestmentDetails2 } from "./investment-details/InvestmentDetails2";
 
+export const ClipboardButton = dynamic<ClipboardButtonProps>(
+  () => import("ui/button/clipboard-button/ClipboardButton").then((mod) => mod.ClipboardButton),
+  { ssr: false },
+);
+
 export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
   className,
   contract,
-  contractData,
   isContractDataLoading,
-  contractAddress,
+  property,
 }) => {
   const [isInvestmentDetailsModalOpen, setIsInvestmentDetailsModalOpen] = useState(false);
+  const wallet = useWalletSelectorContext();
+  const router = useRouter();
+
+  const onCopyTextValue = `${process.env.NEXT_PUBLIC_VERCEL_URL}/${router.locale}${router.asPath}`;
 
   return (
     <>
@@ -52,7 +65,22 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
                               </Typography.Text>
                               <Typography.Text>
                                 If the transaction completes successfully, your funds will securely be kept on-hold in
-                                the CONTRACT_NAME_HERE contract. This contract is open-source and auditable.
+                                the{" "}
+                                <Typography.Anchor
+                                  href={`${near.getConfig(wallet.network).explorerUrl}/accounts/${
+                                    contract?.contractAddress
+                                  }`}
+                                  target="_blank"
+                                >
+                                  {contract?.contractAddress || "CONTRACT_ADDRESS"}
+                                </Typography.Anchor>{" "}
+                                contract. This contract is{" "}
+                                <Typography.Anchor
+                                  href="https://github.com/aufacicenta/near.holdings/blob/master/rust-escrow/conditional-escrow/src/lib.rs"
+                                  target="_blank"
+                                >
+                                  open-source and auditable.
+                                </Typography.Anchor>
                               </Typography.Text>
                               <Typography.TextBold>
                                 Depositing does not mean you already own the shares
@@ -73,16 +101,14 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
                             </div>
                           </Card.Content>
                           <div className={styles["property-details__actions--secondary"]}>
-                            <Button color="secondary" variant="outlined">
-                              Back
-                            </Button>
+                            <ClipboardButton onCopyTextValue={onCopyTextValue}>Share</ClipboardButton>
                           </div>
                         </div>
                       </Grid.Col>
                       <Grid.Col lg={6}>
-                        <PropertyCardContainer
+                        <PropertyCard
                           minimal={false}
-                          contractAddress={contractAddress}
+                          property={property}
                           action={
                             <Button
                               color="primary"
@@ -111,12 +137,7 @@ export const PropertyDetails2: React.FC<PropertyDetailsProps> = ({
           <Modal.Header onClose={() => setIsInvestmentDetailsModalOpen(false)}>
             <Typography.Headline3 flat>Investment Details</Typography.Headline3>
           </Modal.Header>
-          <InvestmentDetails2
-            contractAddress={contractAddress}
-            contract={contract}
-            contractData={contractData}
-            isContractDataLoading={isContractDataLoading}
-          />
+          <InvestmentDetails2 contract={contract} isContractDataLoading={isContractDataLoading} />
         </Modal>
       )}
     </>
