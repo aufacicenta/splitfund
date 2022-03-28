@@ -18,9 +18,11 @@ const Index: NextPage<HomeProps> = ({ featuredActiveHoldings, totalValueLocked }
 export async function getServerSideProps({ locale }: GetServerSidePropsContext) {
   const { featuredActiveHoldings: featuredActiveHoldingsIds } = near.getConfig(DEFAULT_NETWORK_ENV);
 
-  const featuredActiveHoldings = await Promise.all(
-    featuredActiveHoldingsIds.map((contractAddress) => ConditionalEscrow.getPropertyCard(contractAddress)),
-  );
+  const featuredActiveHoldings = (
+    await Promise.all(
+      featuredActiveHoldingsIds.map((contractAddress) => ConditionalEscrow.getPropertyCard(contractAddress)),
+    )
+  ).filter(Boolean);
 
   const contract = await EscrowFactory.getFromConnection();
   const escrowFactory = new EscrowFactory(contract);

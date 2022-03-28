@@ -19,9 +19,11 @@ export async function getServerSideProps({ locale }: GetServerSidePropsContext) 
   const conditionalEscrowContractIds = await escrowFactory.getConditionalEscrowContractsList();
 
   // @TODO pagination
-  const properties = await Promise.all(
-    conditionalEscrowContractIds.map((contractAddress) => ConditionalEscrow.getPropertyCard(contractAddress)),
-  );
+  const properties = (
+    await Promise.all(
+      conditionalEscrowContractIds.map((contractAddress) => ConditionalEscrow.getPropertyCard(contractAddress)),
+    )
+  ).filter(Boolean);
 
   return {
     props: {

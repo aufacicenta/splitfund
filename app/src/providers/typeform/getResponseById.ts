@@ -1,6 +1,5 @@
 import { Property } from "api/codegen";
 
-import crust from "providers/crust";
 import currency from "providers/currency";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 import ipfs from "providers/ipfs";
@@ -77,15 +76,6 @@ const parseAnswerFromResponseData = async (data: TypeformResponse, responseId: s
     },
   };
 
-  const fileName = `${responseId}.json`;
-  const ipfsResponse = await ipfs.upload(Buffer.from(JSON.stringify(content)), fileName);
-
-  try {
-    await crust.pin(ipfsResponse?.path!);
-  } catch {
-    // @TODO log error. File was not pinned to Crust Network successfully
-  }
-
   const priceFieldValue = getNumberTypeAnswerFieldValue(answersRefKeyMap, "asset_price");
   const { equivalence } = await ConditionalEscrow.getCurrentPriceEquivalence(priceFieldValue);
   const price = {
@@ -97,6 +87,9 @@ const parseAnswerFromResponseData = async (data: TypeformResponse, responseId: s
       equivalence: formatFiatCurrency(equivalence),
     },
   };
+
+  const fileName = `${responseId}.json`;
+  const ipfsResponse = await ipfs.upload(Buffer.from(JSON.stringify({ ...content, price })), fileName);
 
   return {
     ...content,
