@@ -1,6 +1,5 @@
 import { GetServerSidePropsContext, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { Property } from "api/codegen";
 
 import { AppLayout } from "layouts/app-layout/AppLayout";
 import { PropertyDetailsContainer } from "app/property-details/PropertyDetailsContainer";
@@ -29,7 +28,7 @@ export async function getServerSideProps({ params, locale }: GetServerSidePropsC
   const serverSideTranslationsProps = await serverSideTranslations(locale!, ["common", "head"]);
 
   try {
-    const property: Property = await ConditionalEscrow.getPropertyCard(contractAddress!);
+    const property = await ConditionalEscrow.getPropertyCard(contractAddress!);
 
     return {
       props: {

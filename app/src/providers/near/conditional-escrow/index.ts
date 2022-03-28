@@ -45,7 +45,7 @@ export class ConditionalEscrow {
     deposits: [],
   });
 
-  static async getCurrentPriceEquivalence(price: number): Promise<{ price: number; equivalence: number }> {
+  static async getCurrentPriceEquivalence(price: number = 0): Promise<{ price: number; equivalence: number }> {
     const currentCoinPrice = await currency.getCoinCurrentPrice("near", currency.constants.DEFAULT_VS_CURRENCY);
 
     return { price: currentCoinPrice, equivalence: currentCoinPrice * price };
@@ -75,14 +75,19 @@ export class ConditionalEscrow {
     return nearUtils.initContract<ConditionalEscrowMethods>(account, contractAddress, contractMethods);
   }
 
-  static async getPropertyCard(contractAddress: string): Promise<Property> {
+  static async getPropertyCard(contractAddress: string): Promise<Property | null> {
     const contract = await ConditionalEscrow.getFromConnection(contractAddress);
 
     const conditionalEscrow = new ConditionalEscrow(contract);
     const metadataUrl = await conditionalEscrow.getMetadataUrl();
+
     const propertyMetadata = await ConditionalEscrow.getPropertyFromMetadataUrl(metadataUrl);
 
-    const { price, equivalence } = await ConditionalEscrow.getCurrentPriceEquivalence(propertyMetadata.price);
+    if (!propertyMetadata.price) {
+      return null;
+    }
+
+    const { price, equivalence } = await ConditionalEscrow.getCurrentPriceEquivalence(propertyMetadata.price.value);
     const fundedPercentageResponse = await conditionalEscrow.getTotalFundedPercentage();
 
     return {
@@ -91,7 +96,7 @@ export class ConditionalEscrow {
         id: contractAddress,
       },
       price: {
-        value: propertyMetadata.price,
+        value: propertyMetadata.price.value || 0,
         fundedPercentage: fundedPercentageResponse.toString(),
         exchangeRate: {
           price: formatFiatCurrency(price),

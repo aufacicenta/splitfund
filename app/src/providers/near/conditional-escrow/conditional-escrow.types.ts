@@ -1,9 +1,9 @@
-import { PropertyOwner, PropertyContentMedia } from "api/codegen";
+import { PropertyOwner, PropertyContentMedia, PropertyPrice } from "api/codegen";
 
 export type PropertyMetadata = {
   id: string;
   title: string;
-  price: number;
+  price: PropertyPrice;
   shortDescription: string;
   longDescription: string;
   category: string;
