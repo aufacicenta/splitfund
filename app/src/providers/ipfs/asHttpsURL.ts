@@ -1,1 +1,1 @@
-export default (path?: string) => `https://ipfs.infura.io/ipfs/${path}`;
+export default (path?: string) => `https://infura-ipfs.io/ipfs/${path}`;
