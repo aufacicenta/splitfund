@@ -46,6 +46,10 @@
     position: relative;
     padding: $navbar-height 0;
 
+    &--heading {
+      font-size: $font-size-headline-2;
+    }
+
     &--box {
       @include atLargeTablet {
         margin-bottom: 0;
@@ -64,7 +68,7 @@
     @include withNavbar;
     position: relative;
     overflow: hidden;
-    background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
 
     &--headline {
       margin-bottom: $space-m;
@@ -147,6 +151,10 @@
 
   &__section {
     display: block;
+
+    &--heading {
+      font-size: $font-size-headline-3;
+    }
   }
 
   &__button-box {

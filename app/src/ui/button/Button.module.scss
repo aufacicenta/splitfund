@@ -286,7 +286,6 @@ $HALF_LOADER_SIZE: 15px;
   }
 
   &.button--text {
-    padding: 0;
     transition: opacity $duration-medium;
 
     &.button--primary,
@@ -295,6 +294,8 @@ $HALF_LOADER_SIZE: 15px;
     &.button--danger,
     &.button--dark,
     &.button--light {
+      background: transparent;
+
       &:active,
       &:hover,
       &[disabled],

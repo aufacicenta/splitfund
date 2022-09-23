@@ -10,7 +10,6 @@ import { Button } from "ui/button/Button";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
-import { Icon } from "ui/icon/Icon";
 import { TypeformButton } from "ui/button/typeform-button/TypeformButton";
 
 import styles from "./Home2.module.scss";
@@ -64,7 +63,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                       </Button>
                     </Grid.Col>
                     <Grid.Col width="auto">
-                      <Button variant="outlined" onClick={() => scrollTo("#what-is-fasst")}>
+                      <Button variant="text" onClick={() => scrollTo("#what-is-fasst")}>
                         {t("intro.cta.learnMore")}
                       </Button>
                     </Grid.Col>
@@ -81,42 +80,77 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
         </section>
         <section id="how-it-works" className={clsx(styles.home__section, styles["home__how-it-works"])}>
           <Grid.Container>
-            <Typography.Headline2>{t("how-it-works.title")}</Typography.Headline2>
-            <Grid.Row>
-              <Grid.Col lg={4} xs={12}>
-                <div className={styles["home__how-it-works--box"]}>
-                  <div className={styles["home__how-it-works--icon"]}>
-                    <Icon name="icon-rocket" />
-                  </div>
-                  <Typography.Headline3>{t("how-it-works.1.title")}</Typography.Headline3>
+            <Typography.Headline2 className={clsx(styles["home__section--heading"])}>
+              {t("how-it-works.title")}
+            </Typography.Headline2>
+            <div className={styles["home__what-is--row"]}>
+              <Grid.Row>
+                <Grid.Col lg={5} xs={12}>
+                  <Typography.Headline3 className={clsx(styles["home__how-it-works--heading"])}>
+                    1. <Trans>{t("how-it-works.1.title")}</Trans>
+                  </Typography.Headline3>
                   <Typography.TextLead>{t("how-it-works.1.subtitle")}</Typography.TextLead>
-                  <Typography.TextLead>{t("how-it-works.1.description")}</Typography.TextLead>
+                  <hr />
                   <div className={styles["home__button-box"]}>
-                    <TypeformButton>{t("navbar.apply", { ns: "common" })}</TypeformButton>
+                    <Button variant="outlined" onClick={() => scrollTo("#use-cases")}>
+                      {t("how-it-works.1.button")}
+                    </Button>
                   </div>
-                </div>
-              </Grid.Col>
-              <Grid.Col lg={4} xs={12}>
-                <div className={styles["home__how-it-works--box"]}>
-                  <div className={styles["home__how-it-works--icon"]}>
-                    <Icon name="icon-network-lock" />
-                  </div>
-                  <Typography.Headline3>{t("how-it-works.2.title")}</Typography.Headline3>
+                </Grid.Col>
+              </Grid.Row>
+            </div>
+            <div className={styles["home__what-is--row"]}>
+              <Grid.Row>
+                <Grid.Col lg={5} xs={12} offset={{ lg: 7 }}>
+                  <Typography.Headline3 className={clsx(styles["home__how-it-works--heading"])}>
+                    2. {t("how-it-works.2.title")}
+                  </Typography.Headline3>
                   <Typography.TextLead>{t("how-it-works.2.subtitle")}</Typography.TextLead>
-                  <Typography.TextLead>{t("how-it-works.2.description")}</Typography.TextLead>
-                </div>
-              </Grid.Col>
-              <Grid.Col lg={4} xs={12}>
-                <div className={styles["home__how-it-works--box"]}>
-                  <div className={styles["home__how-it-works--icon"]}>
-                    <Icon name="icon-users-plus" />
-                  </div>
-                  <Typography.Headline3>{t("how-it-works.3.title")}</Typography.Headline3>
+                  <hr />
+                  <Typography.Text>{t("how-it-works.2.description")}</Typography.Text>
+                </Grid.Col>
+              </Grid.Row>
+            </div>
+            <div className={styles["home__what-is--row"]}>
+              <Grid.Row>
+                <Grid.Col lg={5} xs={12}>
+                  <Typography.Headline3 className={clsx(styles["home__how-it-works--heading"])}>
+                    3. <Trans>{t("how-it-works.3.title")}</Trans>
+                  </Typography.Headline3>
                   <Typography.TextLead>{t("how-it-works.3.subtitle")}</Typography.TextLead>
-                  <Typography.TextLead>{t("how-it-works.3.description")}</Typography.TextLead>
-                </div>
-              </Grid.Col>
-            </Grid.Row>
+                  <hr />
+                  <Typography.Text>{t("how-it-works.3.description")}</Typography.Text>
+                </Grid.Col>
+              </Grid.Row>
+            </div>
+            <div className={styles["home__what-is--row"]}>
+              <Grid.Row>
+                <Grid.Col lg={5} xs={12} offset={{ lg: 7 }}>
+                  <Typography.Headline3 className={clsx(styles["home__how-it-works--heading"])}>
+                    4. {t("how-it-works.4.title")}
+                  </Typography.Headline3>
+                  <Typography.TextLead>{t("how-it-works.4.subtitle")}</Typography.TextLead>
+                  <hr />
+                  <Typography.Text>{t("how-it-works.4.description")}</Typography.Text>
+                </Grid.Col>
+              </Grid.Row>
+            </div>
+            <div className={styles["home__what-is--row"]}>
+              <Grid.Row>
+                <Grid.Col lg={5} xs={12}>
+                  <Typography.Headline3 className={clsx(styles["home__how-it-works--heading"])}>
+                    5. <Trans>{t("how-it-works.5.title")}</Trans>
+                  </Typography.Headline3>
+                  <Typography.TextLead>{t("how-it-works.5.subtitle")}</Typography.TextLead>
+                  <hr />
+                  <div className={styles["home__button-box"]}>
+                    <Button variant="outlined" onClick={() => scrollTo("#use-cases")}>
+                      {t("how-it-works.5.button")}
+                    </Button>
+                  </div>
+                </Grid.Col>
+              </Grid.Row>
+            </div>
           </Grid.Container>
         </section>
         {featuredActiveHoldings && (
@@ -156,135 +190,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             </Grid.Container>
           </section>
         )}
-        <section id="what-is-fasst" className={clsx(styles.home__section, styles["home__what-is"])}>
-          <Grid.Container>
-            <div className={styles["home__what-is--row"]}>
-              <Grid.Row>
-                <Grid.Col lg={5} xs={12}>
-                  <Typography.Headline2>
-                    <Trans>{t("what-is-fasst.1.title")}</Trans>
-                  </Typography.Headline2>
-                  <Typography.TextLead>{t("what-is-fasst.1.subtitle")}</Typography.TextLead>
-                  <div className={styles["home__what-is--image"]}>
-                    <img src="/home/near-holdings-doughnut.png" alt="fractionalized ownership graphic" />
-                  </div>
-                  <hr />
-                  <Typography.Text>{t("what-is-fasst.1.description")}</Typography.Text>
-                  <div className={styles["home__button-box"]}>
-                    <Button variant="outlined" onClick={() => scrollTo("#use-cases")}>
-                      {t("button.useCases", { ns: "common" })}
-                    </Button>
-                  </div>
-                </Grid.Col>
-              </Grid.Row>
-            </div>
-            <div className={styles["home__what-is--row"]}>
-              <Grid.Row>
-                <Grid.Col lg={5} xs={12} offset={{ lg: 7 }}>
-                  <Typography.Headline2>{t("what-is-fasst.2.title")}</Typography.Headline2>
-                  <Typography.TextLead>{t("what-is-fasst.2.subtitle")}</Typography.TextLead>
-                  <Typography.TextLead>{t("what-is-fasst.2.subtitle2")}</Typography.TextLead>
-                  <hr />
-                  <Typography.Text>{t("what-is-fasst.2.description")}</Typography.Text>
-                  <Typography.Text>{t("what-is-fasst.2.description2")}</Typography.Text>
-                  <div className={styles["home__button-box"]}>
-                    <Button
-                      as="a"
-                      variant="outlined"
-                      href="https://github.com/aufacicenta/near.holdings/blob/master/rust-escrow/conditional-escrow/src/lib.rs"
-                      target="_blank"
-                    >
-                      {t("button.auditContracts", { ns: "common" })}
-                    </Button>
-                  </div>
-                </Grid.Col>
-              </Grid.Row>
-            </div>
-            <div className={styles["home__what-is--row"]}>
-              <Grid.Row>
-                <Grid.Col lg={5} xs={12}>
-                  <Typography.Headline2>{t("what-is-fasst.3.title")}</Typography.Headline2>
-                  <Typography.TextLead>{t("what-is-fasst.3.subtitle")}</Typography.TextLead>
-                  <Typography.TextLead>{t("what-is-fasst.3.subtitle2")}</Typography.TextLead>
-                  <Typography.TextLead>{t("what-is-fasst.3.subtitle3")}</Typography.TextLead>
-                  <hr />
-                  <Typography.Text>{t("what-is-fasst.3.description")}</Typography.Text>
-                  <Typography.Text>{t("what-is-fasst.3.description2")}</Typography.Text>
-                  <Typography.Text>{t("what-is-fasst.3.description3")}</Typography.Text>
-                  <div className={styles["home__button-box"]}>
-                    <TypeformButton>{t("navbar.apply", { ns: "common" })}</TypeformButton>
-                  </div>
-                </Grid.Col>
-              </Grid.Row>
-            </div>
-            <div className={styles["home__what-is--row"]}>
-              <Grid.Row>
-                <Grid.Col lg={5} offset={{ lg: 7 }} xs={12}>
-                  <Typography.Headline2>{t("what-is-fasst.4.title")}</Typography.Headline2>
-                  <Typography.TextLead>{t("what-is-fasst.4.subtitle")}</Typography.TextLead>
-                  <hr />
-                  <Typography.Text>{t("what-is-fasst.4.description")}</Typography.Text>
-                  <Typography.Text>{t("what-is-fasst.4.description2")}</Typography.Text>
-                </Grid.Col>
-              </Grid.Row>
-            </div>
-          </Grid.Container>
-        </section>
-        <section id="use-cases" className={styles["home__use-cases"]}>
-          <Grid.Container>
-            <Grid.Row>
-              <Grid.Col lg={4}>
-                <div className={styles["home__use-cases--col"]}>
-                  <Typography.Headline2>{t("use-cases.title")}</Typography.Headline2>
-                  <Typography.TextLead>{t("use-cases.subtitle")}</Typography.TextLead>
-                  <Typography.Text>{t("use-cases.description")}</Typography.Text>
-                  <div className={styles["home__button-box"]}>
-                    <TypeformButton>{t("navbar.apply", { ns: "common" })}</TypeformButton>
-                  </div>
-                </div>
-              </Grid.Col>
-              <Grid.Col lg={8}>
-                <Grid.Row>
-                  <Grid.Col lg={4}>
-                    <div className={styles["home__use-cases--col"]}>
-                      <Typography.Headline3>{t("use-cases.art.title")}</Typography.Headline3>
-                      <Typography.TextLead>{t("use-cases.art.subtitle")}</Typography.TextLead>
-                      <Typography.Text>{t("use-cases.art.description")}</Typography.Text>
-                    </div>
-                  </Grid.Col>
-                  <Grid.Col lg={4}>
-                    <div className={styles["home__use-cases--col"]}>
-                      <Typography.Headline3>{t("use-cases.real-estate.title")}</Typography.Headline3>
-                      <Typography.TextLead>{t("use-cases.real-estate.subtitle")}</Typography.TextLead>
-                      <Typography.Text>{t("use-cases.real-estate.description")}</Typography.Text>
-                    </div>
-                  </Grid.Col>
-                  <Grid.Col lg={4}>
-                    <div className={styles["home__use-cases--col"]}>
-                      <Typography.Headline3>{t("use-cases.events.title")}</Typography.Headline3>
-                      <Typography.TextLead>{t("use-cases.events.subtitle")}</Typography.TextLead>
-                      <Typography.Text>{t("use-cases.events.description")}</Typography.Text>
-                    </div>
-                  </Grid.Col>
-                  <Grid.Col lg={4}>
-                    <div className={styles["home__use-cases--col"]}>
-                      <Typography.Headline3>{t("use-cases.commodity.title")}</Typography.Headline3>
-                      <Typography.TextLead>{t("use-cases.commodity.subtitle")}</Typography.TextLead>
-                      <Typography.Text>{t("use-cases.commodity.description")}</Typography.Text>
-                    </div>
-                  </Grid.Col>
-                  <Grid.Col lg={4}>
-                    <div className={styles["home__use-cases--col"]}>
-                      <Typography.Headline3>{t("use-cases.business.title")}</Typography.Headline3>
-                      <Typography.TextLead>{t("use-cases.business.subtitle")}</Typography.TextLead>
-                      <Typography.Text>{t("use-cases.business.description")}</Typography.Text>
-                    </div>
-                  </Grid.Col>
-                </Grid.Row>
-              </Grid.Col>
-            </Grid.Row>
-          </Grid.Container>
-        </section>
+
         <Footer />
       </div>
     </>

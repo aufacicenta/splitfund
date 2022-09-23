@@ -49,6 +49,7 @@ export type Styles = {
   "home__featured-assets--cards": string;
   "home__how-it-works": string;
   "home__how-it-works--box": string;
+  "home__how-it-works--heading": string;
   "home__how-it-works--icon": string;
   home__intro: string;
   "home__intro--box": string;
@@ -60,6 +61,7 @@ export type Styles = {
   "home__property-card--cta": string;
   "home__property-card--row": string;
   home__section: string;
+  "home__section--heading": string;
   "home__total-value-locked": string;
   "home__total-value-locked--amount": string;
   "home__use-cases": string;
