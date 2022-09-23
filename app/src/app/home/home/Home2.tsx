@@ -37,14 +37,10 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
       </WalletSelectorNavbar2>
       <div className={clsx(styles.home, className)}>
         <section id="intro" className={clsx(styles.home__section, styles.home__intro)}>
-          <div className={styles["home__intro--linear-gradient"]} />
           <Grid.Container>
             <Grid.Row>
               <Grid.Col lg={6}>
                 <div className={styles["home__intro--box"]}>
-                  <Typography.Headline1 className={styles["home__intro--headline"]}>
-                    <Trans>{t("intro.h1.top")}</Trans>
-                  </Typography.Headline1>
                   <div className={styles["home__powered-by"]}>
                     <div>
                       <Typography.Text flat>{t("poweredBy", { ns: "common" })}</Typography.Text>
@@ -53,6 +49,9 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                       <NearLogoHorizontal />
                     </Typography.Anchor>
                   </div>
+                  <Typography.Headline1 className={styles["home__intro--headline"]}>
+                    <Trans>{t("intro.h1.top")}</Trans>
+                  </Typography.Headline1>
                   <div className={styles["home__intro--text-block"]}>
                     <Typography.TextLead>
                       <Trans>{t("intro.asInvestor.description")}</Trans>
@@ -120,41 +119,43 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             </Grid.Row>
           </Grid.Container>
         </section>
-        <section id="featured-assets" className={clsx(styles.home__section, styles["home__featured-assets"])}>
-          <Grid.Container>
-            <Typography.Headline2>{t("featured-assets.title")}</Typography.Headline2>
-            <Grid.Row justify="between" align="center">
-              <Grid.Col width="auto" xs={6}>
-                <Typography.TextLead flat>{t("featured-assets.subtitle")}</Typography.TextLead>
-              </Grid.Col>
-              <Grid.Col width="auto" xs={6}>
-                <TypeformButton>{t("navbar.apply", { ns: "common" })}</TypeformButton>
-              </Grid.Col>
-            </Grid.Row>
-            <div className={styles["home__featured-assets--cards"]}>
-              <Grid.Row className={styles["home__property-card--row"]}>
-                {featuredActiveHoldings.map((property) => (
-                  <Grid.Col lg={4} xs={12} key={property.contract!.id}>
-                    <div>
-                      <PropertyCard
-                        minimal
-                        property={property}
-                        action={
-                          <Typography.Link
-                            href={routes.property.details(property.contract!.id)}
-                            className={styles["home__property-card--cta"]}
-                          >
-                            {t("button.seeDetails", { ns: "common" })}
-                          </Typography.Link>
-                        }
-                      />
-                    </div>
-                  </Grid.Col>
-                ))}
+        {featuredActiveHoldings && (
+          <section id="featured-assets" className={clsx(styles.home__section, styles["home__featured-assets"])}>
+            <Grid.Container>
+              <Typography.Headline2>{t("featured-assets.title")}</Typography.Headline2>
+              <Grid.Row justify="between" align="center">
+                <Grid.Col width="auto" xs={6}>
+                  <Typography.TextLead flat>{t("featured-assets.subtitle")}</Typography.TextLead>
+                </Grid.Col>
+                <Grid.Col width="auto" xs={6}>
+                  <TypeformButton>{t("navbar.apply", { ns: "common" })}</TypeformButton>
+                </Grid.Col>
               </Grid.Row>
-            </div>
-          </Grid.Container>
-        </section>
+              <div className={styles["home__featured-assets--cards"]}>
+                <Grid.Row className={styles["home__property-card--row"]}>
+                  {featuredActiveHoldings.map((property) => (
+                    <Grid.Col lg={4} xs={12} key={property.contract!.id}>
+                      <div>
+                        <PropertyCard
+                          minimal
+                          property={property}
+                          action={
+                            <Typography.Link
+                              href={routes.property.details(property.contract!.id)}
+                              className={styles["home__property-card--cta"]}
+                            >
+                              {t("button.seeDetails", { ns: "common" })}
+                            </Typography.Link>
+                          }
+                        />
+                      </div>
+                    </Grid.Col>
+                  ))}
+                </Grid.Row>
+              </div>
+            </Grid.Container>
+          </section>
+        )}
         <section id="what-is-fasst" className={clsx(styles.home__section, styles["home__what-is"])}>
           <Grid.Container>
             <div className={styles["home__what-is--row"]}>

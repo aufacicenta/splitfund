@@ -127,7 +127,7 @@ body[data-theme="dark"] {
 
 body[data-theme="light"] {
   // Status colors
-  --color-status-info: #153fbd;
+  --color-status-info: #023ca7;
   --color-status-info-light: rgba(21, 63, 189, 0.6);
   --color-status-info-lighter: rgba(21, 63, 189, 0.3);
   --color-status-success: #aad055;
@@ -155,7 +155,7 @@ body[data-theme="light"] {
   --color-dark-1: #ffffff;
 
   // Brand
-  --color-primary: var(--color-status-info);
+  --color-primary: #023ca7;
   --color-secondary: #7fbc94;
 
   // Background
@@ -170,6 +170,7 @@ body[data-theme="light"] {
 
   // Button
   --color-button-primary: var(--color-primary);
+  --color-button-primary-gradient: #3b18d9;
   --color-button-primary-text: var(--color-white);
   --color-button-primary-hover: var(--color-primary);
   --color-button-primary-hover-text: var(--color-white);

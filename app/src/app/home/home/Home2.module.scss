@@ -2,7 +2,6 @@
 @import "src/ui/button/Button.module";
 
 .home {
-  @include withNavbar;
   min-height: 100vh;
   background-color: var(--color-background);
 
@@ -62,21 +61,10 @@
   }
 
   &__intro {
+    @include withNavbar;
     position: relative;
     overflow: hidden;
-    background-color: var(--color-background);
-
-    &--linear-gradient {
-      position: absolute;
-      bottom: -100%;
-      left: -25%;
-      width: 150%;
-      height: 100vh;
-      background: url("/home/gradient@3x.png");
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-    }
+    background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
 
     &--headline {
       margin-bottom: $space-m;
@@ -84,18 +72,24 @@
 
     &--box,
     &--image {
+      @include atLargeTablet {
+        display: flex;
+      }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 80vh;
       padding: $navbar-height 0;
     }
 
     &--image {
       @include atLargeTablet {
-        display: block;
+        display: flex;
       }
       display: none;
-      padding-top: $navbar-height / 2;
 
       img {
-        width: 81%;
+        width: 100%;
         height: auto;
       }
     }
@@ -105,7 +99,7 @@
     }
 
     &--text-block {
-      margin-bottom: $space-ml;
+      margin-bottom: $space-xl;
     }
   }
 

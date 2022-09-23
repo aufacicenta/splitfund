@@ -1,20 +1,26 @@
-.button_primary {
+@mixin buttonGradientPrimary {
+  background-image: linear-gradient(90deg, var(--color-button-primary), var(--color-button-primary-gradient));
+
+  &:hover {
+    background-image: linear-gradient(90deg, var(--color-button-primary-gradient), var(--color-button-primary));
+  }
+}
+
+.button-primary {
   @include font-properties($typography-button-label);
-  padding: 13px 24px;
+  @include buttonGradientPrimary();
   min-width: 88px;
   border: 2px solid var(--color-button-primary);
   border-radius: $border-radius-button;
-  text-transform: uppercase;
+  padding: 13px 24px;
+  text-transform: capitalize;
   color: var(--color-button-primary-text);
-  background-color: var(--color-button-primary);
   background-position: center;
   transition: background-color $duration-medium, color $duration-medium;
 
   &:hover,
   &:focus {
     color: var(--color-button-primary-hover-text);
-    background: var(--color-button-primary-hover)
-      radial-gradient(circle, transparent 1%, var(--color-button-primary-hover) 1%) center/15000%;
   }
 
   &:focus {

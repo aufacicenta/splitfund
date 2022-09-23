@@ -8,7 +8,7 @@
   left: 0;
   z-index: $z-index-navigation;
   width: 100%;
-  background-color: var(--color-white);
+  background-color: transparent;
 
   &__dropdown {
     @extend .z-depth-1-half;
