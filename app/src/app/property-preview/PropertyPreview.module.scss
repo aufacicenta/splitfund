@@ -1,5 +1,6 @@
 @import "src/theme/base";
 @import "src/app/property-details/PropertyDetails2.module";
+@import "src/ui/wallet-selector-navbar/variables";
 
 .property-preview {
   @extend .property-details;

@@ -5,6 +5,7 @@
 @import "./utilities/functions/str-explode.scss";
 @import "./utilities/font-properties";
 @import "_variables";
+@import "src/ui/wallet-selector-navbar/variables";
 
 $color-primary: #f8d663;
 $color-black: #000000;
@@ -65,6 +66,7 @@ $sidebar-width: 320px;
     @content;
   }
 }
+
 @mixin withSidebar {
   display: flex;
 }

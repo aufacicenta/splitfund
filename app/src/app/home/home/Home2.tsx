@@ -80,7 +80,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             </Grid.Row>
           </Grid.Container>
         </section>
-        <section id="vs" className={clsx(styles.home__section, styles["home__versus-table"])}>
+        <section id="vs">
           <MainPanel.Container>
             <VersusTable />
           </MainPanel.Container>
