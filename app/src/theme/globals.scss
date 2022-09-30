@@ -1,4 +1,5 @@
 @import "src/theme/base";
+@import "src/ui/typography/variables";
 
 html {
   @media (max-width: $mq-medium) {
@@ -155,11 +156,11 @@ body[data-theme="light"] {
   --color-dark-1: #ffffff;
 
   // Brand
-  --color-primary: #023ca7;
-  --color-secondary: #7fbc94;
+  --color-primary: #080d55;
+  --color-secondary: #dddd49;
 
   // Background
-  --color-background: var(--color-white);
+  --color-background: #dfe9f3;
   --color-background-contrast: var(--color-dark-2);
 
   // Sidebar
@@ -171,7 +172,7 @@ body[data-theme="light"] {
   // Button
   --color-button-primary: var(--color-primary);
   --color-button-primary-gradient: #3b18d9;
-  --color-button-primary-text: var(--color-white);
+  --color-button-primary-text: var(--color-secondary);
   --color-button-primary-hover: var(--color-primary);
   --color-button-primary-hover-text: var(--color-white);
   --color-button-primary-disabled: var(--color-dark-5);
@@ -181,17 +182,17 @@ body[data-theme="light"] {
   --color-button-secondary-hover-text: var(--color-white);
 
   // Typography
-  --color-typography-headline-1: var(--color-black);
-  --color-typography-headline-2: var(--color-black);
-  --color-typography-headline-3: var(--color-black);
-  --color-typography-headline-4: var(--color-black);
-  --color-typography-headline-5: var(--color-black);
+  --color-typography-headline-1: var(--color-primary);
+  --color-typography-headline-2: var(--color-primary);
+  --color-typography-headline-3: var(--color-primary);
+  --color-typography-headline-4: var(--color-primary);
+  --color-typography-headline-5: var(--color-primary);
   --color-typography-headline-6: var(--color-dark-6);
-  --color-typography-text: var(--color-black);
-  --color-typography-text-bold: var(--color-black);
+  --color-typography-text: var(--color-primary);
+  --color-typography-text-bold: var(--color-primary);
   --color-typography-subtitle: var(--color-dark-7);
-  --color-typography-button-label: var(--color-black);
-  --color-typography-mini-button-label: var(--color-black);
+  --color-typography-button-label: var(--color-primary);
+  --color-typography-mini-button-label: var(--color-primary);
   --color-typography-description: var(--color-dark-6);
   --color-typography-mini-description: var(--color-dark-5);
   --color-typography-link: var(--color-primary);

@@ -1,9 +1,12 @@
 @import "src/theme/base";
 @import "src/ui/button/Button.module";
+@import "src/ui/wallet-selector-navbar/variables";
+@import "src/ui/typography/variables";
 
 .home {
   min-height: 100vh;
-  background-color: var(--color-background);
+  background-image: url(/home/bg-grain-pattern.png);
+  background-repeat: repeat;
 
   &__total-value-locked {
     text-align: right;
@@ -68,7 +71,6 @@
     @include withNavbar;
     position: relative;
     overflow: hidden;
-    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
 
     &--headline {
       margin-bottom: $space-m;

@@ -1,11 +1,12 @@
 @import "src/theme/base";
+@import "src/ui/typography/variables";
 
 .tooltip {
+  position: absolute;
+  top: -2px;
+  right: -16px;
   display: block;
   color: var(--color-primary);
-  position: absolute;
-  right: -16px;
-  top: -2px;
 
   &:hover {
     cursor: pointer;
@@ -23,8 +24,8 @@
     bottom: 0;
     left: 0;
     z-index: $z-index-navigation - 1;
-    background-color: transparent;
     display: none;
+    background-color: transparent;
 
     &--visible {
       display: block;
@@ -32,20 +33,20 @@
   }
 
   &__box {
-    display: none;
     position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: $z-index-navigation;
+    display: none;
+    width: 210px;
+    border-radius: $border-radius;
     padding: $space-xs;
     background-color: var(--color-background);
-    border-radius: $border-radius;
-    z-index: $z-index-navigation;
-    width: 210px;
-    right: 0;
-    top: 100%;
 
     > div {
-      background-color: var(--color-background-contrast);
-      padding: $space-s;
       @include boxShadowInset;
+      padding: $space-s;
+      background-color: var(--color-background-contrast);
 
       p:not([class*="title"]) {
         margin-bottom: 0;

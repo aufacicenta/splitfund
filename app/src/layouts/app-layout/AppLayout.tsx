@@ -22,9 +22,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://use.typekit.net/sxr6aaa.css" />
         <meta property="og:url" content="https://near.holdings" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content={locale} />
