@@ -2,7 +2,6 @@ import { Hidden } from "react-grid-system";
 
 import { Typography } from "../typography/Typography";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
-import { NearHoldingsIcon } from "ui/icons/NearHoldingsIcon";
 import { Grid } from "ui/grid/Grid";
 import { SplitfundLogo } from "ui/icons/SplitfundLogo";
 
@@ -19,7 +18,7 @@ export const WalletSelectorNavbar2: React.FC<WalletSelectorNavbarProps> = ({ chi
           <Grid.Col lg={3} sm={3} xs={6}>
             <div className={styles["wallet-selector-navbar__logo-mobile"]}>
               <Typography.Link href={routes.home}>
-                <NearHoldingsIcon />
+                <SplitfundLogo />
               </Typography.Link>
             </div>
             <div className={styles["wallet-selector-navbar__logo-desktop"]}>
