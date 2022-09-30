@@ -11,9 +11,11 @@ import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { TypeformButton } from "ui/button/typeform-button/TypeformButton";
+import { MainPanel } from "ui/mainpanel/MainPanel";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
+import { VersusTable } from "./versus-table/VersusTable";
 
 const scrollTo = (selector: string) => {
   document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
@@ -77,6 +79,11 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
               </Grid.Col>
             </Grid.Row>
           </Grid.Container>
+        </section>
+        <section id="vs" className={clsx(styles.home__section, styles["home__versus-table"])}>
+          <MainPanel.Container>
+            <VersusTable />
+          </MainPanel.Container>
         </section>
         <section id="how-it-works" className={clsx(styles.home__section, styles["home__how-it-works"])}>
           <Grid.Container>

@@ -24,7 +24,10 @@ const Row: React.FC<RowProps> = ({ children, className, ...props }) => (
 );
 
 const Col: React.FC<ColProps> = ({ children, justifyContent, className, ...props }) => (
-  <RGSCol className={clsx(className, { [styles["col__justify-content--end"]]: justifyContent === "end" })} {...props}>
+  <RGSCol
+    className={clsx(className, { [styles["col__justify-content--end"]]: justifyContent === "end" }, "grid-col")}
+    {...props}
+  >
     {children}
   </RGSCol>
 );
