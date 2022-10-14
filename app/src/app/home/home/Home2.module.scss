@@ -47,9 +47,30 @@
 
   &__how-it-works {
     position: relative;
-    padding: $navbar-height 0;
+    padding: $navbar-height * 1.5 0;
 
     &--heading {
+      margin-top: $space-ml;
+      font-size: $font-size-headline-1;
+      text-align: center;
+
+      &-regular {
+        font-weight: $font-weight-regular;
+        text-align: center;
+      }
+    }
+
+    &--icon-heading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      svg {
+        width: 70px;
+      }
+    }
+
+    &--row-heading {
       font-size: $font-size-headline-2;
     }
 

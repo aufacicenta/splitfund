@@ -50,7 +50,10 @@ export type Styles = {
   "home__how-it-works": string;
   "home__how-it-works--box": string;
   "home__how-it-works--heading": string;
+  "home__how-it-works--heading-regular": string;
   "home__how-it-works--icon": string;
+  "home__how-it-works--icon-heading": string;
+  "home__how-it-works--row-heading": string;
   home__intro: string;
   "home__intro--box": string;
   "home__intro--cta": string;

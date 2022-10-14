@@ -12,6 +12,7 @@ import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { TypeformButton } from "ui/button/typeform-button/TypeformButton";
 import { MainPanel } from "ui/mainpanel/MainPanel";
+import { SplitfundIcon } from "ui/icons/SplitfundIcon";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -87,13 +88,19 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
         </section>
         <section id="how-it-works" className={clsx(styles.home__section, styles["home__how-it-works"])}>
           <Grid.Container>
-            <Typography.Headline2 className={clsx(styles["home__section--heading"])}>
-              {t("how-it-works.title")}
-            </Typography.Headline2>
+            <div className={clsx(styles["home__how-it-works--icon-heading"])}>
+              <SplitfundIcon />
+              <Typography.Headline2 className={clsx(styles["home__how-it-works--heading"])}>
+                {t("how-it-works.title")}
+              </Typography.Headline2>
+              <Typography.Headline3 className={clsx(styles["home__how-it-works--heading-regular"])}>
+                <Trans>{t("how-it-works.subtitle")}</Trans>
+              </Typography.Headline3>
+            </div>
             <div className={styles["home__what-is--row"]}>
               <Grid.Row>
-                <Grid.Col lg={5} xs={12}>
-                  <Typography.Headline3 className={clsx(styles["home__how-it-works--heading"])}>
+                <Grid.Col lg={7} xs={12}>
+                  <Typography.Headline3 className={clsx(styles["home__how-it-works--row-heading"])}>
                     1. <Trans>{t("how-it-works.1.title")}</Trans>
                   </Typography.Headline3>
                   <Typography.TextLead>{t("how-it-works.1.subtitle")}</Typography.TextLead>
@@ -108,8 +115,8 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             </div>
             <div className={styles["home__what-is--row"]}>
               <Grid.Row>
-                <Grid.Col lg={5} xs={12} offset={{ lg: 7 }}>
-                  <Typography.Headline3 className={clsx(styles["home__how-it-works--heading"])}>
+                <Grid.Col lg={7} xs={12} offset={{ lg: 5 }}>
+                  <Typography.Headline3 className={clsx(styles["home__how-it-works--row-heading"])}>
                     2. {t("how-it-works.2.title")}
                   </Typography.Headline3>
                   <Typography.TextLead>{t("how-it-works.2.subtitle")}</Typography.TextLead>
@@ -120,41 +127,13 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             </div>
             <div className={styles["home__what-is--row"]}>
               <Grid.Row>
-                <Grid.Col lg={5} xs={12}>
-                  <Typography.Headline3 className={clsx(styles["home__how-it-works--heading"])}>
+                <Grid.Col lg={7} xs={12}>
+                  <Typography.Headline3 className={clsx(styles["home__how-it-works--row-heading"])}>
                     3. <Trans>{t("how-it-works.3.title")}</Trans>
                   </Typography.Headline3>
                   <Typography.TextLead>{t("how-it-works.3.subtitle")}</Typography.TextLead>
                   <hr />
                   <Typography.Text>{t("how-it-works.3.description")}</Typography.Text>
-                </Grid.Col>
-              </Grid.Row>
-            </div>
-            <div className={styles["home__what-is--row"]}>
-              <Grid.Row>
-                <Grid.Col lg={5} xs={12} offset={{ lg: 7 }}>
-                  <Typography.Headline3 className={clsx(styles["home__how-it-works--heading"])}>
-                    4. {t("how-it-works.4.title")}
-                  </Typography.Headline3>
-                  <Typography.TextLead>{t("how-it-works.4.subtitle")}</Typography.TextLead>
-                  <hr />
-                  <Typography.Text>{t("how-it-works.4.description")}</Typography.Text>
-                </Grid.Col>
-              </Grid.Row>
-            </div>
-            <div className={styles["home__what-is--row"]}>
-              <Grid.Row>
-                <Grid.Col lg={5} xs={12}>
-                  <Typography.Headline3 className={clsx(styles["home__how-it-works--heading"])}>
-                    5. <Trans>{t("how-it-works.5.title")}</Trans>
-                  </Typography.Headline3>
-                  <Typography.TextLead>{t("how-it-works.5.subtitle")}</Typography.TextLead>
-                  <hr />
-                  <div className={styles["home__button-box"]}>
-                    <Button variant="outlined" onClick={() => scrollTo("#use-cases")}>
-                      {t("how-it-works.5.button")}
-                    </Button>
-                  </div>
                 </Grid.Col>
               </Grid.Row>
             </div>
@@ -197,7 +176,6 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             </Grid.Container>
           </section>
         )}
-
         <Footer />
       </div>
     </>
