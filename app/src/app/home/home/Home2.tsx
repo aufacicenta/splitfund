@@ -13,6 +13,7 @@ import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWall
 import { TypeformButton } from "ui/button/typeform-button/TypeformButton";
 import { MainPanel } from "ui/mainpanel/MainPanel";
 import { SplitfundIcon } from "ui/icons/SplitfundIcon";
+import { PropertyCardContainer } from "ui/splitfund/property-card/PropertyCardContainer";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -110,6 +111,9 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                       {t("how-it-works.1.button")}
                     </Button>
                   </div>
+                </Grid.Col>
+                <Grid.Col lg={5} xs={12}>
+                  <PropertyCardContainer id="1" />
                 </Grid.Col>
               </Grid.Row>
             </div>
