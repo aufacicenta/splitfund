@@ -1,0 +1,16 @@
+@import "src/theme/base";
+@import "src/ui/wallet-selector-navbar/variables";
+
+.property-details {
+  position: relative;
+
+  &__main {
+    @include withNavbar(1.2);
+    min-height: 100vh;
+  }
+
+  &__heading {
+    padding: $space-ml 0;
+    text-align: center;
+  }
+}

@@ -13,13 +13,21 @@ type Property {
   category: String!
   expirationDate: Date!
   media: PropertyContentMedia!
-  contract: Contract
-  owner: PropertyOwner
+  gallery: [PropertyGalleryMedia]!
+  contract: Contract!
+  owner: PropertyOwner!
+  investors: PropertyInvestors!
+}
+
+type PropertyInvestors {
+  amount: Int!
+  wallets: [String]
 }
 
 type PropertyOwner {
   name: String!
   url: String
+  media: PropertyContentMedia
 }
 
 type Contract {
@@ -29,7 +37,8 @@ type Contract {
 type PropertyPrice {
   value: Float!
   fundedPercentage: String!
-  exchangeRate: ExchangeRate!
+  fundedAmount: Float!
+  exchangeRate: ExchangeRate
 }
 
 type ExchangeRate {
@@ -56,6 +65,11 @@ type PropertyContentCustomFields {
 
 type PropertyContentMedia {
   featuredImageUrl: String!
+  ipfsURL: String!
+}
+
+type PropertyGalleryMedia {
+  url: String!
   ipfsURL: String!
 }
 

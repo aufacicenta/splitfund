@@ -8,25 +8,24 @@ import date from "providers/date";
 import currency from "providers/currency";
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
-import { DEFAULT_NETWORK_ENV } from "../getConfig";
 import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 
-import { ConditionalEscrowMethods, ConditionalEscrowValues, PropertyMetadata } from "./conditional-escrow.types";
+import { StableEscrowMethods, StableEscrowValues, PropertyMetadata } from "./stable-escrow.types";
 import { VIEW_METHODS } from "./constants";
 
-export class ConditionalEscrow {
-  values: ConditionalEscrowValues | undefined;
+export class StableEscrow {
+  values: StableEscrowValues | undefined;
 
-  contract: Contract & ConditionalEscrowMethods;
+  contract: Contract & StableEscrowMethods;
 
   contractAddress: string;
 
-  constructor(contract: Contract & ConditionalEscrowMethods) {
+  constructor(contract: Contract & StableEscrowMethods) {
     this.contract = contract;
     this.contractAddress = contract.contractId;
   }
 
-  static getDefaultContractValues = (): ConditionalEscrowValues => ({
+  static getDefaultContractValues = (): StableEscrowValues => ({
     totalFunds: "0",
     fundingAmountLimit: nearUtils.formatAccountBalance("0"),
     unpaidFundingAmount: nearUtils.formatAccountBalance("0"),
@@ -65,29 +64,49 @@ export class ConditionalEscrow {
     const near = await nearAPI.connect({
       keyStore: new nearAPI.keyStores.InMemoryKeyStore(),
       headers: {},
-      // @TODO DEFAULT_NETWORK_ENV should be dynamic from client headers: testnet or mainnet
-      ...nearUtils.getConfig(DEFAULT_NETWORK_ENV),
+      ...nearUtils.getConfig(),
     });
 
-    const account = await near.account(nearUtils.getConfig(DEFAULT_NETWORK_ENV).guestWalletId);
+    const account = await near.account(nearUtils.getConfig().guestWalletId);
     const contractMethods = { viewMethods: VIEW_METHODS, changeMethods: [] };
 
-    return nearUtils.initContract<ConditionalEscrowMethods>(account, contractAddress, contractMethods);
+    return nearUtils.initContract<StableEscrowMethods>(account, contractAddress, contractMethods);
+  }
+
+  static async getProperty(contractAddress: string): Promise<Property | null> {
+    return {
+      category: "real estate",
+      contract: { id: contractAddress },
+      expirationDate: "2022-10-25",
+      gallery: [{ url: "", ipfsURL: "" }],
+      id: contractAddress,
+      longDescription: "Long description",
+      media: { featuredImageUrl: "", ipfsURL: "" },
+      owner: { name: "Remax" },
+      investors: { amount: 100 },
+      price: {
+        value: 25000,
+        fundedPercentage: "70%",
+        fundedAmount: 15000,
+      },
+      shortDescription: "Short description",
+      title: "A Property",
+    };
   }
 
   static async getPropertyCard(contractAddress: string): Promise<Property | null> {
-    const contract = await ConditionalEscrow.getFromConnection(contractAddress);
+    const contract = await StableEscrow.getFromConnection(contractAddress);
 
-    const conditionalEscrow = new ConditionalEscrow(contract);
+    const conditionalEscrow = new StableEscrow(contract);
     const metadataUrl = await conditionalEscrow.getMetadataUrl();
 
-    const propertyMetadata = await ConditionalEscrow.getPropertyFromMetadataUrl(metadataUrl);
+    const propertyMetadata = await StableEscrow.getPropertyFromMetadataUrl(metadataUrl);
 
     if (!propertyMetadata.price) {
       return null;
     }
 
-    const { price, equivalence } = await ConditionalEscrow.getCurrentPriceEquivalence(propertyMetadata.price.value);
+    const { price, equivalence } = await StableEscrow.getCurrentPriceEquivalence(propertyMetadata.price.value);
     const fundedPercentageResponse = await conditionalEscrow.getTotalFundedPercentage();
 
     return {
@@ -96,6 +115,7 @@ export class ConditionalEscrow {
         id: contractAddress,
       },
       gallery: [{ url: "", ipfsURL: "" }],
+      investors: { amount: 100 },
       price: {
         value: propertyMetadata.price.value || 0,
         fundedPercentage: fundedPercentageResponse.toString(),
@@ -167,7 +187,7 @@ export class ConditionalEscrow {
     const depositsOfPercentage = (BigInt(depositsOfResponse) * BigInt(100)) / BigInt(getFundingAmountLimitResponse);
 
     const currentCoinPrice = await getCoinCurrentPrice("near", "usd");
-    const { equivalence: priceEquivalence } = await ConditionalEscrow.getCurrentPriceEquivalence(
+    const { equivalence: priceEquivalence } = await StableEscrow.getCurrentPriceEquivalence(
       Number(nearUtils.formatAccountBalanceFlat(BigInt(getFundingAmountLimitResponse).toString()).replace(",", "")),
     );
 

@@ -42,8 +42,8 @@ const TESTNET_CONFIG = {
   astroDaoURLOrigin: TESTNET_ASTRODAO_URL_ORIGIN,
 };
 
-export default (network: string | undefined) => {
-  switch (network) {
+export default (network: string | undefined = "testnet") => {
+  switch (network || DEFAULT_NETWORK_ENV) {
     case "mainnet":
       return {
         networkId: "mainnet",
