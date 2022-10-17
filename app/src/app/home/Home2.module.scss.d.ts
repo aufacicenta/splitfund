@@ -45,6 +45,9 @@ export type Styles = {
   "button-primary_medium": string;
   home: string;
   "home__button-box": string;
+  home__faqs: string;
+  "home__faqs--heading": string;
+  "home__faqs--icon-heading": string;
   "home__featured-assets": string;
   "home__featured-assets--cards": string;
   "home__how-it-works": string;

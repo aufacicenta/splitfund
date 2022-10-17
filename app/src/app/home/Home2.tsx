@@ -20,6 +20,7 @@ import { SplitfundLogo } from "ui/icons/SplitfundLogo";
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
 import { VersusTable } from "./versus-table/VersusTable";
+import { FAQs } from "./faqs/Faqs";
 
 const scrollTo = (selector: string) => {
   document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
@@ -197,6 +198,21 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                 </Grid.Col>
               </Grid.Row>
             </div>
+          </Grid.Container>
+        </section>
+        <section id="faqs" className={clsx(styles.home__section, styles.home__faqs)}>
+          <Grid.Container>
+            <Grid.Row>
+              <Grid.Col lg={8} offset={{ lg: 2 }}>
+                <div className={clsx(styles["home__faqs--icon-heading"])}>
+                  <SplitfundIcon />
+                  <Typography.Headline2 className={clsx(styles["home__faqs--heading"])}>
+                    {t("faqs.title")}
+                  </Typography.Headline2>
+                </div>
+                <FAQs />
+              </Grid.Col>
+            </Grid.Row>
           </Grid.Container>
         </section>
         {featuredActiveHoldings && (

@@ -1,0 +1,36 @@
+@import "src/theme/base";
+
+.item {
+  margin-bottom: $space-ml;
+  border: 1px solid var(--color-primary);
+  border-radius: $border-radius;
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-primary);
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    padding: $space-default $space-ml;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__description {
+    max-height: 0;
+    padding-right: $space-ml;
+    padding-left: $space-ml;
+    overflow: hidden;
+    transition: max-height 0.15s ease-out, padding 0.15s ease-out;
+
+    &--active {
+      max-height: 500px;
+      padding-top: $space-default;
+      padding-bottom: $space-default;
+      transition: max-height 0.25s ease-in, padding 0.25s ease-in;
+    }
+  }
+}
