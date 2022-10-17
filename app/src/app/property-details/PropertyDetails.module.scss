@@ -7,6 +7,7 @@
   &__main {
     @include withNavbar(1.2);
     min-height: 100vh;
+    padding-bottom: $navbar-height * 1.5;
   }
 
   &__heading {

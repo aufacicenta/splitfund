@@ -27,6 +27,10 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
           <Typography.Headline3 flat>{property.expirationDate}</Typography.Headline3>
           <Typography.Text>days to go</Typography.Text>
         </div>
+        <div className={styles["invest-now-widget__your-investment"]}>
+          <Typography.Headline3 flat>23567</Typography.Headline3>
+          <Typography.Text>your investment</Typography.Text>
+        </div>
       </Card.Content>
       <Card.Actions>
         <Button>Connect Wallet to Invest</Button>

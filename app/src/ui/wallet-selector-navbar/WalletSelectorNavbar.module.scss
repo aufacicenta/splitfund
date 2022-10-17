@@ -184,8 +184,8 @@
         font-weight: $font-weight-bold;
       }
 
-      &:nth-child(n + 2) {
-        margin-left: $space-default;
+      &:nth-child(n + 1) {
+        margin-left: $space-l;
       }
     }
 

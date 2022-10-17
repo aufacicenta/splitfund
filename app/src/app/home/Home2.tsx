@@ -9,13 +9,13 @@ import { WalletSelectorNavbar2 } from "ui/wallet-selector-navbar/WalletSelectorN
 import { Button } from "ui/button/Button";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { PropertyCard } from "app/properties-explorer/property-card/PropertyCard";
-import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { TypeformButton } from "ui/button/typeform-button/TypeformButton";
 import { MainPanel } from "ui/mainpanel/MainPanel";
 import { SplitfundIcon } from "ui/icons/SplitfundIcon";
 import { PropertyCardContainer } from "ui/splitfund/property-card/PropertyCardContainer";
 import { Icon } from "ui/icon/Icon";
 import { SplitfundLogo } from "ui/icons/SplitfundLogo";
+import { TotalValueLockedWidget } from "ui/splitfund/total-value-locked-widget/TotalValueLockedWidget";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -26,20 +26,14 @@ const scrollTo = (selector: string) => {
   document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
 };
 
-export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, totalValueLocked }) => {
+export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings }) => {
   const { t } = useTranslation(["home", "common"]);
   const routes = useRoutes();
-  const wallet = useWalletSelectorContext();
 
   return (
     <>
       <WalletSelectorNavbar2>
-        <div className={styles["home__total-value-locked"]}>
-          <Typography.Description>
-            {t("navbar.totalValueLocked", { ns: "common" })} · {wallet.network}
-          </Typography.Description>
-          <Typography.Text className={styles["home__total-value-locked--amount"]}>{totalValueLocked}</Typography.Text>
-        </div>
+        <TotalValueLockedWidget />
       </WalletSelectorNavbar2>
       <div className={clsx(styles.home, className)}>
         <section id="intro" className={clsx(styles.home__section, styles.home__intro)}>
