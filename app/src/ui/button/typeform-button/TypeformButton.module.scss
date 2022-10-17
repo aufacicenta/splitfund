@@ -1,0 +1,16 @@
+@import "src/theme/base";
+@import "src/ui/button/Button.module";
+
+.typeform-button {
+  @extend .button-outline;
+  display: block;
+  padding: 9px 24px;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: transparent;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

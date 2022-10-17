@@ -1,0 +1,25 @@
+@import "src/theme/base";
+@import "src/ui/button/Button.module";
+@import "src/ui/wallet-selector-navbar/variables";
+
+.property-preview-error {
+  @include withNavbar;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 90vh;
+  text-align: center;
+
+  &__cta {
+    @extend .button-outline;
+    display: block;
+    width: 100%;
+    padding: 9px 24px;
+    text-align: center;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

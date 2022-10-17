@@ -1,0 +1,15 @@
+@import "src/theme/base";
+@import "src/ui/wallet-selector-navbar/variables";
+
+.sign-up {
+  padding-top: $navbar-height;
+
+  &__instructions {
+    margin-bottom: $space-m;
+  }
+
+  &__footer {
+    padding: $space-l 0;
+    text-align: center;
+  }
+}

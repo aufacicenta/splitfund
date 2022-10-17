@@ -1,0 +1,64 @@
+scalar Date
+
+input GetPropertyByResponseIdInput {
+  responseId: String!
+}
+
+type Property {
+  id: String!
+  title: String!
+  price: PropertyPrice!
+  shortDescription: String!
+  longDescription: String!
+  category: String!
+  expirationDate: Date!
+  media: PropertyContentMedia!
+  contract: Contract
+  owner: PropertyOwner
+}
+
+type PropertyOwner {
+  name: String!
+  url: String
+}
+
+type Contract {
+  id: String!
+}
+
+type PropertyPrice {
+  value: Float!
+  fundedPercentage: String!
+  exchangeRate: ExchangeRate!
+}
+
+type ExchangeRate {
+  price: String!
+  currencySymbol: String!
+  equivalence: String!
+}
+
+type PropertyContent {
+  title: String!
+  asHtmlString: String!
+  media: PropertyContentMedia!
+  customFields: PropertyContentCustomFields!
+}
+
+type PropertyContentCustomFields {
+  category: String!
+  countryCode: String!
+  latitude: String!
+  longitude: String!
+  shortDescription: String!
+  nearConditionalEscrowContractAddress: String!
+}
+
+type PropertyContentMedia {
+  featuredImageUrl: String!
+  ipfsURL: String!
+}
+
+type Query {
+  getPropertyByResponseId(input: GetPropertyByResponseIdInput!): Property
+}

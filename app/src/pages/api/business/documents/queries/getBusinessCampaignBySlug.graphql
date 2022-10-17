@@ -1,0 +1,17 @@
+query GetBusinessCampaignBySlug($input: GetBusinessCampaignBySlugInput!) {
+  getBusinessCampaignBySlug(input: $input) {
+    id
+    userId
+    info {
+      id
+      businessId
+      establisedAt
+    }
+    activeCampaign {
+      ...BusinessCampaign
+      content {
+        ...BusinessCampaignContent
+      }
+    }
+  }
+}

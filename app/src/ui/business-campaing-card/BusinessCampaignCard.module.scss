@@ -1,0 +1,13 @@
+@import "src/theme/base";
+
+.campaign-card {
+  cursor: pointer;
+
+  &__short {
+    text-align: center;
+  }
+
+  &__content {
+    margin-bottom: $space-default;
+  }
+}

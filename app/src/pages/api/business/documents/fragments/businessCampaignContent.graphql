@@ -1,0 +1,14 @@
+fragment BusinessCampaignContent on BusinessCampaignContent {
+  asHtmlString
+  category
+  country
+  description
+  instagram
+  latitude
+  longitude
+  title
+  website
+  media {
+    featuredImageUrl
+  }
+}

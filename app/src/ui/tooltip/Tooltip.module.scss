@@ -1,0 +1,68 @@
+@import "src/theme/base";
+@import "src/ui/typography/variables";
+
+.tooltip {
+  position: absolute;
+  top: -2px;
+  right: -16px;
+  display: block;
+  color: var(--color-primary);
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__wrapper {
+    position: relative;
+    width: fit-content;
+  }
+
+  &__backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: $z-index-navigation - 1;
+    display: none;
+    background-color: transparent;
+
+    &--visible {
+      display: block;
+    }
+  }
+
+  &__box {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: $z-index-navigation;
+    display: none;
+    width: 210px;
+    border-radius: $border-radius;
+    padding: $space-xs;
+    background-color: var(--color-background);
+
+    > div {
+      @include boxShadowInset;
+      padding: $space-s;
+      background-color: var(--color-background-contrast);
+
+      p:not([class*="title"]) {
+        margin-bottom: 0;
+      }
+    }
+
+    &--visible {
+      display: block;
+    }
+  }
+
+  &__title {
+    margin-bottom: $space-xs;
+  }
+
+  &__icon {
+    font-size: $font-size-description;
+  }
+}
