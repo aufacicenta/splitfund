@@ -47,7 +47,9 @@ export const VersusTable: React.FC<VersusTableProps> = ({ className }) => (
         </Grid.Row>
         <Grid.Row className={styles["versus-table__grid--row-header"]}>
           <Grid.Col>
-            <Typography.Text flat>Low Fluctuation</Typography.Text>
+            <Typography.Text flat>
+              <strong>Low Fluctuation</strong>
+            </Typography.Text>
           </Grid.Col>
           <Grid.Col>
             <Icon name="icon-check" />
@@ -67,7 +69,9 @@ export const VersusTable: React.FC<VersusTableProps> = ({ className }) => (
         </Grid.Row>
         <Grid.Row className={styles["versus-table__grid--row-header"]}>
           <Grid.Col>
-            <Typography.Text flat>Low entrance barriers</Typography.Text>
+            <Typography.Text flat>
+              <strong>Low entrance barriers</strong>
+            </Typography.Text>
           </Grid.Col>
           <Grid.Col>
             <Icon name="icon-check" />
@@ -87,7 +91,9 @@ export const VersusTable: React.FC<VersusTableProps> = ({ className }) => (
         </Grid.Row>
         <Grid.Row className={styles["versus-table__grid--row-header"]}>
           <Grid.Col>
-            <Typography.Text flat>Value increase certainty</Typography.Text>
+            <Typography.Text flat>
+              <strong>Value increase certainty</strong>
+            </Typography.Text>
           </Grid.Col>
           <Grid.Col>
             <Icon name="icon-check" />
@@ -107,7 +113,9 @@ export const VersusTable: React.FC<VersusTableProps> = ({ className }) => (
         </Grid.Row>
         <Grid.Row className={styles["versus-table__grid--row-header"]}>
           <Grid.Col>
-            <Typography.Text flat>Short-term passive income</Typography.Text>
+            <Typography.Text flat>
+              <strong>Short-term passive income</strong>
+            </Typography.Text>
           </Grid.Col>
           <Grid.Col>
             <Icon name="icon-check" />
@@ -127,7 +135,9 @@ export const VersusTable: React.FC<VersusTableProps> = ({ className }) => (
         </Grid.Row>
         <Grid.Row className={styles["versus-table__grid--row-header"]}>
           <Grid.Col>
-            <Typography.Text flat>Low opt-out barriers</Typography.Text>
+            <Typography.Text flat>
+              <strong>Low opt-out barriers</strong>
+            </Typography.Text>
           </Grid.Col>
           <Grid.Col>
             <Icon name="icon-check" />
@@ -147,7 +157,9 @@ export const VersusTable: React.FC<VersusTableProps> = ({ className }) => (
         </Grid.Row>
         <Grid.Row className={styles["versus-table__grid--row-header"]}>
           <Grid.Col>
-            <Typography.Text flat>Trade anytime</Typography.Text>
+            <Typography.Text flat>
+              <strong>Trade anytime</strong>
+            </Typography.Text>
           </Grid.Col>
           <Grid.Col>
             <Icon name="icon-check" />
@@ -155,6 +167,28 @@ export const VersusTable: React.FC<VersusTableProps> = ({ className }) => (
           <Grid.Col>&nbsp;</Grid.Col>
           <Grid.Col>
             <Icon name="icon-check" />
+          </Grid.Col>
+          <Grid.Col>&nbsp;</Grid.Col>
+          <Grid.Col>
+            <Icon name="icon-cross" />
+          </Grid.Col>
+          <Grid.Col>&nbsp;</Grid.Col>
+          <Grid.Col>
+            <Icon name="icon-check" />
+          </Grid.Col>
+        </Grid.Row>
+        <Grid.Row className={styles["versus-table__grid--row-header"]}>
+          <Grid.Col>
+            <Typography.Text flat>
+              <strong>Value storage</strong>
+            </Typography.Text>
+          </Grid.Col>
+          <Grid.Col>
+            <Icon name="icon-check" />
+          </Grid.Col>
+          <Grid.Col>&nbsp;</Grid.Col>
+          <Grid.Col>
+            <Icon name="icon-cross" />
           </Grid.Col>
           <Grid.Col>&nbsp;</Grid.Col>
           <Grid.Col>

@@ -14,6 +14,8 @@ import { TypeformButton } from "ui/button/typeform-button/TypeformButton";
 import { MainPanel } from "ui/mainpanel/MainPanel";
 import { SplitfundIcon } from "ui/icons/SplitfundIcon";
 import { PropertyCardContainer } from "ui/splitfund/property-card/PropertyCardContainer";
+import { Icon } from "ui/icon/Icon";
+import { SplitfundLogo } from "ui/icons/SplitfundLogo";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -62,7 +64,7 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                   </div>
                   <Grid.Row justify="start">
                     <Grid.Col width="auto">
-                      <Button color="primary" as="a" href={routes.properties.explorer()}>
+                      <Button as="a" href={routes.properties.explorer()}>
                         {t("intro.cta.exploreAssets")}
                       </Button>
                     </Grid.Col>
@@ -87,6 +89,45 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             <VersusTable />
           </MainPanel.Container>
         </section>
+        <section id="stats" className={clsx(styles.home__section, styles.home__stats)}>
+          <Grid.Container>
+            <Typography.Headline2 className={clsx(styles["home__stats--heading"])}>
+              <span>
+                <SplitfundLogo />
+              </span>{" "}
+              <Trans>{t("stats.title")}</Trans>
+            </Typography.Headline2>
+            <Typography.Headline3 className={clsx(styles["home__stats--heading-regular"])}>
+              <Trans>{t("stats.subtitle")}</Trans>
+            </Typography.Headline3>
+            <Grid.Row>
+              <Grid.Col lg={4} xs={12}>
+                <div className={styles["home__stats--data"]}>
+                  <Typography.Headline2>21,357</Typography.Headline2>
+                  <Typography.TextLead>
+                    <Trans>{t("stats.1.description")}</Trans>
+                  </Typography.TextLead>
+                </div>
+              </Grid.Col>
+              <Grid.Col lg={4} xs={12}>
+                <div className={styles["home__stats--data"]}>
+                  <Typography.Headline2>2.5 M</Typography.Headline2>
+                  <Typography.TextLead>
+                    <Trans>{t("stats.2.description")}</Trans>
+                  </Typography.TextLead>
+                </div>
+              </Grid.Col>
+              <Grid.Col lg={4} xs={12}>
+                <div className={styles["home__stats--data"]}>
+                  <Typography.Headline2>456.00</Typography.Headline2>
+                  <Typography.TextLead>
+                    <Trans>{t("stats.3.description")}</Trans>
+                  </Typography.TextLead>
+                </div>
+              </Grid.Col>
+            </Grid.Row>
+          </Grid.Container>
+        </section>
         <section id="how-it-works" className={clsx(styles.home__section, styles["home__how-it-works"])}>
           <Grid.Container>
             <div className={clsx(styles["home__how-it-works--icon-heading"])}>
@@ -100,19 +141,20 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
             </div>
             <div className={styles["home__what-is--row"]}>
               <Grid.Row>
-                <Grid.Col lg={7} xs={12}>
+                <Grid.Col lg={5} xs={12}>
                   <Typography.Headline3 className={clsx(styles["home__how-it-works--row-heading"])}>
                     1. <Trans>{t("how-it-works.1.title")}</Trans>
                   </Typography.Headline3>
-                  <Typography.TextLead>{t("how-it-works.1.subtitle")}</Typography.TextLead>
+                  <Typography.TextLead>
+                    <Trans>{t("how-it-works.1.subtitle")}</Trans>
+                  </Typography.TextLead>
                   <hr />
+                  <Typography.Text>{t("how-it-works.1.description")}</Typography.Text>
                   <div className={styles["home__button-box"]}>
-                    <Button variant="outlined" onClick={() => scrollTo("#use-cases")}>
-                      {t("how-it-works.1.button")}
-                    </Button>
+                    <Button onClick={() => scrollTo("#use-cases")}>{t("how-it-works.1.button")}</Button>
                   </div>
                 </Grid.Col>
-                <Grid.Col lg={5} xs={12}>
+                <Grid.Col lg={5} xs={12} offset={{ lg: 2 }}>
                   <PropertyCardContainer id="1" />
                 </Grid.Col>
               </Grid.Row>
@@ -123,9 +165,15 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                   <Typography.Headline3 className={clsx(styles["home__how-it-works--row-heading"])}>
                     2. {t("how-it-works.2.title")}
                   </Typography.Headline3>
-                  <Typography.TextLead>{t("how-it-works.2.subtitle")}</Typography.TextLead>
+                  <Typography.TextLead>
+                    <Trans>{t("how-it-works.2.subtitle")}</Trans>
+                  </Typography.TextLead>
                   <hr />
-                  <Typography.Text>{t("how-it-works.2.description")}</Typography.Text>
+                  <Typography.Text>
+                    <Icon name="icon-shield-check" className={styles["home__how-it-works--icon-shield-check"]} />{" "}
+                    {t("how-it-works.2.description")}
+                  </Typography.Text>
+                  <Typography.Description>{t("how-it-works.2.footnote")}</Typography.Description>
                 </Grid.Col>
               </Grid.Row>
             </div>
@@ -135,9 +183,17 @@ export const Home2: React.FC<HomeProps> = ({ className, featuredActiveHoldings, 
                   <Typography.Headline3 className={clsx(styles["home__how-it-works--row-heading"])}>
                     3. <Trans>{t("how-it-works.3.title")}</Trans>
                   </Typography.Headline3>
-                  <Typography.TextLead>{t("how-it-works.3.subtitle")}</Typography.TextLead>
+                  <Typography.TextLead>
+                    <Trans>{t("how-it-works.3.subtitle")}</Trans>
+                  </Typography.TextLead>
                   <hr />
                   <Typography.Text>{t("how-it-works.3.description")}</Typography.Text>
+                  <Typography.Description>{t("how-it-works.3.footnote")}</Typography.Description>
+                  <div className={styles["home__button-box"]}>
+                    <Button disabled variant="outlined" onClick={() => scrollTo("#use-cases")}>
+                      {t("how-it-works.3.button")}
+                    </Button>
+                  </div>
                 </Grid.Col>
               </Grid.Row>
             </div>

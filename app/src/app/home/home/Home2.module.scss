@@ -45,6 +45,38 @@
     }
   }
 
+  &__stats {
+    padding-top: $navbar-height * 1.5;
+
+    &--heading {
+      font-size: $font-size-headline-1;
+      font-weight: $font-weight-regular;
+      text-align: center;
+
+      span {
+        vertical-align: middle;
+
+        svg {
+          width: 240px;
+        }
+      }
+
+      &-regular {
+        margin-bottom: $space-xl;
+        font-weight: $font-weight-regular;
+        text-align: center;
+      }
+    }
+
+    &--data {
+      text-align: center;
+
+      h2 {
+        font-size: $font-size-headline-1;
+      }
+    }
+  }
+
   &__how-it-works {
     position: relative;
     padding: $navbar-height * 1.5 0;
@@ -85,6 +117,10 @@
       margin-bottom: $space-m;
       font-size: $font-size-headline-1;
       color: var(--color-primary);
+    }
+
+    &--icon-shield-check {
+      color: var(--color-status-critical);
     }
   }
 

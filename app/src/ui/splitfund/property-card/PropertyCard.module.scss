@@ -3,6 +3,12 @@
 .property-card {
   display: block;
 
+  :global {
+    .card__background-image {
+      height: 240px;
+    }
+  }
+
   &__progress-bar {
     position: relative;
     height: $space-default;

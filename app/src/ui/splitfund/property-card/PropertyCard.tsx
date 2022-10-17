@@ -44,7 +44,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, className 
       <Button disabled variant="text">
         Expires in 30 days
       </Button>
-      <Button>See Details</Button>
+      <Button variant="outlined">See Details</Button>
     </Card.Actions>
   </Card>
 );

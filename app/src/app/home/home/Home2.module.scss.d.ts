@@ -53,6 +53,7 @@ export type Styles = {
   "home__how-it-works--heading-regular": string;
   "home__how-it-works--icon": string;
   "home__how-it-works--icon-heading": string;
+  "home__how-it-works--icon-shield-check": string;
   "home__how-it-works--row-heading": string;
   home__intro: string;
   "home__intro--box": string;
@@ -65,6 +66,10 @@ export type Styles = {
   "home__property-card--row": string;
   home__section: string;
   "home__section--heading": string;
+  home__stats: string;
+  "home__stats--data": string;
+  "home__stats--heading": string;
+  "home__stats--heading-regular": string;
   "home__total-value-locked": string;
   "home__total-value-locked--amount": string;
   "home__use-cases": string;
