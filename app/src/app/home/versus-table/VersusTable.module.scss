@@ -1,0 +1,51 @@
+@import "src/theme/base";
+@import "src/ui/typography/variables";
+
+.versus-table {
+  @extend .z-depth-2;
+  border-radius: $border-radius;
+  padding: $space-xl;
+  background-color: var(--color-primary);
+
+  h2,
+  h3,
+  p {
+    color: var(--color-background);
+  }
+
+  &__headline {
+    text-align: center;
+
+    &--regular {
+      font-weight: $font-weight-regular;
+    }
+  }
+
+  &__container {
+    margin-top: $space-xl;
+  }
+
+  &__logo {
+    width: 100%;
+  }
+
+  &__grid {
+    &--row-header {
+      margin-bottom: $space-ml;
+
+      :global {
+        .icon {
+          font-size: $font-size-headline-2;
+          color: var(--color-secondary);
+        }
+
+        .grid-col {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

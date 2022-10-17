@@ -1,6 +1,7 @@
 @import "../../theme/base";
 
 .dashboard-layout {
+  @include withSidebar;
   position: relative;
   height: 100vh;
   background-color: var(--color-background);
@@ -12,6 +13,4 @@
   &__main-panel {
     position: relative;
   }
-
-  @include withSidebar;
 }

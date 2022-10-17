@@ -6,9 +6,9 @@ import { Grid } from "ui/grid/Grid";
 import { Typography } from "ui/typography/Typography";
 import { Icon } from "ui/icon/Icon";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
-import { NearHoldingsIcon } from "ui/icons/NearHoldingsIcon";
 import { NearLogoHorizontal } from "ui/icons/NearLogoHorizontal";
 import { AufacicentaIcon } from "ui/icons/AufacicentaIcon";
+import { SplitfundLogo } from "ui/icons/SplitfundLogo";
 
 import styles from "./Footer.module.scss";
 import { FooterProps } from "./Footer.types";
@@ -24,7 +24,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
           <Grid.Row>
             <Grid.Col lg={7} xs={12} sm={6}>
               <Typography.Link href={routes.home} className={styles["footer__cta-banner--icon"]}>
-                <NearHoldingsIcon theme="dark" />
+                <SplitfundLogo theme="dark" />
               </Typography.Link>
             </Grid.Col>
           </Grid.Row>
@@ -68,7 +68,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                   <Grid.Col width="auto">
                     <div className={styles["footer__copyright--social-item"]}>
                       <Typography.Text flat className={styles["footer__copyright--social-text"]}>
-                        © NEAR Holdings 2022
+                        © Splitfund 2022
                       </Typography.Text>
                     </div>
                   </Grid.Col>

@@ -6,12 +6,18 @@ $LOADER_SIZE: 30px;
 $HALF_LOADER_SIZE: 15px;
 
 .button {
-  @extend .button_primary;
+  @extend .button-primary;
   display: inline-block;
   min-width: auto;
   white-space: nowrap;
   text-align: center;
   cursor: pointer;
+
+  p,
+  span {
+    font-size: inherit;
+    color: inherit;
+  }
 
   &[disabled] {
     cursor: not-allowed;
@@ -58,7 +64,7 @@ $HALF_LOADER_SIZE: 15px;
   }
 
   &--large {
-    @extend .button_primary_large;
+    @extend .button-primary_large;
   }
 
   &--medium {
@@ -74,35 +80,22 @@ $HALF_LOADER_SIZE: 15px;
 
   &--extra-small {
     @include font-properties($typography-mini-button-label);
-    padding: $space-s 20px;
+    padding: 3px 14px;
   }
 
   &--small {
     @include font-properties($typography-button-label);
-    padding: 9px 24px;
+    padding: 4px 20px;
   }
 
-  // "m" on desktop and "xs" on mobile
-
   &--auto-size {
-    // default values from .button size "m"
-    @include atTablet {
-      padding: 13px $space-ml;
-      font-size: $font-size-4;
-      font-weight: $font-weight-bold;
-      line-height: 1.47;
-
-      &.button--outlined {
-        padding: 11px 22px;
-      }
-    }
-    padding: $space-s 20px;
-    font-size: $font-size-3;
-    font-weight: $font-weight-medium;
-    line-height: 1.75;
+    padding: 12px 27px;
+    font-size: $font-size-4;
+    font-weight: $font-weight-bold;
+    line-height: 1.47;
 
     &.button--outlined {
-      padding: 6px 20px;
+      padding: 11px 22px;
     }
   }
 
@@ -188,8 +181,6 @@ $HALF_LOADER_SIZE: 15px;
       background: rgba(var(--color-dark-5), 0.9);
     }
   }
-
-  // Inverted and text variant
 
   &.button--inverted,
   &.button--text {
@@ -295,7 +286,6 @@ $HALF_LOADER_SIZE: 15px;
   }
 
   &.button--text {
-    padding: 0;
     transition: opacity $duration-medium;
 
     &.button--primary,
@@ -304,6 +294,8 @@ $HALF_LOADER_SIZE: 15px;
     &.button--danger,
     &.button--dark,
     &.button--light {
+      background: transparent;
+
       &:active,
       &:hover,
       &[disabled],
@@ -314,33 +306,19 @@ $HALF_LOADER_SIZE: 15px;
     }
   }
 
-  // Outlined variant
-
   &--outlined {
     @extend .button-outline;
-    background-color: transparent;
-
-    &.button--extra-small {
-      padding: 6px 18px;
-    }
-
-    &.button--medium {
-      padding: 14px 30px;
-    }
-
-    &.button--large {
-      @extend .button-outline_large;
-    }
+    background: transparent;
 
     &.button--primary,
     &.button--secondary,
     &.button--success,
     &.button--danger,
+    &.button--info,
     &.button--dark {
       &[disabled] {
-        border-color: var(--color-dark-1);
-        color: var(--color-dark-1);
-        background-color: var(--color-white);
+        border-color: var(--color-button-outlined-disabled);
+        color: var(--color-button-outlined-disabled-text);
       }
     }
 
@@ -421,7 +399,20 @@ $HALF_LOADER_SIZE: 15px;
       }
     }
 
+    &.button--info {
+      border-color: var(--color-button-outlined-info);
+      color: var(--color-button-outlined-info-text);
+
+      &:active,
+      &:hover,
+      &:focus {
+        color: var(--color-white);
+      }
+    }
+
     &.button--primary {
+      background-color: transparent;
+
       .button__icon--right {
         svg {
           fill: var(--color-button-primary);
@@ -431,6 +422,8 @@ $HALF_LOADER_SIZE: 15px;
       &:active,
       &:hover,
       &:focus {
+        border-color: var(--color-button-primary-hover-text);
+
         .button__icon--right {
           svg {
             fill: var(--color-button-primary-text);
@@ -440,7 +433,18 @@ $HALF_LOADER_SIZE: 15px;
     }
   }
 
-  // Loader classes
+  &--gradient {
+    @include buttonGradientPrimary();
+    border: none;
+    padding: 3px;
+    transform-style: preserve-3d;
+
+    > div {
+      border-radius: 1000px;
+      padding: 6px 18px;
+      background-color: var(--color-background);
+    }
+  }
 
   &__loading-floating-border {
     @keyframes spin {

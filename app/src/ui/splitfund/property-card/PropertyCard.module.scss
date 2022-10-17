@@ -1,0 +1,41 @@
+@import "src/theme/base";
+
+.property-card {
+  display: block;
+
+  :global {
+    .card__background-image {
+      height: 240px;
+    }
+  }
+
+  &__progress-bar {
+    position: relative;
+    height: $space-default;
+    margin-right: -$space-default;
+    margin-bottom: $space-default;
+    margin-left: -$space-default;
+
+    &--funded,
+    &--total {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: $space-default;
+    }
+
+    &--funded {
+      z-index: 1;
+      background-color: var(--color-primary);
+    }
+
+    &--total {
+      width: 100%;
+      background-color: var(--color-secondary);
+    }
+  }
+
+  &__stat {
+    text-align: right;
+  }
+}

@@ -11,16 +11,15 @@
   }
 
   &__funded-amount {
+    @include atLargeTablet {
+      top: 1px;
+    }
     position: absolute;
     top: 3px;
     margin: 0;
     padding-left: $space-default;
     font-weight: $font-weight-bold;
     color: var(--color-white);
-
-    @include atLargeTablet {
-      top: 1px;
-    }
   }
 
   &__funded-bar {

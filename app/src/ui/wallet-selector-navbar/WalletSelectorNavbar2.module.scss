@@ -1,5 +1,7 @@
 @import "src/theme/base";
 @import "src/theme/button/primary";
+@import "src/ui/wallet-selector-navbar/variables";
+@import "src/ui/typography/variables";
 
 .wallet-selector-navbar {
   position: absolute;
@@ -8,7 +10,7 @@
   left: 0;
   z-index: $z-index-navigation;
   width: 100%;
-  background-color: var(--color-white);
+  background-color: transparent;
 
   &__dropdown {
     @extend .z-depth-1-half;
@@ -189,7 +191,7 @@
     }
 
     &--cta {
-      @extend .button_primary;
+      @extend .button-primary;
 
       @include atLargeTablet {
         display: block;

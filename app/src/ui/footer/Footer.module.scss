@@ -1,4 +1,6 @@
 @import "src/theme/base";
+@import "src/ui/wallet-selector-navbar/variables";
+@import "src/ui/typography/variables";
 
 .footer {
   display: block;
@@ -32,7 +34,7 @@
       margin-bottom: $space-ml;
 
       svg {
-        width: 40px;
+        width: 156px;
       }
     }
 

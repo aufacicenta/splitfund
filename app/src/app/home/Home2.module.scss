@@ -1,10 +1,12 @@
 @import "src/theme/base";
 @import "src/ui/button/Button.module";
+@import "src/ui/wallet-selector-navbar/variables";
+@import "src/ui/typography/variables";
 
 .home {
-  @include withNavbar;
   min-height: 100vh;
-  background-color: var(--color-background);
+  background-image: url(/home/bg-grain-pattern.png);
+  background-repeat: repeat;
 
   &__total-value-locked {
     text-align: right;
@@ -43,9 +45,87 @@
     }
   }
 
+  &__faqs {
+    padding-bottom: $navbar-height * 1.5;
+
+    &--heading {
+      margin-top: $space-ml;
+      margin-bottom: $space-xl;
+      font-size: $font-size-headline-1;
+      text-align: center;
+    }
+
+    &--icon-heading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      svg {
+        width: 70px;
+      }
+    }
+  }
+
+  &__stats {
+    padding-top: $navbar-height * 1.5;
+
+    &--heading {
+      font-size: $font-size-headline-1;
+      font-weight: $font-weight-regular;
+      text-align: center;
+
+      span {
+        vertical-align: middle;
+
+        svg {
+          width: 240px;
+        }
+      }
+
+      &-regular {
+        margin-bottom: $space-xl;
+        font-weight: $font-weight-regular;
+        text-align: center;
+      }
+    }
+
+    &--data {
+      text-align: center;
+
+      h2 {
+        font-size: $font-size-headline-1;
+      }
+    }
+  }
+
   &__how-it-works {
     position: relative;
-    padding: $navbar-height 0;
+    padding: $navbar-height * 1.5 0;
+
+    &--heading {
+      margin-top: $space-ml;
+      font-size: $font-size-headline-1;
+      text-align: center;
+
+      &-regular {
+        font-weight: $font-weight-regular;
+        text-align: center;
+      }
+    }
+
+    &--icon-heading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      svg {
+        width: 70px;
+      }
+    }
+
+    &--row-heading {
+      font-size: $font-size-headline-2;
+    }
 
     &--box {
       @include atLargeTablet {
@@ -59,24 +139,16 @@
       font-size: $font-size-headline-1;
       color: var(--color-primary);
     }
+
+    &--icon-shield-check {
+      color: var(--color-status-critical);
+    }
   }
 
   &__intro {
+    @include withNavbar;
     position: relative;
     overflow: hidden;
-    background-color: var(--color-background);
-
-    &--linear-gradient {
-      position: absolute;
-      bottom: -100%;
-      left: -25%;
-      width: 150%;
-      height: 100vh;
-      background: url("/home/gradient@3x.png");
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-    }
 
     &--headline {
       margin-bottom: $space-m;
@@ -84,18 +156,24 @@
 
     &--box,
     &--image {
+      @include atLargeTablet {
+        display: flex;
+      }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 80vh;
       padding: $navbar-height 0;
     }
 
     &--image {
       @include atLargeTablet {
-        display: block;
+        display: flex;
       }
       display: none;
-      padding-top: $navbar-height / 2;
 
       img {
-        width: 81%;
+        width: 100%;
         height: auto;
       }
     }
@@ -105,7 +183,7 @@
     }
 
     &--text-block {
-      margin-bottom: $space-ml;
+      margin-bottom: $space-xl;
     }
   }
 
@@ -153,6 +231,10 @@
 
   &__section {
     display: block;
+
+    &--heading {
+      font-size: $font-size-headline-3;
+    }
   }
 
   &__button-box {

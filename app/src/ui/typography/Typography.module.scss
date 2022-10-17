@@ -1,4 +1,5 @@
 @import "src/theme/base";
+@import "./variables";
 
 .typography {
   position: relative;
@@ -29,6 +30,7 @@
   &__headline2 {
     @include font-properties($typography-headline-2);
     @include normalizeTypography;
+    margin-bottom: $space-default;
     color: var(--color-typography-headline-2);
   }
 

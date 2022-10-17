@@ -1,4 +1,5 @@
 @import "src/theme/base";
+@import "src/ui/typography/variables";
 
 html {
   @media (max-width: $mq-medium) {
@@ -127,7 +128,7 @@ body[data-theme="dark"] {
 
 body[data-theme="light"] {
   // Status colors
-  --color-status-info: #153fbd;
+  --color-status-info: #023ca7;
   --color-status-info-light: rgba(21, 63, 189, 0.6);
   --color-status-info-lighter: rgba(21, 63, 189, 0.3);
   --color-status-success: #aad055;
@@ -155,11 +156,11 @@ body[data-theme="light"] {
   --color-dark-1: #ffffff;
 
   // Brand
-  --color-primary: var(--color-status-info);
-  --color-secondary: #7fbc94;
+  --color-primary: #080d55;
+  --color-secondary: #dddd49;
 
   // Background
-  --color-background: var(--color-white);
+  --color-background: #dfe9f3;
   --color-background-contrast: var(--color-dark-2);
 
   // Sidebar
@@ -170,9 +171,10 @@ body[data-theme="light"] {
 
   // Button
   --color-button-primary: var(--color-primary);
-  --color-button-primary-text: var(--color-white);
+  --color-button-primary-gradient: #3b18d9;
+  --color-button-primary-text: var(--color-secondary);
   --color-button-primary-hover: var(--color-primary);
-  --color-button-primary-hover-text: var(--color-white);
+  --color-button-primary-hover-text: var(--color-secondary);
   --color-button-primary-disabled: var(--color-dark-5);
   --color-button-secondary: var(--color-dark-9);
   --color-button-secondary-text: var(--color-dark-9);
@@ -180,17 +182,17 @@ body[data-theme="light"] {
   --color-button-secondary-hover-text: var(--color-white);
 
   // Typography
-  --color-typography-headline-1: var(--color-black);
-  --color-typography-headline-2: var(--color-black);
-  --color-typography-headline-3: var(--color-black);
-  --color-typography-headline-4: var(--color-black);
-  --color-typography-headline-5: var(--color-black);
+  --color-typography-headline-1: var(--color-primary);
+  --color-typography-headline-2: var(--color-primary);
+  --color-typography-headline-3: var(--color-primary);
+  --color-typography-headline-4: var(--color-primary);
+  --color-typography-headline-5: var(--color-primary);
   --color-typography-headline-6: var(--color-dark-6);
-  --color-typography-text: var(--color-black);
-  --color-typography-text-bold: var(--color-black);
+  --color-typography-text: var(--color-primary);
+  --color-typography-text-bold: var(--color-primary);
   --color-typography-subtitle: var(--color-dark-7);
-  --color-typography-button-label: var(--color-black);
-  --color-typography-mini-button-label: var(--color-black);
+  --color-typography-button-label: var(--color-primary);
+  --color-typography-mini-button-label: var(--color-primary);
   --color-typography-description: var(--color-dark-6);
   --color-typography-mini-description: var(--color-dark-5);
   --color-typography-link: var(--color-primary);
@@ -208,6 +210,9 @@ body[data-theme="light"] {
 
   // Forms
   --color-input-border: var(--color-black);
+
+  // Card
+  --color-card-background: #fff;
 }
 
 hr {
@@ -296,8 +301,8 @@ code {
     font-size: rem(18);
     color: var(--color-typography-text);
 
-    [class^="icon-"],
-    [class*=" icon-"] {
+    [class^="icon"],
+    [class*=" icon"] {
       font-size: $font-size-text * 0.75;
     }
   }

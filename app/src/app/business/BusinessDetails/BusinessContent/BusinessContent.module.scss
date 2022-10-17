@@ -4,9 +4,8 @@
   padding: 0 $space-default $space-xl;
 
   h2 {
-    margin-top: $space-ml;
-
     @include font-properties($typography-headline-6);
+    margin-top: $space-ml;
   }
 
   p {

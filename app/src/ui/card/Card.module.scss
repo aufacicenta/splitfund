@@ -2,7 +2,7 @@
 
 .card {
   border-radius: $border-radius;
-  background-color: var(--color-background);
+  background-color: var(--color-card-background);
 
   &__shadow {
     @extend .z-depth-1;

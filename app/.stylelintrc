@@ -36,7 +36,8 @@
           "calc",
           "outline",
           "css3-cursors",
-          "user-select-none"
+          "user-select-none",
+          "css-gradients"
         ],
         "severity": "warning"
       }

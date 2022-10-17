@@ -3,10 +3,6 @@
 .campaigns-grid {
   display: block;
 
-  &__section {
-    padding: $navbar-height 0;
-  }
-
   &__intro {
     &--cta {
       margin-top: $space-ml;
@@ -14,6 +10,8 @@
   }
 
   &__section {
+    padding: $navbar-height 0;
+
     &--intro {
       text-align: center;
     }

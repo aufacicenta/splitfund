@@ -19,6 +19,10 @@
   }
 
   & > div {
+    @include atMobile {
+      padding-right: $space-ml;
+      padding-left: $space-ml;
+    }
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -26,11 +30,6 @@
     max-width: 512px;
     padding-right: $space-m;
     padding-left: $space-m;
-
-    @include atMobile {
-      padding-right: $space-ml;
-      padding-left: $space-ml;
-    }
   }
 
   & > div > div {

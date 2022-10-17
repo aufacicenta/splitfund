@@ -1,6 +1,8 @@
 @import "src/theme/base";
+@import "src/ui/typography/variables";
 
 .toast {
+  @extend .z-depth-1;
   position: relative;
   display: flex;
   align-items: center;
@@ -9,13 +11,12 @@
   border-radius: $border-radius;
   padding: $space-default;
   background-color: var(--color-background);
-  @extend .z-depth-1;
 
   &__icon {
     display: flex;
     margin-right: $space-m;
-    color: var(--color-status-info);
     font-size: $font-size-headline-3;
+    color: var(--color-status-info);
   }
 
   &__content {
@@ -42,8 +43,8 @@
 
   &__title {
     margin-right: $space-xl;
-    word-break: break-word;
     font-weight: $font-weight-bold;
+    word-break: break-word;
   }
 
   &__close-button {
