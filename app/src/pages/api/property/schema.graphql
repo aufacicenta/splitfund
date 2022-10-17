@@ -17,6 +17,15 @@ type Property {
   contract: Contract!
   owner: PropertyOwner!
   investors: PropertyInvestors!
+  location: PropertyLocation!
+}
+
+type PropertyLocation {
+  country: String!
+  city: String!
+  countryCode: String!
+  latitude: String!
+  longitude: String!
 }
 
 type PropertyInvestors {

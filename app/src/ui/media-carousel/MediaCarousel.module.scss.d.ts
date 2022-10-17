@@ -1,10 +1,6 @@
 export type Styles = {
-  "property-details": string;
-  "property-details__campaign": string;
-  "property-details__campaign--right-col": string;
-  "property-details__gallery": string;
-  "property-details__heading": string;
-  "property-details__main": string;
+  "media-carousel": string;
+  "media-carousel__img": string;
   "z-depth-0": string;
   "z-depth-1": string;
   "z-depth-1-half": string;

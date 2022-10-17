@@ -8,7 +8,6 @@ import date from "providers/date";
 import currency from "providers/currency";
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
-import formatFiatCurrency from "providers/currency/formatFiatCurrency";
 
 import { StableEscrowMethods, StableEscrowValues, PropertyMetadata } from "./stable-escrow.types";
 import { VIEW_METHODS } from "./constants";
@@ -84,6 +83,13 @@ export class StableEscrow {
       media: { featuredImageUrl: "", ipfsURL: "" },
       owner: { name: "Remax" },
       investors: { amount: 100 },
+      location: {
+        country: "México",
+        city: "Mérida, Yucatán",
+        latitude: "0.1234",
+        longitude: "1.2345",
+        countryCode: "MX",
+      },
       price: {
         value: 25000,
         fundedPercentage: "70%",
@@ -91,41 +97,6 @@ export class StableEscrow {
       },
       shortDescription: "Short description",
       title: "A Property",
-    };
-  }
-
-  static async getPropertyCard(contractAddress: string): Promise<Property | null> {
-    const contract = await StableEscrow.getFromConnection(contractAddress);
-
-    const conditionalEscrow = new StableEscrow(contract);
-    const metadataUrl = await conditionalEscrow.getMetadataUrl();
-
-    const propertyMetadata = await StableEscrow.getPropertyFromMetadataUrl(metadataUrl);
-
-    if (!propertyMetadata.price) {
-      return null;
-    }
-
-    const { price, equivalence } = await StableEscrow.getCurrentPriceEquivalence(propertyMetadata.price.value);
-    const fundedPercentageResponse = await conditionalEscrow.getTotalFundedPercentage();
-
-    return {
-      ...propertyMetadata,
-      contract: {
-        id: contractAddress,
-      },
-      gallery: [{ url: "", ipfsURL: "" }],
-      investors: { amount: 100 },
-      price: {
-        value: propertyMetadata.price.value || 0,
-        fundedPercentage: fundedPercentageResponse.toString(),
-        fundedAmount: 0,
-        exchangeRate: {
-          price: formatFiatCurrency(price),
-          currencySymbol: currency.constants.DEFAULT_VS_CURRENCY,
-          equivalence: formatFiatCurrency(equivalence),
-        },
-      },
     };
   }
 

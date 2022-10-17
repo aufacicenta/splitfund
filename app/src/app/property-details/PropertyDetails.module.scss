@@ -5,13 +5,27 @@
   position: relative;
 
   &__main {
-    @include withNavbar(1.2);
+    @include withNavbar;
     min-height: 100vh;
-    padding-bottom: $navbar-height * 1.5;
   }
 
   &__heading {
     padding: $space-ml 0;
     text-align: center;
+  }
+
+  &__gallery {
+    padding-bottom: $navbar-height;
+  }
+
+  &__campaign {
+    min-height: 50vh;
+    padding-top: $navbar-height;
+    padding-bottom: $navbar-height * 1.5;
+    background-color: var(--color-white);
+
+    &--right-col {
+      padding-top: $space-m;
+    }
   }
 }
