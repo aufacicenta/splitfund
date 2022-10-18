@@ -7,12 +7,12 @@ input GetPropertyByResponseIdInput {
 type Property {
   id: String!
   title: String!
-  price: PropertyPrice!
   shortDescription: String!
   longDescription: String!
   category: String!
   expirationDate: Date!
-  media: PropertyContentMedia!
+  price: PropertyPrice!
+  token: PropertyToken!
   gallery: [PropertyGalleryMedia]!
   contract: Contract!
   owner: PropertyOwner!
@@ -22,8 +22,9 @@ type Property {
 
 type PropertyLocation {
   country: String!
-  city: String!
   countryCode: String!
+  city: String!
+  state: String!
   latitude: String!
   longitude: String!
 }
@@ -35,8 +36,8 @@ type PropertyInvestors {
 
 type PropertyOwner {
   name: String!
-  url: String
-  media: PropertyContentMedia
+  url: String!
+  gallery: PropertyGalleryMedia
 }
 
 type Contract {
@@ -50,17 +51,16 @@ type PropertyPrice {
   exchangeRate: ExchangeRate
 }
 
+type PropertyToken {
+  address: String!
+  symbol: String!
+  decimals: Int!
+}
+
 type ExchangeRate {
   price: String!
   currencySymbol: String!
   equivalence: String!
-}
-
-type PropertyContent {
-  title: String!
-  asHtmlString: String!
-  media: PropertyContentMedia!
-  customFields: PropertyContentCustomFields!
 }
 
 type PropertyContentCustomFields {
@@ -72,13 +72,9 @@ type PropertyContentCustomFields {
   nearConditionalEscrowContractAddress: String!
 }
 
-type PropertyContentMedia {
-  featuredImageUrl: String!
-  ipfsURL: String!
-}
-
 type PropertyGalleryMedia {
   url: String!
+  alternativeText: String!
   ipfsURL: String!
 }
 

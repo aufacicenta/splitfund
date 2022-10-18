@@ -1,4 +1,4 @@
-import { Property } from "api/codegen";
+import { Property } from "api/property/types";
 import { ReactNode } from "react";
 
 import { ConditionalEscrow } from "providers/near/conditional-escrow";

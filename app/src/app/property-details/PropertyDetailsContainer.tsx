@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import ipfs from "providers/ipfs";
 
-import { PropertyDetailsContainerProps } from "./PropertyDetails2.types";
+import { PropertyDetailsContainerProps } from "./PropertyDetails.types";
 import { PropertyDetails } from "./PropertyDetails";
 
 export const PropertyDetailsContainer = ({ property }: PropertyDetailsContainerProps) => {
@@ -16,7 +16,7 @@ export const PropertyDetailsContainer = ({ property }: PropertyDetailsContainerP
         <meta name="description" content={property.shortDescription} />
         <meta property="og:title" content={property.title} />
         <meta property="og:description" content={property.shortDescription} />
-        <meta property="og:image" content={ipfs.asHttpsURL(property.media.featuredImageUrl)} />
+        <meta property="og:image" content={ipfs.asHttpsURL(property.gallery?.data[0].attributes?.url)} />
       </Head>
       <PropertyDetails property={property} isContractDataLoading={isContractDataLoading} />
     </>

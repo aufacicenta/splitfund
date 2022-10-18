@@ -8,7 +8,7 @@ import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNa
 
 import { InvestNowWidget } from "./invest-now-widget/InvestNowWidget";
 import styles from "./PropertyDetails.module.scss";
-import { PropertyDetailsProps } from "./PropertyDetails2.types";
+import { PropertyDetailsProps } from "./PropertyDetails.types";
 
 export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, property }) => (
   <>

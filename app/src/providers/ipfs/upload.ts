@@ -34,7 +34,7 @@ async function addFileToIPFS(
 ): Promise<IpfsResponse> {
   const basename = getFileBasename(options);
 
-  const ipfsPath = `/near-holdings/${basename}`;
+  const ipfsPath = `/splitfund/${basename}`;
 
   const result = await client.add({ path: ipfsPath, content }, { hashAlg: "sha2-256", ...ipfsOptions });
 
@@ -53,9 +53,7 @@ export default async (content: Buffer, name: string): Promise<IpfsResponse | nul
       ...result,
       name,
     };
-  } catch (error) {
-    console.error(error);
-
+  } catch {
     return null;
   }
 };

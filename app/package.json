@@ -15,6 +15,7 @@
     "plop": "plop",
     "api:codegen:watch": "graphql-codegen --watch 'src/pages/api/**/resolvers/*.ts' --watch 'src/pages/api/**/schema.graphql'",
     "api:codegen:dry": "graphql-codegen",
+    "api:codegen:dry:strapi": "graphql-codegen --config codegen.strapi.yml",
     "postinstall": "npm run api:codegen:dry"
   },
   "dependencies": {

@@ -3,9 +3,9 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { AppLayout } from "layouts/app-layout/AppLayout";
 import { PropertyDetailsContainer } from "app/property-details/PropertyDetailsContainer";
-import { PropertyDetailsContainerProps } from "app/property-details/PropertyDetails2.types";
 import { PropertyPreviewError } from "app/property-preview/property-preview-error/PropertyPreviewError";
 import { StableEscrow } from "providers/near/stable-escrow";
+import { PropertyDetailsContainerProps } from "app/property-details/PropertyDetails.types";
 
 const PropertyDetails: NextPage<PropertyDetailsContainerProps> = ({ property }) => {
   if (!property) {

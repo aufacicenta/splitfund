@@ -1,6 +1,7 @@
 import { Contract } from "near-api-js";
 import * as nearAPI from "near-api-js";
-import { Property } from "api/codegen";
+import { Property } from "api/property/types";
+import { Enum_Componentlocationlocation_Countrycode, Enum_Property_Category } from "api/codegen/strapi";
 
 import nearUtils from "providers/near";
 import ipfs from "providers/ipfs";
@@ -74,23 +75,26 @@ export class StableEscrow {
 
   static async getProperty(contractAddress: string): Promise<Property | null> {
     return {
-      category: "real estate",
+      category: Enum_Property_Category.RealEstate,
       contract: { id: contractAddress },
       expirationDate: "2022-10-25",
-      gallery: [{ url: "", ipfsURL: "" }],
+      gallery: { data: [{ attributes: { url: "", alternativeText: "alt" } }] },
       id: contractAddress,
       longDescription: "Long description",
       media: { featuredImageUrl: "", ipfsURL: "" },
-      owner: { name: "Remax" },
+      owner: { id: "id", name: "Remax", url: "url" },
       investors: { amount: 100 },
       location: {
+        id: "id",
         country: "México",
-        city: "Mérida, Yucatán",
+        city: "Mérida",
+        state: "Yucatán",
         latitude: "0.1234",
         longitude: "1.2345",
-        countryCode: "MX",
+        countryCode: Enum_Componentlocationlocation_Countrycode.Mx,
       },
       price: {
+        id: "0",
         value: 25000,
         fundedPercentage: "70%",
         fundedAmount: 15000,
