@@ -14,9 +14,10 @@
     "scss:class-types:watch": "npm run scss:class-types -- --watch",
     "plop": "plop",
     "api:codegen:watch": "graphql-codegen --watch 'src/pages/api/**/resolvers/*.ts' --watch 'src/pages/api/**/schema.graphql'",
+    "api:codegen": "npm run api:codegen:dry & npm run api:codegen:dry:strapi",
     "api:codegen:dry": "graphql-codegen",
     "api:codegen:dry:strapi": "graphql-codegen --config codegen.strapi.yml",
-    "postinstall": "npm run api:codegen:dry"
+    "postinstall": "npm run api:codegen"
   },
   "dependencies": {
     "@apollo/client": "^3.4.17",
