@@ -1,15 +1,29 @@
-import { PropertyOwner, PropertyContentMedia, PropertyPrice } from "api/codegen";
-
-export type PropertyMetadata = {
+export type Metadata = {
   id: string;
-  title: string;
-  price: PropertyPrice;
-  shortDescription: string;
-  longDescription: string;
-  category: string;
-  expirationDate: string;
-  media: PropertyContentMedia;
-  owner: PropertyOwner;
+  expires_at: number;
+  funding_amount_limit: number;
+  unpaid_amount: number;
+  nep_141: string;
+  maintainer_account_id: string;
+  metadata_url: string;
+};
+
+export type Fees = {
+  percentage: number;
+  balance: number;
+};
+
+export type FungibleTokenMetadata = {
+  spec: string;
+  name: string;
+  symbol: string;
+  decimals: number;
+};
+
+export type StableEscrowProps = {
+  metadata: Metadata;
+  fees: Fees;
+  fungible_token_metadata: FungibleTokenMetadata;
 };
 
 export type StableEscrowValues = {

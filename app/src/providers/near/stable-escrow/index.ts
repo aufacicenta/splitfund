@@ -1,7 +1,7 @@
 import { Contract } from "near-api-js";
 import * as nearAPI from "near-api-js";
-import { Property } from "api/property/types";
 import { Enum_Componentlocationlocation_Countrycode, Enum_Property_Category } from "api/codegen/strapi";
+import { Property } from "api/webhooks/splitfund/strapi-entry-update/types";
 
 import nearUtils from "providers/near";
 import ipfs from "providers/ipfs";
@@ -10,7 +10,7 @@ import currency from "providers/currency";
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
 
-import { StableEscrowMethods, StableEscrowValues, PropertyMetadata } from "./stable-escrow.types";
+import { StableEscrowMethods, StableEscrowValues } from "./stable-escrow.types";
 import { VIEW_METHODS } from "./constants";
 
 export class StableEscrow {
@@ -50,7 +50,7 @@ export class StableEscrow {
     return { price: currentCoinPrice, equivalence: currentCoinPrice * price };
   }
 
-  static async getPropertyFromMetadataUrl(url: string): Promise<PropertyMetadata> {
+  static async getPropertyFromMetadataUrl(url: string): Promise<Property> {
     const response = await fetch(ipfs.asHttpsURL(url), {
       method: "GET",
     });
@@ -77,15 +77,15 @@ export class StableEscrow {
     return {
       category: Enum_Property_Category.RealEstate,
       contract: { id: contractAddress },
-      expirationDate: "2022-10-25",
-      gallery: { data: [{ attributes: { url: "", alternativeText: "alt" } }] },
-      id: contractAddress,
+      expirationDate: new Date(),
+      gallery: [{ url: "", alternativeText: "alt" }],
+      id: 0,
       longDescription: "Long description",
       media: { featuredImageUrl: "", ipfsURL: "" },
-      owner: { id: "id", name: "Remax", url: "url" },
+      owner: { id: 0, name: "Remax", url: "url" },
       investors: { amount: 100 },
       location: {
-        id: "id",
+        id: 0,
         country: "México",
         city: "Mérida",
         state: "Yucatán",
@@ -94,7 +94,7 @@ export class StableEscrow {
         countryCode: Enum_Componentlocationlocation_Countrycode.Mx,
       },
       price: {
-        id: "0",
+        id: 0,
         value: 25000,
         fundedPercentage: "70%",
         fundedAmount: 15000,

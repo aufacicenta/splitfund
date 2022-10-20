@@ -45,7 +45,7 @@ async function addFileToIPFS(
   };
 }
 
-export default async (content: Buffer, name: string): Promise<IpfsResponse | null> => {
+const upload = async (content: Buffer, name: string): Promise<IpfsResponse | null> => {
   try {
     const result = await addFileToIPFS(content, { path: name });
 
@@ -53,7 +53,33 @@ export default async (content: Buffer, name: string): Promise<IpfsResponse | nul
       ...result,
       name,
     };
-  } catch {
-    return null;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+
+    throw new Error("providers/ipfs/upload: failed to upload file");
   }
 };
+
+export const getFileAsIPFSUrl = async (url: string, headers?: HeadersInit): Promise<string> => {
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers,
+    });
+
+    const blob = await response.arrayBuffer();
+    const fileName = url.split("/").pop();
+
+    const ipfsResponse = await upload(Buffer.from(blob), fileName!);
+
+    return ipfsResponse?.path || "";
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+
+    throw new Error("providers/ipfs/getfileAsIPFsUrl: invalid file response");
+  }
+};
+
+export default upload;

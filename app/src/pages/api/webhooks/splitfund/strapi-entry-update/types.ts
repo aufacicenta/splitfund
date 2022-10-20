@@ -1,30 +1,4 @@
-export type Metadata = {
-  id: string;
-  expires_at: number;
-  funding_amount_limit: number;
-  unpaid_amount: number;
-  nep_141: string;
-  maintainer_account_id: string;
-  metadata_url: string;
-};
-
-export type Fees = {
-  percentage: number;
-  balance: number;
-};
-
-export type FungibleTokenMetadata = {
-  spec: string;
-  name: string;
-  symbol: string;
-  decimals: number;
-};
-
-export type StableEscrowProps = {
-  metadata: Metadata;
-  fees: Fees;
-  fungible_token_metadata: FungibleTokenMetadata;
-};
+import { PropertyPrice } from "api/codegen";
 
 export type Thumbnail = {
   name: string;
@@ -82,29 +56,20 @@ export type Formats = {
 };
 
 export type Gallery = {
-  id: number;
   name: string;
   alternativeText: string;
   caption: string;
   width: number;
   height: number;
-  formats: Formats;
-  hash: string;
   ext: string;
   mime: string;
-  size: number;
   url: string;
-  previewUrl?: unknown;
-  provider: string;
-  provider_metadata?: unknown;
-  createdAt: Date;
-  updatedAt: Date;
 };
 
 export type Price = {
   id: number;
   value: number;
-};
+} & PropertyPrice;
 
 export type Token = {
   id: number;
@@ -113,31 +78,11 @@ export type Token = {
   decimals: number;
 };
 
-export type Gallery2 = {
-  id: number;
-  name: string;
-  alternativeText: string;
-  caption: string;
-  width: number;
-  height: number;
-  formats?: unknown;
-  hash: string;
-  ext: string;
-  mime: string;
-  size: number;
-  url: string;
-  previewUrl?: unknown;
-  provider: string;
-  provider_metadata?: unknown;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
 export type Owner = {
   id: number;
   name: string;
   url: string;
-  gallery: Gallery2[];
+  gallery: Gallery[];
 };
 
 export type Location = {
@@ -164,6 +109,9 @@ export type Localization = {
   createNEARContract: boolean;
 };
 
+// This type comes from the data sent to POST api/webhooks/splitfund/strapi-entry-update,
+// if you update the Strapi CMS Property Collection, update this too.
+// This is the source of truth for the PropertyDetails.tsx page and the StableEscrow.metadata_url
 export type Property = {
   id: number;
   title: string;
