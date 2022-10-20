@@ -1,7 +1,7 @@
 import { Contract } from "near-api-js";
 import * as nearAPI from "near-api-js";
-import { Enum_Componentlocationlocation_Countrycode, Enum_Property_Category } from "api/codegen/strapi";
 import { Property } from "api/webhooks/splitfund/strapi-entry-update/types";
+import { Enum_Property_Category } from "api/codegen/strapi";
 
 import nearUtils from "providers/near";
 import ipfs from "providers/ipfs";
@@ -74,33 +74,121 @@ export class StableEscrow {
   }
 
   static async getProperty(contractAddress: string): Promise<Property | null> {
+    // @TODO fill with values calculated from contract amounts
+    const price = {
+      fundedPercentage: "50%",
+      fundedAmount: 75000,
+    };
+
+    // @TODO fill with data from contract
+    const investors = {
+      amount: 150,
+      wallets: ["wallet1.near"],
+    };
+
     return {
+      id: 2,
+      title: "M10, departamento C18",
+      createdAt: "2022-10-18T16:58:56.859Z",
+      updatedAt: "2022-10-20T03:57:31.504Z",
+      publishedAt: "2022-10-18T16:58:59.582Z",
+      locale: "es",
+      shortDescription:
+        "Te presentamos la oportunidad de invertir en este departamento a un precio de descuento de preventa de $3,087,800, el objetivo es venderlo mínimo en $3,800,000 en un período máximo de 24 meses, que incluyen 2 meses para venderlo una vez construido.",
+      longDescription:
+        "Nuestras expectativas para este proyecto son positivas por la fuerte demanda de productos terminados en la zona que se prevé para esa fecha pudiendo superar nuestros rendimientos estimados hasta con un 5% adicionales al 23% estimado como escenario base. **Este rendimiento va directo a nuestros inversionistas**.\n \n## ¿Por qué invertir en M10?\n\nM10 es un proyecto de Consur®, desarrolladora yucateca con varios años de experiencia y más de 500 unidades finalizadas y vendidas.\n\nNuestros expertos han seleccionado M10 por su excelente ubicación, diseño vanguardista y distribución excepcional en los espacios tanto privados como públicos, como son las amenidades bien pensadas, con un toque de originalidad.\n\nUbicado en la Avenida 10 de Montebello, nos brinda conexión con todos los servicios y a 25 minutos de la playa. Todo esto en una de las zonas residenciales con más prestigio de la ciudad blanca.\n\nEl proyecto está pensado para habitar en él con todas las comodidades que un usuario necesita, esto da lugar a unidades muy atractivas para ser adquiridas tanto para habitar como para invertir y generar rentas.\n\nPara información más detallada descarga el documento de datos de inversión y del inmueble en el botón de abajo.",
       category: Enum_Property_Category.RealEstate,
-      contract: { id: contractAddress },
-      expirationDate: new Date(),
-      gallery: [{ url: "", alternativeText: "alt" }],
-      id: 0,
-      longDescription: "Long description",
-      media: { featuredImageUrl: "", ipfsURL: "" },
-      owner: { id: 0, name: "Remax", url: "url" },
-      investors: { amount: 100 },
+      expirationDate: "2022-12-31T06:00:00.000Z",
+      createNEARContract: true,
+      gallery: [
+        {
+          url: "Qmdx5Bk1WLwbYShNSXC3SH78tLnhgZc1Nx6NXRRTfvNwbK/62e1821a7b17f_cbf76ca498.jpeg",
+          name: "62e1821a7b17f.jpeg",
+          alternativeText: "62e1821a7b17f.jpeg",
+          caption: "62e1821a7b17f.jpeg",
+          width: 1490,
+          height: 1112,
+          ext: ".jpeg",
+          mime: "image/jpeg",
+        },
+        {
+          url: "QmWJJvmEWz8nvDRce7RqmassRvqY9ijoxMizCBiTVHpsBu/62e18218944dd_9683e96f32.jpeg",
+          name: "62e18218944dd.jpeg",
+          alternativeText: "62e18218944dd.jpeg",
+          caption: "62e18218944dd.jpeg",
+          width: 1490,
+          height: 1112,
+          ext: ".jpeg",
+          mime: "image/jpeg",
+        },
+        {
+          url: "QmTFeq6sfGxBatZbzNeyeQEksvyyctAqYREwdaXj4QqYeU/62e18219b5f2a_7d983ce127.jpeg",
+          name: "62e18219b5f2a.jpeg",
+          alternativeText: "62e18219b5f2a.jpeg",
+          caption: "62e18219b5f2a.jpeg",
+          width: 1490,
+          height: 1112,
+          ext: ".jpeg",
+          mime: "image/jpeg",
+        },
+        {
+          url: "QmW6CJcsctsMuvVjDuGejckGQemmscWzoiXKKSJxi5fuUB/62e18217ce8cd_cc275697bd.jpeg",
+          name: "62e18217ce8cd.jpeg",
+          alternativeText: "featured",
+          caption: "62e18217ce8cd.jpeg",
+          width: 955,
+          height: 443,
+          ext: ".jpeg",
+          mime: "image/jpeg",
+        },
+      ],
+      price: { id: 1, value: 154122.91, ...price },
+      token: { id: 1, address: "usdt.fakes.testnet", symbol: "USDT", decimals: 6 },
+      owner: {
+        id: 1,
+        name: "Arces MX",
+        url: "https://arces.mx/",
+        gallery: [
+          {
+            url: "QmZP15KdKnbE82dkPpXK84vpXwCkpwevpN5JQSBAUYukrX/arcesmx_logo_ed039d136b.svg",
+            name: "arcesmx-logo.svg",
+            alternativeText: "arcesmx-logo.svg",
+            caption: "arcesmx-logo.svg",
+            width: 181,
+            height: 36,
+            ext: ".svg",
+            mime: "image/svg+xml",
+          },
+        ],
+      },
       location: {
-        id: 0,
+        id: 1,
         country: "México",
+        countryCode: "MX",
         city: "Mérida",
         state: "Yucatán",
-        latitude: "0.1234",
-        longitude: "1.2345",
-        countryCode: Enum_Componentlocationlocation_Countrycode.Mx,
+        latitude: "21.03378",
+        longitude: "-89.609508",
       },
-      price: {
-        id: 0,
-        value: 25000,
-        fundedPercentage: "70%",
-        fundedAmount: 15000,
+      localizations: [
+        {
+          id: 1,
+          title: "M10, departamento C18",
+          createdAt: "2022-10-18T16:58:24.740Z",
+          updatedAt: "2022-10-20T03:57:16.420Z",
+          publishedAt: "2022-10-20T03:57:16.420Z",
+          locale: "en",
+          shortDescription: "short english",
+          longDescription: "long english",
+          category: null,
+          expirationDate: "2022-12-31T06:00:00.000Z",
+          createNEARContract: true,
+        },
+      ],
+      contract: {
+        id: contractAddress,
       },
-      shortDescription: "Short description",
-      title: "A Property",
+      investors,
     };
   }
 

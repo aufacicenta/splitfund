@@ -24,6 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       console.log(
         `api/webhooks/splitfund/strapi-entry-update: createNEARContract false for ${property.title} id:${property.id}`,
       );
+
       res.status(200).json({
         success: true,
       });
@@ -39,10 +40,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const expires_at = date.toNanoseconds(date.client(property.expirationDate).utc().valueOf());
 
-    // @TODO build this URL through the IPFS utils
     console.log(
       `api/webhooks/splitfund/strapi-entry-update: fetching metadata_url for ${property.title} id:${property.id}`,
     );
+
     const metadata_url = await strapi.getIPFSUrlFromPropertyEntry(property);
 
     const {
@@ -55,7 +56,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       fees: { percentage },
     } = splitfund.getConfig().stableEscrow;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const stableEscrowProps: StableEscrowProps = {
       metadata: {
         id,

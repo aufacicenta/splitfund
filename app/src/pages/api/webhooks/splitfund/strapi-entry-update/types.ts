@@ -1,4 +1,5 @@
-import { PropertyPrice } from "api/codegen";
+import { PropertyContract, PropertyInvestors, PropertyPrice } from "api/codegen";
+import { Enum_Property_Category } from "api/codegen/strapi";
 
 export type Thumbnail = {
   name: string;
@@ -98,14 +99,14 @@ export type Location = {
 export type Localization = {
   id: number;
   title: string;
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt?: Date;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt?: string;
   locale: string;
   shortDescription?: string;
   longDescription?: string;
   category?: unknown;
-  expirationDate: Date;
+  expirationDate: string;
   createNEARContract: boolean;
 };
 
@@ -115,14 +116,14 @@ export type Localization = {
 export type Property = {
   id: number;
   title: string;
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt: Date;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
   locale: string;
   shortDescription: string;
   longDescription: string;
-  category: string;
-  expirationDate: Date;
+  category: Enum_Property_Category;
+  expirationDate: string;
   createNEARContract: boolean;
   gallery: Gallery[];
   price: Price;
@@ -130,11 +131,13 @@ export type Property = {
   owner: Owner;
   location: Location;
   localizations: Localization[];
+  contract: PropertyContract;
+  investors: PropertyInvestors;
 };
 
 export type StrapiPropertyEntry = {
   event: string;
-  createdAt: Date;
+  createdAt: string;
   model: string;
   entry: Property;
 };

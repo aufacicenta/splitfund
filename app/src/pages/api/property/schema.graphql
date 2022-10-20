@@ -14,7 +14,7 @@ type Property {
   price: PropertyPrice!
   token: PropertyToken!
   gallery: [PropertyGalleryMedia]!
-  contract: Contract!
+  contract: PropertyContract!
   owner: PropertyOwner!
   investors: PropertyInvestors!
   location: PropertyLocation!
@@ -40,7 +40,7 @@ type PropertyOwner {
   gallery: PropertyGalleryMedia
 }
 
-type Contract {
+type PropertyContract {
   id: String!
 }
 

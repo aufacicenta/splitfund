@@ -1,5 +1,6 @@
 import clsx from "clsx";
 
+import ipfs from "providers/ipfs";
 import { Footer } from "ui/footer/Footer";
 import { Grid } from "ui/grid/Grid";
 import { MediaCarousel } from "ui/media-carousel/MediaCarousel";
@@ -24,16 +25,7 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
         <Grid.Container>
           <Grid.Row>
             <Grid.Col lg={7} xs={12}>
-              <MediaCarousel
-                media={[
-                  {
-                    url: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHJlYWwlMjBlc3RhdGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-                  },
-                  {
-                    url: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHJlYWwlMjBlc3RhdGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-                  },
-                ]}
-              />
+              <MediaCarousel media={property.gallery.map((item) => ({ url: ipfs.asHttpsURL(item.url) }))} />
             </Grid.Col>
             <Grid.Col lg={5} xs={12}>
               <InvestNowWidget property={property} />
@@ -46,6 +38,7 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
           <Grid.Row>
             <Grid.Col lg={7}>
               <Typography.Headline2>About</Typography.Headline2>
+              {/* @TODO react-markdown */}
               <Typography.Text>{property.longDescription}</Typography.Text>
             </Grid.Col>
             <Grid.Col lg={5}>

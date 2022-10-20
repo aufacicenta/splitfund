@@ -1,4 +1,4 @@
-import { Property } from "api/property/types";
+import { Property } from "api/webhooks/splitfund/strapi-entry-update/types";
 import { ReactNode } from "react";
 
 export type PropertyDetailsProps = {
