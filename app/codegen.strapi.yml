@@ -11,7 +11,6 @@ generates:
     plugins:
       - typescript
       - typescript-operations
-      - typescript-react-apollo
     config:
       withComponent: true
   ./src/pages/api/codegen/strapi/resolvers-types.ts:
