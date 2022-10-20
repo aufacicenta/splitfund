@@ -1,0 +1,66 @@
+@import "src/theme/base";
+@import "src/ui/wallet-selector-navbar/variables";
+@import "src/ui/typography/mixins";
+
+.property-details {
+  position: relative;
+
+  &__main {
+    @include withNavbar;
+    min-height: 100vh;
+  }
+
+  &__heading {
+    padding: $space-ml 0;
+    text-align: center;
+  }
+
+  &__gallery {
+    padding-bottom: $navbar-height;
+  }
+
+  &__campaign {
+    min-height: 50vh;
+    padding-top: $navbar-height;
+    padding-bottom: $navbar-height * 1.5;
+    background-color: var(--color-white);
+
+    &--right-col {
+      padding-top: $space-m;
+    }
+  }
+
+  &__long-description {
+    h1 {
+      @include headline1;
+    }
+
+    h2 {
+      @include headline2;
+    }
+
+    h3 {
+      @include headline3;
+    }
+
+    h4 {
+      @include headline4;
+    }
+
+    h5 {
+      @include headline5;
+    }
+
+    h6 {
+      @include headline6;
+    }
+
+    p {
+      @include text;
+    }
+
+    strong {
+      @include textBold;
+    }
+  }
+}

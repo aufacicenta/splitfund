@@ -1,0 +1,9 @@
+@import "src/theme/base";
+
+.total-value-locked-widget {
+  text-align: right;
+
+  &__amount {
+    color: var(--color-primary);
+  }
+}

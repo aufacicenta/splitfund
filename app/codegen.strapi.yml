@@ -1,19 +1,19 @@
-schema: [src/pages/api/property/*.graphql]
+schema: [http://cms.splitfund.xyz/graphql]
 # documents: "src/pages/api/**/documents/**/*.graphql"
 generates:
-  ./src/pages/api/codegen/introspection.json:
+  ./src/pages/api/codegen/strapi/introspection.json:
     plugins:
       - introspection
     config:
       minify: true
       descriptions: false
-  ./src/pages/api/codegen/index.tsx:
+  ./src/pages/api/codegen/strapi/index.tsx:
     plugins:
       - typescript
       - typescript-operations
     config:
       withComponent: true
-  ./src/pages/api/codegen/resolvers-types.ts:
+  ./src/pages/api/codegen/strapi/resolvers-types.ts:
     plugins:
       - typescript
       - typescript-resolvers

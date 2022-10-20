@@ -14,8 +14,10 @@
     "scss:class-types:watch": "npm run scss:class-types -- --watch",
     "plop": "plop",
     "api:codegen:watch": "graphql-codegen --watch 'src/pages/api/**/resolvers/*.ts' --watch 'src/pages/api/**/schema.graphql'",
+    "api:codegen": "npm run api:codegen:dry & npm run api:codegen:dry:strapi",
     "api:codegen:dry": "graphql-codegen",
-    "postinstall": "npm run api:codegen:dry"
+    "api:codegen:dry:strapi": "graphql-codegen --config codegen.strapi.yml",
+    "postinstall": "npm run api:codegen"
   },
   "dependencies": {
     "@apollo/client": "^3.4.17",
@@ -44,6 +46,8 @@
     "react-dom": "17.0.1",
     "react-final-form": "^6.5.7",
     "react-grid-system": "^7.1.2",
+    "react-markdown": "^8.0.3",
+    "react-responsive-carousel": "^3.2.23",
     "react-transition-group": "^4.4.1",
     "rxjs": "^6.6.6",
     "sequelize": "^6.12.0-alpha.1",

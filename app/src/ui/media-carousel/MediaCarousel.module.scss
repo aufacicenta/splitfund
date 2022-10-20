@@ -1,0 +1,24 @@
+@import "src/theme/base";
+
+.media-carousel {
+  display: block;
+
+  &__img {
+    width: auto;
+    height: auto;
+    max-height: 500px;
+    border-radius: $border-radius;
+  }
+
+  :global {
+    .control-next {
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+
+    .control-prev {
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+    }
+  }
+}

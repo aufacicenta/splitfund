@@ -1,4 +1,4 @@
-import { Property } from "api/codegen";
+import { Property } from "api/codegen/strapi";
 
 export type HomeProps = {
   featuredActiveHoldings: Property[];

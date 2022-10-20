@@ -10,8 +10,6 @@ import { Resolvers } from "api/codegen/resolvers-types";
 
 import { routes } from "hooks/useRoutes/useRoutes";
 
-import getPropertyByResponseId from "./property/resolvers/queries/getPropertyByResponseId";
-
 const schemas = loadTypedefsSync([path.join(process.cwd(), "/src/pages/api/property/schema.graphql")], {
   loaders: [new GraphQLFileLoader()],
 });
@@ -19,9 +17,7 @@ const schemas = loadTypedefsSync([path.join(process.cwd(), "/src/pages/api/prope
 const typeDefs = schemas.map((schema) => schema.document) as DocumentNode[];
 
 const resolvers: Resolvers = {
-  Query: {
-    getPropertyByResponseId,
-  },
+  Query: {},
 };
 
 export type ResolversContext = {

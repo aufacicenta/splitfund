@@ -1,0 +1,47 @@
+@import "src/theme/base";
+@import "src/ui/typography/variables";
+
+.invest-now-widget {
+  margin-bottom: $space-default;
+
+  &__progress-bar {
+    position: relative;
+    height: $space-default;
+    margin-top: $space-m;
+    margin-right: -$space-default;
+    margin-bottom: $space-default;
+    margin-left: -$space-default;
+
+    &--funded,
+    &--total {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: $space-default;
+    }
+
+    &--funded {
+      z-index: 1;
+      background-color: var(--color-primary);
+    }
+
+    &--total {
+      width: 100%;
+      background-color: var(--color-secondary);
+    }
+  }
+
+  &__funding-terms {
+    padding: 0 $space-default;
+  }
+
+  &__funded-amount {
+    &--currency {
+      text-transform: uppercase;
+    }
+  }
+
+  &__headline-regular {
+    font-weight: $font-weight-regular;
+  }
+}
