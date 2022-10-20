@@ -7,6 +7,7 @@ const TESTNET_CONFIG = {
       percentage: 0.02,
     },
     ft_metadata: {
+      symbol: "USDT",
       address: "usdt.testnet.near",
       decimals: 6,
     },
@@ -25,6 +26,7 @@ export default (network: string | undefined = "testnet") => {
           },
           ft_metadata: {
             // @TODO check for mainnet address
+            symbol: "USDT",
             address: "usdt.near",
             decimals: 6,
           },

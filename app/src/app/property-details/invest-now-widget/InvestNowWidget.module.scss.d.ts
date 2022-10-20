@@ -1,6 +1,8 @@
 export type Styles = {
   "invest-now-widget": string;
+  "invest-now-widget__funded-amount--currency": string;
   "invest-now-widget__funding-terms": string;
+  "invest-now-widget__headline-regular": string;
   "invest-now-widget__progress-bar": string;
   "invest-now-widget__progress-bar--funded": string;
   "invest-now-widget__progress-bar--total": string;

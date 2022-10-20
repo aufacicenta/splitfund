@@ -1,4 +1,5 @@
 @import "src/theme/base";
+@import "src/ui/typography/variables";
 
 .invest-now-widget {
   margin-bottom: $space-default;
@@ -32,5 +33,15 @@
 
   &__funding-terms {
     padding: 0 $space-default;
+  }
+
+  &__funded-amount {
+    &--currency {
+      text-transform: uppercase;
+    }
+  }
+
+  &__headline-regular {
+    font-weight: $font-weight-regular;
   }
 }
