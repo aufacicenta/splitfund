@@ -1,6 +1,6 @@
 export type Styles = {
   "total-value-locked-widget": string;
-  "total-value-locked-widget--amount": string;
+  "total-value-locked-widget__amount": string;
   "z-depth-0": string;
   "z-depth-1": string;
   "z-depth-1-half": string;

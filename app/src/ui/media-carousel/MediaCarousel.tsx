@@ -10,7 +10,7 @@ export const MediaCarousel: React.FC<MediaCarouselProps> = ({ className, media }
     {media.map((m) => (
       <div key={m.url}>
         <img src={m.url} alt={m.legend} className={styles["media-carousel__img"]} />
-        {m.legend && <p className={styles["media-carousel__legend"]}>{m.legend}</p>}
+        {m.legend && <p>{m.legend}</p>}
       </div>
     ))}
   </Carousel>

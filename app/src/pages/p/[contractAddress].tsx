@@ -3,25 +3,14 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { AppLayout } from "layouts/app-layout/AppLayout";
 import { PropertyDetailsContainer } from "app/property-details/PropertyDetailsContainer";
-import { PropertyPreviewError } from "app/property-preview/property-preview-error/PropertyPreviewError";
 import { StableEscrow } from "providers/near/stable-escrow";
 import { PropertyDetailsContainerProps } from "app/property-details/PropertyDetails.types";
 
-const PropertyDetails: NextPage<PropertyDetailsContainerProps> = ({ property }) => {
-  if (!property) {
-    return (
-      <AppLayout>
-        <PropertyPreviewError />
-      </AppLayout>
-    );
-  }
-
-  return (
-    <AppLayout>
-      <PropertyDetailsContainer property={property} />
-    </AppLayout>
-  );
-};
+const PropertyDetails: NextPage<PropertyDetailsContainerProps> = ({ property }) => (
+  <AppLayout>
+    <PropertyDetailsContainer property={property} />
+  </AppLayout>
+);
 
 export async function getServerSideProps({ params, locale }: GetServerSidePropsContext<{ contractAddress: string }>) {
   const contractAddress = params?.contractAddress;
