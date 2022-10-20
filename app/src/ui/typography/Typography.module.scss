@@ -1,5 +1,6 @@
 @import "src/theme/base";
 @import "./variables";
+@import "./mixins";
 
 .typography {
   position: relative;
@@ -21,84 +22,43 @@
   }
 
   &__headline1 {
-    @include font-properties($typography-headline-1);
-    @include normalizeTypography;
-    margin-bottom: $space-s;
-    color: var(--color-typography-headline-1);
+    @include headline1();
   }
 
   &__headline2 {
-    @include font-properties($typography-headline-2);
-    @include normalizeTypography;
-    margin-bottom: $space-default;
-    color: var(--color-typography-headline-2);
+    @include headline2();
   }
 
   &__headline3 {
-    @include font-properties($typography-headline-3);
-    @include normalizeTypography;
-    margin-bottom: $space-s;
-    color: var(--color-typography-headline-3);
+    @include headline3();
   }
 
   &__headline4 {
-    @include font-properties($typography-headline-4);
-    @include normalizeTypography;
-    margin-bottom: $space-xs;
-    color: var(--color-typography-headline-4);
-
-    [class^="icon-"],
-    [class*=" icon-"] {
-      font-size: $font-size-headline-4 * 0.75;
-    }
+    @include headline4();
   }
 
   &__headline5 {
-    @include font-properties($typography-headline-5);
-    @include normalizeTypography;
-    margin-top: $space-default;
-    margin-bottom: $space-xs;
-    color: var(--color-typography-headline-5);
+    @include headline5();
   }
 
   &__headline6 {
-    @include font-properties($typography-headline-6);
-    @include normalizeTypography;
-    margin-top: $space-default;
-    margin-bottom: $space-xs;
-    color: var(--color-typography-headline-6);
+    @include headline6();
   }
 
   &__text {
-    @include font-properties($typography-text);
-    @include normalizeTypography;
-    margin-bottom: $space-m;
-    color: var(--color-typography-text);
-
-    [class^="icon-"],
-    [class*=" icon-"] {
-      font-size: $font-size-text * 0.75;
-    }
+    @include text();
   }
 
   &__text-lead {
-    @include font-properties($typography-text-lead);
-    @include normalizeTypography;
-    margin-bottom: $space-m;
-    color: var(--color-typography-text);
+    @include textLead();
   }
 
   &__text-bold {
-    @include font-properties($typography-text-bold);
-    @include normalizeTypography;
-    color: var(--color-typography-text-bold);
+    @include textBold();
   }
 
   &__subtitle {
-    @include font-properties($typography-subtitle);
-    @include normalizeTypography;
-    margin-bottom: $space-xs;
-    color: var(--color-typography-subtitle);
+    @include subtitle();
   }
 
   &__button-label {

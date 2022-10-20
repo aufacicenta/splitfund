@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import ReactMarkdown from "react-markdown";
 
 import ipfs from "providers/ipfs";
 import { Footer } from "ui/footer/Footer";
@@ -10,6 +11,14 @@ import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNa
 import { InvestNowWidget } from "./invest-now-widget/InvestNowWidget";
 import styles from "./PropertyDetails.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails.types";
+
+function LinkRenderer(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  return (
+    <a href={props.href} target="_blank" rel="noreferrer">
+      {props.children}
+    </a>
+  );
+}
 
 export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, property }) => (
   <>
@@ -39,7 +48,9 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
             <Grid.Col lg={7}>
               <Typography.Headline2>About</Typography.Headline2>
               {/* @TODO react-markdown */}
-              <Typography.Text>{property.longDescription}</Typography.Text>
+              <div className={styles["property-details__long-description"]}>
+                <ReactMarkdown components={{ a: LinkRenderer }}>{property.longDescription}</ReactMarkdown>
+              </div>
             </Grid.Col>
             <Grid.Col lg={5}>
               <div className={styles["property-details__campaign--right-col"]}>

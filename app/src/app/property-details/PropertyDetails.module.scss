@@ -1,5 +1,6 @@
 @import "src/theme/base";
 @import "src/ui/wallet-selector-navbar/variables";
+@import "src/ui/typography/mixins";
 
 .property-details {
   position: relative;
@@ -26,6 +27,40 @@
 
     &--right-col {
       padding-top: $space-m;
+    }
+  }
+
+  &__long-description {
+    h1 {
+      @include headline1;
+    }
+
+    h2 {
+      @include headline2;
+    }
+
+    h3 {
+      @include headline3;
+    }
+
+    h4 {
+      @include headline4;
+    }
+
+    h5 {
+      @include headline5;
+    }
+
+    h6 {
+      @include headline6;
+    }
+
+    p {
+      @include text;
+    }
+
+    strong {
+      @include textBold;
     }
   }
 }
