@@ -6,6 +6,7 @@ import date from "providers/date";
 import { StableEscrowProps } from "providers/near/stable-escrow/stable-escrow.types";
 import splitfund from "providers/splitfund";
 import strapi from "providers/strapi";
+import { client as supabase } from "providers/supabase/client";
 
 import { Property, StrapiPropertyEntry } from "./types";
 
@@ -32,7 +33,27 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return;
     }
 
-    // @TODO check for an existing contract by the metadata id and throw if exists
+    try {
+      const { data: existingSupabaseProperty, error: onQueryPropertyError } = await supabase
+        .from("property")
+        .select("*")
+        .eq("strapi_property_id", property.id);
+
+      if (onQueryPropertyError) {
+        throw new Error(onQueryPropertyError.message);
+      }
+
+      if (existingSupabaseProperty) {
+        throw new Error("property exists");
+      }
+    } catch (error) {
+      console.log(
+        `api/webhooks/splitfund/strapi-entry-update: query supabase property ${property.title} id:${property.id}`,
+        error,
+      );
+
+      return;
+    }
 
     const id = `splitfund-${property.id}`;
     const name = `Splitfund.xyz Property ${property.id}`;
@@ -87,6 +108,30 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log({ stableEscrowProps });
 
     // @TODO deploy and init contract here...
+    const near_contract_address = "";
+
+    try {
+      // @TODO insert property row
+      const { data: newSupabaseProperty, error: onInsertPropertyError } = await supabase
+        .from("property")
+        .insert([{ strapi_property_id: property.id, near_contract_address }]);
+
+      if (onInsertPropertyError) {
+        throw new Error(onInsertPropertyError.message);
+      }
+
+      console.log(
+        `api/webhooks/splitfund/strapi-entry-update: successful supabase property record ${property.title} id:${property.id}`,
+        newSupabaseProperty,
+      );
+    } catch (error) {
+      console.log(
+        `api/webhooks/splitfund/strapi-entry-update: inserting supabase property record ${property.title} id:${property.id}`,
+        error,
+      );
+
+      return;
+    }
 
     res.status(200).json({
       success: true,
