@@ -23,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!property.createNEARContract || !property.gallery) {
       console.log(
-        `api/webhooks/splitfund/strapi-entry-update: createNEARContract false for ${property.title} id:${property.id}`,
+        `api/webhooks/splitfund/strapi-entry-update: createNEARContract false for "${property.title}" id:${property.id}`,
       );
 
       res.status(200).json({
@@ -34,23 +34,33 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     try {
+      console.log(
+        `api/webhooks/splitfund/strapi-entry-update: querying supabase property for "${property.title}" id:${property.id}`,
+      );
+
       const { data: existingSupabaseProperty, error: onQueryPropertyError } = await supabase
         .from("property")
         .select("*")
         .eq("strapi_property_id", property.id);
 
+      console.log(existingSupabaseProperty);
+
       if (onQueryPropertyError) {
         throw new Error(onQueryPropertyError.message);
       }
 
-      if (existingSupabaseProperty) {
-        throw new Error("property exists");
+      if (existingSupabaseProperty?.length) {
+        throw new Error(`supabase property ${property.id} exists at id:${existingSupabaseProperty[0].id}`);
       }
     } catch (error) {
       console.log(
-        `api/webhooks/splitfund/strapi-entry-update: query supabase property ${property.title} id:${property.id}`,
+        `api/webhooks/splitfund/strapi-entry-update: query supabase property "${property.title}" id:${property.id}`,
         error,
       );
+
+      res.status(200).json({
+        success: true,
+      });
 
       return;
     }
@@ -62,7 +72,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const expires_at = date.toNanoseconds(date.client(property.expirationDate).utc().valueOf());
 
     console.log(
-      `api/webhooks/splitfund/strapi-entry-update: fetching metadata_url for ${property.title} id:${property.id}`,
+      `api/webhooks/splitfund/strapi-entry-update: fetching metadata_url for "${property.title}" id:${property.id}`,
     );
 
     const metadata_url = await strapi.getIPFSUrlFromPropertyEntry(property);
@@ -108,27 +118,34 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log({ stableEscrowProps });
 
     // @TODO deploy and init contract here...
-    const near_contract_address = "";
+    const near_contract_address = "contract.splitfund.testnet";
 
     try {
-      // @TODO insert property row
+      console.log(
+        `api/webhooks/splitfund/strapi-entry-update: inserting supabase property record "${property.title}" id:${property.id}`,
+      );
+
       const { data: newSupabaseProperty, error: onInsertPropertyError } = await supabase
         .from("property")
-        .insert([{ strapi_property_id: property.id, near_contract_address }]);
+        .insert([{ strapi_property_id: property.id, near_contract_address, ipfs_metadata_url: metadata_url }]);
 
       if (onInsertPropertyError) {
         throw new Error(onInsertPropertyError.message);
       }
 
       console.log(
-        `api/webhooks/splitfund/strapi-entry-update: successful supabase property record ${property.title} id:${property.id}`,
+        `api/webhooks/splitfund/strapi-entry-update: successful supabase property record "${property.title}" id:${property.id}`,
         newSupabaseProperty,
       );
     } catch (error) {
       console.log(
-        `api/webhooks/splitfund/strapi-entry-update: inserting supabase property record ${property.title} id:${property.id}`,
+        `api/webhooks/splitfund/strapi-entry-update: inserting supabase property record "${property.title}" id:${property.id}`,
         error,
       );
+
+      res.status(200).json({
+        success: true,
+      });
 
       return;
     }
