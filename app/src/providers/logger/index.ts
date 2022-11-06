@@ -1,11 +1,19 @@
 import { createLogger, format, transports } from "winston";
 
-const { combine, timestamp, printf } = format;
+const { combine, timestamp, printf, splat } = format;
 
-const myFormat = printf((info) => `${info.timestamp} [${__filename}] ${info.level}: ${info.message}`);
+const myFormat = printf((info) => {
+  let { message } = info;
+
+  if (typeof info.message === "object") {
+    message = JSON.stringify(info.message, null, 2);
+  }
+
+  return `${info.timestamp} [${__filename}] ${info.level}: ${message}`;
+});
 
 const logger = createLogger({
-  format: combine(timestamp(), myFormat),
+  format: combine(timestamp(), myFormat, splat()),
   transports: [new transports.Console()],
 });
 

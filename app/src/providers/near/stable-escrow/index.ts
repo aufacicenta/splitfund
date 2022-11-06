@@ -1,5 +1,6 @@
 import { Contract } from "near-api-js";
-import * as nearAPI from "near-api-js";
+import fs from "fs";
+import path from "path";
 import { Property } from "api/webhooks/splitfund/strapi-entry-update/types";
 import { Enum_Property_Category } from "api/codegen/strapi";
 
@@ -9,6 +10,7 @@ import date from "providers/date";
 import currency from "providers/currency";
 import { WalletSelectorContextType } from "context/wallet-selector/WalletSelectorContext.types";
 import getCoinCurrentPrice from "providers/currency/getCoinCurrentPrice";
+import logger from "providers/logger";
 
 import { StableEscrowMethods, StableEscrowValues } from "./stable-escrow.types";
 import { VIEW_METHODS } from "./constants";
@@ -61,16 +63,20 @@ export class StableEscrow {
   }
 
   static async getFromConnection(contractAddress: string) {
-    const near = await nearAPI.connect({
-      keyStore: new nearAPI.keyStores.InMemoryKeyStore(),
-      headers: {},
-      ...nearUtils.getConfig(),
-    });
+    const guestAccount = await nearUtils.getGuestAccount();
 
-    const account = await near.account(nearUtils.getConfig().guestWalletId);
     const contractMethods = { viewMethods: VIEW_METHODS, changeMethods: [] };
 
-    return nearUtils.initContract<StableEscrowMethods>(account, contractAddress, contractMethods);
+    return nearUtils.initContract<StableEscrowMethods>(guestAccount, contractAddress, contractMethods);
+  }
+
+  static async deploy() {
+    const guestAccount = await nearUtils.getGuestAccount();
+
+    const file = path.resolve(process.cwd(), "./src/providers/near/stable-escrow/escrow.wasm");
+    const response = await guestAccount.deployContract(fs.readFileSync(file));
+
+    logger.info(response);
   }
 
   static async getProperty(contractAddress: string): Promise<Property | null> {

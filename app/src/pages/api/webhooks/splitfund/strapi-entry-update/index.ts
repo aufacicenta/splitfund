@@ -3,9 +3,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import date from "providers/date";
 import logger from "providers/logger";
+import { StableEscrow } from "providers/near/stable-escrow";
 import { StableEscrowProps } from "providers/near/stable-escrow/stable-escrow.types";
 import splitfund from "providers/splitfund";
-import strapi from "providers/strapi";
 import supabase from "providers/supabase";
 
 import { Property, StrapiPropertyEntry } from "./types";
@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const data: StrapiPropertyEntry = req.body;
 
     if (!data || data?.model !== "property") {
-      throw new Error("api/webhooks/splitfund/strapi-entry-update: invalid data.");
+      throw new Error("invalid property data.");
     }
 
     const { entry: property } = data as { entry: Property };
@@ -35,7 +35,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const expires_at = date.toNanoseconds(date.client(property.expirationDate).utc().valueOf());
 
-    const metadata_url = await strapi.getIPFSUrlFromPropertyEntry(property);
+    const metadata_url = "metadata_url";
+    // const metadata_url = await strapi.getIPFSUrlFromPropertyEntry(property);
 
     const {
       price: { value: funding_amount_limit },
@@ -78,6 +79,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     logger.info({ stableEscrowProps });
 
     // @TODO deploy and init contract here...
+    await StableEscrow.deploy();
     const near_contract_address = "contract.splitfund.testnet";
 
     await supabase.database.property.insert({
