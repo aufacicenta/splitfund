@@ -1,13 +1,16 @@
 import { Property } from "api/webhooks/splitfund/strapi-entry-update/types";
 
 import ipfs from "providers/ipfs";
+import logger from "providers/logger";
 
 import { STRAPI_ADMIN_URL } from "./constants";
 
-const getIPFSUrlFromPropertyEntry = async (propertyEntry: Property): Promise<string> => {
+const getIPFSUrlFromPropertyEntry = async (property: Property): Promise<string> => {
+  logger.info(`fetching metadata_url for "${property.title}" id:${property.id}`);
+
   try {
     const gallery = await Promise.all(
-      propertyEntry.gallery.map(async (item) => ({
+      property.gallery.map(async (item) => ({
         url: await ipfs.getFileAsIPFSUrl(`${STRAPI_ADMIN_URL}${item.url}`),
         name: item.name,
         alternativeText: item.alternativeText,
@@ -20,7 +23,7 @@ const getIPFSUrlFromPropertyEntry = async (propertyEntry: Property): Promise<str
     );
 
     const ownerGallery = await Promise.all(
-      propertyEntry.owner.gallery.map(async (item) => ({
+      property.owner.gallery.map(async (item) => ({
         url: await ipfs.getFileAsIPFSUrl(`${STRAPI_ADMIN_URL}${item.url}`),
         name: item.name,
         alternativeText: item.alternativeText,
@@ -33,15 +36,15 @@ const getIPFSUrlFromPropertyEntry = async (propertyEntry: Property): Promise<str
     );
 
     const content: Property = {
-      ...propertyEntry,
+      ...property,
       owner: {
-        ...propertyEntry.owner,
+        ...property.owner,
         gallery: ownerGallery,
       },
       gallery,
     };
 
-    const fileName = `splitfund-${propertyEntry.id}.json`;
+    const fileName = `splitfund-${property.id}.json`;
     const ipfsResponse = await ipfs.upload(Buffer.from(JSON.stringify(content)), fileName);
 
     return ipfsResponse?.path as string;

@@ -1,12 +1,12 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { NextApiRequest, NextApiResponse } from "next";
 
 import date from "providers/date";
+import logger from "providers/logger";
 import { StableEscrowProps } from "providers/near/stable-escrow/stable-escrow.types";
 import splitfund from "providers/splitfund";
 import strapi from "providers/strapi";
-import { client as supabase } from "providers/supabase/client";
+import supabase from "providers/supabase";
 
 import { Property, StrapiPropertyEntry } from "./types";
 
@@ -22,47 +22,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { entry: property } = data as { entry: Property };
 
     if (!property.createNEARContract || !property.gallery) {
-      console.log(
-        `api/webhooks/splitfund/strapi-entry-update: createNEARContract false for "${property.title}" id:${property.id}`,
-      );
-
-      res.status(200).json({
-        success: true,
-      });
-
-      return;
+      throw new Error(`createNEARContract false for "${property.title}" id:${property.id}.`);
     }
 
-    try {
-      console.log(
-        `api/webhooks/splitfund/strapi-entry-update: querying supabase property for "${property.title}" id:${property.id}`,
-      );
-
-      const { data: existingSupabaseProperty, error: onQueryPropertyError } = await supabase
-        .from("property")
-        .select("*")
-        .eq("strapi_property_id", property.id);
-
-      console.log(existingSupabaseProperty);
-
-      if (onQueryPropertyError) {
-        throw new Error(onQueryPropertyError.message);
-      }
-
-      if (existingSupabaseProperty?.length) {
-        throw new Error(`supabase property ${property.id} exists at id:${existingSupabaseProperty[0].id}`);
-      }
-    } catch (error) {
-      console.log(
-        `api/webhooks/splitfund/strapi-entry-update: query supabase property "${property.title}" id:${property.id}`,
-        error,
-      );
-
-      res.status(200).json({
-        success: true,
-      });
-
-      return;
+    if (await supabase.database.property.strapiPropertyExists(property)) {
+      throw new Error(`supabase property ${property.id} exists.`);
     }
 
     const id = `splitfund-${property.id}`;
@@ -70,10 +34,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const symbol = `SF${property.id}`;
 
     const expires_at = date.toNanoseconds(date.client(property.expirationDate).utc().valueOf());
-
-    console.log(
-      `api/webhooks/splitfund/strapi-entry-update: fetching metadata_url for "${property.title}" id:${property.id}`,
-    );
 
     const metadata_url = await strapi.getIPFSUrlFromPropertyEntry(property);
 
@@ -115,46 +75,23 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       },
     };
 
-    console.log({ stableEscrowProps });
+    logger.info({ stableEscrowProps });
 
     // @TODO deploy and init contract here...
     const near_contract_address = "contract.splitfund.testnet";
 
-    try {
-      console.log(
-        `api/webhooks/splitfund/strapi-entry-update: inserting supabase property record "${property.title}" id:${property.id}`,
-      );
-
-      const { data: newSupabaseProperty, error: onInsertPropertyError } = await supabase
-        .from("property")
-        .insert([{ strapi_property_id: property.id, near_contract_address, ipfs_metadata_url: metadata_url }]);
-
-      if (onInsertPropertyError) {
-        throw new Error(onInsertPropertyError.message);
-      }
-
-      console.log(
-        `api/webhooks/splitfund/strapi-entry-update: successful supabase property record "${property.title}" id:${property.id}`,
-        newSupabaseProperty,
-      );
-    } catch (error) {
-      console.log(
-        `api/webhooks/splitfund/strapi-entry-update: inserting supabase property record "${property.title}" id:${property.id}`,
-        error,
-      );
-
-      res.status(200).json({
-        success: true,
-      });
-
-      return;
-    }
+    await supabase.database.property.insert({
+      strapi_property_id: property.id,
+      near_contract_address,
+      ipfs_metadata_url: metadata_url,
+    });
 
     res.status(200).json({
       success: true,
     });
   } catch (error) {
-    // @TODO log to error logger
+    logger.error((error as Error).message);
+
     res.status(500).send(error);
   }
 };
