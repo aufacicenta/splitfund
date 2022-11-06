@@ -71,10 +71,11 @@ export class StableEscrow {
   }
 
   static async deploy() {
-    const guestAccount = await nearUtils.getGuestAccount();
+    const connection = await nearUtils.getPrivateKeyConnection();
+    const account = await connection.account(nearUtils.getConfig().signerWalletId);
 
     const file = path.resolve(process.cwd(), "./src/providers/near/stable-escrow/escrow.wasm");
-    const response = await guestAccount.deployContract(fs.readFileSync(file));
+    const response = await account.deployContract(fs.readFileSync(file));
 
     logger.info(response);
   }

@@ -5,6 +5,9 @@ const CONTRACT_NAME = process.env.CONTRACT_NAME || "testnet";
 const TESTNET_GUEST_WALLET_ID = "nearholdings.testnet";
 const MAINNET_GUEST_WALLET_ID = "communitycapital.near";
 
+const TESTNET_SIGNER_WALLET_ID = "splitfund.testnet";
+const MAINNET_SIGNER_WALLET_ID = "splitfund.near";
+
 const TESTNET_DAO_CONTRACT_NAME = "sputnikv2.testnet";
 const MAINNET_DAO_CONTRACT_NAME = "sputnik-dao.near";
 
@@ -40,6 +43,7 @@ const TESTNET_CONFIG = {
   skFactoryContractName: TESTNET_SKFACTORY_CONTRACT_NAME,
   featuredActiveHoldings: TESTNET_FEATURED_ACTIVE_HOLDINGS,
   astroDaoURLOrigin: TESTNET_ASTRODAO_URL_ORIGIN,
+  signerWalletId: TESTNET_SIGNER_WALLET_ID,
 };
 
 export default (network: string | undefined = "testnet") => {
@@ -57,6 +61,7 @@ export default (network: string | undefined = "testnet") => {
         skFactoryContractName: MAINNET_SKFACTORY_CONTRACT_NAME,
         featuredActiveHoldings: MAINNET_FEATURED_ACTIVE_HOLDINGS,
         astroDaoURLOrigin: MAINNET_ASTRODAO_URL_ORIGIN,
+        signerWalletId: MAINNET_SIGNER_WALLET_ID,
         walletUrl: "https://wallet.near.org",
         helperUrl: "https://helper.mainnet.near.org",
         explorerUrl: "https://explorer.near.org",

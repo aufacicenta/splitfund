@@ -5,8 +5,10 @@ import parseNearAmount from "./parseNearAmount";
 import initContract from "./initContract";
 import { formatAccountBalance, formatAccountBalanceFlat, formatGasValue } from "./format";
 import getGuestAccount from "./getGuestAccount";
+import getPrivateKeyConnection from "./getPrivateKeyConnection";
 
 export default {
+  getPrivateKeyConnection,
   getGuestAccount,
   getConfig,
   initWalletConnection,
