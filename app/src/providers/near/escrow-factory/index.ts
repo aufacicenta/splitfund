@@ -2,7 +2,7 @@ import { Contract } from "near-api-js";
 import { BN } from "bn.js";
 
 import { EscrowFactoryMethods, EscrowFactoryValues } from "../contract/escrow-factory.types";
-import nearUtils from "providers/near";
+import near from "providers/near";
 import logger from "providers/logger";
 import { StableEscrowProps } from "../stable-escrow/stable-escrow.types";
 
@@ -19,13 +19,13 @@ export class EscrowFactory {
   }
 
   static async createEscrow(name: string, props: StableEscrowProps) {
-    logger.info(`creating Escrow contract from ${nearUtils.getConfig().signerWalletId}`);
+    logger.info(`creating Escrow contract from ${near.getConfig().signerWalletId}`);
 
-    const connection = await nearUtils.getPrivateKeyConnection();
-    const account = await connection.account(nearUtils.getConfig().signerWalletId);
+    const connection = await near.getPrivateKeyConnection();
+    const account = await connection.account(near.getConfig().signerWalletId);
 
     const base64args = Buffer.from(JSON.stringify(props)).toString("base64");
-    const contractId = nearUtils.getConfig().factoryWalletId;
+    const contractId = near.getConfig().factoryWalletId;
     const methodName = "create_escrow";
 
     const args = {
