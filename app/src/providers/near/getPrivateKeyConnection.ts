@@ -6,9 +6,9 @@ const getPrivateKeyConnection = async () => {
   const config = getConfig();
 
   const keyStore = new nearAPI.keyStores.InMemoryKeyStore();
-  const keypair = nearAPI.KeyPair.fromString(process.env.NEAR_SIGNER_WALLET_KEYPAIR as string);
+  const keypair = nearAPI.KeyPair.fromString(process.env.NEAR_SIGNER_PRIVATE_KEY as string);
 
-  keyStore.setKey(DEFAULT_NETWORK_ENV, config.signerWalletId, keypair);
+  await keyStore.setKey(DEFAULT_NETWORK_ENV, config.signerWalletId, keypair);
 
   const near = await nearAPI.connect({
     keyStore,

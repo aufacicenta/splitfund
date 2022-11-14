@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from "winston";
 
-const { combine, timestamp, printf, splat } = format;
+const { combine, timestamp, printf, splat, colorize } = format;
 
 const myFormat = printf((info) => {
   let { message } = info;
@@ -13,7 +13,7 @@ const myFormat = printf((info) => {
 });
 
 const logger = createLogger({
-  format: combine(timestamp(), myFormat, splat()),
+  format: combine(timestamp(), myFormat, splat(), colorize()),
   transports: [new transports.Console()],
 });
 

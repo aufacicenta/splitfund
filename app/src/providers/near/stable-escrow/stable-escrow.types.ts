@@ -1,5 +1,4 @@
 export type Metadata = {
-  id: string;
   expires_at: number;
   funding_amount_limit: number;
   unpaid_amount: number;
@@ -10,7 +9,9 @@ export type Metadata = {
 
 export type Fees = {
   percentage: number;
-  balance: number;
+  amount: number;
+  claimed: boolean;
+  account_id: string;
 };
 
 export type FungibleTokenMetadata = {
