@@ -6,6 +6,10 @@
   align-items: center;
   height: $navbar-height;
 
+  &__button {
+    text-transform: uppercase;
+  }
+
   &__icon {
     &--connected {
       color: var(--color-typography-text);
@@ -41,11 +45,11 @@
 
   &__widget {
     @include atLargeTablet {
-      top: $navbar-height + 2;
+      top: $navbar-height;
       width: 420px;
     }
     position: absolute;
-    top: $navbar-height-mobile + 2;
+    top: $navbar-height-mobile;
     right: 0;
     z-index: $z-index-navigation;
     width: calc(100vw - 32px);

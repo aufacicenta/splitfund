@@ -26,8 +26,10 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
     <div className={clsx(styles["property-details"], styles["property-details__main"], className)}>
       <section className={styles["property-details__heading"]}>
         <Grid.Container>
-          <Typography.Headline1>{property.title}</Typography.Headline1>
-          <Typography.Text>{property.shortDescription}</Typography.Text>
+          <Grid.Col lg={8} offset={{ lg: 2 }}>
+            <Typography.Headline1>{property.title}</Typography.Headline1>
+            <Typography.Text>{property.shortDescription}</Typography.Text>
+          </Grid.Col>
         </Grid.Container>
       </section>
       <section className={styles["property-details__gallery"]}>
@@ -47,7 +49,6 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
           <Grid.Row>
             <Grid.Col lg={7}>
               <Typography.Headline2>About</Typography.Headline2>
-              {/* @TODO react-markdown */}
               <div className={styles["property-details__long-description"]}>
                 <ReactMarkdown components={{ a: LinkRenderer }}>{property.longDescription}</ReactMarkdown>
               </div>

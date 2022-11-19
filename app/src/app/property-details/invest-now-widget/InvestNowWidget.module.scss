@@ -44,4 +44,17 @@
   &__headline-regular {
     font-weight: $font-weight-regular;
   }
+
+  &__form {
+    width: 100%;
+
+    input {
+      padding: 23px 27px;
+      font-weight: $font-weight-bold;
+    }
+
+    &--balance {
+      padding-left: $space-default;
+    }
+  }
 }

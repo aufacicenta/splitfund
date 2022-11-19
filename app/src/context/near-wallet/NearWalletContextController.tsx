@@ -73,7 +73,7 @@ export const NearWalletContextController = ({ children }: NearWalletContextContr
       walletState.balance.set("0");
       walletState.address.set(undefined);
     } else {
-      wallet.requestSignIn(signInOptions);
+      wallet.requestSignIn({ ...signInOptions });
     }
   };
 

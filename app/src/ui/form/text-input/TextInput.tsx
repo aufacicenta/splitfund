@@ -1,19 +1,47 @@
 import clsx from "clsx";
 import { Field } from "react-final-form";
 
+import { Typography } from "ui/typography/Typography";
+
 import { TextInputProps } from "./TextInput.types";
 import styles from "./TextInput.module.scss";
 
-export const TextInput: React.FC<TextInputProps> = ({ className, id, labelProps, type, ...props }) => (
-  <div className={clsx(styles["text-input"], "input-field", className)}>
+export const TextInput: React.FC<TextInputProps> = ({
+  className,
+  id,
+  type,
+  placeholder,
+  name,
+  value,
+  children,
+  autoFocus,
+  disabled,
+  defaultValue,
+}) => (
+  <div className={clsx(styles["text-input"], "input-field")}>
     <Field
       id={id}
-      name={id}
+      name={name || id}
       component="input"
       type={type}
-      className={clsx(styles["text-input"], "validate")}
-      autoFocus={props.autoFocus}
-    />
-    {props.label && <label htmlFor={id}>{props.label}</label>}
+      autoFocus={autoFocus}
+      placeholder={placeholder}
+      value={value}
+      defaultValue={defaultValue}
+    >
+      {({ input, meta }) => (
+        <>
+          <input
+            className={clsx(styles["text-input__field"], "validate", className)}
+            disabled={disabled}
+            id={id}
+            placeholder={placeholder}
+            {...input}
+          />
+          {meta.error && meta.touched && <Typography.Description flat>{meta.error}</Typography.Description>}
+        </>
+      )}
+    </Field>
+    {children && children}
   </div>
 );

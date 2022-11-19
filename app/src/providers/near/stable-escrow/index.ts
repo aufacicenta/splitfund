@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Contract } from "near-api-js";
 import { Property } from "api/webhooks/splitfund/strapi-entry-update/types";
+import { BN } from "bn.js";
 
 import near from "providers/near";
 import ipfs from "providers/ipfs";
-import currency from "providers/currency";
-import logger from "providers/logger";
 
-import { StableEscrowMethods, StableEscrowValues } from "./stable-escrow.types";
-import { VIEW_METHODS } from "./constants";
+import { DepositArgs, StableEscrowMethods, StableEscrowValues } from "./stable-escrow.types";
+import { CHANGE_METHODS, VIEW_METHODS } from "./constants";
 
 export class StableEscrow {
   values: StableEscrowValues | undefined;
@@ -20,12 +19,6 @@ export class StableEscrow {
   constructor(contract: Contract & StableEscrowMethods) {
     this.contract = contract;
     this.contractAddress = contract.contractId;
-  }
-
-  static async getCurrentPriceEquivalence(price: number = 0): Promise<{ price: number; equivalence: number }> {
-    const currentCoinPrice = await currency.getCoinCurrentPrice("near", currency.constants.DEFAULT_VS_CURRENCY);
-
-    return { price: currentCoinPrice, equivalence: currentCoinPrice * price };
   }
 
   static async getPropertyFromMetadataUrl(url: string): Promise<Property> {
@@ -46,12 +39,18 @@ export class StableEscrow {
     return near.initContract<StableEscrowMethods>(guestAccount, contractAddress, contractMethods);
   }
 
+  static async getFromConnection(contractAddress: string, accountId: string) {
+    const account = await near.getAccount(accountId);
+
+    const contractMethods = { viewMethods: VIEW_METHODS, changeMethods: CHANGE_METHODS };
+
+    return near.initContract<StableEscrowMethods>(account, contractAddress, contractMethods);
+  }
+
   static async getProperty(contractAddress: string): Promise<Property | null> {
     const contract = await this.getFromGuestConnection(contractAddress);
 
     const metadata = await contract.get_metadata();
-
-    logger.info({ metadata });
 
     const { metadata_url } = metadata;
 
@@ -109,5 +108,13 @@ export class StableEscrow {
       },
       investors,
     };
+  }
+
+  async deposit(args: DepositArgs) {
+    const gas = new BN("3000000000000");
+
+    const response = await this.contract.deposit(args, gas.toString());
+
+    return response;
   }
 }

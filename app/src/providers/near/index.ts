@@ -6,8 +6,10 @@ import initContract from "./initContract";
 import { formatAccountBalance, formatAccountBalanceFlat, formatGasValue } from "./format";
 import getGuestAccount from "./getGuestAccount";
 import getPrivateKeyConnection from "./getPrivateKeyConnection";
+import getAccount from "./getAccount";
 
 export default {
+  getAccount,
   getPrivateKeyConnection,
   getGuestAccount,
   getConfig,

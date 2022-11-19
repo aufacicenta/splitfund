@@ -1,5 +1,13 @@
-@import "../../../theme/base";
+@import "src/theme/base";
+@import "src/theme/forms/variables";
 
 .text-input {
   display: block;
+
+  &__field {
+    margin: $input-margin;
+    padding: 0 $space-default;
+    font-size: $input-font-size;
+    background-color: $input-background;
+  }
 }

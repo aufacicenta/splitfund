@@ -1,5 +1,5 @@
-export const DEFAULT_VS_CURRENCY = "usd";
+export const DEFAULT_DECIMALS_PRECISION = 6;
 
 export default {
-  DEFAULT_VS_CURRENCY,
+  DEFAULT_DECIMALS_PRECISION,
 };

@@ -1,10 +1,17 @@
 import Head from "next/head";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 
 import ipfs from "providers/ipfs";
 
-import { PropertyDetailsContainerProps } from "./PropertyDetails.types";
-import { PropertyDetails } from "./PropertyDetails";
+import { PropertyDetailsContainerProps, PropertyDetailsProps } from "./PropertyDetails.types";
+
+const PropertyDetails = dynamic<PropertyDetailsProps>(
+  () => import("./PropertyDetails").then((mod) => mod.PropertyDetails),
+  {
+    ssr: false,
+  },
+);
 
 export const PropertyDetailsContainer = ({ property }: PropertyDetailsContainerProps) => {
   const [isContractDataLoading] = useState(false);

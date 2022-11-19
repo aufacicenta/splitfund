@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { Form as RFForm } from "react-final-form";
 
 import { Card } from "ui/card/Card";
 import { Typography } from "ui/typography/Typography";
@@ -6,13 +7,25 @@ import { Button } from "ui/button/Button";
 import date from "providers/date";
 import currency from "providers/currency";
 import splitfund from "providers/splitfund";
+import { useEscrowContract } from "hooks/near/useEscrowContract/useEscrowContract";
 import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
+import { Form } from "ui/form/Form";
+import { Grid } from "ui/grid/Grid";
 
-import { InvestNowWidgetProps } from "./InvestNowWidget.types";
 import styles from "./InvestNowWidget.module.scss";
+import { InvestNowWidgetProps } from "./InvestNowWidget.types";
 
 export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, property }) => {
   const wallet = useWalletSelectorContext();
+  const escrow = useEscrowContract(property.contract.id);
+
+  const onClickConnectWallet = () => {
+    wallet.onClickConnect({ contractId: property.contract.id });
+  };
+
+  const onSubmit = async ({ amount }: { amount: number }) => {
+    await escrow.deposit(amount.toLocaleString("fullwide", { useGrouping: false }));
+  };
 
   return (
     <>
@@ -51,7 +64,30 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
           </div>
         </Card.Content>
         <Card.Actions>
-          <Button>Connect Wallet to Invest</Button>
+          {wallet.isConnected ? (
+            <RFForm
+              onSubmit={onSubmit}
+              render={({ handleSubmit }) => (
+                <form onSubmit={handleSubmit} className={styles["invest-now-widget__form"]}>
+                  <Grid.Row>
+                    <Grid.Col lg={7}>
+                      <Form.TextInput id="amount" type="number" placeholder="investment amount..." />
+                    </Grid.Col>
+                    <Grid.Col>
+                      <Button type="submit" fullWidth>
+                        Deposit USDT
+                      </Button>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Typography.Description className={styles["invest-now-widget__form--balance"]}>
+                    USDT balance: 0.00
+                  </Typography.Description>
+                </form>
+              )}
+            />
+          ) : (
+            <Button onClick={onClickConnectWallet}>Connect Wallet to Invest</Button>
+          )}
         </Card.Actions>
       </Card>
       <Typography.Text className={styles["invest-now-widget__funding-terms"]}>

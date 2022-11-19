@@ -46,6 +46,11 @@ export type StableEscrowValues = {
   depositsOfPercentage: number;
 };
 
+export type DepositArgs = {
+  sender_id: string;
+  amount: string;
+};
+
 export type StableEscrowMethods = {
   get_total_funds: () => Promise<number>;
   is_deposit_allowed: () => Promise<boolean>;
@@ -58,7 +63,7 @@ export type StableEscrowMethods = {
   get_block_timestamp: () => Promise<string>;
 
   // Change methods
-  deposit: (args: Record<string, string>, gas?: number, amount?: string | null) => Promise<void>;
+  deposit: ({ sender_id, amount }: DepositArgs, gas?: string, deposit?: string | null) => Promise<void>;
   withdraw: () => Promise<void>;
   delegate_funds: ({ dao_name }: { dao_name: string }, gas: string | number) => Promise<boolean>;
 };
