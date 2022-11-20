@@ -1,8 +1,8 @@
 import * as nearAPI from "near-api-js";
 import React, { useEffect, useState } from "react";
 
-import { WalletSelectorContextController } from "../wallet-selector/WalletSelectorContextController";
-import { WalletSelectorChain, WalletSelectorContextType } from "../wallet-selector/WalletSelectorContext.types";
+import { WalletSelectorContextController } from "../../wallet-selector/WalletSelectorContextController";
+import { WalletSelectorChain, WalletSelectorContextType } from "../../wallet-selector/WalletSelectorContext.types";
 import { useWalletState } from "hooks/useWalletState/useWalletState";
 import nearUtils from "providers/near";
 import { DEFAULT_NETWORK_ENV } from "providers/near/getConfig";

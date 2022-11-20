@@ -8,19 +8,19 @@ import date from "providers/date";
 import currency from "providers/currency";
 import splitfund from "providers/splitfund";
 import { useEscrowContract } from "hooks/near/useEscrowContract/useEscrowContract";
-import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
 import { Form } from "ui/form/Form";
 import { Grid } from "ui/grid/Grid";
+import { useNearWalletSelectorContext } from "hooks/useNearWalletSelectorContext/useNearWalletSelectorContext";
 
 import styles from "./InvestNowWidget.module.scss";
 import { InvestNowWidgetProps } from "./InvestNowWidget.types";
 
 export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, property }) => {
-  const wallet = useWalletSelectorContext();
+  const nearWalletSelectorContext = useNearWalletSelectorContext();
   const escrow = useEscrowContract(property.contract.id);
 
   const onClickConnectWallet = () => {
-    wallet.onClickConnect({ contractId: property.contract.id });
+    nearWalletSelectorContext.modal?.show();
   };
 
   const onSubmit = async ({ amount }: { amount: number }) => {
@@ -40,7 +40,8 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
             <Typography.Text>
               invested of {currency.formatFiatCurrency(property.price.value)}{" "}
               <span className={styles["invest-now-widget__funded-amount--currency"]}>
-                {splitfund.getConfig().stableEscrow.ft_metadata.symbol}/{wallet.chain}
+                {splitfund.getConfig().stableEscrow.ft_metadata.symbol}/
+                {nearWalletSelectorContext.selector?.options.network.networkId}
               </span>
             </Typography.Text>
           </div>
@@ -64,7 +65,7 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
           </div>
         </Card.Content>
         <Card.Actions>
-          {wallet.isConnected ? (
+          {nearWalletSelectorContext.selector?.isSignedIn() ? (
             <RFForm
               onSubmit={onSubmit}
               render={({ handleSubmit }) => (
