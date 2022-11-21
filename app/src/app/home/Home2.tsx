@@ -7,13 +7,11 @@ import { NearLogoHorizontal } from "ui/icons/NearLogoHorizontal";
 import { Footer } from "ui/footer/Footer";
 import { WalletSelectorNavbar2 } from "ui/wallet-selector-navbar/WalletSelectorNavbar2";
 import { Button } from "ui/button/Button";
-import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { MainPanel } from "ui/mainpanel/MainPanel";
 import { SplitfundIcon } from "ui/icons/SplitfundIcon";
 import { PropertyCardContainer } from "ui/splitfund/property-card/PropertyCardContainer";
 import { Icon } from "ui/icon/Icon";
 import { SplitfundLogo } from "ui/icons/SplitfundLogo";
-import { TotalValueLockedWidget } from "ui/splitfund/total-value-locked-widget/TotalValueLockedWidget";
 
 import styles from "./Home2.module.scss";
 import { HomeProps } from "./Home.types";
@@ -26,13 +24,11 @@ const scrollTo = (selector: string) => {
 
 export const Home2: React.FC<HomeProps> = ({ className }) => {
   const { t } = useTranslation(["home", "common"]);
-  const routes = useRoutes();
 
   return (
     <>
-      <WalletSelectorNavbar2>
-        <TotalValueLockedWidget />
-      </WalletSelectorNavbar2>
+      <WalletSelectorNavbar2 />
+
       <div className={clsx(styles.home, className)}>
         <section id="intro" className={clsx(styles.home__section, styles.home__intro)}>
           <Grid.Container>
@@ -57,12 +53,10 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
                   </div>
                   <Grid.Row justify="start">
                     <Grid.Col width="auto">
-                      <Button as="a" href={routes.properties.explorer()}>
-                        {t("intro.cta.exploreAssets")}
-                      </Button>
+                      <Button onClick={() => scrollTo("#how-it-works")}>{t("intro.cta.exploreAssets")}</Button>
                     </Grid.Col>
                     <Grid.Col width="auto">
-                      <Button variant="text" onClick={() => scrollTo("#what-is-fasst")}>
+                      <Button variant="text" onClick={() => scrollTo("#how-it-works")}>
                         {t("intro.cta.learnMore")}
                       </Button>
                     </Grid.Col>
@@ -143,12 +137,9 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
                   </Typography.TextLead>
                   <hr />
                   <Typography.Text>{t("how-it-works.1.description")}</Typography.Text>
-                  <div className={styles["home__button-box"]}>
-                    <Button onClick={() => scrollTo("#use-cases")}>{t("how-it-works.1.button")}</Button>
-                  </div>
                 </Grid.Col>
                 <Grid.Col lg={5} xs={12} offset={{ lg: 2 }}>
-                  <PropertyCardContainer id="1" />
+                  <PropertyCardContainer id="splitfund-3-d7ce.factory.splitfund.testnet" />
                 </Grid.Col>
               </Grid.Row>
             </div>
@@ -207,6 +198,7 @@ export const Home2: React.FC<HomeProps> = ({ className }) => {
             </Grid.Row>
           </Grid.Container>
         </section>
+
         <Footer />
       </div>
     </>

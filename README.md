@@ -13,18 +13,28 @@ On the technical side, users get back a new NEP141 token as collateral for their
 - Sp/itfund opens a new market of tradable NEP141 Real Estate collateral tokens as a **store of value**.
 - Once Sp/itfund buys a Real Estate property, our legal mechanism will make each investor's wallet a legal owner of the asset.
 
+**What makes Splitfund different?**
+
+Real Estate co-ownership has been around for more than a decade, however accessing this investment type is bureaucratic, limited to large deposit minimums and restricted to the investor's territory.
+
+Splitfund brings the power back to the common citizen by opening the global Real Estate market starting at 50.00 USDT/NEAR.
+
+Investing with the Splitfund co-ownership protocol is transparent, decentralized, quick, secure and it has no boundaries.
+
+The Splitfund protocol provides passive income from rent and a reliable store of value that users can sell in the open market at any time.
+
 ## NEAR Contracts
 
 Find the contract code [here](https://github.com/aufacicenta/splitfund-contracts).
 
 ## Current features
 
-[x] Create NEAR Escrow contracts from Strapi CMS data
-[x] Use WalletSelector to connect a NEAR wallet
-[x] Deposit an amount of USDT
-[x] Display contract data in the property details page
-[ ] Withdraw if property is not funded or has expired (complete in the contract side, not in the UI side)
-[ ] Delegate funds if property is funded (complete in the contract side, not in the UI side)
+- [x] Create NEAR Escrow contracts from Strapi CMS data
+- [x] Use WalletSelector to connect a NEAR wallet
+- [x] Deposit an amount of USDT
+- [x] Display contract data in the property details page
+- [ ] Withdraw if property is not funded or has expired (complete in the contract side, not in the UI side)
+- [ ] Delegate funds if property is funded (complete in the contract side, not in the UI side)
 
 ## Contributing
 

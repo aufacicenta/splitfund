@@ -76,7 +76,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                   </Grid.Col>
                   <Grid.Col width="auto">
                     <div className={styles["footer__copyright--social-item"]}>
-                      <Typography.Anchor flat href="https://github.com/aufacicenta/near.holdings-web" target="_blank">
+                      <Typography.Anchor flat href="https://github.com/aufacicenta/splitfund" target="_blank">
                         <Icon name="icon-github" className={styles["footer__copyright--social-icon"]} />
                       </Typography.Anchor>
                     </div>

@@ -107,7 +107,7 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
                     </Grid.Col>
                   </Grid.Row>
                   <Typography.Description flat className={styles["invest-now-widget__form--balance"]}>
-                    USDT balance: {fungibleToken.balance}
+                    {property.token.symbol} balance: {fungibleToken.balance}
                   </Typography.Description>
                 </form>
               )}

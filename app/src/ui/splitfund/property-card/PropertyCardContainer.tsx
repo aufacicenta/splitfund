@@ -8,15 +8,16 @@ export const PropertyCardContainer = ({ id }: PropertyCardContainerProps) => {
 
   const data: Array<PropertyCardProps["property"]> = [
     {
-      id: "1",
-      title: "A property",
-      shortDescription: "short description",
+      id: "splitfund-3-d7ce.factory.splitfund.testnet",
+      title: "Bajareque, Department 22",
+      shortDescription:
+        "Own a share of Bajareque, Department 22, in the Yucatecan coast of Mexico. Available to you starting at 50.00 USDT.e/NEAR using Splitfund's co-ownership protocol built on NEAR.",
       description: "description",
       featuredImage: {
-        url: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHJlYWwlMjBlc3RhdGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
+        url: "https://splitfund.infura-ipfs.io/ipfs/QmUnKwr7GpmfPNXayo2Jcibhy3xwJqM74r5HSPkhua3KKR/63587a415d96b_753888884c.jpeg",
       },
       gallery: [{ url: "url" }],
-      fundingGoal: "$250,000",
+      fundingGoal: "$291,564.00",
       amountFunded: "$150,000",
       numberOfBackers: 120,
     },

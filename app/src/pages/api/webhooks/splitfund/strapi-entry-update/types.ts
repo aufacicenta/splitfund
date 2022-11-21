@@ -121,7 +121,7 @@ export type Property = {
   shortDescription: string;
   longDescription: string;
   category: Enum_Property_Category;
-  expirationDate: string;
+  expirationDate: number;
   createNEARContract: boolean;
   gallery: Gallery[];
   price: Price;

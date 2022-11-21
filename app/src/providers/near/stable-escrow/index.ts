@@ -8,6 +8,7 @@ import ipfs from "providers/ipfs";
 import currency from "providers/currency";
 import splitfund from "providers/splitfund";
 import { FungibleToken } from "../fungible-token";
+import date from "providers/date";
 
 import { DepositArgs, StableEscrowMethods, StableEscrowValues } from "./stable-escrow.types";
 import { CHANGE_METHODS, VIEW_METHODS } from "./constants";
@@ -55,7 +56,7 @@ export class StableEscrow {
 
     const metadata = await escrow.get_metadata();
 
-    const { metadata_url, funding_amount_limit, unpaid_amount, nep_141 } = metadata;
+    const { metadata_url, funding_amount_limit, unpaid_amount, nep_141, expires_at } = metadata;
 
     const ipfsData = await ipfs.fetch<Property>(metadata_url);
 
@@ -75,6 +76,8 @@ export class StableEscrow {
       localizations,
       location,
     } = ipfsData;
+
+    const expirationDate = date.fromNanoseconds(expires_at);
 
     const value = currency.convert.fromUIntAmount(
       funding_amount_limit,
@@ -117,7 +120,7 @@ export class StableEscrow {
       shortDescription,
       longDescription,
       category,
-      expirationDate: "2022-12-31T06:00:00.000Z",
+      expirationDate,
       createNEARContract,
       gallery,
       owner,
