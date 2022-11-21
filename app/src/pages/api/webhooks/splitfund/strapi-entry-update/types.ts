@@ -68,12 +68,10 @@ export type Gallery = {
 };
 
 export type Price = {
-  id: number;
-  value: number;
+  value: string;
 } & PropertyPrice;
 
 export type Token = {
-  id: number;
   address: string;
   symbol: string;
   decimals: number;
@@ -123,7 +121,7 @@ export type Property = {
   shortDescription: string;
   longDescription: string;
   category: Enum_Property_Category;
-  expirationDate: string;
+  expirationDate: number;
   createNEARContract: boolean;
   gallery: Gallery[];
   price: Price;

@@ -3,13 +3,24 @@ import { BN } from "bn.js";
 import { Wallet } from "@near-wallet-selector/core";
 import { FinalExecutionStatus } from "near-api-js/lib/providers";
 
-import { FtBalanceOfArgs, FtTransferCallArgs } from "./fungible-token.types";
+import near from "..";
+
+import { FtBalanceOfArgs, FtTransferCallArgs, FungibleTokenMethods } from "./fungible-token.types";
+import { VIEW_METHODS } from "./constants";
 
 export class FungibleToken {
   wallet: Wallet;
 
   constructor(wallet: Wallet) {
     this.wallet = wallet;
+  }
+
+  static async getFromGuestConnection(contractAddress: string) {
+    const guestAccount = await near.getGuestAccount();
+
+    const contractMethods = { viewMethods: VIEW_METHODS, changeMethods: [] };
+
+    return near.initContract<FungibleTokenMethods>(guestAccount, contractAddress, contractMethods);
   }
 
   async ftBalanceOf(args: FtBalanceOfArgs) {

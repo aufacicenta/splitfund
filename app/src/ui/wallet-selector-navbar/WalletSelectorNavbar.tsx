@@ -4,7 +4,6 @@ import { Typography } from "../typography/Typography";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { Grid } from "ui/grid/Grid";
 import { SplitfundLogo } from "ui/icons/SplitfundLogo";
-import { TotalValueLockedWidget } from "ui/splitfund/total-value-locked-widget/TotalValueLockedWidget";
 
 import styles from "./WalletSelectorNavbar.module.scss";
 import { WalletSelectorNavbarProps } from "./WalletSelectorNavbar.types";
@@ -36,7 +35,7 @@ export const WalletSelectorNavbar: React.FC<WalletSelectorNavbarProps> = () => {
           <Grid.Col lg={5} sm={5} xs={6}>
             <div className={styles["wallet-selector-navbar__right"]}>
               <div className={styles["wallet-selector-navbar__right--item"]}>
-                <TotalValueLockedWidget />
+                <Typography.Text>Sell With Us</Typography.Text>
               </div>
             </div>
           </Grid.Col>

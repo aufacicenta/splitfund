@@ -5,6 +5,10 @@ import { BN } from "bn.js";
 
 import near from "providers/near";
 import ipfs from "providers/ipfs";
+import currency from "providers/currency";
+import splitfund from "providers/splitfund";
+import { FungibleToken } from "../fungible-token";
+import date from "providers/date";
 
 import { DepositArgs, StableEscrowMethods, StableEscrowValues } from "./stable-escrow.types";
 import { CHANGE_METHODS, VIEW_METHODS } from "./constants";
@@ -48,11 +52,11 @@ export class StableEscrow {
   }
 
   static async getProperty(contractAddress: string): Promise<Property | null> {
-    const contract = await this.getFromGuestConnection(contractAddress);
+    const escrow = await this.getFromGuestConnection(contractAddress);
 
-    const metadata = await contract.get_metadata();
+    const metadata = await escrow.get_metadata();
 
-    const { metadata_url } = metadata;
+    const { metadata_url, funding_amount_limit, unpaid_amount, nep_141, expires_at } = metadata;
 
     const ipfsData = await ipfs.fetch<Property>(metadata_url);
 
@@ -73,16 +77,37 @@ export class StableEscrow {
       location,
     } = ipfsData;
 
-    // @TODO fill with values calculated from contract amounts
+    const expirationDate = date.fromNanoseconds(expires_at);
+
+    const value = currency.convert.fromUIntAmount(
+      funding_amount_limit,
+      splitfund.getConfig().stableEscrow.ft_metadata.decimals,
+    );
+
+    const fundedAmount = currency.convert.fromUIntAmount(
+      new BN(funding_amount_limit).sub(new BN(unpaid_amount)).toString(),
+      splitfund.getConfig().stableEscrow.ft_metadata.decimals,
+    );
+
+    const fundedPercentage = `${new BN(unpaid_amount).div(new BN(funding_amount_limit)).toString()}%`;
+
     const price = {
-      fundedPercentage: "50%",
-      fundedAmount: 75000,
+      fundedPercentage,
+      fundedAmount,
+      value,
     };
 
-    // @TODO fill with data from contract
+    const ft = await FungibleToken.getFromGuestConnection(nep_141);
+
+    const { symbol, decimals } = await ft.ft_metadata();
+
+    const token = { address: nep_141, symbol, decimals };
+
+    const depositAccounts = await escrow.get_deposit_accounts();
+
     const investors = {
-      amount: 150,
-      wallets: ["wallet1.near"],
+      amount: depositAccounts.length,
+      wallets: depositAccounts,
     };
 
     return {
@@ -95,14 +120,14 @@ export class StableEscrow {
       shortDescription,
       longDescription,
       category,
-      expirationDate: "2022-12-31T06:00:00.000Z",
+      expirationDate,
       createNEARContract,
       gallery,
       owner,
       location,
       localizations,
-      price: { id: 1, value: 154122.91, ...price },
-      token: { id: 1, address: "usdt.fakes.testnet", symbol: "USDT", decimals: 6 },
+      price,
+      token,
       contract: {
         id: contractAddress,
       },

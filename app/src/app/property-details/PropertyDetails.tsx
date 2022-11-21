@@ -9,10 +9,12 @@ import { MediaCarousel } from "ui/media-carousel/MediaCarousel";
 import { Typography } from "ui/typography/Typography";
 import { WalletSelectorNavbar } from "ui/wallet-selector-navbar/WalletSelectorNavbar";
 import { useNearWalletSelectorContext } from "hooks/useNearWalletSelectorContext/useNearWalletSelectorContext";
+import near from "providers/near";
 
 import { InvestNowWidget } from "./invest-now-widget/InvestNowWidget";
 import styles from "./PropertyDetails.module.scss";
 import { PropertyDetailsProps } from "./PropertyDetails.types";
+
 import "@near-wallet-selector/modal-ui/styles.css";
 
 function LinkRenderer(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
@@ -74,6 +76,15 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ className, pro
                   <Typography.Text>
                     {property.location.city} — {property.location.country}
                   </Typography.Text>
+                </div>
+                <div className={styles["property-details__campaign--right-col"]}>
+                  <Typography.Headline4>Contract</Typography.Headline4>
+                  <Typography.Anchor
+                    target="_blank"
+                    href={`${near.getConfig().explorerUrl}/accounts/${property.contract.id}`}
+                  >
+                    {property.contract.id}
+                  </Typography.Anchor>
                 </div>
               </Grid.Col>
             </Grid.Row>
