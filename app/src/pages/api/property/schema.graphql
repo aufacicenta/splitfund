@@ -17,9 +17,9 @@ type PropertyContract {
 }
 
 type PropertyPrice {
-  value: Float!
+  value: String!
   fundedPercentage: String!
-  fundedAmount: Float!
+  fundedAmount: String!
   exchangeRate: ExchangeRate
 }
 

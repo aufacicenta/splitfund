@@ -55,7 +55,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const stableEscrowProps: StableEscrowProps = {
       metadata: {
         expires_at,
-        funding_amount_limit: currency.convert.toUIntAmount(Math.ceil(funding_amount_limit), decimals),
+        funding_amount_limit: currency.convert.toUIntAmount(Math.ceil(Number(funding_amount_limit)), decimals),
         // Always zero. It is set in the contract anyway
         unpaid_amount: 0,
         // constant for now, but may be set through the UI in the future

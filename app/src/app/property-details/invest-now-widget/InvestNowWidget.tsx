@@ -12,6 +12,7 @@ import { Form } from "ui/form/Form";
 import { Grid } from "ui/grid/Grid";
 import { useNearWalletSelectorContext } from "hooks/useNearWalletSelectorContext/useNearWalletSelectorContext";
 import { useFungibleTokenContract } from "hooks/near/useFungibleTokenContract/useFungibleTokenContract";
+import { useEscrowContract } from "hooks/near/useEscrowContract/useEscrowContract";
 
 import styles from "./InvestNowWidget.module.scss";
 import { InvestNowWidgetProps } from "./InvestNowWidget.types";
@@ -19,6 +20,7 @@ import { InvestNowWidgetProps } from "./InvestNowWidget.types";
 export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, property }) => {
   const nearWalletSelectorContext = useNearWalletSelectorContext();
   const fungibleToken = useFungibleTokenContract(property.contract.id);
+  const escrow = useEscrowContract(property.contract.id);
 
   useEffect(() => {
     if (!nearWalletSelectorContext.selector) {
@@ -26,6 +28,19 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
     }
 
     nearWalletSelectorContext.initModal(splitfund.getConfig().stableEscrow.ft_metadata.address);
+  }, [nearWalletSelectorContext.selector]);
+
+  useEffect(() => {
+    if (!nearWalletSelectorContext.selector?.isSignedIn()) {
+      return;
+    }
+
+    (async () => {
+      const wallet = await nearWalletSelectorContext.selector?.wallet();
+      const [{ accountId }] = await wallet!.getAccounts();
+
+      escrow.getBalanceOf(accountId);
+    })();
   }, [nearWalletSelectorContext.selector]);
 
   const onClickConnectWallet = () => {
@@ -41,17 +56,17 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
       <Card className={clsx(styles["invest-now-widget"], className)} shadow>
         <Card.Content>
           <div className={styles["invest-now-widget__progress-bar"]}>
-            <div className={styles["invest-now-widget__progress-bar--funded"]} style={{ width: "70%" }} />
+            <div
+              className={styles["invest-now-widget__progress-bar--funded"]}
+              style={{ width: property.price.fundedPercentage }}
+            />
             <div className={styles["invest-now-widget__progress-bar--total"]} />
           </div>
           <div>
             <Typography.Headline3 flat>{currency.formatFiatCurrency(property.price.fundedAmount)}</Typography.Headline3>
             <Typography.Text>
               invested of {currency.formatFiatCurrency(property.price.value)}{" "}
-              <span className={styles["invest-now-widget__funded-amount--currency"]}>
-                {splitfund.getConfig().stableEscrow.ft_metadata.symbol}/
-                {nearWalletSelectorContext.selector?.options.network.networkId}
-              </span>
+              <span className={styles["invest-now-widget__funded-amount--currency"]}>{property.token.symbol}/NEAR</span>
             </Typography.Text>
           </div>
           <div>
@@ -68,9 +83,11 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
           </div>
           <div>
             <Typography.Headline3 flat className={clsx(styles["invest-now-widget__headline-regular"])}>
-              {currency.formatFiatCurrency(23567)}
+              {currency.formatFiatCurrency(escrow.balanceOf)}
             </Typography.Headline3>
-            <Typography.Text>your investment (35% of total)</Typography.Text>
+            <Typography.Text>
+              your investment ({(Number(escrow.balanceOf) / Number(property.price.value)).toFixed(8)}% of total)
+            </Typography.Text>
           </div>
         </Card.Content>
         <Card.Actions>

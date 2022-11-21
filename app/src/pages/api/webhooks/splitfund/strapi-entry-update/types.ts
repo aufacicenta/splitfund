@@ -68,12 +68,10 @@ export type Gallery = {
 };
 
 export type Price = {
-  id: number;
-  value: number;
+  value: string;
 } & PropertyPrice;
 
 export type Token = {
-  id: number;
   address: string;
   symbol: string;
   decimals: number;
