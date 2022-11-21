@@ -35,7 +35,7 @@ export const WalletSelectorNavbar: React.FC<WalletSelectorNavbarProps> = () => {
           <Grid.Col lg={5} sm={5} xs={6}>
             <div className={styles["wallet-selector-navbar__right"]}>
               <div className={styles["wallet-selector-navbar__right--item"]}>
-                <Typography.Text>Sell with us</Typography.Text>
+                <Typography.Text>Sell With Us</Typography.Text>
               </div>
             </div>
           </Grid.Col>
