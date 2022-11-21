@@ -10,6 +10,7 @@ import splitfund from "providers/splitfund";
 import strapi from "providers/strapi";
 import supabase from "providers/supabase";
 import near from "providers/near";
+import currency from "providers/currency";
 
 import { Property, StrapiPropertyEntry } from "./types";
 
@@ -54,7 +55,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const stableEscrowProps: StableEscrowProps = {
       metadata: {
         expires_at,
-        funding_amount_limit: Math.ceil(funding_amount_limit),
+        funding_amount_limit: currency.convert.toUIntAmount(Math.ceil(funding_amount_limit), decimals),
         // Always zero. It is set in the contract anyway
         unpaid_amount: 0,
         // constant for now, but may be set through the UI in the future

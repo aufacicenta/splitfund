@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { Form as RFForm } from "react-final-form";
+import { useEffect } from "react";
 
 import { Card } from "ui/card/Card";
 import { Typography } from "ui/typography/Typography";
@@ -7,24 +8,32 @@ import { Button } from "ui/button/Button";
 import date from "providers/date";
 import currency from "providers/currency";
 import splitfund from "providers/splitfund";
-import { useEscrowContract } from "hooks/near/useEscrowContract/useEscrowContract";
 import { Form } from "ui/form/Form";
 import { Grid } from "ui/grid/Grid";
 import { useNearWalletSelectorContext } from "hooks/useNearWalletSelectorContext/useNearWalletSelectorContext";
+import { useFungibleTokenContract } from "hooks/near/useFungibleTokenContract/useFungibleTokenContract";
 
 import styles from "./InvestNowWidget.module.scss";
 import { InvestNowWidgetProps } from "./InvestNowWidget.types";
 
 export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, property }) => {
   const nearWalletSelectorContext = useNearWalletSelectorContext();
-  const escrow = useEscrowContract(property.contract.id);
+  const fungibleToken = useFungibleTokenContract(property.contract.id);
+
+  useEffect(() => {
+    if (!nearWalletSelectorContext.selector) {
+      return;
+    }
+
+    nearWalletSelectorContext.initModal(splitfund.getConfig().stableEscrow.ft_metadata.address);
+  }, [nearWalletSelectorContext.selector]);
 
   const onClickConnectWallet = () => {
     nearWalletSelectorContext.modal?.show();
   };
 
   const onSubmit = async ({ amount }: { amount: number }) => {
-    await escrow.deposit(amount.toLocaleString("fullwide", { useGrouping: false }));
+    await fungibleToken.deposit(amount.toLocaleString("fullwide", { useGrouping: false }));
   };
 
   return (
@@ -81,7 +90,7 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
                     </Grid.Col>
                   </Grid.Row>
                   <Typography.Description className={styles["invest-now-widget__form--balance"]}>
-                    USDT balance: 0.00
+                    USDT balance: {fungibleToken.balance}
                   </Typography.Description>
                 </form>
               )}

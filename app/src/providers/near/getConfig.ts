@@ -2,8 +2,8 @@ export const DEFAULT_NETWORK_ENV = "testnet";
 
 const CONTRACT_NAME = process.env.CONTRACT_NAME || "testnet";
 
-const TESTNET_GUEST_WALLET_ID = "nearholdings.testnet";
-const MAINNET_GUEST_WALLET_ID = "communitycapital.near";
+const TESTNET_GUEST_WALLET_ID = "splitfund.testnet";
+const MAINNET_GUEST_WALLET_ID = "splitfund.near";
 
 const TESTNET_SIGNER_WALLET_ID = "factory.splitfund.testnet";
 const MAINNET_SIGNER_WALLET_ID = "factory.splitfund.near";
