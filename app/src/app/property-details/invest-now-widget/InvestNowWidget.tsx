@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import { Form as RFForm } from "react-final-form";
+import { useEffect } from "react";
 
 import { Card } from "ui/card/Card";
 import { Typography } from "ui/typography/Typography";
@@ -6,13 +8,33 @@ import { Button } from "ui/button/Button";
 import date from "providers/date";
 import currency from "providers/currency";
 import splitfund from "providers/splitfund";
-import { useWalletSelectorContext } from "hooks/useWalletSelectorContext/useWalletSelectorContext";
+import { Form } from "ui/form/Form";
+import { Grid } from "ui/grid/Grid";
+import { useNearWalletSelectorContext } from "hooks/useNearWalletSelectorContext/useNearWalletSelectorContext";
+import { useFungibleTokenContract } from "hooks/near/useFungibleTokenContract/useFungibleTokenContract";
 
-import { InvestNowWidgetProps } from "./InvestNowWidget.types";
 import styles from "./InvestNowWidget.module.scss";
+import { InvestNowWidgetProps } from "./InvestNowWidget.types";
 
 export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, property }) => {
-  const wallet = useWalletSelectorContext();
+  const nearWalletSelectorContext = useNearWalletSelectorContext();
+  const fungibleToken = useFungibleTokenContract(property.contract.id);
+
+  useEffect(() => {
+    if (!nearWalletSelectorContext.selector) {
+      return;
+    }
+
+    nearWalletSelectorContext.initModal(splitfund.getConfig().stableEscrow.ft_metadata.address);
+  }, [nearWalletSelectorContext.selector]);
+
+  const onClickConnectWallet = () => {
+    nearWalletSelectorContext.modal?.show();
+  };
+
+  const onSubmit = async ({ amount }: { amount: number }) => {
+    await fungibleToken.deposit(amount.toLocaleString("fullwide", { useGrouping: false }));
+  };
 
   return (
     <>
@@ -27,7 +49,8 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
             <Typography.Text>
               invested of {currency.formatFiatCurrency(property.price.value)}{" "}
               <span className={styles["invest-now-widget__funded-amount--currency"]}>
-                {splitfund.getConfig().stableEscrow.ft_metadata.symbol}/{wallet.chain}
+                {splitfund.getConfig().stableEscrow.ft_metadata.symbol}/
+                {nearWalletSelectorContext.selector?.options.network.networkId}
               </span>
             </Typography.Text>
           </div>
@@ -51,7 +74,30 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
           </div>
         </Card.Content>
         <Card.Actions>
-          <Button>Connect Wallet to Invest</Button>
+          {nearWalletSelectorContext.selector?.isSignedIn() ? (
+            <RFForm
+              onSubmit={onSubmit}
+              render={({ handleSubmit }) => (
+                <form onSubmit={handleSubmit} className={styles["invest-now-widget__form"]}>
+                  <Grid.Row>
+                    <Grid.Col lg={7}>
+                      <Form.TextInput id="amount" type="number" placeholder="investment amount..." />
+                    </Grid.Col>
+                    <Grid.Col>
+                      <Button type="submit" fullWidth>
+                        Deposit USDT
+                      </Button>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Typography.Description className={styles["invest-now-widget__form--balance"]}>
+                    USDT balance: {fungibleToken.balance}
+                  </Typography.Description>
+                </form>
+              )}
+            />
+          ) : (
+            <Button onClick={onClickConnectWallet}>Connect Wallet to Invest</Button>
+          )}
         </Card.Actions>
       </Card>
       <Typography.Text className={styles["invest-now-widget__funding-terms"]}>

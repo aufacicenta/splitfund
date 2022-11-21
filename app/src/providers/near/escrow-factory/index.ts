@@ -1,10 +1,10 @@
-import * as nearAPI from "near-api-js";
 import { Contract } from "near-api-js";
+import { BN } from "bn.js";
 
 import { EscrowFactoryMethods, EscrowFactoryValues } from "../contract/escrow-factory.types";
-import nearUtils from "providers/near";
-import { DEFAULT_NETWORK_ENV } from "../getConfig";
-import { VIEW_METHODS } from "../contract/escrow-factory";
+import near from "providers/near";
+import logger from "providers/logger";
+import { StableEscrowProps } from "../stable-escrow/stable-escrow.types";
 
 export class EscrowFactory {
   values: EscrowFactoryValues | undefined;
@@ -18,24 +18,29 @@ export class EscrowFactory {
     this.contractAddress = contract.contractId;
   }
 
-  static async getFromConnection() {
-    const near = await nearAPI.connect({
-      keyStore: new nearAPI.keyStores.InMemoryKeyStore(),
-      headers: {},
-      // @TODO DEFAULT_NETWORK_ENV should be dynamic from client headers: testnet or mainnet
-      ...nearUtils.getConfig(DEFAULT_NETWORK_ENV),
+  static async createEscrow(name: string, props: StableEscrowProps) {
+    logger.info(`creating Escrow contract from ${near.getConfig().signerWalletId}`);
+
+    const connection = await near.getPrivateKeyConnection();
+    const account = await connection.account(near.getConfig().signerWalletId);
+
+    const base64args = Buffer.from(JSON.stringify(props)).toString("base64");
+    const contractId = near.getConfig().factoryWalletId;
+    const methodName = "create_escrow";
+
+    const args = {
+      name,
+      args: base64args,
+    };
+
+    const response = await account.functionCall({
+      contractId,
+      methodName,
+      args,
+      gas: new BN("300000000000000"),
+      attachedDeposit: new BN("4000000000000000000000000"),
     });
 
-    const account = await near.account(nearUtils.getConfig(DEFAULT_NETWORK_ENV).guestWalletId);
-    const contractMethods = { viewMethods: VIEW_METHODS, changeMethods: [] };
-    const contractAddress = nearUtils.getConfig(DEFAULT_NETWORK_ENV).escrowFactoryContractName;
-
-    return nearUtils.initContract<EscrowFactoryMethods>(account, contractAddress, contractMethods);
-  }
-
-  async getConditionalEscrowContractsList(): Promise<EscrowFactoryValues["conditionalEscrowContractsList"]> {
-    const conditionalEscrowContractsList = await this.contract.get_conditional_escrow_contracts_list();
-
-    return conditionalEscrowContractsList;
+    logger.info(response);
   }
 }

@@ -1,43 +1,15 @@
 scalar Date
 
-input GetPropertyByResponseIdInput {
-  responseId: String!
-}
-
 type Property {
   id: String!
-  title: String!
-  shortDescription: String!
-  longDescription: String!
-  category: String!
-  expirationDate: Date!
-  price: PropertyPrice!
-  token: PropertyToken!
-  gallery: [PropertyGalleryMedia]!
-  contract: PropertyContract!
-  owner: PropertyOwner!
-  investors: PropertyInvestors!
-  location: PropertyLocation!
-}
-
-type PropertyLocation {
-  country: String!
-  countryCode: String!
-  city: String!
-  state: String!
-  latitude: String!
-  longitude: String!
+  strapiPropertyId: Int!
+  createdAt: Date!
+  updatedAt: Date!
 }
 
 type PropertyInvestors {
   amount: Int!
   wallets: [String]
-}
-
-type PropertyOwner {
-  name: String!
-  url: String!
-  gallery: PropertyGalleryMedia
 }
 
 type PropertyContract {
@@ -51,33 +23,12 @@ type PropertyPrice {
   exchangeRate: ExchangeRate
 }
 
-type PropertyToken {
-  address: String!
-  symbol: String!
-  decimals: Int!
-}
-
 type ExchangeRate {
   price: String!
   currencySymbol: String!
   equivalence: String!
 }
 
-type PropertyContentCustomFields {
-  category: String!
-  countryCode: String!
-  latitude: String!
-  longitude: String!
-  shortDescription: String!
-  nearConditionalEscrowContractAddress: String!
-}
-
-type PropertyGalleryMedia {
-  url: String!
-  alternativeText: String!
-  ipfsURL: String!
-}
-
 type Query {
-  getPropertyByResponseId(input: GetPropertyByResponseIdInput!): Property
+  property: Property
 }

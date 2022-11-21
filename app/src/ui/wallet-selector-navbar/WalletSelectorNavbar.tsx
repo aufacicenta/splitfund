@@ -3,7 +3,6 @@ import { Hidden } from "react-grid-system";
 import { Typography } from "../typography/Typography";
 import { useRoutes } from "hooks/useRoutes/useRoutes";
 import { Grid } from "ui/grid/Grid";
-import { WalletSelector } from "ui/wallet-selector/WalletSelector";
 import { SplitfundLogo } from "ui/icons/SplitfundLogo";
 import { TotalValueLockedWidget } from "ui/splitfund/total-value-locked-widget/TotalValueLockedWidget";
 
@@ -36,9 +35,6 @@ export const WalletSelectorNavbar: React.FC<WalletSelectorNavbarProps> = () => {
           </Hidden>
           <Grid.Col lg={5} sm={5} xs={6}>
             <div className={styles["wallet-selector-navbar__right"]}>
-              <div className={styles["wallet-selector-navbar__right--item"]}>
-                <WalletSelector />
-              </div>
               <div className={styles["wallet-selector-navbar__right--item"]}>
                 <TotalValueLockedWidget />
               </div>

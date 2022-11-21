@@ -1,7 +1,7 @@
 import { Near, WalletConnection as NEARWalletConnection } from "near-api-js";
 import { ReactNode } from "react";
 
-import { NEARSignInOptions } from "context/near-wallet/NearWalletContext.types";
+import { NEARSignInOptions } from "context/near/wallet/NearWalletContext.types";
 
 export type WalletSelectorContextControllerProps = {
   children: ReactNode;

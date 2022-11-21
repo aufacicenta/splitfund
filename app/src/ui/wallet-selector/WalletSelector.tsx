@@ -33,7 +33,13 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
 
   return (
     <div className={clsx(styles["wallet-selector"], className)}>
-      <Button size="xs" variant="text" color="secondary" onClick={handleOnConnectWalletClick}>
+      <Button
+        size="xs"
+        variant="text"
+        color="secondary"
+        onClick={handleOnConnectWalletClick}
+        className={styles["wallet-selector__button"]}
+      >
         {wallet.isConnected ? `${wallet.chain}: ${wallet.network}` : "Connect Wallet"}
       </Button>
       {isWidgetVisible && (

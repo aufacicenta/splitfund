@@ -73,7 +73,7 @@
   &__logo-desktop {
     a {
       @include atLargeTablet {
-        height: $navbar-height * 0.85;
+        height: $navbar-height;
       }
       display: flex;
       flex-direction: column;
@@ -108,7 +108,7 @@
   &__logo {
     a {
       @include atLargeTablet {
-        height: $navbar-height * 0.85;
+        height: $navbar-height;
       }
       display: flex;
       flex-direction: column;
@@ -141,7 +141,7 @@
 
     &--item {
       @include atLargeTablet {
-        height: $navbar-height * 0.85;
+        height: $navbar-height;
       }
       position: relative;
       display: flex;
@@ -169,7 +169,7 @@
 
     &--item {
       @include atLargeTablet {
-        height: $navbar-height * 0.85;
+        height: $navbar-height;
       }
       position: relative;
       display: flex;

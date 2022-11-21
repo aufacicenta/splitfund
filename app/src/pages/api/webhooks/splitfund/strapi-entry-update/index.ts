@@ -1,11 +1,16 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { NextApiRequest, NextApiResponse } from "next";
+import { v4 as uuidv4 } from "uuid";
 
 import date from "providers/date";
+import logger from "providers/logger";
+import { EscrowFactory } from "providers/near/escrow-factory";
 import { StableEscrowProps } from "providers/near/stable-escrow/stable-escrow.types";
 import splitfund from "providers/splitfund";
 import strapi from "providers/strapi";
+import supabase from "providers/supabase";
+import near from "providers/near";
+import currency from "providers/currency";
 
 import { Property, StrapiPropertyEntry } from "./types";
 
@@ -15,34 +20,24 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const data: StrapiPropertyEntry = req.body;
 
     if (!data || data?.model !== "property") {
-      throw new Error("api/webhooks/splitfund/strapi-entry-update: invalid data.");
+      throw new Error("invalid property data.");
     }
 
     const { entry: property } = data as { entry: Property };
 
     if (!property.createNEARContract || !property.gallery) {
-      console.log(
-        `api/webhooks/splitfund/strapi-entry-update: createNEARContract false for ${property.title} id:${property.id}`,
-      );
-
-      res.status(200).json({
-        success: true,
-      });
-
-      return;
+      throw new Error(`createNEARContract false for "${property.title}" id:${property.id}.`);
     }
 
-    // @TODO check for an existing contract by the metadata id and throw if exists
+    if (await supabase.database.property.strapiPropertyExists(property)) {
+      throw new Error(`supabase property ${property.id} exists.`);
+    }
 
-    const id = `splitfund-${property.id}`;
+    const id = `splitfund-${property.id}-${uuidv4().slice(0, 4)}`;
     const name = `Splitfund.xyz Property ${property.id}`;
     const symbol = `SF${property.id}`;
 
     const expires_at = date.toNanoseconds(date.client(property.expirationDate).utc().valueOf());
-
-    console.log(
-      `api/webhooks/splitfund/strapi-entry-update: fetching metadata_url for ${property.title} id:${property.id}`,
-    );
 
     const metadata_url = await strapi.getIPFSUrlFromPropertyEntry(property);
 
@@ -53,14 +48,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const {
       ft_metadata: { address: nep_141, decimals },
       maintainer_account_id,
+      fees_account_id,
       fees: { percentage },
     } = splitfund.getConfig().stableEscrow;
 
     const stableEscrowProps: StableEscrowProps = {
       metadata: {
-        id,
         expires_at,
-        funding_amount_limit,
+        funding_amount_limit: currency.convert.toUIntAmount(Math.ceil(funding_amount_limit), decimals),
         // Always zero. It is set in the contract anyway
         unpaid_amount: 0,
         // constant for now, but may be set through the UI in the future
@@ -71,8 +66,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       },
       fees: {
         percentage,
-        // Always zero. It is set in the contract anyway
-        balance: 0,
+        account_id: fees_account_id,
+        amount: 0,
+        claimed: false,
       },
       fungible_token_metadata: {
         // Random string, gets set in contract anyway
@@ -84,15 +80,24 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       },
     };
 
-    console.log({ stableEscrowProps });
+    logger.info({ stableEscrowProps });
 
     // @TODO deploy and init contract here...
+    await EscrowFactory.createEscrow(id, stableEscrowProps);
+    const near_contract_address = `${id}.${near.getConfig().factoryWalletId}`;
+
+    await supabase.database.property.insert({
+      strapi_property_id: property.id,
+      near_contract_address,
+      ipfs_metadata_url: metadata_url,
+    });
 
     res.status(200).json({
       success: true,
     });
   } catch (error) {
-    // @TODO log to error logger
+    logger.error((error as Error).message);
+
     res.status(500).send(error);
   }
 };

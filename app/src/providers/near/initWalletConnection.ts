@@ -8,7 +8,6 @@ export default async (chain: string | undefined) => {
 
   const near = await nearAPI.connect({
     keyStore,
-    headers: {},
     ...nearConfig,
   });
 

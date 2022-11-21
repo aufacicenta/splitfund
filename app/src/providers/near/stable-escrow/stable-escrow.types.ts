@@ -1,5 +1,4 @@
 export type Metadata = {
-  id: string;
   expires_at: number;
   funding_amount_limit: number;
   unpaid_amount: number;
@@ -10,7 +9,9 @@ export type Metadata = {
 
 export type Fees = {
   percentage: number;
-  balance: number;
+  amount: number;
+  claimed: boolean;
+  account_id: string;
 };
 
 export type FungibleTokenMetadata = {
@@ -45,20 +46,24 @@ export type StableEscrowValues = {
   depositsOfPercentage: number;
 };
 
+export type DepositArgs = {
+  sender_id: string;
+  amount: string;
+};
+
 export type StableEscrowMethods = {
   get_total_funds: () => Promise<number>;
-  get_funding_amount_limit: () => Promise<number>;
-  get_unpaid_funding_amount: () => Promise<number>;
-  get_deposits: () => Promise<string[][]>;
-  get_expiration_date: () => Promise<number>;
-  get_dao_factory_account_id: () => Promise<string>;
-  get_ft_factory_account_id: () => Promise<string>;
-  get_dao_name: () => Promise<string>;
-  get_metadata_url: () => Promise<string>;
   is_deposit_allowed: () => Promise<boolean>;
   is_withdrawal_allowed: () => Promise<boolean>;
-  deposits_of: ({ payee }: { payee: string }) => Promise<number>;
-  deposit: (args: Record<string, string>, gas?: number, amount?: string | null) => Promise<void>;
+  has_contract_expired: () => Promise<boolean>;
+  is_funding_reached: () => Promise<boolean>;
+  get_deposit_accounts: () => Promise<string[]>;
+  get_fees: () => Promise<Fees>;
+  get_metadata: () => Promise<Metadata>;
+  get_block_timestamp: () => Promise<string>;
+
+  // Change methods
+  deposit: ({ sender_id, amount }: DepositArgs, gas?: string, deposit?: string | null) => Promise<void>;
   withdraw: () => Promise<void>;
   delegate_funds: ({ dao_name }: { dao_name: string }, gas: string | number) => Promise<boolean>;
 };
