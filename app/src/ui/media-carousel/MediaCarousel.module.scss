@@ -1,7 +1,11 @@
 @import "src/theme/base";
 
 .media-carousel {
+  @include atLargeTablet {
+    margin-bottom: 0;
+  }
   display: block;
+  margin-bottom: $space-ml;
 
   &__img {
     width: auto;
