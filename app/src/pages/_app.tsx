@@ -6,6 +6,7 @@ import { setConfiguration } from "react-grid-system";
 
 import { GenericLoader } from "ui/generic-loader/GenericLoader";
 import "../theme/globals.scss";
+import "src/styles/globals.css";
 
 setConfiguration({ containerWidths: [540, 740, 960, 1280, 1540], gutterWidth: 32 });
 

@@ -1,0 +1,55 @@
+@import "src/theme/base";
+
+.market {
+  display: block;
+
+  &__container {
+    height: calc(100vh - 30px);
+  }
+
+  &__row {
+    display: flex;
+  }
+
+  &__navbar {
+    &--logo {
+      width: 32px;
+    }
+  }
+
+  &__details {
+    width: 80%;
+
+    &--about {
+      height: 45vh;
+    }
+  }
+
+  &__orders {
+    width: 20%;
+  }
+
+  &__table {
+    width: 100%;
+
+    &--wrapper {
+      display: block;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    &--head {
+      th {
+        padding: 14px;
+      }
+    }
+
+    &--body {
+      height: 180px;
+
+      td {
+        padding: 14px;
+      }
+    }
+  }
+}

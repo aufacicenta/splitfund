@@ -18,6 +18,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   useEffect(() => {
     // @todo set with a toggle button from navbar or footer
     document.body.dataset.theme = "light";
+    document.documentElement.classList.add("dark");
   }, []);
 
   return (
