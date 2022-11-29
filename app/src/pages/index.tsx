@@ -1,11 +1,11 @@
 import { GetServerSidePropsContext, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { i18n } from "next-i18next";
+import { HomeContainer } from "src/components/home/HomeContainer";
+import { HomeProps } from "src/components/home/Home.types";
 
-import { HomeContainer } from "app/home/HomeContainer";
 import { AppLayout } from "layouts/app-layout/AppLayout";
 import near from "providers/near";
-import { HomeProps } from "app/home/Home.types";
 
 const Index: NextPage<HomeProps> = ({ featuredActiveHoldings, totalValueLocked }) => (
   <AppLayout>
