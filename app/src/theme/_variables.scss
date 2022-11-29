@@ -79,9 +79,9 @@ $border-radius-input: $border-radius !default;
 // Spacing
 $space-default: rem(16) !default;
 $gutter-width: $space-default * 2;
-$space-xxs: $space-default / 8 !default;
-$space-xs: $space-default / 4 !default;
-$space-s: $space-default / 2 !default;
+$space-xxs: calc($space-default / 8) !default;
+$space-xs: calc($space-default / 4) !default;
+$space-s: calc($space-default / 2) !default;
 $space-m: $space-default * 1.2 !default;
 $space-ml: $space-default * 2 !default;
 $space-l: $space-default * 3 !default;

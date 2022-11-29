@@ -72,9 +72,9 @@ $sidebar-width: 320px;
 }
 @mixin withNavbar($divisor: 1) {
   @include atLargeTablet {
-    padding-top: $navbar-height / $divisor;
+    padding-top: calc($navbar-height / $divisor);
   }
-  padding-top: $navbar-height-mobile / $divisor;
+  padding-top: calc($navbar-height-mobile / $divisor);
 }
 @mixin normalizeTypography {
   margin-top: 0;

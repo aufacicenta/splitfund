@@ -211,7 +211,7 @@
         display: none;
       }
       display: block;
-      padding: ($navbar-height / 2) 0;
+      padding: calc($navbar-height / 2) 0;
       text-align: center;
 
       img {

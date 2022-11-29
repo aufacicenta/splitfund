@@ -1,4 +1,5 @@
 import { ApolloProvider } from "@apollo/client";
+import Script from "next/script";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -23,7 +24,6 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://use.typekit.net/sxr6aaa.css" />
         <meta property="og:url" content="https://splitfund.xyz" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content={locale} />
@@ -31,9 +31,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         <link rel="preload" href="/icons/icomoon.ttf" as="font" crossOrigin="" />
         <link rel="preload" href="/icons/icomoon.woff" as="font" crossOrigin="" />
         <link rel="preload" href="/icons/icomoon.svg" as="font" crossOrigin="" />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2BT20MG97S" />
-        <script
-          // eslint-disable-next-line react/no-danger
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-2BT20MG97S" />
+        <Script
           dangerouslySetInnerHTML={{
             __html: `
                 window.dataLayer = window.dataLayer || [];

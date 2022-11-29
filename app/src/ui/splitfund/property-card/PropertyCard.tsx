@@ -48,11 +48,9 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, className 
         <Button disabled variant="text">
           Expires in 30 days
         </Button>
-        <Typography.Link href={routes.property.details(property.id)}>
-          <Button variant="outlined" as="a">
-            See Details
-          </Button>
-        </Typography.Link>
+        <Button variant="outlined" as="a" href={routes.property.details(property.id)}>
+          See Details
+        </Button>
       </Card.Actions>
     </Card>
   );
