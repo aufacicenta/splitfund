@@ -1,4 +1,5 @@
 @import "src/theme/base";
+@import "src/ui/typography/mixins";
 
 .market {
   display: block;
@@ -21,7 +22,41 @@
     width: 80%;
 
     &--about {
-      height: 45vh;
+      height: 42vh;
+    }
+
+    &--long-description {
+      h1 {
+        @include headline1;
+      }
+
+      h2 {
+        @include headline2;
+      }
+
+      h3 {
+        @include headline3;
+      }
+
+      h4 {
+        @include headline4;
+      }
+
+      h5 {
+        @include headline5;
+      }
+
+      h6 {
+        @include headline6;
+      }
+
+      p {
+        @include text;
+      }
+
+      strong {
+        @include textBold;
+      }
     }
   }
 

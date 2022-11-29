@@ -1,13 +1,23 @@
 /* eslint-disable no-irregular-whitespace */
+import ReactMarkdown from "react-markdown";
 import clsx from "clsx";
 import { Badge, Navbar } from "flowbite-react";
 
 import { SplitfundIcon } from "ui/icons/SplitfundIcon";
 import { MediaCarousel } from "ui/media-carousel/MediaCarousel";
 import ipfs from "providers/ipfs";
+import { Typography } from "ui/typography/Typography";
 
 import { MarketProps } from "./Market.types";
 import styles from "./Market.module.scss";
+
+function LinkRenderer(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  return (
+    <a href={props.href} target="_blank" rel="noreferrer">
+      {props.children}
+    </a>
+  );
+}
 
 export const Market: React.FC<MarketProps> = ({ className, property }) => (
   <div className={clsx(styles.market, className, "bg-primary", "h-screen", "p-default")}>
@@ -39,7 +49,7 @@ export const Market: React.FC<MarketProps> = ({ className, property }) => (
             )}
           >
             <div className="mb-default">
-              <h1 className="text-white font-bold text-xl">SFP1/USDT</h1>
+              <Typography.Headline1>SFP1/USDT</Typography.Headline1>
               <div className="flex">
                 <span className="text-gray-500 text-xs">Real Estate — &nbsp;</span>
                 <Badge className="inline-block dark:bg-primary dark:text-secondary">funding</Badge>
@@ -48,6 +58,10 @@ export const Market: React.FC<MarketProps> = ({ className, property }) => (
             <div className="grid grid-cols-2">
               <div className={clsx(styles["market__details--about"], "overflow-y-scroll")}>
                 <MediaCarousel media={property.gallery.map((item) => ({ url: ipfs.asHttpsURL(item.url) }))} />
+                <Typography.Headline2 className="text-white text-medium text-lg">About</Typography.Headline2>
+                <div className={clsx(styles["market__details--long-description"])}>
+                  <ReactMarkdown components={{ a: LinkRenderer }}>{property.longDescription}</ReactMarkdown>
+                </div>
               </div>
             </div>
           </div>
@@ -61,7 +75,7 @@ export const Market: React.FC<MarketProps> = ({ className, property }) => (
               "p-default",
             )}
           >
-            <h2 className="text-white font-medium">Buy or Sell</h2>
+            <Typography.Headline2>Buy or Sell</Typography.Headline2>
           </div>
         </div>
         <div className={clsx(styles.market__row)}>
@@ -75,7 +89,7 @@ export const Market: React.FC<MarketProps> = ({ className, property }) => (
               "p-default",
             )}
           >
-            <h2 className={clsx("text-white", "font-medium", "mb-default")}>Properties</h2>
+            <Typography.Headline2>Properties</Typography.Headline2>
             <div className={clsx(styles["market__table--wrapper"], "overflow-x-auto relative block")}>
               <table className="w-full">
                 <thead
@@ -114,7 +128,7 @@ export const Market: React.FC<MarketProps> = ({ className, property }) => (
                 </thead>
                 <tbody className={clsx(styles["market__table--body"], "overflow-y-scroll text-xs")}>
                   <tr className="bg-white border-none dark:bg-secondary-900 text-white hover:cursor-pointer dark:hover:bg-gray-900">
-                    <td className="font-medium text-gray-900 dark:text-white">SFP1/USDT</td>
+                    <td className="font-bold text-gray-900 dark:text-white">SFP1/USDT</td>
                     <td>Real Estate</td>
                     <td className="text-right">25%</td>
                     <td className="text-right">USDT 123,000.00</td>
@@ -127,7 +141,7 @@ export const Market: React.FC<MarketProps> = ({ className, property }) => (
                     <td className="text-right">30</td>
                   </tr>
                   <tr className="bg-white border-none dark:bg-secondary text-white hover:cursor-pointer dark:hover:bg-gray-900">
-                    <td className="font-medium text-gray-900 dark:text-white">SFP1/USDT</td>
+                    <td className="font-bold text-gray-900 dark:text-white">SFP1/USDT</td>
                     <td>Real Estate</td>
                     <td className="text-right">25%</td>
                     <td className="text-right">USDT 123,000.00</td>
@@ -140,7 +154,7 @@ export const Market: React.FC<MarketProps> = ({ className, property }) => (
                     <td className="text-right">30</td>
                   </tr>
                   <tr className="bg-white border-none dark:bg-secondary-900 text-white">
-                    <td className="font-medium text-gray-900 dark:text-white">SFP1/USDT</td>
+                    <td className="font-bold text-gray-900 dark:text-white">SFP1/USDT</td>
                     <td>Real Estate</td>
                     <td className="text-right">25%</td>
                     <td className="text-right">USDT 123,000.00</td>
@@ -153,7 +167,7 @@ export const Market: React.FC<MarketProps> = ({ className, property }) => (
                     <td className="text-right">30</td>
                   </tr>
                   <tr className="bg-white border-none dark:bg-secondary-900 text-white">
-                    <td className="font-medium text-gray-900 dark:text-white">SFP1/USDT</td>
+                    <td className="font-bold text-gray-900 dark:text-white">SFP1/USDT</td>
                     <td>Real Estate</td>
                     <td className="text-right">25%</td>
                     <td className="text-right">USDT 123,000.00</td>

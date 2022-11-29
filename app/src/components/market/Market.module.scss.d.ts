@@ -3,6 +3,7 @@ export type Styles = {
   market__container: string;
   market__details: string;
   "market__details--about": string;
+  "market__details--long-description": string;
   "market__navbar--logo": string;
   market__orders: string;
   market__row: string;
