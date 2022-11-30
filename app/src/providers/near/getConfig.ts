@@ -1,4 +1,4 @@
-export const DEFAULT_NETWORK_ENV = "testnet";
+export const DEFAULT_NETWORK_ENV = process.env.NEXT_PUBLIC_NEAR_WALLET_ENV;
 
 const CONTRACT_NAME = process.env.CONTRACT_NAME || "testnet";
 

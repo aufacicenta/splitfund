@@ -1,4 +1,4 @@
-import { WalletSelector } from "@near-wallet-selector/core";
+import { AccountState, WalletSelector } from "@near-wallet-selector/core";
 import { WalletSelectorModal } from "@near-wallet-selector/modal-ui";
 import { ReactNode } from "react";
 
@@ -7,9 +7,11 @@ export type NearWalletSelectorContextControllerProps = {
 };
 
 export type NearWalletSelectorContextType = {
+  initModal: (contractId: string) => void;
   selector?: WalletSelector;
   modal?: WalletSelectorModal;
-  initModal: (contractId: string) => void;
+  accountId: string | null;
+  accounts: Array<AccountState>;
 };
 
 export type NEARSignInOptions = {

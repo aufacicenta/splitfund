@@ -31,7 +31,7 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
   }, [nearWalletSelectorContext.selector]);
 
   useEffect(() => {
-    if (!nearWalletSelectorContext.selector?.isSignedIn()) {
+    if (!nearWalletSelectorContext.accountId) {
       return;
     }
 
@@ -91,7 +91,7 @@ export const InvestNowWidget: React.FC<InvestNowWidgetProps> = ({ className, pro
           </div>
         </Card.Content>
         <Card.Actions>
-          {nearWalletSelectorContext.selector?.isSignedIn() ? (
+          {nearWalletSelectorContext.accountId ? (
             <RFForm
               onSubmit={onSubmit}
               render={({ handleSubmit }) => (

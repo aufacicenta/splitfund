@@ -10,6 +10,7 @@ import { Typography } from "ui/typography/Typography";
 
 import { MarketProps } from "./Market.types";
 import styles from "./Market.module.scss";
+import { Swap } from "./swap/Swap";
 
 function LinkRenderer(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   return (
@@ -76,6 +77,7 @@ export const Market: React.FC<MarketProps> = ({ className, property }) => (
             )}
           >
             <Typography.Headline2>Buy or Sell</Typography.Headline2>
+            <Swap property={property} />
           </div>
         </div>
         <div className={clsx(styles.market__row)}>
