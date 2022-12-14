@@ -1,8 +1,8 @@
 import clsx from "clsx";
-import NextLink, { LinkProps } from "next/link";
+import NextLink from "next/link";
 
 import styles from "./Typography.module.scss";
-import { AnchorProps, TypographyProps } from "./Typography.types";
+import { AnchorProps, NextLinkProps, TypographyProps } from "./Typography.types";
 
 export const Typography: React.FC<TypographyProps> & {
   Headline1: React.FC<TypographyProps>;
@@ -19,7 +19,7 @@ export const Typography: React.FC<TypographyProps> & {
   MiniButtonLabel: React.FC<TypographyProps>;
   Description: React.FC<TypographyProps>;
   MiniDescription: React.FC<TypographyProps>;
-  Link: React.FC<TypographyProps & LinkProps>;
+  Link: React.FC<NextLinkProps>;
   Anchor: React.FC<AnchorProps>;
 } = ({ children, className }) => <div className={clsx(styles.typography, className)}>{children}</div>;
 
@@ -130,9 +130,9 @@ const MiniDescription: React.FC<TypographyProps> = ({ children, className, flat,
   </p>
 );
 
-const Link: React.FC<TypographyProps & LinkProps> = ({ children, className, href, ...props }) => (
-  <NextLink href={href} {...props}>
-    <a className={clsx(styles.typography__link, className)}>{children}</a>
+const Link: React.FC<NextLinkProps> = ({ children, className, href, ...props }) => (
+  <NextLink className={clsx(styles.typography__link, className)} href={href} {...props}>
+    {children}
   </NextLink>
 );
 

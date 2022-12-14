@@ -1,4 +1,5 @@
 import { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from "react";
+import { LinkProps } from "next/link";
 
 type GeneralProps = {
   inline?: boolean;
@@ -12,3 +13,9 @@ export type TypographyProps = HTMLAttributes<HTMLParagraphElement> & {
 } & GeneralProps;
 
 export type AnchorProps = AnchorHTMLAttributes<HTMLAnchorElement> & GeneralProps;
+
+export type NextLinkProps = TypographyProps &
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> &
+  LinkProps & {
+    children?: React.ReactNode;
+  } & React.RefAttributes<HTMLAnchorElement>;

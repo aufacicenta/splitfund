@@ -47,7 +47,7 @@ const reactComponentGenerator = (plop) => ({
       type: "list",
       name: "baseDir",
       message: "base directory",
-      choices: ["ui", "app"],
+      choices: ["ui", "components"],
       default: 1,
     },
     {
@@ -61,8 +61,8 @@ const reactComponentGenerator = (plop) => ({
       type: "directory",
       name: "directory",
       message: "select directory",
-      basePath: "./src/app",
-      when: (answers) => answers.baseDir === "app",
+      basePath: "./src/components",
+      when: (answers) => answers.baseDir === "components",
     },
     {
       type: "input",

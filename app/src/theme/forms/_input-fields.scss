@@ -181,7 +181,7 @@ textarea.materialize-textarea {
 
   &.col {
     label {
-      left: $gutter-width / 2;
+      left: calc($gutter-width / 2);
     }
 
     .prefix ~ label,
@@ -218,7 +218,7 @@ textarea.materialize-textarea {
 
   .prefix {
     position: absolute;
-    top: ($input-height - $input-icon-size) / 2;
+    top: calc($input-height - $input-icon-size / 2);
     width: $input-height;
     font-size: $input-icon-size;
     transition: color 0.2s;

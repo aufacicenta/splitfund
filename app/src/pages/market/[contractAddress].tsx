@@ -1,14 +1,14 @@
 import { GetServerSidePropsContext, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { PropertyDetailsContainer } from "src/components/property-details/PropertyDetailsContainer";
-import { PropertyDetailsContainerProps } from "src/components/property-details/PropertyDetails.types";
+import { MarketContainer } from "app/market/MarketContainer";
+import { MarketContainerProps } from "app/market/Market.types";
 
 import { AppLayout } from "layouts/app-layout/AppLayout";
 import { StableEscrow } from "providers/near/stable-escrow";
 
-const PropertyDetails: NextPage<PropertyDetailsContainerProps> = ({ property }) => (
+const Market: NextPage<MarketContainerProps> = ({ property }) => (
   <AppLayout>
-    <PropertyDetailsContainer property={property} />
+    <MarketContainer property={property} />
   </AppLayout>
 );
 
@@ -32,4 +32,4 @@ export async function getServerSideProps({ params, locale }: GetServerSidePropsC
   return { props: { property: null, ...serverSideTranslationsProps } };
 }
 
-export default PropertyDetails;
+export default Market;
