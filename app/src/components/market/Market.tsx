@@ -1,4 +1,5 @@
 /* eslint-disable no-irregular-whitespace */
+import dynamic from "next/dynamic";
 import ReactMarkdown from "react-markdown";
 import clsx from "clsx";
 import { Badge, Navbar } from "flowbite-react";
@@ -7,10 +8,10 @@ import { SplitfundIcon } from "ui/icons/SplitfundIcon";
 import { MediaCarousel } from "ui/media-carousel/MediaCarousel";
 import ipfs from "providers/ipfs";
 import { Typography } from "ui/typography/Typography";
+import { RefSwapWidgetProps } from "ui/splitfund/ref-swap-widget/RefSwapWidget.types";
 
 import { MarketProps } from "./Market.types";
 import styles from "./Market.module.scss";
-import { Swap } from "./swap/Swap";
 
 function LinkRenderer(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   return (
@@ -19,6 +20,11 @@ function LinkRenderer(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
     </a>
   );
 }
+
+const RefSwapWidget = dynamic<RefSwapWidgetProps>(
+  () => import("ui/splitfund/ref-swap-widget/RefSwapWidget").then((mod) => mod.RefSwapWidget),
+  { ssr: false },
+);
 
 export const Market: React.FC<MarketProps> = ({ className, property }) => (
   <div className={clsx(styles.market, className, "bg-primary", "h-screen", "p-default")}>
@@ -77,7 +83,8 @@ export const Market: React.FC<MarketProps> = ({ className, property }) => (
             )}
           >
             <Typography.Headline2>Buy or Sell</Typography.Headline2>
-            <Swap property={property} />
+
+            <RefSwapWidget property={property} />
           </div>
         </div>
         <div className={clsx(styles.market__row)}>

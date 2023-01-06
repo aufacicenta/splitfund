@@ -17,8 +17,8 @@ const TESTNET_CONFIG = {
   factoryWalletId: TESTNET_FACTORY_WALLET_ID,
 };
 
-export default (network: string | undefined = "testnet") => {
-  switch (network || DEFAULT_NETWORK_ENV) {
+export default (network: string | undefined = DEFAULT_NETWORK_ENV) => {
+  switch (network) {
     case "mainnet":
       return {
         networkId: "mainnet",

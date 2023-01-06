@@ -21,6 +21,9 @@ module.exports = {
         700: "#1628B5",
       },
     },
+    fontFamily: {
+      sans: ["ofelia-text", "sans-serif"],
+    },
     extend: {
       spacing: {
         default: "14px",

@@ -17,7 +17,7 @@ module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  webpack: (config) => {
+  webpack: (config, { isServer, webpack }) => {
     const oneOf = config.module.rules.find((rule) => typeof rule.oneOf === "object");
 
     if (oneOf) {
@@ -30,6 +30,10 @@ module.exports = {
           sassLoader.options.additionalData = `$basePath:'/';`;
         }
       }
+    }
+
+    if (!isServer) {
+      config.plugins.push(new webpack.NormalModuleReplacementPlugin(/^fs$/, "../package.json"));
     }
 
     return config;

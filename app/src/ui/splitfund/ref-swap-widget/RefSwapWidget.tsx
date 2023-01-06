@@ -1,17 +1,41 @@
 import clsx from "clsx";
 import * as React from "react";
-import { SwapWidget, WalletSelectorTransactions, NotLoginError, Transaction } from "@ref-finance/ref-sdk";
+import {
+  SwapWidget,
+  WalletSelectorTransactions,
+  NotLoginError,
+  Transaction,
+  TokenMetadata,
+} from "@ref-finance/ref-sdk";
 
 import { useNearWalletSelectorContext } from "hooks/useNearWalletSelectorContext/useNearWalletSelectorContext";
+import { useRefFinanceSdk } from "hooks/near/useRefFinanceSDK/useRefFinanceSdk";
 
 import styles from "./RefSwapWidget.module.scss";
 import { RefSwapWidgetProps } from "./RefSwapWidget.types";
 
 export const RefSwapWidget: React.FC<RefSwapWidgetProps> = ({ className, property }) => {
   const { modal, selector, accountId, initModal } = useNearWalletSelectorContext();
+  const { getTokenMetadata } = useRefFinanceSdk();
 
   const [swapState, setSwapState] = React.useState<"success" | "fail" | null>(null);
   const [tx, setTx] = React.useState<string | undefined>(undefined);
+  const [defaultTokenInMetadata, setDefaultTokenInMetadata] = React.useState<TokenMetadata>();
+  const [defaultTokenOutMetadata, setDefaultTokenOutMetadata] = React.useState<TokenMetadata>();
+
+  React.useEffect(() => {
+    (async () => {
+      const defaultTokenIn = await getTokenMetadata(property.token.address);
+      const defaultTokenOut = await getTokenMetadata(property.contract.id);
+
+      if (!defaultTokenIn || !defaultTokenOut) {
+        return;
+      }
+
+      setDefaultTokenInMetadata(defaultTokenIn);
+      setDefaultTokenOutMetadata(defaultTokenOut);
+    })();
+  }, [selector]);
 
   React.useEffect(() => {
     if (!selector) {
@@ -56,8 +80,32 @@ export const RefSwapWidget: React.FC<RefSwapWidgetProps> = ({ className, propert
     await wallet?.signOut();
   };
 
+  if (!defaultTokenInMetadata || !defaultTokenOutMetadata) {
+    return (
+      <div
+        role="status"
+        className="p-4 max-w-sm rounded border border-gray-200 shadow animate-pulse md:p-6 dark:border-gray-700"
+      >
+        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2.5" />
+        <div className="mb-10 w-48 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
+        <div className="flex items-baseline mt-4 space-x-6">
+          <div className="w-full h-72 bg-gray-200 rounded-t-lg dark:bg-gray-700" />
+          <div className="w-full h-56 bg-gray-200 rounded-t-lg dark:bg-gray-700" />
+          <div className="w-full h-72 bg-gray-200 rounded-t-lg dark:bg-gray-700" />
+          <div className="w-full h-64 bg-gray-200 rounded-t-lg dark:bg-gray-700" />
+          <div className="w-full h-80 bg-gray-200 rounded-t-lg dark:bg-gray-700" />
+          <div className="w-full h-72 bg-gray-200 rounded-t-lg dark:bg-gray-700" />
+          <div className="w-full h-80 bg-gray-200 rounded-t-lg dark:bg-gray-700" />
+        </div>
+        <span className="sr-only">Loading...</span>
+      </div>
+    );
+  }
+
   return (
     <SwapWidget
+      darkMode
+      defaultTokenList={[defaultTokenInMetadata, defaultTokenOutMetadata]}
       className={clsx(styles["ref-swap-widget"], className)}
       onSwap={onSwap}
       onDisConnect={onDisConnect}
@@ -74,8 +122,8 @@ export const RefSwapWidget: React.FC<RefSwapWidgetProps> = ({ className, propert
       }}
       enableSmartRouting
       onConnect={onConnect}
-      defaultTokenIn={property.contract.id}
-      defaultTokenOut={property.token.address}
+      defaultTokenIn={property.token.address}
+      defaultTokenOut={property.contract.id}
     />
   );
 };
